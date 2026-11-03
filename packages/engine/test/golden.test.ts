@@ -8,8 +8,9 @@ import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { gunzipSync } from 'node:zlib';
 import { describe, expect, it } from 'vitest';
-import { ENGINE_VERSION, simuler } from '../src/index.ts';
+import { ENGINE_VERSIONS, simuler } from '../src/index.ts';
 import type { BattleInput, BattleResult, LogEvent, UnitInput } from '../src/index.ts';
+import { loadInputs, logHash, play } from '../scripts/golden.ts';
 
 const DIR = join(dirname(fileURLToPath(import.meta.url)), '../golden/v0.4');
 const content = JSON.parse(readFileSync(join(DIR, 'content.json'), 'utf8')) as Pick<BattleInput, 'params' | 'skills'> & {
@@ -33,13 +34,15 @@ const asJson = <T>(v: T): T => JSON.parse(JSON.stringify(v)) as T;
 
 describe(`combats de référence ${content.engineVersion}`, () => {
   it('correspondent à la version du moteur', () => {
-    expect(ENGINE_VERSION).toBe(content.engineVersion);
+    expect(ENGINE_VERSIONS).toContain(content.engineVersion);
     expect(files.length).toBeGreaterThanOrEqual(200);
   });
 
   it.each(files)('%s', (file) => {
     const g = load(file);
-    const out = asJson(simuler({ params: content.params, skills: content.skills, units: g.units }, g.seed));
+    const out = asJson(
+      simuler({ engineVersion: content.engineVersion, params: content.params, skills: content.skills, units: g.units }, g.seed),
+    );
     expect(out.result).toEqual(g.result);
     // Premier écart en clair, plutôt qu'un différentiel de milliers d'événements.
     const i = out.log.findIndex((e, k) => JSON.stringify(e) !== JSON.stringify(g.log[k]));
@@ -52,7 +55,41 @@ describe(`combats de référence ${content.engineVersion}`, () => {
   it("n'altère pas son entrée", () => {
     const g = load(files[0]!);
     const units = asJson(g.units);
-    simuler({ params: content.params, skills: content.skills, units }, g.seed);
+    simuler({ engineVersion: content.engineVersion, params: content.params, skills: content.skills, units }, g.seed);
     expect(units).toEqual(g.units);
+  });
+});
+
+/**
+ * Versions corrigées (guide 4.2, étape 3) : mêmes entrées que v0.4, plus les combats ciblés de
+ * golden/extra. Chaque journal doit avoir l'empreinte relevée à la génération, relue lors de la revue
+ * (scripts/golden.ts ; les journaux qui ont changé sont gardés en entier dans <version>/changed/).
+ */
+interface Manifest {
+  engineVersion: string;
+  previous: string;
+  fights: Record<string, { log: string; events: number; winner: number | null; reason: string; time: number }>;
+}
+
+const inputs = loadInputs();
+
+describe.each(ENGINE_VERSIONS.slice(1))('combats de référence %s', (version) => {
+  const manifest = JSON.parse(readFileSync(join(DIR, '..', version, 'manifest.json'), 'utf8')) as Manifest;
+
+  it('couvrent toutes les entrées', () => {
+    expect(manifest.engineVersion).toBe(version);
+    expect(Object.keys(manifest.fights).sort()).toEqual(inputs.map((g) => g.file).sort());
+  });
+
+  it.each(inputs.map((g) => [g.file, g] as const))('%s', (file, g) => {
+    const out = play(version, g);
+    const m = manifest.fights[file]!;
+    expect({ winner: out.result.winner, reason: out.result.reason, time: out.result.time, events: out.log.length }).toEqual({
+      winner: m.winner,
+      reason: m.reason,
+      time: m.time,
+      events: m.events,
+    });
+    expect(logHash(out)).toBe(m.log);
   });
 });

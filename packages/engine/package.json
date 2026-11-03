@@ -8,5 +8,8 @@
   },
   "dependencies": {
     "@cr/rng": "workspace:*"
+  },
+  "scripts": {
+    "golden": "tsx scripts/golden.ts"
   }
 }

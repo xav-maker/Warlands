@@ -3,12 +3,28 @@
  *
  * Portage fidèle : seuls les types sont ajoutés. Les assertions `!` reprennent les accès directs du
  * prototype et ne changent rien à l'exécution. Le comportement est figé par les combats de référence
- * (golden/v0.4) : toute modification qui change un journal exige une nouvelle version du moteur.
+ * (golden/) : toute modification qui change un journal exige une nouvelle version du moteur.
+ *
+ * Versions (guide 4.2, étape 3 ; README 16) : chacune corrige une bizarrerie du prototype, et les
+ * versions antérieures restent jouables à l'identique pour rejouer d'anciens combats.
+ *   proto-0.4-ville  le prototype, bizarreries comprises
+ *   proto-0.4.1      Embrasement compte les tics restants à la période des brûlures (README 16.1)
+ *   proto-0.4.2      allyHpBelow ne compte plus l'unité elle-même (README 16.4)
  */
 import { Rng } from '@cr/rng';
 import type { BattleInput, BattleOutput, Fx, LogEvent, Rule, Side, Skill, UnitInput } from './types.ts';
 
-export const ENGINE_VERSION = 'proto-0.4-ville';
+export const ENGINE_VERSIONS = ['proto-0.4-ville', 'proto-0.4.1', 'proto-0.4.2'] as const;
+export type EngineVersion = (typeof ENGINE_VERSIONS)[number];
+/** Version jouée quand l'entrée n'en précise pas. */
+export const ENGINE_VERSION: EngineVersion = ENGINE_VERSIONS[ENGINE_VERSIONS.length - 1]!;
+
+/** Rang de la version demandée ; une version inconnue est refusée plutôt que jouée au hasard. */
+function versionLevel(v: string | undefined): number {
+  const i = ENGINE_VERSIONS.indexOf((v ?? ENGINE_VERSION) as EngineVersion);
+  if (i < 0) throw new Error(`version du moteur inconnue : ${v}`);
+  return i;
+}
 export const DMG_TYPES = ['contondant', 'tranchant', 'maladie', 'psychique', 'feu', 'glace', 'tenebres', 'sacre'];
 
 const DOT: Record<string, string> = { saignement: 'tranchant', poison: 'maladie', brulure: 'feu' };
@@ -115,6 +131,11 @@ interface Choice {
 
 export function simuler(input: BattleInput, seed: number): BattleOutput {
   const P = input.params;
+  const level = versionLevel(input.engineVersion);
+  const FIX_EMBRASEMENT = level >= 1;
+  const FIX_ALLY_HP_BELOW = level >= 2;
+  /** Alliés comptés par allyHpBelow : l'unité elle-même en est exclue depuis proto-0.4.2. */
+  const otherAllies = (u2: Unit): Unit[] => (FIX_ALLY_HP_BELOW ? alliesOf(u2).filter((a) => a !== u2) : alliesOf(u2));
   const SK = input.skills;
   const rng2 = new Rng(seed);
   const log: LogEvent[] = [];
@@ -480,7 +501,7 @@ export function simuler(input: BattleInput, seed: number): BattleOutput {
       case 'selfHpBelow':
         return u2.hp * 100 < v * u2.hpMax;
       case 'allyHpBelow':
-        return alliesOf(u2).some((a) => a.hp * 100 < v * a.hpMax);
+        return otherAllies(u2).some((a) => a.hp * 100 < v * a.hpMax);
       case 'selfWillBelow':
         return u2.will * 100 < v * u2.willMax;
       case 'selfEnergyBelow':
@@ -550,7 +571,8 @@ export function simuler(input: BattleInput, seed: number): BattleOutput {
       let list = candidates(u2, id);
       if (P.healCooldown && isHealSkill(id)) {
         const v = r.v ?? 0;
-        if (!alliesOf(u2).some((a) => healReady(a) && (r.cond !== 'allyHpBelow' || a.hp * 100 < v * a.hpMax))) continue;
+        const pool = r.cond === 'allyHpBelow' ? otherAllies(u2) : alliesOf(u2);
+        if (!pool.some((a) => healReady(a) && (r.cond !== 'allyHpBelow' || a.hp * 100 < v * a.hpMax))) continue;
         if (SK[id]!.target === 'ally') list = list.filter(healReady);
       }
       if (P.hotCooldown && isHotSkill(id)) {
@@ -876,7 +898,9 @@ export function simuler(input: BattleInput, seed: number): BattleOutput {
         if (!list.length) lost('personne ne brûle');
         for (const x of list) {
           const b = has(x, 'brulure')!;
-          const ticks = Math.floor(b.end / P.tick) - Math.floor(now / P.tick);
+          // Le prototype compte à la période des tics globaux (20) alors que les brûlures tiquent tous les dotTick (4).
+          const period = FIX_EMBRASEMENT && P.dotTick ? P.dotTick : P.tick;
+          const ticks = Math.floor(b.end / period) - Math.floor(now / period);
           const dmg = b.v * b.charges * Math.max(0, ticks) * 2;
           removeState(x, 'brulure');
           if (dmg > 0) damage(u2, x, dmg, 'feu', { cause: name });
