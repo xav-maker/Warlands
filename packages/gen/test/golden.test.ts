@@ -6,6 +6,7 @@ import { readFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { gunzipSync } from 'node:zlib';
+import { validateContent } from '@cr/content';
 import { Rng } from '@cr/rng';
 import { describe, expect, it } from 'vitest';
 import {
@@ -33,7 +34,7 @@ const vectors = JSON.parse(gunzipSync(readFileSync(join(DIR, 'vectors.json.gz'))
 const asJson = (v: unknown): unknown => JSON.parse(JSON.stringify(v));
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
-const CALL: Record<string, (...a: any[]) => unknown> = {
+const calls = (c: GenContent): Record<string, (...a: any[]) => unknown> => ({
   computeStats: (type: string, form: string, level: number) => computeStats(c, c.troops[type]!, form, level),
   newTroop: (type: string, level: number) => newTroop(c, type, level),
   genEquip: (base: string, seed: number, roll: number | null) => genEquip(c, base, new Rng(seed), roll ?? undefined),
@@ -46,22 +47,31 @@ const CALL: Record<string, (...a: any[]) => unknown> = {
   rarePresent: (seed: number, key: string, fights: number) => rarePresent(c, seed, key, fights),
   canWear: (type: string, level: number, base: string) => canWear(c, type, level, base),
   battleUnits: (squad: PlayerTroop[], group: MonsterGroup, o: BattleOptions) => battleUnits(c, squad, group, o),
-};
+});
+
+/** Le même contenu compilé depuis content/ (YAML) : les tirages doivent être identiques (ordre des entrées). */
+const compiled = validateContent(join(DIR, '../../../../content'));
+const contents: [string, GenContent][] = [
+  ['instantané du prototype', c],
+  ['pack compilé depuis le YAML', compiled.pack as unknown as GenContent],
+];
 
 type Vector = (typeof vectors)[number];
 const byFn = new Map<string, Vector[]>();
 for (const v of vectors) byFn.set(v.fn, [...(byFn.get(v.fn) ?? []), v]);
 const groups = [...byFn.entries()];
 
-describe('générateurs : vecteurs du prototype', () => {
+describe.each(contents)('générateurs sur le %s : vecteurs du prototype', (_name, content) => {
+  const call = calls(content);
   it('couvrent chaque générateur', () => {
-    expect(groups.map(([fn]) => fn).sort()).toEqual(Object.keys(CALL).sort());
+    expect(compiled.ok).toBe(true);
+    expect(groups.map(([fn]) => fn).sort()).toEqual(Object.keys(call).sort());
   });
 
   describe.each(groups)('%s', (fn, list) => {
     it(`${list.length} vecteurs identiques`, () => {
       for (const [i, v] of list.entries()) {
-        const got = asJson(CALL[fn]!(...v.args));
+        const got = asJson(call[fn]!(...v.args));
         if (JSON.stringify(got) !== JSON.stringify(v.out)) expect({ i, args: v.args, got }).toEqual({ i, args: v.args, got: v.out });
       }
     });

@@ -9,5 +9,8 @@
   "dependencies": {
     "@cr/engine": "workspace:*",
     "@cr/rng": "workspace:*"
+  },
+  "devDependencies": {
+    "@cr/content": "workspace:*"
   }
 }

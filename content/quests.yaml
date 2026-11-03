@@ -1,0 +1,16 @@
+# Quêtes de ville : donneurs par région.
+
+givers:
+  [
+    [
+      'Maître Aldric, forgeron',
+      'Dame Ysolde, capitaine de la garde',
+      'Frère Benoît, du temple',
+      'Mirela, marchande d’étoffes',
+      'le vieux Tomas, chasseur',
+    ],
+    [Capitaine Morvan, Nella la rebouteuse, 'Gaspard, armateur', 'Sœur Maëlle, du phare', 'le Borgne, contrebandier'],
+    ['Thrain, maître forgeron', 'Dagna, cheffe des mineurs', Brokk le runiste, 'Hilde, prospectrice', le thane Gorm],
+    ['Sayed, caravanier', 'Amira, prêtresse du soleil', le vizir Kassim, 'Nour, alchimiste', 'Rachid, maître d’armes'],
+    [Mère Séraphine, le chevalier Aurèle, 'Lysandre, astronome', 'Frère Clément, archiviste', 'Héliane, oracle'],
+  ]

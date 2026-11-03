@@ -1,0 +1,815 @@
+# Troupes recrutables et leurs emplacements d’équipement.
+
+milicien:
+  units: 1
+  pop: 1
+  tags: [humain]
+  weapon: epee
+  defaultDist: 1
+  base: { hp: 100, will: 60, energy: 100, mana: 0, atk: 5 }
+  growth: { hp: 6, will: 1, energy: 2, mana: 0, atk: 1 }
+  forms:
+    - id: milicien
+      level: 1
+      speed: 20
+      res: { tranchant: 10 }
+      skills: [[emploi, 1], [exploit, 1], [repos, 3], [coup_bouclier, 5], [repousser, 8]]
+    - id: fantassin
+      level: 10
+      parent: milicien
+      hpMult: 1150
+      bonus: { will: 10, energy: 10, atk: 3 }
+      speed: 19
+      res: { tranchant: 15, contondant: 10 }
+      skills: [[provocation, 10], [riposte, 14]]
+    - id: garde
+      level: 20
+      parent: fantassin
+      hpMult: 1300
+      bonus: { will: 20, energy: 10, atk: 2 }
+      speed: 20
+      res: { tranchant: 25, contondant: 20 }
+      skills: [[dernier_rempart, 20], [mur_boucliers, 24]]
+    - id: lame
+      level: 20
+      parent: fantassin
+      hpMult: 1150
+      bonus: { will: 15, energy: 20, atk: 8 }
+      speed: 17
+      res: { tranchant: 15 }
+      skills: [[execution, 20], [brise_armure, 22], [charge, 26]]
+  slots:
+    arme: [une_main]
+    armure: [legere, moyenne, lourde]
+    accessoire: [bottes, anneau]
+frondeurs:
+  units: 3
+  pop: 2
+  tags: [humain]
+  weapon: fronde
+  defaultDist: 3
+  base: { hp: 55, will: 45, energy: 80, mana: 0, atk: 3 }
+  growth: { hp: 3, will: 1, energy: 2, mana: 0, atk: 1 }
+  forms:
+    - id: frondeur
+      level: 1
+      speed: 18
+      res: { contondant: -10 }
+      skills: [[tir_fronde, 1], [repos, 1], [marque, 6]]
+    - id: tirailleur
+      level: 10
+      parent: frondeur
+      hpMult: 1200
+      bonus: { will: 10, energy: 10, atk: 3 }
+      speed: 16
+      res: {}
+      skills: [[volee, 10], [tir_precis, 16]]
+  slots:
+    arme: [fronde]
+    armure: [legere]
+    accessoire: [bottes, anneau]
+acolyte:
+  units: 1
+  pop: 1
+  tags: [humain]
+  weapon: masse
+  defaultDist: 3
+  base: { hp: 70, will: 80, energy: 80, mana: 40, atk: 2 }
+  growth: { hp: 4, will: 2, energy: 1, mana: 2, atk: 0.5 }
+  forms:
+    - id: acolyte
+      level: 1
+      speed: 22
+      res: { sacre: 30, tenebres: -20 }
+      skills: [[emploi, 1], [soin_mineur, 1], [meditation, 1], [trait_sacre, 4], [purification, 7]]
+    - id: pretre
+      level: 10
+      parent: acolyte
+      hpMult: 1100
+      bonus: { will: 15, energy: 10, mana: 15, atk: 1 }
+      speed: 21
+      res: { sacre: 40, psychique: 10 }
+      skills: [[regeneration, 10], [bouclier_foi, 13]]
+    - id: haut_pretre
+      level: 20
+      parent: pretre
+      hpMult: 1150
+      bonus: { will: 20, energy: 10, mana: 30, atk: 1 }
+      speed: 20
+      res: { sacre: 50, psychique: 20 }
+      skills: [[priere, 20], [aura_serenite, 24]]
+    - id: inquisiteur
+      level: 20
+      parent: pretre
+      hpMult: 1250
+      bonus: { will: 15, energy: 20, mana: 15, atk: 5 }
+      speed: 20
+      res: { sacre: 40, tenebres: 10 }
+      skills: [[trait_sacre_renforce, 20], [confusion, 24]]
+  slots:
+    arme: [une_main, baton]
+    armure: [robe, legere]
+    accessoire: [bottes, anneau]
+pyromancien:
+  units: 1
+  pop: 2
+  tags: [humain]
+  weapon: baton
+  defaultDist: 3
+  base: { hp: 65, will: 55, energy: 70, mana: 50, atk: 2 }
+  growth: { hp: 3, will: 1, energy: 1, mana: 3, atk: 1 }
+  forms:
+    - id: apprenti
+      level: 1
+      speed: 24
+      res: { feu: 40, glace: -25 }
+      skills: [[emploi, 1], [trait_flammes, 1], [boule_feu, 5], [meditation, 5]]
+    - id: pyromancien
+      level: 10
+      parent: apprenti
+      hpMult: 1100
+      bonus: { will: 10, energy: 10, mana: 20, atk: 3 }
+      speed: 22
+      res: { feu: 50, glace: -25 }
+      skills: [[arme_enflammee, 10], [mur_flammes, 15]]
+    - id: maitre_cendres
+      level: 20
+      parent: pyromancien
+      hpMult: 1150
+      bonus: { will: 15, energy: 10, mana: 40, atk: 5 }
+      speed: 21
+      res: { feu: 70, glace: -25 }
+      skills: [[embrasement, 20], [coeur_ardent, 25]]
+  slots:
+    arme: [baton]
+    armure: [robe]
+    accessoire: [bottes, anneau]
+chasseur:
+  units: 1
+  pop: 1
+  tags: [humain]
+  weapon: arc
+  defaultDist: 3
+  base: { hp: 80, will: 55, energy: 100, mana: 0, atk: 4 }
+  growth: { hp: 4, will: 1, energy: 2, mana: 0, atk: 1 }
+  forms:
+    - id: chasseur
+      level: 1
+      speed: 18
+      res: { glace: 20 }
+      skills: [[tir_arc, 1], [repos, 1], [marque, 4], [fleche_givre, 8]]
+    - id: traqueur
+      level: 10
+      parent: chasseur
+      hpMult: 1150
+      bonus: { will: 10, energy: 15, atk: 4 }
+      speed: 16
+      res: { glace: 40 }
+      skills: [[grappin, 10], [pieges_glace, 16], [tir_precis, 22]]
+  slots:
+    arme: [arc]
+    armure: [legere]
+    accessoire: [bottes, anneau]
+berserker:
+  units: 1
+  pop: 2
+  tags: [humain]
+  weapon: hache2m
+  defaultDist: 1
+  base: { hp: 120, will: 40, energy: 110, mana: 0, atk: 9 }
+  growth: { hp: 7, will: 1, energy: 2, mana: 0, atk: 2 }
+  forms:
+    - id: berserker
+      level: 1
+      speed: 21
+      res: { psychique: -20, maladie: 10 }
+      skills: [[emploi, 1], [exploit, 1], [rage, 1], [lame_saignante, 4], [charge, 8], [cri_guerre, 12]]
+    - id: massacreur
+      level: 15
+      parent: berserker
+      hpMult: 1200
+      bonus: { will: 10, energy: 20, atk: 8 }
+      speed: 19
+      res: { psychique: -10, maladie: 20 }
+      skills: [[execution, 15], [tourbillon, 20]]
+  slots:
+    arme: [deux_mains]
+    armure: [legere, moyenne]
+    accessoire: [bottes, collier, anneau]
+loups:
+  units: 2
+  pop: 2
+  tags: [bete]
+  weapon: crocs
+  defaultDist: 1
+  base: { hp: 70, will: 50, energy: 100, mana: 0, atk: 5 }
+  growth: { hp: 4, will: 1, energy: 2, mana: 0, atk: 1 }
+  forms:
+    - id: loup
+      level: 1
+      speed: 15
+      res: { glace: 25, feu: -25 }
+      skills: [[morsure, 1], [repos, 1], [charge, 5], [hurlement, 9]]
+    - id: alpha
+      level: 12
+      parent: loup
+      hpMult: 1200
+      bonus: { will: 15, energy: 10, atk: 4 }
+      speed: 13
+      res: { glace: 35, feu: -20 }
+      skills: [[instinct_meute, 12], [execution, 18]]
+  slots:
+    accessoire: [collier]
+adepte:
+  units: 1
+  pop: 2
+  tags: [humain]
+  weapon: baton
+  defaultDist: 3
+  base: { hp: 65, will: 65, energy: 70, mana: 45, atk: 2 }
+  growth: { hp: 3, will: 2, energy: 1, mana: 2, atk: 1 }
+  forms:
+    - id: adepte
+      level: 1
+      speed: 23
+      res: { tenebres: 30, sacre: -30 }
+      skills: [[emploi, 1], [drain, 1], [meditation, 1], [murmure, 5], [malediction, 8]]
+    - id: necromancien
+      level: 10
+      parent: adepte
+      hpMult: 1100
+      bonus: { will: 15, energy: 10, mana: 15, atk: 2 }
+      speed: 22
+      res: { tenebres: 40, maladie: 20, sacre: -30 }
+      skills: [[nuage, 10], [lien_vital, 15]]
+    - id: liche
+      level: 20
+      parent: necromancien
+      hpMult: 1100
+      bonus: { will: 30, energy: 10, mana: 30, atk: 3 }
+      speed: 22
+      res: { tenebres: 60, maladie: 50, glace: 30, sacre: -50 }
+      tags: [mort-vivant]
+      skills: [[non_mort, 20], [terreur_masse, 24]]
+    - id: sorcier_peste
+      level: 20
+      parent: necromancien
+      hpMult: 1200
+      bonus: { will: 15, energy: 15, mana: 20, atk: 4 }
+      speed: 21
+      res: { tenebres: 40, maladie: 60, sacre: -30 }
+      skills: [[contagion, 20], [nuage_renforce, 24]]
+  slots:
+    arme: [baton]
+    armure: [robe]
+    accessoire: [bottes, anneau]
+moine:
+  units: 1
+  pop: 1
+  tags: [humain]
+  weapon: gantelets
+  defaultDist: 1
+  base: { hp: 85, will: 100, energy: 110, mana: 0, atk: 4 }
+  growth: { hp: 5, will: 3, energy: 3, mana: 0, atk: 1 }
+  forms:
+    - id: novice
+      level: 1
+      speed: 16
+      res: { psychique: 30 }
+      skills: [[emploi, 1], [meditation, 1], [repos, 1], [repousser, 5], [fracas, 9]]
+    - id: moine
+      level: 10
+      parent: novice
+      hpMult: 1150
+      bonus: { will: 20, energy: 15, atk: 3 }
+      speed: 15
+      res: { psychique: 45, maladie: 15 }
+      skills: [[confusion_moine, 10], [hate, 15]]
+    - id: maitre_souffle
+      level: 20
+      parent: moine
+      hpMult: 1200
+      bonus: { will: 30, energy: 20, atk: 5 }
+      speed: 14
+      res: { psychique: 60, maladie: 25 }
+      skills: [[esprit_inebranlable, 20], [paume_vide, 24]]
+  slots:
+    arme: [gantelets]
+    armure: [robe, legere]
+    accessoire: [bottes, anneau]
+briseur:
+  units: 1
+  pop: 3
+  tags: [geant]
+  weapon: masse_lourde
+  defaultDist: 1
+  base: { hp: 180, will: 70, energy: 120, mana: 0, atk: 8 }
+  growth: { hp: 10, will: 1, energy: 2, mana: 0, atk: 2 }
+  forms:
+    - id: briseur
+      level: 1
+      speed: 28
+      res: { contondant: 25, tranchant: 25, feu: -10 }
+      skills: [[emploi, 1], [exploit, 1], [repos, 1], [brise_armure, 4], [fracas, 8], [riposte, 12]]
+    - id: colosse
+      level: 15
+      parent: briseur
+      hpMult: 1250
+      bonus: { will: 15, energy: 20, atk: 6 }
+      speed: 27
+      res: { contondant: 40, tranchant: 35, feu: -10 }
+      skills: [[repousser_renforce, 15], [provocation, 18], [seisme, 24]]
+  slots:
+    arme: [deux_mains]
+    armure: [moyenne, lourde]
+    accessoire: [collier, anneau]
+ecuyer:
+  units: 1
+  pop: 1
+  tags: [humain]
+  weapon: epee
+  defaultDist: 1
+  base: { hp: 95, will: 55, energy: 100, mana: 0, atk: 5 }
+  growth: { hp: 6, will: 1, energy: 2, mana: 0, atk: 1 }
+  forms:
+    - id: ecuyer
+      level: 1
+      speed: 19
+      res: { tranchant: 10 }
+      skills: [[emploi, 1], [coup_jarret, 3], [second_souffle, 6], [exploit, 8], [coup_tonnerre, 12]]
+  slots: &a1
+    arme: [une_main]
+    armure: [legere, moyenne, lourde]
+    accessoire: [bottes, anneau]
+herboriste:
+  units: 1
+  pop: 1
+  tags: [humain]
+  weapon: masse
+  defaultDist: 3
+  base: { hp: 70, will: 75, energy: 80, mana: 40, atk: 2 }
+  growth: { hp: 4, will: 2, energy: 1, mana: 2, atk: 0.5 }
+  forms:
+    - id: herboriste
+      level: 1
+      speed: 22
+      res: { maladie: 25 }
+      skills: [[emploi, 1], [seve, 1], [meditation, 1], [peau_ecorce, 4], [soin_mineur, 8], [cercle_soins, 15]]
+  slots:
+    arme: [une_main, baton]
+    armure: [robe, legere]
+    accessoire: [bottes, anneau]
+braconniers:
+  units: 2
+  pop: 2
+  tags: [humain]
+  weapon: arc
+  defaultDist: 3
+  base: { hp: 60, will: 45, energy: 85, mana: 0, atk: 3 }
+  growth: { hp: 3, will: 1, energy: 2, mana: 0, atk: 1 }
+  forms:
+    - id: braconniers
+      level: 1
+      speed: 18
+      res: { glace: 10 }
+      skills: [[tir_arc, 1], [repos, 1], [tir_empoisonne, 3], [tir_recul, 8]]
+  slots: &a2
+    arme: [arc]
+    armure: [legere]
+    accessoire: [bottes, anneau]
+harponneur:
+  units: 1
+  pop: 1
+  tags: [humain]
+  weapon: lance
+  defaultDist: 1
+  base: { hp: 90, will: 55, energy: 100, mana: 0, atk: 5 }
+  growth: { hp: 5, will: 1, energy: 2, mana: 0, atk: 1 }
+  forms:
+    - id: harponneur
+      level: 1
+      speed: 20
+      res: { glace: 15 }
+      skills: [[emploi, 1], [repos, 1], [grappin, 3], [coup_jarret, 6], [assassinat, 14]]
+  slots:
+    arme: [deux_mains]
+    armure: [legere]
+    accessoire: [bottes, anneau]
+sorciere_marais:
+  units: 1
+  pop: 2
+  tags: [humain]
+  weapon: baton
+  defaultDist: 3
+  base: { hp: 65, will: 70, energy: 70, mana: 50, atk: 2 }
+  growth: { hp: 3, will: 2, energy: 1, mana: 3, atk: 1 }
+  forms:
+    - id: sorciere_marais
+      level: 1
+      speed: 23
+      res: { maladie: 40, feu: -20 }
+      skills: [[emploi, 1], [fleau, 1], [meditation, 1], [affaiblissement, 4], [toucher_spectral, 8], [nuage, 14]]
+  slots: &a3
+    arme: [baton]
+    armure: [robe]
+    accessoire: [bottes, anneau]
+gardes_maree:
+  units: 2
+  pop: 2
+  tags: [humain]
+  weapon: epee
+  defaultDist: 1
+  base: { hp: 85, will: 60, energy: 100, mana: 0, atk: 4 }
+  growth: { hp: 5, will: 1, energy: 2, mana: 0, atk: 1 }
+  forms:
+    - id: gardes_maree
+      level: 1
+      speed: 20
+      res: { tranchant: 15, contondant: 10 }
+      skills: [[emploi, 1], [repos, 1], [provocation, 3], [carapace_epines, 6], [coup_bouclier, 10]]
+  slots: *a1
+arbaletrier:
+  units: 1
+  pop: 1
+  tags: [humain]
+  weapon: arbalete
+  defaultDist: 3
+  base: { hp: 80, will: 55, energy: 95, mana: 0, atk: 4 }
+  growth: { hp: 4, will: 1, energy: 2, mana: 0, atk: 1 }
+  forms:
+    - id: arbaletrier
+      level: 1
+      speed: 19
+      res: {}
+      skills: [[tir_arc, 1], [repos, 1], [tir_perforant, 5], [tir_precis, 10]]
+  slots: *a2
+chamane_crues:
+  units: 1
+  pop: 2
+  tags: [humain]
+  weapon: baton
+  defaultDist: 3
+  base: { hp: 70, will: 70, energy: 75, mana: 50, atk: 2 }
+  growth: { hp: 4, will: 2, energy: 1, mana: 3, atk: 1 }
+  forms:
+    - id: chamane_crues
+      level: 1
+      speed: 22
+      res: { glace: 30, feu: -15 }
+      skills: [[emploi, 1], [eclat_glace, 1], [meditation, 1], [soin_mineur, 3], [tempete_givre, 10]]
+  slots: *a3
+mineurs:
+  units: 3
+  pop: 2
+  tags: [nain]
+  weapon: pioche
+  defaultDist: 1
+  base: { hp: 60, will: 60, energy: 90, mana: 0, atk: 3 }
+  growth: { hp: 4, will: 1, energy: 2, mana: 0, atk: 1 }
+  forms:
+    - id: mineurs
+      level: 1
+      speed: 21
+      res: { contondant: 15 }
+      skills: [[emploi, 1], [repos, 1], [coup_massue, 4], [frappe_sismique, 8]]
+  slots: *a1
+forgeron_runes:
+  units: 1
+  pop: 2
+  tags: [nain]
+  weapon: masse
+  defaultDist: 1
+  base: { hp: 120, will: 70, energy: 110, mana: 30, atk: 5 }
+  growth: { hp: 7, will: 1, energy: 2, mana: 2, atk: 1 }
+  forms:
+    - id: forgeron_runes
+      level: 1
+      speed: 22
+      res: { feu: 30, contondant: 10 }
+      skills: [[emploi, 1], [chant_guerre, 1], [coup_tonnerre, 4], [repos, 4], [benediction, 10]]
+  slots: *a1
+eclaireuse:
+  units: 1
+  pop: 1
+  tags: [humain]
+  weapon: dague
+  defaultDist: 1
+  base: { hp: 75, will: 55, energy: 100, mana: 0, atk: 6 }
+  growth: { hp: 4, will: 1, energy: 2, mana: 0, atk: 2 }
+  forms:
+    - id: eclaireuse
+      level: 1
+      speed: 15
+      res: { tenebres: 15 }
+      skills: [[emploi, 1], [repos, 1], [assassinat, 4], [lame_ombre, 8], [hate, 12]]
+  slots:
+    arme: [une_main]
+    armure: [legere]
+    accessoire: [bottes, anneau]
+alchimiste:
+  units: 1
+  pop: 1
+  tags: [humain]
+  weapon: flasques
+  defaultDist: 3
+  base: { hp: 65, will: 60, energy: 80, mana: 35, atk: 3 }
+  growth: { hp: 3, will: 1, energy: 1, mana: 2, atk: 1 }
+  forms:
+    - id: alchimiste
+      level: 1
+      speed: 20
+      res: { feu: 20, maladie: 20 }
+      skills: [[tir_fronde, 1], [meditation, 1], [tir_empoisonne, 3], [fleche_feu, 6], [pluie_feu, 12]]
+  slots:
+    arme: [fronde]
+    armure: [robe, legere]
+    accessoire: [bottes, anneau]
+gardien_pierre:
+  units: 1
+  pop: 3
+  tags: [construct]
+  weapon: masse_lourde
+  defaultDist: 1
+  base: { hp: 190, will: 80, energy: 120, mana: 0, atk: 7 }
+  growth: { hp: 11, will: 1, energy: 2, mana: 0, atk: 2 }
+  forms:
+    - id: gardien_pierre
+      level: 1
+      speed: 28
+      res: { contondant: 30, tranchant: 30, glace: -10 }
+      skills: [[emploi, 1], [repos, 1], [provocation, 3], [carapace_epines, 6], [frappe_sismique, 12], [riposte, 16]]
+  slots:
+    arme: [deux_mains]
+    armure: [lourde]
+    accessoire: [collier, anneau]
+mage_cristal:
+  units: 1
+  pop: 2
+  tags: [humain]
+  weapon: baton
+  defaultDist: 3
+  base: { hp: 65, will: 70, energy: 70, mana: 55, atk: 2 }
+  growth: { hp: 3, will: 2, energy: 1, mana: 3, atk: 1 }
+  forms:
+    - id: mage_cristal
+      level: 1
+      speed: 23
+      res: { glace: 35, contondant: -15 }
+      skills: [[emploi, 1], [eclat_glace, 1], [meditation, 1], [mot_silence, 5], [tempete_givre, 10]]
+  slots: *a3
+lanciers_cendres:
+  units: 2
+  pop: 2
+  tags: [humain]
+  weapon: lance
+  defaultDist: 1
+  base: { hp: 80, will: 55, energy: 100, mana: 0, atk: 5 }
+  growth: { hp: 5, will: 1, energy: 2, mana: 0, atk: 1 }
+  forms:
+    - id: lanciers_cendres
+      level: 1
+      speed: 20
+      res: { feu: 25 }
+      skills: [[emploi, 1], [repos, 1], [coup_jarret, 3], [charge, 6], [frappe_sismique, 12]]
+  slots:
+    arme: [deux_mains]
+    armure: [legere, moyenne]
+    accessoire: [bottes, anneau]
+nomade:
+  units: 1
+  pop: 1
+  tags: [humain]
+  weapon: arc
+  defaultDist: 3
+  base: { hp: 80, will: 55, energy: 100, mana: 0, atk: 4 }
+  growth: { hp: 4, will: 1, energy: 2, mana: 0, atk: 1 }
+  forms:
+    - id: nomade
+      level: 1
+      speed: 17
+      res: { feu: 20 }
+      skills: [[tir_arc, 1], [repos, 1], [fleche_feu, 3], [tir_recul, 6], [tir_precis, 12]]
+  slots: *a2
+derviche:
+  units: 1
+  pop: 2
+  tags: [humain]
+  weapon: griffes
+  defaultDist: 1
+  base: { hp: 100, will: 70, energy: 120, mana: 0, atk: 6 }
+  growth: { hp: 6, will: 2, energy: 3, mana: 0, atk: 2 }
+  forms:
+    - id: derviche
+      level: 1
+      speed: 15
+      res: { psychique: 20 }
+      skills: [[emploi, 1], [hate, 1], [second_souffle, 3], [tourbillon, 6], [lame_ombre, 10]]
+  slots:
+    arme: [gantelets]
+    armure: [legere, robe]
+    accessoire: [bottes, anneau]
+pretresse_soleil:
+  units: 1
+  pop: 2
+  tags: [humain]
+  weapon: sceptre
+  defaultDist: 3
+  base: { hp: 75, will: 85, energy: 80, mana: 55, atk: 2 }
+  growth: { hp: 4, will: 2, energy: 1, mana: 3, atk: 1 }
+  forms:
+    - id: pretresse_soleil
+      level: 1
+      speed: 21
+      res: { sacre: 40, feu: 20, tenebres: -20 }
+      skills: [[emploi, 1], [javelot_lumiere, 1], [meditation, 1], [soin_majeur, 4], [benediction, 10]]
+  slots: *a3
+scorpions:
+  units: 2
+  pop: 2
+  tags: [bete]
+  weapon: dard_s
+  defaultDist: 1
+  base: { hp: 70, will: 50, energy: 90, mana: 0, atk: 4 }
+  growth: { hp: 4, will: 1, energy: 2, mana: 0, atk: 1 }
+  forms:
+    - id: scorpions
+      level: 1
+      speed: 16
+      res: { feu: 20, maladie: 30 }
+      skills: [[morsure, 1], [repos, 1], [morsure_venin, 3], [carapace_epines, 6]]
+  slots:
+    accessoire: [collier]
+mage_cendre:
+  units: 1
+  pop: 2
+  tags: [humain]
+  weapon: baton
+  defaultDist: 3
+  base: { hp: 65, will: 60, energy: 70, mana: 60, atk: 2 }
+  growth: { hp: 3, will: 1, energy: 1, mana: 3, atk: 1 }
+  forms:
+    - id: mage_cendre
+      level: 1
+      speed: 23
+      res: { feu: 50, glace: -25 }
+      skills: [[emploi, 1], [trait_flammes, 1], [meditation, 1], [pluie_feu, 6], [eruption, 15]]
+  slots: *a3
+garde_oasis:
+  units: 1
+  pop: 2
+  tags: [humain]
+  weapon: epee
+  defaultDist: 1
+  base: { hp: 130, will: 75, energy: 110, mana: 0, atk: 5 }
+  growth: { hp: 8, will: 2, energy: 2, mana: 0, atk: 1 }
+  forms:
+    - id: garde_oasis
+      level: 1
+      speed: 20
+      res: { tranchant: 20, feu: 20 }
+      skills: [[emploi, 1], [provocation, 1], [repos, 1], [mur_boucliers, 5], [carapace_epines, 8], [coup_tonnerre, 12]]
+  slots: *a1
+barde:
+  units: 1
+  pop: 1
+  tags: [humain]
+  weapon: dague
+  defaultDist: 2
+  base: { hp: 70, will: 80, energy: 80, mana: 40, atk: 3 }
+  growth: { hp: 4, will: 2, energy: 1, mana: 2, atk: 1 }
+  forms:
+    - id: barde
+      level: 1
+      speed: 18
+      res: { psychique: 30 }
+      skills: [[emploi, 1], [chant_guerre, 1], [meditation, 1], [cri_effroi, 4], [vent_rapide, 10]]
+  slots:
+    arme: [une_main]
+    armure: [legere, robe]
+    accessoire: [bottes, anneau]
+paladin:
+  units: 1
+  pop: 3
+  tags: [humain]
+  weapon: epee
+  defaultDist: 1
+  base: { hp: 170, will: 90, energy: 110, mana: 40, atk: 7 }
+  growth: { hp: 10, will: 2, energy: 2, mana: 2, atk: 2 }
+  forms:
+    - id: paladin
+      level: 1
+      speed: 21
+      res: { sacre: 40, tenebres: 20, tranchant: 15 }
+      skills: [[emploi, 1], [provocation, 1], [javelot_lumiere, 3], [benediction, 8], [coup_tonnerre, 12], [soin_mineur, 16]]
+  slots: *a1
+archonte_aube:
+  units: 1
+  pop: 3
+  tags: [celeste]
+  weapon: sceptre
+  defaultDist: 3
+  base: { hp: 110, will: 100, energy: 80, mana: 70, atk: 3 }
+  growth: { hp: 6, will: 2, energy: 1, mana: 4, atk: 1 }
+  forms:
+    - id: archonte_aube
+      level: 1
+      speed: 21
+      res: { sacre: 50, psychique: 30 }
+      skills: [[emploi, 1], [nova_sacree, 1], [meditation, 1], [cercle_soins, 5], [mot_silence, 10], [javelot_lumiere, 14]]
+  slots: *a3
+lames_jumelles:
+  units: 2
+  pop: 2
+  tags: [humain]
+  weapon: dague
+  defaultDist: 1
+  base: { hp: 70, will: 55, energy: 100, mana: 0, atk: 6 }
+  growth: { hp: 4, will: 1, energy: 2, mana: 0, atk: 2 }
+  forms:
+    - id: lames_jumelles
+      level: 1
+      speed: 14
+      res: { tenebres: 15 }
+      skills: [[emploi, 1], [repos, 1], [coup_jarret, 1], [assassinat, 3], [lame_ombre, 6]]
+  slots:
+    arme: [une_main]
+    armure: [legere]
+    accessoire: [bottes, anneau]
+tireur_astral:
+  units: 1
+  pop: 2
+  tags: [celeste]
+  weapon: arc
+  defaultDist: 3
+  base: { hp: 90, will: 65, energy: 110, mana: 0, atk: 6 }
+  growth: { hp: 5, will: 1, energy: 2, mana: 0, atk: 2 }
+  forms:
+    - id: tireur_astral
+      level: 1
+      speed: 17
+      res: { glace: 20, sacre: 20 }
+      skills: [[tir_arc, 1], [repos, 1], [marque, 1], [tir_perforant, 3], [tir_precis, 6]]
+  slots: *a2
+oracle:
+  units: 1
+  pop: 2
+  tags: [humain]
+  weapon: baton
+  defaultDist: 3
+  base: { hp: 70, will: 100, energy: 70, mana: 60, atk: 2 }
+  growth: { hp: 4, will: 3, energy: 1, mana: 3, atk: 1 }
+  forms:
+    - id: oracle
+      level: 1
+      speed: 22
+      res: { psychique: 40 }
+      skills: [[emploi, 1], [affaiblissement, 1], [meditation, 1], [mot_silence, 3], [terreur_masse, 10]]
+  slots: *a3
+chevalier_griffon:
+  units: 1
+  pop: 3
+  tags: [humain]
+  weapon: lance
+  defaultDist: 1
+  base: { hp: 160, will: 75, energy: 120, mana: 0, atk: 8 }
+  growth: { hp: 9, will: 1, energy: 2, mana: 0, atk: 2 }
+  forms:
+    - id: chevalier_griffon
+      level: 1
+      speed: 18
+      res: { tranchant: 20, contondant: 15 }
+      skills: [[emploi, 1], [repos, 1], [charge, 1], [coup_massue, 4], [frappe_sismique, 10]]
+  slots:
+    arme: [deux_mains]
+    armure: [moyenne, lourde]
+    accessoire: [bottes, anneau]
+invocatrice:
+  units: 1
+  pop: 2
+  tags: [humain]
+  weapon: baton
+  defaultDist: 3
+  base: { hp: 70, will: 70, energy: 70, mana: 65, atk: 2 }
+  growth: { hp: 3, will: 2, energy: 1, mana: 4, atk: 1 }
+  forms:
+    - id: invocatrice
+      level: 1
+      speed: 23
+      res: { glace: 30, feu: 30 }
+      skills: [[emploi, 1], [eclat_glace, 1], [meditation, 1], [tempete_givre, 4], [eruption, 12]]
+  slots: *a3
+gardiens_celestes:
+  units: 3
+  pop: 3
+  tags: [celeste]
+  weapon: epee
+  defaultDist: 1
+  base: { hp: 80, will: 75, energy: 100, mana: 0, atk: 5 }
+  growth: { hp: 5, will: 2, energy: 2, mana: 0, atk: 1 }
+  forms:
+    - id: gardiens_celestes
+      level: 1
+      speed: 20
+      res: { sacre: 30, tranchant: 15 }
+      skills: [[emploi, 1], [repos, 1], [provocation, 3], [carapace_epines, 6]]
+  slots: *a1

@@ -1,0 +1,22 @@
+# Monstres rares : un par étape hors gardien.
+
+- { id: rare_lisiere, region: 0, step: lisiere, base: loup_gris, trophy: fourrure_givre }
+- { id: rare_sentier, region: 0, step: sentier, base: gobelins, trophy: banniere_grishnak }
+- { id: rare_nids, region: 0, step: nids, base: araignee, trophy: oeuf_reine_soie }
+- { id: rare_camp, region: 0, step: camp, base: troll, trophy: oeil_machefer }
+- { id: rare_berges, region: 1, step: berges, base: crapaud, trophy: langue_vase }
+- { id: rare_roselieres, region: 1, step: roselieres, base: hommes_lezards, trophy: crane_ssark }
+- { id: rare_epaves, region: 1, step: epaves, base: pecheurs_maudits, trophy: lanterne_capitaine }
+- { id: rare_tertre, region: 1, step: tertre, base: crocodile, trophy: dent_mangeur }
+- { id: rare_entree, region: 2, step: entree, base: artificier, trophy: detonateur }
+- { id: rare_galeries, region: 2, step: galeries, base: ver_galeries, trophy: mandibule_ver }
+- { id: rare_filons, region: 2, step: filons, base: elementaire_cristal, trophy: coeur_prisme }
+- { id: rare_puits, region: 2, step: puits, base: basilic, trophy: oeil_or }
+- { id: rare_dunes, region: 3, step: dunes, base: ombre_mirage, trophy: voile_mirage }
+- { id: rare_caravane, region: 3, step: caravane, base: pillards_sable, trophy: sceau_main_rouge }
+- { id: rare_tombeaux, region: 3, step: tombeaux, base: pretre_scarabee, trophy: scarabee_or }
+- { id: rare_verrerie, region: 3, step: verrerie, base: ver_sables, trophy: perle_ver_roi }
+- { id: rare_marches, region: 4, step: marches, base: griffons, trophy: remige_argent }
+- { id: rare_parvis, region: 4, step: parvis, base: sentinelles, trophy: glyphe_vigilance }
+- { id: rare_observatoire, region: 4, step: observatoire, base: astromancien, trophy: astrolabe_brise }
+- { id: rare_jardins, region: 4, step: jardins, base: chimere, trophy: corne_chimere }

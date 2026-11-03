@@ -831,7 +831,7 @@ Comportements actuels qui ressemblent à des accidents. La version en ligne doit
 
 1. **Embrasement** calcule les tics de brûlure restants avec la période de 20 instants (`P.tick`) alors que les brûlures tiquent maintenant tous les 4 : il compte environ 5 fois moins de dégâts restants que prévu.
 2. **L'ajustement du gardien** s'applique à toute la rencontre de l'étape 5, escorte comprise (utile pour le Dragon à ×0,48, qui adoucit aussi son escorte).
-3. **L'XP n'est pas partagée** entre les troupes : chacune reçoit le total. Une escouade de 5 troupes d'une unité gagne 5 fois plus d'XP au total qu'une escouade d'une seule troupe.
+3. **L'XP n'est pas partagée** entre les troupes : chacune reçoit le total. Une escouade de 5 troupes d'une unité gagne 5 fois plus d'XP au total qu'une escouade d'une seule troupe. **Tranché par Xavier le 3 novembre 2026 : en ligne, l'XP est partagée entre les troupes de l'escouade.**
 4. **`allyHpBelow`** compte l'unité elle-même parmi les alliés.
 5. Les **règles par défaut** contiennent des capacités que la troupe n'apprendra jamais faute d'évolution ; elles sont filtrées pour les troupes de joueur mais restent dans le contenu.
 6. **`searchFight`** ne vérifie pas qu'aucun groupe n'est en vue (13.2, point 3).
@@ -1121,7 +1121,7 @@ Certaines quêtes demandent des **trophées de boss de donjon**. Le générateur
 
 ## 27. Liste des points encore ouverts
 
-1. Partage ou non de l'XP entre les troupes d'une escouade de 8 (section 20).
+1. ~~Partage ou non de l'XP entre les troupes d'une escouade de 8 (section 20).~~ Tranché par Xavier le 3 novembre 2026 : l'XP est partagée entre les troupes de l'escouade (règle de répartition à fixer avec la progression, J3).
 2. Durée minimale de rediffusion imposée par le serveur (section 13.1).
 3. Les 12 routes à donjon proposées et la formule de difficulté des salles (section 23.5).
 4. Taxe de 5 %, durée de 7 jours et limite de 20 annonces des boutiques (section 22.2).

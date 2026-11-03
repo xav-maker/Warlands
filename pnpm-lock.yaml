@@ -136,6 +136,15 @@ importers:
         specifier: ^4.6.7
         version: 4.6.7
 
+  packages/content:
+    dependencies:
+      yaml:
+        specifier: 2.9.1
+        version: 2.9.1
+      zod:
+        specifier: ^4.6.7
+        version: 4.6.7
+
   packages/db:
     dependencies:
       kysely:
@@ -185,6 +194,10 @@ importers:
       '@cr/rng':
         specifier: workspace:*
         version: link:../rng
+    devDependencies:
+      '@cr/content':
+        specifier: workspace:*
+        version: link:../content
 
   packages/rng: {}
 
@@ -210,7 +223,11 @@ importers:
         specifier: ^8.23.1
         version: 8.23.1
 
-  tools/extract-prototype: {}
+  tools/extract-prototype:
+    devDependencies:
+      yaml:
+        specifier: 2.9.1
+        version: 2.9.1
 
 packages:
 

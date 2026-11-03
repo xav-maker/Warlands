@@ -1,0 +1,262 @@
+# Régions, dans l’ordre du voyage : ville (recrutement, marchand) et territoire (étapes, gardien en dernier).
+
+- id: ronces
+  tier: 1
+  minLevel: 1
+  firstItem: coeur_ronce
+  guardianLoot: ecorce_vivante
+  city:
+    recruit: [milicien, chasseur, acolyte, frondeurs, moine, ecuyer, herboriste, braconniers]
+    shop: [lame_1, baton_1, arc_1, legere_1, robe_1, bandage, potion_mineure]
+  territory:
+    steps:
+      - id: lisiere
+        pool: [loup_gris, gobelins, frondeurs_gob, corbeaux]
+        mats: [bois_tordu, pierre_lisse, champignon_pale]
+        tier: 1
+        gold: 8
+        level: [3, 4]
+        pop: [1, 2]
+        draws: [1, 2]
+      - id: sentier
+        pool: [gobelins, frondeurs_gob, loup_gris, corbeaux]
+        mats: [bois_tordu, resine, plume_corbeau]
+        tier: 1
+        gold: 12
+        level: [4, 5]
+        pop: [2, 3]
+        draws: [1, 2]
+      - id: nids
+        pool: [araignee, loup_gris, frondeurs_gob, loup_alpha]
+        mats: [resine, fil_araignee, champignon_pale]
+        tier: 1
+        gold: 16
+        level: [5, 6]
+        pop: [3, 5]
+        draws: [2, 2]
+      - id: camp
+        pool: [gobelins, frondeurs_gob, chaman, troll]
+        mats: [ferraille, fer_noir, plume_corbeau]
+        tier: 1
+        gold: 22
+        level: [6, 7]
+        pop: [5, 7]
+        draws: [2, 2]
+      - id: coeur
+        pool: [loup_gris, araignee, loup_alpha]
+        mats: [seve_ambree, os_ancien, resine]
+        tier: 1
+        gold: 40
+        level: [8, 9]
+        pop: [8, 9]
+        draws: [2, 3]
+        guardian: true
+        forced: [sylvain]
+- id: marais
+  tier: 2
+  minLevel: 6
+  firstItem: coeur_marais
+  guardianLoot: cape_noyes
+  city:
+    recruit: [pyromancien, loups, berserker, harponneur, sorciere_marais, gardes_maree, arbaletrier, chamane_crues]
+    shop: [lame_2, deuxmains_2, arc_2, moyenne_2, robe_2, bandage, potion_mineure, potion_soin, potion_mana]
+  territory:
+    steps:
+      - id: berges
+        pool: [moustiques, crapaud, sangsues, hommes_lezards]
+        mats: [algue_noire, tourbe, venin]
+        tier: 2
+        gold: 32
+        level: [8, 9]
+        pop: [2, 3]
+        draws: [1, 2]
+      - id: roselieres
+        pool: [hommes_lezards, feu_follet, crapaud, pecheurs_maudits]
+        mats: [ecaille_terne, plume_heron, algue_noire]
+        tier: 2
+        gold: 48
+        level: [9, 10]
+        pop: [3, 4]
+        draws: [1, 2]
+      - id: epaves
+        pool: [noyes, pecheurs_maudits, spectre_brumes, sangsues]
+        mats: [fer_noir, algue_noire, os_ancien]
+        tier: 2
+        gold: 64
+        level: [10, 11]
+        pop: [3, 5]
+        draws: [2, 2]
+      - id: tertre
+        pool: [sorciere_noyee, crocodile, troll_marais, noyes]
+        mats: [tourbe, seve_ambree, ecaille_terne]
+        tier: 2
+        gold: 88
+        level: [11, 12]
+        pop: [5, 7]
+        draws: [2, 2]
+      - id: gouffre
+        pool: [noyes, spectre_brumes, sangsues]
+        mats: [algue_noire, perle_noyee, plume_heron]
+        tier: 2
+        gold: 160
+        level: [13, 14]
+        pop: [6, 7]
+        draws: [2, 3]
+        guardian: true
+        forced: [mere_noyes]
+- id: mines
+  tier: 3
+  minLevel: 11
+  firstItem: gemme_profonde
+  guardianLoot: poings_forge
+  city:
+    recruit: [briseur, adepte, mineurs, forgeron_runes, eclaireuse, alchimiste, gardien_pierre, mage_cristal]
+    shop: [masse_3, fronde_3, gantelets_3, lourde_3, robe_3, bandage, potion_mineure, potion_soin, potion_mana]
+  territory:
+    steps:
+      - id: entree
+        pool: [kobolds, chauves_souris, artificier, gelee]
+        mats: [charbon_dense, minerai_argent, soufre]
+        tier: 3
+        gold: 72
+        level: [13, 14]
+        pop: [2, 3]
+        draws: [1, 2]
+      - id: galeries
+        pool: [ver_galeries, kobolds, contremaitre, gelee]
+        mats: [soie_profonde, charbon_dense, cuir_basilic]
+        tier: 3
+        gold: 108
+        level: [14, 15]
+        pop: [3, 4]
+        draws: [1, 2]
+      - id: filons
+        pool: [elementaire_cristal, nains_renegats, mineurs_fantomes, artificier]
+        mats: [cristal_brut, minerai_argent, soufre]
+        tier: 3
+        gold: 144
+        level: [15, 16]
+        pop: [3, 5]
+        draws: [2, 2]
+      - id: puits
+        pool: [basilic, golem_pierre, nains_renegats, mineurs_fantomes]
+        mats: [cuir_basilic, cristal_brut, soie_profonde]
+        tier: 3
+        gold: 198
+        level: [16, 17]
+        pop: [5, 7]
+        draws: [2, 2]
+      - id: forge
+        pool: [golem_pierre, kobolds, artificier]
+        mats: [minerai_argent, cristal_brut, charbon_dense]
+        tier: 3
+        gold: 360
+        level: [18, 19]
+        pop: [8, 9]
+        draws: [2, 3]
+        guardian: true
+        forced: [coeur_forge]
+- id: desert
+  tier: 4
+  minLevel: 16
+  firstItem: coeur_dragon
+  guardianLoot: ecailles_dragon
+  city:
+    recruit: [lanciers_cendres, nomade, derviche, pretresse_soleil, scorpions, mage_cendre, garde_oasis, barde]
+    shop: [lame_4, arc_4, baton_4, legere_4, moyenne_4, bandage, potion_mineure, potion_soin, potion_mana]
+  territory:
+    steps:
+      - id: dunes
+        pool: [vautours, scorpions_geants, archers_nomades, ombre_mirage]
+        mats: [sel_ardent, ecorce_cendre, chitine_doree]
+        tier: 4
+        gold: 128
+        level: [18, 19]
+        pop: [3, 4]
+        draws: [1, 2]
+      - id: caravane
+        pool: [pillards_sable, archers_nomades, scorpions_geants, salamandre]
+        mats: [ecorce_cendre, verre_cendre, sel_ardent]
+        tier: 4
+        gold: 192
+        level: [19, 20]
+        pop: [4, 5]
+        draws: [1, 2]
+      - id: tombeaux
+        pool: [momies, pretre_scarabee, ombre_mirage, djinn]
+        mats: [essence_mirage, os_dragonnet, chitine_doree]
+        tier: 4
+        gold: 256
+        level: [20, 21]
+        pop: [3, 5]
+        draws: [2, 2]
+      - id: verrerie
+        pool: [golem_verre, ver_sables, djinn, salamandre]
+        mats: [verre_cendre, os_dragonnet, essence_mirage]
+        tier: 4
+        gold: 352
+        level: [21, 22]
+        pop: [5, 7]
+        draws: [2, 2]
+      - id: antre
+        pool: [salamandre, scorpions_geants, djinn]
+        mats: [os_dragonnet, verre_cendre, sel_ardent]
+        tier: 4
+        gold: 640
+        level: [23, 24]
+        pop: [9, 10]
+        draws: [2, 3]
+        guardian: true
+        forced: [dragon_cendre]
+- id: ciel
+  tier: 5
+  minLevel: 21
+  firstItem: couronne_aube
+  guardianLoot: diademe_aube
+  city:
+    recruit: [paladin, archonte_aube, lames_jumelles, tireur_astral, oracle, chevalier_griffon, invocatrice, gardiens_celestes]
+    shop: [lame_5, deuxmains_5, baton_5, lourde_5, robe_5, bandage, potion_mineure, potion_soin, potion_mana]
+  territory:
+    steps:
+      - id: marches
+        pool: [harpies, gargouilles, griffons, sentinelles]
+        mats: [plume_seraphique, pierre_lune, fil_lumiere]
+        tier: 5
+        gold: 200
+        level: [23, 24]
+        pop: [3, 4]
+        draws: [1, 2]
+      - id: parvis
+        pool: [sentinelles, archers_celestes, gargouilles, griffons]
+        mats: [pierre_lune, eclat_astral, fil_lumiere]
+        tier: 5
+        gold: 300
+        level: [24, 25]
+        pop: [4, 5]
+        draws: [1, 2]
+      - id: observatoire
+        pool: [astromancien, spectres_lumiere, anges_dechus, harpies]
+        mats: [poussiere_etoile, eclat_astral, larme_aube]
+        tier: 5
+        gold: 400
+        level: [25, 26]
+        pop: [3, 5]
+        draws: [2, 2]
+      - id: jardins
+        pool: [chimere, golem_astral, gardien_seuil, anges_dechus]
+        mats: [larme_aube, plume_seraphique, poussiere_etoile]
+        tier: 5
+        gold: 550
+        level: [26, 27]
+        pop: [5, 7]
+        draws: [2, 2]
+      - id: trone
+        pool: [anges_dechus, spectres_lumiere, archers_celestes]
+        mats: [eclat_astral, larme_aube, plume_seraphique]
+        tier: 5
+        gold: 1000
+        level: [28, 29]
+        pop: [7, 7]
+        draws: [2, 3]
+        guardian: true
+        forced: [archonte_dechu]

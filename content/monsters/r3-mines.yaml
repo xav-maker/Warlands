@@ -1,0 +1,206 @@
+# Monstres : définition de troupe, butin (drops), gardien (boss), région.
+
+kobolds:
+  units: 3
+  pop: 2
+  tags: [kobold]
+  weapon: lame_rouillee
+  defaultDist: 1
+  base: { hp: 42, will: 40, energy: 80, mana: 0, atk: 3 }
+  growth: { hp: 3, will: 1, energy: 1, mana: 0, atk: 1 }
+  forms:
+    - id: kobolds
+      level: 1
+      speed: 16
+      res: { feu: 10 }
+      skills: [[emploi, 1], [repos, 1], [lame_saignante, 1]]
+  drops: [minerai_argent, charbon_dense]
+  boss: false
+  region: 2
+artificier:
+  units: 1
+  pop: 1
+  tags: [kobold]
+  weapon: flasques
+  defaultDist: 3
+  base: { hp: 50, will: 45, energy: 70, mana: 30, atk: 3 }
+  growth: { hp: 3, will: 1, energy: 1, mana: 0, atk: 1 }
+  forms:
+    - id: artificier
+      level: 1
+      speed: 19
+      res: { feu: 30 }
+      skills: [[tir_fronde, 1], [fleche_feu, 1], [repos, 1]]
+  drops: [soufre, charbon_dense]
+  boss: false
+  region: 2
+golem_pierre:
+  units: 1
+  pop: 3
+  tags: [construct]
+  weapon: poing_pierre
+  defaultDist: 1
+  base: { hp: 200, will: 99, energy: 110, mana: 0, atk: 6 }
+  growth: { hp: 8, will: 1, energy: 2, mana: 1, atk: 2 }
+  forms:
+    - id: golem_pierre
+      level: 1
+      speed: 28
+      res: { contondant: 35, tranchant: 35, maladie: 50, glace: -20 }
+      skills: [[emploi, 1], [repos, 1], [coup_massue, 1], [carapace_epines, 1]]
+  drops: [cristal_brut, noyau_golem]
+  boss: false
+  region: 2
+chauves_souris:
+  units: 3
+  pop: 1
+  tags: [bete]
+  weapon: bec
+  defaultDist: 1
+  base: { hp: 28, will: 40, energy: 60, mana: 0, atk: 2 }
+  growth: { hp: 3, will: 1, energy: 1, mana: 0, atk: 1 }
+  forms:
+    - id: chauves_souris
+      level: 1
+      speed: 12
+      res: { sacre: -20 }
+      skills: [[morsure, 1], [repos, 1]]
+  drops: [cuir_basilic, charbon_dense]
+  boss: false
+  region: 2
+ver_galeries:
+  units: 1
+  pop: 2
+  tags: [bete]
+  weapon: machoires
+  defaultDist: 1
+  base: { hp: 130, will: 50, energy: 100, mana: 0, atk: 5 }
+  growth: { hp: 5, will: 1, energy: 2, mana: 1, atk: 1 }
+  forms:
+    - id: ver_galeries
+      level: 1
+      speed: 23
+      res: { contondant: 20 }
+      skills: [[morsure, 1], [morsure_venin, 1], [frappe_sismique, 1]]
+  drops: [soie_profonde, cuir_basilic]
+  boss: false
+  region: 2
+nains_renegats:
+  units: 2
+  pop: 2
+  tags: [nain]
+  weapon: pioche
+  defaultDist: 1
+  base: { hp: 90, will: 65, energy: 100, mana: 0, atk: 5 }
+  growth: { hp: 5, will: 1, energy: 2, mana: 1, atk: 1 }
+  forms:
+    - id: nains_renegats
+      level: 1
+      speed: 21
+      res: { contondant: 15, feu: 15 }
+      skills: [[emploi, 1], [repos, 1], [coup_tonnerre, 1]]
+  drops: [minerai_argent, fer_noir]
+  boss: false
+  region: 2
+elementaire_cristal:
+  units: 1
+  pop: 2
+  tags: [construct]
+  weapon: mains_spectrales
+  defaultDist: 3
+  base: { hp: 80, will: 99, energy: 70, mana: 60, atk: 3 }
+  growth: { hp: 3, will: 2, energy: 1, mana: 3, atk: 1 }
+  forms:
+    - id: elementaire_cristal
+      level: 1
+      speed: 22
+      res: { glace: 60, contondant: -30 }
+      skills: [[emploi, 1], [eclat_glace, 1], [tempete_givre, 1], [meditation, 1]]
+  drops: [cristal_brut, gemme_profonde]
+  boss: false
+  region: 2
+basilic:
+  units: 1
+  pop: 3
+  tags: [reptile]
+  weapon: machoires
+  defaultDist: 1
+  base: { hp: 160, will: 70, energy: 100, mana: 40, atk: 6 }
+  growth: { hp: 8, will: 1, energy: 2, mana: 1, atk: 2 }
+  forms:
+    - id: basilic
+      level: 1
+      speed: 23
+      res: { tranchant: 20, maladie: 20 }
+      skills: [[morsure, 1], [affaiblissement, 1], [morsure_venin, 1]]
+  drops: [cuir_basilic, soie_profonde]
+  boss: false
+  region: 2
+gelee:
+  units: 1
+  pop: 1
+  tags: [vase]
+  weapon: dard
+  defaultDist: 1
+  base: { hp: 80, will: 99, energy: 60, mana: 0, atk: 3 }
+  growth: { hp: 3, will: 1, energy: 1, mana: 0, atk: 1 }
+  forms:
+    - id: gelee
+      level: 1
+      speed: 22
+      res: { tranchant: 30, contondant: 30, feu: -30 }
+      skills: [[morsure, 1], [morsure_venin, 1]]
+  drops: [soufre, soie_profonde]
+  boss: false
+  region: 2
+contremaitre:
+  units: 1
+  pop: 2
+  tags: [kobold]
+  weapon: lame_rouillee
+  defaultDist: 2
+  base: { hp: 90, will: 70, energy: 90, mana: 30, atk: 4 }
+  growth: { hp: 5, will: 1, energy: 2, mana: 1, atk: 1 }
+  forms:
+    - id: contremaitre
+      level: 1
+      speed: 20
+      res: { feu: 10 }
+      skills: [[emploi, 1], [chant_guerre, 1], [repos, 1]]
+  drops: [minerai_argent, charbon_dense]
+  boss: false
+  region: 2
+mineurs_fantomes:
+  units: 2
+  pop: 2
+  tags: [mort-vivant]
+  weapon: pioche
+  defaultDist: 1
+  base: { hp: 70, will: 80, energy: 80, mana: 30, atk: 4 }
+  growth: { hp: 5, will: 1, energy: 2, mana: 1, atk: 1 }
+  forms:
+    - id: mineurs_fantomes
+      level: 1
+      speed: 21
+      res: { tranchant: 30, sacre: -40 }
+      skills: [[emploi, 1], [toucher_spectral, 1]]
+  drops: [minerai_argent, cristal_brut]
+  boss: false
+  region: 2
+coeur_forge:
+  units: 1
+  pop: 5
+  tags: [construct]
+  weapon: poing_pierre
+  defaultDist: 1
+  base: { hp: 420, will: 99, energy: 140, mana: 60, atk: 10 }
+  growth: { hp: 13, will: 2, energy: 2, mana: 2, atk: 2 }
+  forms:
+    - id: coeur_forge
+      level: 1
+      speed: 27
+      res: { contondant: 35, tranchant: 35, feu: 50, glace: -20 }
+      skills: [[emploi, 1], [coup_tonnerre, 1], [frappe_sismique, 1], [carapace_epines, 1], [eruption, 1]]
+  drops: [noyau_golem, gemme_profonde, cristal_brut]
+  boss: true
+  region: 2

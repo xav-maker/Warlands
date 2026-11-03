@@ -5,6 +5,10 @@
   "version": "0.0.0",
   "scripts": {
     "golden:v0.4": "tsx src/golden.ts",
-    "golden:gen": "tsx src/gen-vectors.ts"
+    "golden:gen": "tsx src/gen-vectors.ts",
+    "to-yaml": "tsx src/to-yaml.ts"
+  },
+  "devDependencies": {
+    "yaml": "2.9.1"
   }
 }

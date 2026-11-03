@@ -1,0 +1,200 @@
+/**
+ * Schémas des fichiers de content/ (guide 5.1). Objets stricts : un champ inconnu est une faute de
+ * frappe, refusée. Les noms et descriptions ne sont pas ici mais dans texts/fr.yaml.
+ */
+import { z } from 'zod';
+
+const int = z.number().int();
+const num = z.number();
+const id = z.string().min(1);
+const range2 = z.tuple([int, int]);
+
+export const Rule = z.strictObject({
+  cond: id,
+  v: num.optional(),
+  s: z.string().optional(),
+  action: id,
+  target: id,
+});
+
+export const Fx = z.strictObject({
+  k: z.enum(['dmg', 'wdmg', 'drain', 'heal', 'will', 'mana', 'energy', 'stun', 'push', 'pull', 'cleanse', 'state']),
+  v: num.optional(),
+  dur: int.optional(),
+  area: z.enum(['target', 'rank', 'allEnemies', 'front', 'self', 'allies', 'allyRank']).optional(),
+  type: z.string().optional(),
+  s: z.string().optional(),
+  cap: int.optional(),
+  tag: z.string().optional(),
+  tagMult: int.optional(),
+  ifState: z.string().optional(),
+});
+
+export const Skill = z.strictObject({
+  kind: z.enum(['active', 'passive', 'reaction']),
+  target: z.enum(['enemy', 'ally', 'self']),
+  range: int,
+  minRange: int.optional(),
+  energy: int,
+  energyW: int.optional(),
+  mana: int,
+  durBase: z.enum(['unit', 'weapon']),
+  durMult: int,
+  p: z.record(z.string(), num),
+  attack: z.boolean().optional(),
+  melee: z.boolean().optional(),
+  dtype: z.string().optional(),
+  ai: z.string().optional(),
+  fx: z.array(Fx).optional(),
+  power: z.enum(['for', 'ele', 'esp', 'foi', 'omb']).optional(),
+  coef: int.optional(),
+});
+
+export const Weapon = z.strictObject({ type: id, dmg: int, speed: int, cost: int });
+
+const Stats = z.strictObject({ hp: num, will: num, energy: num, mana: num, atk: num });
+
+export const Form = z.strictObject({
+  id,
+  level: int,
+  parent: id.optional(),
+  hpMult: int.optional(),
+  bonus: z.strictObject({ will: int.optional(), energy: int.optional(), mana: int.optional(), atk: int.optional() }).optional(),
+  speed: int,
+  res: z.record(z.string(), int),
+  tags: z.array(z.string()).optional(),
+  skills: z.array(z.tuple([id, int])),
+});
+
+/** Troupe recrutable (avec ses emplacements) ou monstre (avec butin, région, gardien, rare). */
+export const Troop = z.strictObject({
+  units: int.min(1),
+  pop: int.min(1),
+  tags: z.array(z.string()),
+  weapon: id,
+  defaultDist: int.min(1).max(3),
+  base: Stats,
+  growth: Stats,
+  forms: z.array(Form).min(1),
+  slots: z.record(z.string(), z.array(z.string())).optional(),
+  drops: z.array(id).optional(),
+  boss: z.boolean().optional(),
+  region: int.optional(),
+  rare: z.strictObject({ step: id, trophy: id, base: id }).optional(),
+});
+
+export const Item = z.strictObject({
+  kind: z.enum(['materiau', 'composant', 'consommable', 'trophee']),
+  tier: int.min(1),
+  value: num,
+  tags: z.array(z.string()),
+  effect: z.record(z.string(), num).optional(),
+});
+
+export const EquipBase = z.strictObject({
+  tier: int.min(1),
+  slot: id,
+  cat: id,
+  value: num,
+  tags: z.array(z.string()),
+  pool: z.array(z.union([z.tuple([id, num]), z.tuple([id, num, z.string()])])),
+  weapon: Weapon.optional(),
+  nStats: int.optional(),
+  workshop: z.boolean().optional(),
+  craft: z.boolean().optional(),
+});
+
+export const Step = z.strictObject({
+  id,
+  pool: z.array(id),
+  mats: z.array(id),
+  tier: int.min(1),
+  gold: int,
+  level: range2,
+  pop: range2,
+  draws: range2,
+  guardian: z.boolean().optional(),
+  forced: z.array(id).optional(),
+});
+
+export const Region = z.strictObject({
+  id,
+  tier: int.min(1),
+  minLevel: int.min(1),
+  firstItem: id,
+  guardianLoot: id,
+  city: z.strictObject({ recruit: z.array(id), shop: z.array(id) }),
+  territory: z.strictObject({ steps: z.array(Step).min(1) }),
+});
+
+export const Rare = z.strictObject({ id, region: int, step: id, base: id, trophy: id });
+
+export const Params = z.strictObject({
+  engine: z.record(z.string(), num),
+  eco: z.looseObject({
+    maxLevel: int,
+    monsterHp: z.array(int),
+    monsterAtk: z.array(int),
+    guardianAdj: z.array(int),
+    table: z.record(z.string(), num),
+    guardianTable: z.record(z.string(), num),
+    craftGoldPerTier: num,
+    recruitGoldPerPop: num,
+  }),
+  gauges: z.strictObject({ mult: int }),
+  items: z.strictObject({
+    boost: int,
+    tierBudget: z.record(z.string(), int),
+    tierNStats: z.record(z.string(), int),
+    tierLevel: z.record(z.string(), int),
+    statCost: z.record(z.string(), z.strictObject({ per: num, unit: z.string().optional() })),
+  }),
+  recipes: z.strictObject({
+    craftConsumables: z.array(id),
+    consumableTags: z.record(z.string(), z.array(z.string())),
+    consumableValueMult: num,
+    recruitValue: z.array(num),
+  }),
+  rares: z.strictObject({ chance: int, minWins: int }),
+});
+
+export const PackFile = z.strictObject({
+  id,
+  engineVersion: id,
+  files: z.strictObject({
+    skills: z.array(z.string()).min(1),
+    troops: z.array(z.string()).min(1),
+    items: z.array(z.string()).min(1),
+    equip: z.array(z.string()).min(1),
+  }),
+});
+
+/** Schéma de chaque fichier à nom fixe, et des fichiers listés dans pack.yaml par collection. */
+export const FIXED = {
+  'pack.yaml': PackFile,
+  'params.yaml': Params,
+  'damage-types.yaml': z.strictObject({ types: z.array(id).min(1) }),
+  'weapons.yaml': z.record(id, Weapon),
+  'strategies.yaml': z.record(id, z.array(Rule)),
+  'world/regions.yaml': z.array(Region).min(1),
+  'world/rares.yaml': z.array(Rare),
+  'quests.yaml': z.strictObject({ givers: z.array(z.array(z.string())) }),
+  'texts/fr.yaml': z.record(z.string(), z.string()),
+} as const;
+
+export const COLLECTION = {
+  skills: z.record(id, Skill),
+  troops: z.record(id, Troop),
+  items: z.record(id, Item),
+  equip: z.record(id, EquipBase),
+} as const;
+
+export type RuleT = z.infer<typeof Rule>;
+export type SkillT = z.infer<typeof Skill>;
+export type TroopT = z.infer<typeof Troop>;
+export type ItemT = z.infer<typeof Item>;
+export type EquipBaseT = z.infer<typeof EquipBase>;
+export type RegionT = z.infer<typeof Region>;
+export type RareT = z.infer<typeof Rare>;
+export type ParamsT = z.infer<typeof Params>;
+export type PackFileT = z.infer<typeof PackFile>;

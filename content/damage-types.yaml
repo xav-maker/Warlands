@@ -1,0 +1,3 @@
+# Types de dégâts, dans l’ordre du moteur.
+
+types: [contondant, tranchant, maladie, psychique, feu, glace, tenebres, sacre]

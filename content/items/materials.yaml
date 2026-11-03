@@ -1,0 +1,187 @@
+# Objets non équipables. Noms et descriptions : texts/fr.yaml.
+
+bois_tordu:
+  kind: materiau
+  tier: 1
+  value: 4
+  tags: [bois]
+resine:
+  kind: materiau
+  tier: 1
+  value: 4
+  tags: [bois, essence]
+cuir_brut:
+  kind: materiau
+  tier: 1
+  value: 5
+  tags: [cuir, bete]
+croc_loup:
+  kind: materiau
+  tier: 1
+  value: 6
+  tags: [bete, os]
+oreille_gobelin:
+  kind: materiau
+  tier: 1
+  value: 3
+  tags: [gobelin]
+ferraille:
+  kind: materiau
+  tier: 1
+  value: 5
+  tags: [metal, gobelin]
+fil_araignee:
+  kind: materiau
+  tier: 1
+  value: 6
+  tags: [fil, bete]
+champignon_pale:
+  kind: materiau
+  tier: 1
+  value: 4
+  tags: [herbe]
+pierre_lisse:
+  kind: materiau
+  tier: 1
+  value: 3
+  tags: [pierre]
+plume_corbeau:
+  kind: materiau
+  tier: 1
+  value: 5
+  tags: [plume, essence]
+cuir_epais:
+  kind: materiau
+  tier: 2
+  value: 12
+  tags: [cuir, bete]
+venin:
+  kind: materiau
+  tier: 2
+  value: 14
+  tags: [essence, bete]
+fer_noir:
+  kind: materiau
+  tier: 2
+  value: 15
+  tags: [metal]
+seve_ambree:
+  kind: materiau
+  tier: 2
+  value: 12
+  tags: [bois, essence]
+os_ancien:
+  kind: materiau
+  tier: 2
+  value: 13
+  tags: [os, pierre]
+algue_noire:
+  kind: materiau
+  tier: 2
+  value: 11
+  tags: [herbe, essence]
+ecaille_terne:
+  kind: materiau
+  tier: 2
+  value: 13
+  tags: [cuir, bete]
+tourbe:
+  kind: materiau
+  tier: 2
+  value: 10
+  tags: [bois, pierre]
+plume_heron:
+  kind: materiau
+  tier: 2
+  value: 12
+  tags: [plume]
+minerai_argent:
+  kind: materiau
+  tier: 3
+  value: 28
+  tags: [metal]
+cristal_brut:
+  kind: materiau
+  tier: 3
+  value: 30
+  tags: [pierre, essence]
+charbon_dense:
+  kind: materiau
+  tier: 3
+  value: 24
+  tags: [pierre, bois]
+cuir_basilic:
+  kind: materiau
+  tier: 3
+  value: 29
+  tags: [cuir, bete]
+soie_profonde:
+  kind: materiau
+  tier: 3
+  value: 27
+  tags: [fil]
+soufre:
+  kind: materiau
+  tier: 3
+  value: 25
+  tags: [essence, pierre]
+verre_cendre:
+  kind: materiau
+  tier: 4
+  value: 50
+  tags: [pierre, metal]
+sel_ardent:
+  kind: materiau
+  tier: 4
+  value: 46
+  tags: [essence]
+os_dragonnet:
+  kind: materiau
+  tier: 4
+  value: 55
+  tags: [os, bete]
+ecorce_cendre:
+  kind: materiau
+  tier: 4
+  value: 45
+  tags: [bois]
+essence_mirage:
+  kind: materiau
+  tier: 4
+  value: 52
+  tags: [essence, fil]
+chitine_doree:
+  kind: materiau
+  tier: 4
+  value: 50
+  tags: [cuir, os]
+plume_seraphique:
+  kind: materiau
+  tier: 5
+  value: 90
+  tags: [plume, fil]
+eclat_astral:
+  kind: materiau
+  tier: 5
+  value: 95
+  tags: [metal, pierre]
+pierre_lune:
+  kind: materiau
+  tier: 5
+  value: 85
+  tags: [pierre]
+poussiere_etoile:
+  kind: materiau
+  tier: 5
+  value: 88
+  tags: [essence]
+larme_aube:
+  kind: materiau
+  tier: 5
+  value: 92
+  tags: [essence, herbe]
+fil_lumiere:
+  kind: materiau
+  tier: 5
+  value: 86
+  tags: [fil]

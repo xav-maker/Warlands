@@ -1,0 +1,206 @@
+# Monstres : définition de troupe, butin (drops), gardien (boss), région.
+
+scorpions_geants:
+  units: 2
+  pop: 2
+  tags: [bete]
+  weapon: dard
+  defaultDist: 1
+  base: { hp: 85, will: 55, energy: 90, mana: 0, atk: 5 }
+  growth: { hp: 5, will: 1, energy: 2, mana: 1, atk: 1 }
+  forms:
+    - id: scorpions_geants
+      level: 1
+      speed: 16
+      res: { feu: 30, maladie: 30 }
+      skills: [[morsure, 1], [morsure_venin, 1], [repos, 1]]
+  drops: [chitine_doree, sel_ardent]
+  boss: false
+  region: 3
+momies:
+  units: 2
+  pop: 2
+  tags: [mort-vivant]
+  weapon: lame_rouillee
+  defaultDist: 1
+  base: { hp: 95, will: 99, energy: 80, mana: 30, atk: 4 }
+  growth: { hp: 5, will: 1, energy: 2, mana: 1, atk: 1 }
+  forms:
+    - id: momies
+      level: 1
+      speed: 23
+      res: { maladie: 50, feu: -40, sacre: -30 }
+      skills: [[emploi, 1], [fleau, 1]]
+  drops: [os_dragonnet, essence_mirage]
+  boss: false
+  region: 3
+djinn:
+  units: 1
+  pop: 2
+  tags: [esprit]
+  weapon: souffle
+  defaultDist: 3
+  base: { hp: 85, will: 80, energy: 70, mana: 70, atk: 4 }
+  growth: { hp: 3, will: 2, energy: 1, mana: 3, atk: 1 }
+  forms:
+    - id: djinn
+      level: 1
+      speed: 20
+      res: { feu: 70, glace: -30 }
+      skills: [[emploi, 1], [trait_flammes, 1], [pluie_feu, 1], [meditation, 1]]
+  drops: [essence_mirage, flamme_figee]
+  boss: false
+  region: 3
+pillards_sable:
+  units: 3
+  pop: 3
+  tags: [humain]
+  weapon: lame_rouillee
+  defaultDist: 1
+  base: { hp: 65, will: 50, energy: 90, mana: 0, atk: 5 }
+  growth: { hp: 5, will: 1, energy: 2, mana: 1, atk: 1 }
+  forms:
+    - id: pillards_sable
+      level: 1
+      speed: 17
+      res: { feu: 20 }
+      skills: [[emploi, 1], [repos, 1], [assassinat, 1]]
+  drops: [sel_ardent, ecorce_cendre]
+  boss: false
+  region: 3
+archers_nomades:
+  units: 2
+  pop: 2
+  tags: [humain]
+  weapon: arc_m
+  defaultDist: 3
+  base: { hp: 70, will: 55, energy: 90, mana: 0, atk: 5 }
+  growth: { hp: 5, will: 1, energy: 2, mana: 1, atk: 1 }
+  forms:
+    - id: archers_nomades
+      level: 1
+      speed: 17
+      res: { feu: 20 }
+      skills: [[tir_arc, 1], [repos, 1], [fleche_feu, 1]]
+  drops: [ecorce_cendre, verre_cendre]
+  boss: false
+  region: 3
+salamandre:
+  units: 1
+  pop: 2
+  tags: [reptile]
+  weapon: souffle
+  defaultDist: 2
+  base: { hp: 110, will: 60, energy: 110, mana: 0, atk: 5 }
+  growth: { hp: 5, will: 1, energy: 2, mana: 1, atk: 1 }
+  forms:
+    - id: salamandre
+      level: 1
+      speed: 19
+      res: { feu: 80, glace: -40 }
+      skills: [[emploi, 1], [souffle_feu, 1], [repos, 1]]
+  drops: [os_dragonnet, sel_ardent]
+  boss: false
+  region: 3
+ver_sables:
+  units: 1
+  pop: 3
+  tags: [bete]
+  weapon: machoires
+  defaultDist: 1
+  base: { hp: 200, will: 50, energy: 120, mana: 0, atk: 7 }
+  growth: { hp: 8, will: 1, energy: 2, mana: 1, atk: 2 }
+  forms:
+    - id: ver_sables
+      level: 1
+      speed: 25
+      res: { contondant: 25 }
+      skills: [[morsure, 1], [frappe_sismique, 1], [repos, 1]]
+  drops: [chitine_doree, os_dragonnet]
+  boss: false
+  region: 3
+vautours:
+  units: 3
+  pop: 1
+  tags: [bete]
+  weapon: bec
+  defaultDist: 1
+  base: { hp: 35, will: 40, energy: 70, mana: 0, atk: 3 }
+  growth: { hp: 3, will: 1, energy: 1, mana: 0, atk: 1 }
+  forms:
+    - id: vautours
+      level: 1
+      speed: 13
+      res: {}
+      skills: [[morsure, 1], [repos, 1]]
+  drops: [ecorce_cendre, sel_ardent]
+  boss: false
+  region: 3
+ombre_mirage:
+  units: 1
+  pop: 1
+  tags: [esprit]
+  weapon: mains_spectrales
+  defaultDist: 2
+  base: { hp: 60, will: 80, energy: 80, mana: 40, atk: 5 }
+  growth: { hp: 3, will: 2, energy: 1, mana: 3, atk: 1 }
+  forms:
+    - id: ombre_mirage
+      level: 1
+      speed: 15
+      res: { tranchant: 40, contondant: 40, sacre: -40 }
+      skills: [[emploi, 1], [lame_ombre, 1], [mot_silence, 1]]
+  drops: [essence_mirage, verre_cendre]
+  boss: false
+  region: 3
+golem_verre:
+  units: 1
+  pop: 3
+  tags: [construct]
+  weapon: poing_pierre
+  defaultDist: 1
+  base: { hp: 190, will: 99, energy: 110, mana: 0, atk: 6 }
+  growth: { hp: 8, will: 1, energy: 2, mana: 1, atk: 2 }
+  forms:
+    - id: golem_verre
+      level: 1
+      speed: 27
+      res: { tranchant: 40, feu: 40, contondant: -30 }
+      skills: [[emploi, 1], [coup_massue, 1], [carapace_epines, 1]]
+  drops: [verre_cendre, flamme_figee]
+  boss: false
+  region: 3
+pretre_scarabee:
+  units: 1
+  pop: 2
+  tags: [humain]
+  weapon: baton_m
+  defaultDist: 3
+  base: { hp: 80, will: 80, energy: 70, mana: 60, atk: 3 }
+  growth: { hp: 3, will: 2, energy: 1, mana: 3, atk: 1 }
+  forms:
+    - id: pretre_scarabee
+      level: 1
+      speed: 22
+      res: { feu: 30, sacre: 20 }
+      skills: [[emploi, 1], [soin_mineur, 1], [affaiblissement, 1], [meditation, 1]]
+  drops: [chitine_doree, essence_mirage]
+  boss: false
+  region: 3
+dragon_cendre:
+  units: 1
+  pop: 6
+  tags: [dragon]
+  weapon: souffle
+  defaultDist: 1
+  base: { hp: 600, will: 99, energy: 150, mana: 80, atk: 13 }
+  growth: { hp: 13, will: 2, energy: 2, mana: 2, atk: 2 }
+  forms:
+    - id: dragon_cendre
+      level: 1
+      speed: 24
+      res: { feu: 75, tranchant: 25, glace: -30 }
+      skills: [[emploi, 1], [souffle_feu, 1], [eruption, 1], [coup_massue, 1], [cri_effroi, 1]]
+  drops: [coeur_dragon, os_dragonnet, flamme_figee]
+  boss: true
+  region: 3

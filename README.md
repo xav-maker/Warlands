@@ -4,11 +4,11 @@ Version en ligne du jeu décrit dans [`docs/README-jeu.md`](docs/README-jeu.md),
 
 ## État
 
-| Jalon                 | État                                                                                                                                                                                                                                                                                                                                         |
-| --------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| J0. Socle             | en cours : dépôt, CI, comptes, sessions, squelette de commande faits ; déploiement Render préparé, mise en place à faire ([`infra/deploy/`](infra/deploy/README.md))                                                                                                                                                                         |
-| J1. Moteur et contenu | en cours : `packages/rng` et `packages/engine` portés, 227 combats de référence verts ; corrections README 16.1 et 16.4 ; moteur v1 (puissances, immunités, soins fixes, passifs de stats, camp de 16 ; 0,96 ms par combat) ; `packages/gen` porté (3 353 vecteurs du prototype verts, correction README 16.2) ; à faire : YAML, content-cli |
-| J2 à J10              | à venir                                                                                                                                                                                                                                                                                                                                      |
+| Jalon                 | État                                                                                                                                                                                                                                                                                                                                                                                                              |
+| --------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| J0. Socle             | en cours : dépôt, CI, comptes, sessions, squelette de commande faits ; déploiement Render préparé, mise en place à faire ([`infra/deploy/`](infra/deploy/README.md))                                                                                                                                                                                                                                              |
+| J1. Moteur et contenu | en cours : `packages/rng` et `packages/engine` portés, 227 combats de référence verts ; corrections README 16.1 et 16.4 ; moteur v1 (puissances, immunités, soins fixes, passifs de stats, camp de 16 ; 0,96 ms par combat) ; `packages/gen` porté (3 353 vecteurs du prototype verts, correction README 16.2) ; contenu du prototype en YAML (), compilé et validé par ; à faire : content-cli, annexe regénérée |
+| J2 à J10              | à venir                                                                                                                                                                                                                                                                                                                                                                                                           |
 
 ## Démarrer en local
 
@@ -40,6 +40,7 @@ apps/worker       tâches pg-boss
 packages/shared   codes d'erreur métier et leurs textes
 packages/rng      aléa déterministe (xoshiro128**, FNV-1a), copie du prototype
 packages/engine   moteur de combat pur ; golden/ : combats de référence
+packages/content  schémas du contenu YAML, chargement, compilation en pack, validation
 packages/gen      générateurs déterministes : rencontres, butin, exemplaires, recettes, quêtes, entrée du moteur
 packages/db       schéma Kysely, migrations
 packages/domain   commandes métier : squelette transactionnel, identité
@@ -48,6 +49,7 @@ infra/docker      compose de développement, Dockerfile (rôles web, worker, mig
 infra/deploy      Blueprint Render et script de déploiement de la préproduction
 tools/extract-prototype  charge le prototype et en tire les combats de référence (pnpm golden:v0.4, pnpm golden:gen)
 docs/             spécifications du jeu
+content/          contenu du jeu en YAML : la source (guide 5.1)
 prototype-extrait/ code du prototype (proto-0.4-ville), extrait du bundle publié : référence pour J1
 ```
 

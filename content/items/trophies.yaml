@@ -1,0 +1,102 @@
+# Objets non équipables. Noms et descriptions : texts/fr.yaml.
+
+fourrure_givre:
+  kind: trophee
+  tier: 1
+  value: 20
+  tags: []
+banniere_grishnak:
+  kind: trophee
+  tier: 1
+  value: 20
+  tags: []
+oeuf_reine_soie:
+  kind: trophee
+  tier: 1
+  value: 20
+  tags: []
+oeil_machefer:
+  kind: trophee
+  tier: 1
+  value: 20
+  tags: []
+langue_vase:
+  kind: trophee
+  tier: 2
+  value: 80
+  tags: []
+crane_ssark:
+  kind: trophee
+  tier: 2
+  value: 80
+  tags: []
+lanterne_capitaine:
+  kind: trophee
+  tier: 2
+  value: 80
+  tags: []
+dent_mangeur:
+  kind: trophee
+  tier: 2
+  value: 80
+  tags: []
+detonateur:
+  kind: trophee
+  tier: 3
+  value: 180
+  tags: []
+mandibule_ver:
+  kind: trophee
+  tier: 3
+  value: 180
+  tags: []
+coeur_prisme:
+  kind: trophee
+  tier: 3
+  value: 180
+  tags: []
+oeil_or:
+  kind: trophee
+  tier: 3
+  value: 180
+  tags: []
+voile_mirage:
+  kind: trophee
+  tier: 4
+  value: 320
+  tags: []
+sceau_main_rouge:
+  kind: trophee
+  tier: 4
+  value: 320
+  tags: []
+scarabee_or:
+  kind: trophee
+  tier: 4
+  value: 320
+  tags: []
+perle_ver_roi:
+  kind: trophee
+  tier: 4
+  value: 320
+  tags: []
+remige_argent:
+  kind: trophee
+  tier: 5
+  value: 500
+  tags: []
+glyphe_vigilance:
+  kind: trophee
+  tier: 5
+  value: 500
+  tags: []
+astrolabe_brise:
+  kind: trophee
+  tier: 5
+  value: 500
+  tags: []
+corne_chimere:
+  kind: trophee
+  tier: 5
+  value: 500
+  tags: []

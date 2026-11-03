@@ -1,0 +1,590 @@
+# Capacités du moteur d’origine (codées dans engine.ts ou décrites par fx).
+
+emploi:
+  kind: active
+  target: enemy
+  range: 1
+  energy: 0
+  mana: 0
+  durBase: weapon
+  durMult: 1000
+  p: {}
+  energyW: 1000
+  dtype: weapon
+  attack: true
+  melee: true
+exploit:
+  kind: active
+  target: enemy
+  range: 1
+  energy: 0
+  mana: 0
+  durBase: weapon
+  durMult: 1500
+  p: { mult: 2000, bleed: 4, bleedDur: 60, stun: 20 }
+  energyW: 2000
+  dtype: weapon
+  attack: true
+  melee: true
+meditation:
+  kind: active
+  target: self
+  range: 1
+  energy: 10
+  mana: 0
+  durBase: unit
+  durMult: 2000
+  p: { ok: 200, half: 50, crit: 100 }
+repos:
+  kind: active
+  target: self
+  range: 1
+  energy: 0
+  mana: 0
+  durBase: unit
+  durMult: 1000
+  p: { ok: 100, crit: 75 }
+coup_bouclier:
+  kind: active
+  target: enemy
+  range: 1
+  energy: 15
+  mana: 0
+  durBase: weapon
+  durMult: 1000
+  p: { mult: 500, stun: 30 }
+  dtype: contondant
+  attack: true
+  melee: true
+repousser:
+  kind: active
+  target: enemy
+  range: 1
+  energy: 15
+  mana: 0
+  durBase: weapon
+  durMult: 1000
+  p: { mult: 500, stun: 30 }
+  dtype: contondant
+  attack: true
+  melee: true
+repousser_renforce:
+  kind: active
+  target: self
+  range: 1
+  energy: 20
+  mana: 0
+  durBase: weapon
+  durMult: 1000
+  p: { mult: 500, stun: 30 }
+  dtype: contondant
+  melee: true
+provocation:
+  kind: active
+  target: self
+  range: 1
+  energy: 15
+  mana: 0
+  durBase: unit
+  durMult: 1000
+  p: { dur: 60, halfDur: 30, crit: 150 }
+riposte:
+  kind: reaction
+  target: self
+  range: 1
+  energy: 10
+  mana: 0
+  durBase: unit
+  durMult: 1000
+  p: { mult: 500 }
+dernier_rempart:
+  kind: passive
+  target: self
+  range: 1
+  energy: 0
+  mana: 0
+  durBase: unit
+  durMult: 1000
+  p: { will: 200 }
+mur_boucliers:
+  kind: active
+  target: self
+  range: 1
+  energy: 25
+  mana: 0
+  durBase: unit
+  durMult: 2000
+  p: { shield: 25, dur: 80 }
+execution:
+  kind: active
+  target: enemy
+  range: 1
+  energy: 25
+  mana: 0
+  durBase: weapon
+  durMult: 1500
+  p: { threshold: 250, bonusMult: 3000 }
+  dtype: tranchant
+  attack: true
+  melee: true
+fracas:
+  kind: active
+  target: enemy
+  range: 1
+  energy: 20
+  mana: 0
+  durBase: weapon
+  durMult: 1500
+  p: { half: 500, bonusMult: 3000 }
+  dtype: contondant
+  attack: true
+  melee: true
+brise_armure:
+  kind: active
+  target: enemy
+  range: 1
+  energy: 15
+  mana: 0
+  durBase: weapon
+  durMult: 1000
+  p: { mult: 500, res: 200, cap: 3, dur: 100 }
+  dtype: tranchant
+  attack: true
+  melee: true
+charge:
+  kind: active
+  target: enemy
+  range: 4
+  energy: 25
+  mana: 0
+  durBase: unit
+  durMult: 1500
+  p: { mult: 1500, stun: 20 }
+  minRange: 2
+  dtype: contondant
+  attack: true
+  melee: true
+tir_fronde:
+  kind: active
+  target: enemy
+  range: 3
+  energy: 0
+  mana: 0
+  durBase: weapon
+  durMult: 1000
+  p: {}
+  energyW: 1000
+  dtype: weapon
+  attack: true
+volee:
+  kind: active
+  target: enemy
+  range: 4
+  energy: 30
+  mana: 0
+  durBase: weapon
+  durMult: 2000
+  p: { mult: 600 }
+  dtype: weapon
+  attack: true
+tir_arc:
+  kind: active
+  target: enemy
+  range: 4
+  energy: 0
+  mana: 0
+  durBase: weapon
+  durMult: 1000
+  p: {}
+  energyW: 1000
+  dtype: weapon
+  attack: true
+tir_precis:
+  kind: active
+  target: enemy
+  range: 5
+  energy: 25
+  mana: 0
+  durBase: weapon
+  durMult: 2000
+  p: { mult: 2000 }
+  dtype: weapon
+  attack: true
+marque:
+  kind: active
+  target: enemy
+  range: 5
+  energy: 10
+  mana: 0
+  durBase: unit
+  durMult: 1000
+  p: { uses: 3, dur: 100, bonus: 300 }
+soin_mineur:
+  kind: active
+  target: ally
+  range: 2
+  energy: 0
+  mana: 8
+  durBase: unit
+  durMult: 1000
+  p: { ok: 250, half: 100, crit: 100 }
+regeneration:
+  kind: active
+  target: ally
+  range: 2
+  energy: 0
+  mana: 10
+  durBase: unit
+  durMult: 1000
+  p: { perTick: 30, dur: 100, halfDur: 50 }
+priere:
+  kind: active
+  target: self
+  range: 1
+  energy: 0
+  mana: 18
+  durBase: unit
+  durMult: 3000
+  p: { ok: 100, crit: 200 }
+purification:
+  kind: active
+  target: ally
+  range: 2
+  energy: 0
+  mana: 10
+  durBase: unit
+  durMult: 1000
+  p: {}
+trait_sacre:
+  kind: active
+  target: enemy
+  range: 5
+  energy: 0
+  mana: 10
+  durBase: unit
+  durMult: 1000
+  p: { dmg: 20, tagMult: 2000 }
+  attack: true
+trait_sacre_renforce:
+  kind: active
+  target: enemy
+  range: 5
+  energy: 0
+  mana: 12
+  durBase: unit
+  durMult: 1000
+  p: { dmg: 20, tagMult: 3000 }
+  attack: true
+bouclier_foi:
+  kind: active
+  target: ally
+  range: 2
+  energy: 0
+  mana: 12
+  durBase: unit
+  durMult: 1000
+  p: { ok: 40, half: 15, dur: 100 }
+aura_serenite:
+  kind: passive
+  target: self
+  range: 1
+  energy: 0
+  mana: 0
+  durBase: unit
+  durMult: 1000
+  p: { will: 50 }
+confusion:
+  kind: active
+  target: enemy
+  range: 5
+  energy: 0
+  mana: 10
+  durBase: unit
+  durMult: 1000
+  p: { dur: 200, half: 100 }
+confusion_moine:
+  kind: active
+  target: enemy
+  range: 5
+  energy: 20
+  mana: 0
+  durBase: unit
+  durMult: 1000
+  p: { dur: 200, half: 100 }
+trait_flammes:
+  kind: active
+  target: enemy
+  range: 4
+  energy: 0
+  mana: 5
+  durBase: unit
+  durMult: 1000
+  p: { dmg: 15, burn: 6, burnDur: 20 }
+  attack: true
+boule_feu:
+  kind: active
+  target: enemy
+  range: 5
+  energy: 0
+  mana: 15
+  durBase: unit
+  durMult: 2000
+  p: { dmg: 30, splash: 10, burn: 6, burnDur: 40 }
+  attack: true
+arme_enflammee:
+  kind: active
+  target: ally
+  range: 1
+  energy: 0
+  mana: 10
+  durBase: unit
+  durMult: 1000
+  p: { dur: 80, halfDur: 40, bonus: 8, burn: 4, burnDur: 40 }
+mur_flammes:
+  kind: active
+  target: enemy
+  range: 5
+  energy: 0
+  mana: 18
+  durBase: unit
+  durMult: 2000
+  p: { burn: 6, burnDur: 60 }
+embrasement:
+  kind: active
+  target: enemy
+  range: 5
+  energy: 0
+  mana: 20
+  durBase: unit
+  durMult: 2000
+  p: {}
+coeur_ardent:
+  kind: passive
+  target: self
+  range: 1
+  energy: 0
+  mana: 0
+  durBase: unit
+  durMult: 1000
+  p: { bonus: 200 }
+lame_saignante:
+  kind: active
+  target: enemy
+  range: 1
+  energy: 15
+  mana: 0
+  durBase: weapon
+  durMult: 1000
+  p: { mult: 800, bleed: 5, bleedDur: 60 }
+  dtype: tranchant
+  attack: true
+  melee: true
+cri_guerre:
+  kind: active
+  target: self
+  range: 1
+  energy: 20
+  mana: 0
+  durBase: unit
+  durMult: 1000
+  p: { will: 200, atk: 100, dur: 80, crit: 100 }
+rage:
+  kind: passive
+  target: self
+  range: 1
+  energy: 0
+  mana: 0
+  durBase: unit
+  durMult: 1000
+  p: { atkPer10: 20 }
+tourbillon:
+  kind: active
+  target: self
+  range: 1
+  energy: 35
+  mana: 0
+  durBase: weapon
+  durMult: 2000
+  p: { half: 500 }
+  dtype: tranchant
+  melee: true
+morsure:
+  kind: active
+  target: enemy
+  range: 1
+  energy: 0
+  mana: 0
+  durBase: weapon
+  durMult: 1000
+  p: { threshold: 500, bleed: 5, bleedDur: 60 }
+  energyW: 1000
+  dtype: tranchant
+  attack: true
+  melee: true
+hurlement:
+  kind: active
+  target: self
+  range: 1
+  energy: 20
+  mana: 0
+  durBase: unit
+  durMult: 1000
+  p: { ally: 150, enemy: 100, crit: 100 }
+instinct_meute:
+  kind: passive
+  target: self
+  range: 1
+  energy: 0
+  mana: 0
+  durBase: unit
+  durMult: 1000
+  p: { bonus: 150 }
+drain:
+  kind: active
+  target: enemy
+  range: 3
+  energy: 0
+  mana: 12
+  durBase: unit
+  durMult: 2000
+  p: { dmg: 20, crit: 10 }
+  attack: true
+murmure:
+  kind: active
+  target: enemy
+  range: 5
+  energy: 0
+  mana: 10
+  durBase: unit
+  durMult: 1000
+  p: { dmg: 10, will: 250, half: 100, crit: 150 }
+  attack: true
+terreur_masse:
+  kind: active
+  target: enemy
+  range: 5
+  energy: 0
+  mana: 18
+  durBase: unit
+  durMult: 2000
+  p: { dmg: 10, will: 250, half: 100, crit: 150 }
+malediction:
+  kind: active
+  target: enemy
+  range: 5
+  energy: 0
+  mana: 12
+  durBase: unit
+  durMult: 2000
+  p: { res: 250, dur: 80, halfDur: 40 }
+nuage:
+  kind: active
+  target: enemy
+  range: 4
+  energy: 0
+  mana: 12
+  durBase: unit
+  durMult: 2000
+  p: { dmg: 3, dur: 100, cap: 3 }
+nuage_renforce:
+  kind: active
+  target: enemy
+  range: 4
+  energy: 0
+  mana: 14
+  durBase: unit
+  durMult: 2000
+  p: { dmg: 3, dur: 100, cap: 5 }
+lien_vital:
+  kind: active
+  target: enemy
+  range: 4
+  energy: 0
+  mana: 15
+  durBase: unit
+  durMult: 2000
+  p: { dur: 60, halfDur: 30, share: 300 }
+non_mort:
+  kind: passive
+  target: self
+  range: 1
+  energy: 0
+  mana: 0
+  durBase: unit
+  durMult: 1000
+  p: {}
+contagion:
+  kind: passive
+  target: self
+  range: 1
+  energy: 0
+  mana: 0
+  durBase: unit
+  durMult: 1000
+  p: { cap: 5 }
+pieges_glace:
+  kind: passive
+  target: self
+  range: 1
+  energy: 0
+  mana: 0
+  durBase: unit
+  durMult: 1000
+  p: { dur: 60 }
+esprit_inebranlable:
+  kind: passive
+  target: self
+  range: 1
+  energy: 0
+  mana: 0
+  durBase: unit
+  durMult: 1000
+  p: {}
+hate:
+  kind: active
+  target: self
+  range: 1
+  energy: 25
+  mana: 0
+  durBase: unit
+  durMult: 1000
+  p: { dur: 80, halfDur: 40 }
+paume_vide:
+  kind: active
+  target: enemy
+  range: 1
+  energy: 30
+  mana: 0
+  durBase: unit
+  durMult: 1500
+  p: { dmg: 25, will: 200, confDur: 200 }
+  attack: true
+  melee: true
+seisme:
+  kind: active
+  target: self
+  range: 1
+  energy: 40
+  mana: 0
+  durBase: unit
+  durMult: 3000
+  p: { dmg: 20, stun: 20, crit: 100 }
+fleche_givre:
+  kind: active
+  target: enemy
+  range: 4
+  energy: 15
+  mana: 0
+  durBase: weapon
+  durMult: 1000
+  p: { dmg: 15, slowDur: 60, freezeDur: 20, freezeImmune: 100 }
+  attack: true
+grappin:
+  kind: active
+  target: enemy
+  range: 4
+  energy: 20
+  mana: 0
+  durBase: unit
+  durMult: 2000
+  p: {}
