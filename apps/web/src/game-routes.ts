@@ -42,6 +42,9 @@ import {
   turnInQuest,
   abandonQuest,
   SHOP,
+  RESET_WORD,
+  giveTestSquad,
+  resetGame,
   buyListing,
   listGoods,
   markNotificationsRead,
@@ -68,6 +71,8 @@ export interface GameRouteDeps {
   page(req: FastifyRequest, reply: FastifyReply, view: string, data?: Record<string, unknown>, status?: number): FastifyReply;
   run<S extends z.ZodType, R>(req: FastifyRequest, def: CommandDef<S, R>, input: unknown): Promise<R>;
   requireAuth(req: FastifyRequest): AuthContext;
+  /** Outils de test (préproduction) : escouade de niveau 30 sur la page Compte. */
+  testTools: boolean;
 }
 
 /** Libellés lus dans le pack, pour les vues. */
@@ -450,6 +455,32 @@ export function registerGameRoutes(app: FastifyInstance, d: GameRouteDeps): void
   app.post('/notifications/lues', (req, reply) =>
     act(req, reply, '/notifications', async () => void (await d.run(req, markNotificationsRead, {}))),
   );
+
+  // ---------- Compte : recommencer la partie, outils de test ----------
+  app.get('/compte', async (req, reply) => {
+    const v = await view(req);
+    return d.page(req, reply, 'compte', {
+      v,
+      L,
+      testTools: d.testTools,
+      word: RESET_WORD,
+      done: (req.query as { ok?: string }).ok,
+      error: errorOf(req.query),
+    });
+  });
+  app.post('/compte/recommencer', (req, reply) =>
+    act(req, reply, '/compte', async () => {
+      await d.run(req, resetGame, { confirm: body(req).confirm });
+      return '/ville';
+    }),
+  );
+  app.post('/compte/escouade-test', (req, reply) => {
+    if (!d.testTools) return reply.status(404).send();
+    return act(req, reply, '/compte', async () => {
+      await d.run(req, giveTestSquad, {});
+      return '/compte?ok=escouade';
+    });
+  });
 
   // ---------- Marchand ----------
   app.get('/marchand', async (req, reply) => {

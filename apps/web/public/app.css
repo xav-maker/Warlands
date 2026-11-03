@@ -389,3 +389,8 @@ table.data td {
   gap: 0.2rem;
   font-size: 0.9rem;
 }
+
+button.danger {
+  border-color: var(--bad);
+  color: var(--bad);
+}

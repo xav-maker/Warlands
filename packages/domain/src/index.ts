@@ -20,3 +20,4 @@ export * from './game/evolution.ts';
 export * from './game/quests.ts';
 export * from './game/shop.ts';
 export * from './game/shop-view.ts';
+export * from './game/reset.ts';

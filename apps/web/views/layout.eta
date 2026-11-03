@@ -20,6 +20,7 @@
           <a href="/jeu">Jouer</a>
           <a href="/sac">Sac</a>
           <a href="/codex">Codex</a>
+          <a href="/compte">Compte</a>
           <% if (it.v && it.v.unread) { %><a href="/notifications" class="badge" title="Notifications non lues">✉ <%= it.v.unread %></a><% } %>
           <% if (it.v) { %><span class="gold" title="Or"><%= it.v.gold %> or</span><% } %>
           <span class="who"><%= it.auth.player.pseudo %></span>

@@ -50,6 +50,8 @@ export interface AppDeps {
   publish?: (events: DomainEvent[]) => void;
   /** Contenu actif ; sans lui, les pages de jeu ne sont pas servies (tests du socle). */
   content?: GameContent;
+  /** Outils de test sur la page Compte (ENABLE_TEST_TOOLS, préproduction). */
+  testTools?: boolean;
   /** Aléa des tirages de jeu (tests) ; par défaut crypto.randomInt. */
   random?: (max: number) => number;
 }
@@ -258,7 +260,8 @@ export async function buildApp(deps: AppDeps): Promise<FastifyInstance> {
   });
 
   // ---------- Jeu ----------
-  if (deps.content) registerGameRoutes(app, { db: deps.db, content: deps.content, page, run, requireAuth });
+  if (deps.content)
+    registerGameRoutes(app, { db: deps.db, content: deps.content, page, run, requireAuth, testTools: deps.testTools ?? false });
 
   app.post('/joueur/donjon-disponible', async (req, reply) => {
     const b = (req.body ?? {}) as Record<string, string>;

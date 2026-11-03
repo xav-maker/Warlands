@@ -1,0 +1,33 @@
+<% layout('./layout', { title: 'Compte' }) %>
+<section>
+  <h1>Compte</h1>
+  <p class="muted">Connecté en tant que <b><%= it.auth.player.pseudo %></b> (<%= it.auth.account.email %>).</p>
+  <% if (it.done === 'escouade') { %><p class="flash" role="status">Escouade de test engagée : six troupes de niveau 30. Vos troupes précédentes sont en caserne.</p><% } %>
+
+  <div class="grid">
+    <div class="card">
+      <h2>Recommencer la partie</h2>
+      <p>Votre partie repart de zéro : plus de troupes, d’objets ni d’or ; annonces en boutique retirées, quêtes effacées ; retour à Havre-Gris avec le kit de départ. Vous recevez de nouvelles recettes personnelles. Votre compte, votre pseudo et l’historique de vos combats sont gardés.</p>
+      <p class="bad"><b>C’est définitif.</b></p>
+      <form method="post" action="/compte/recommencer" class="row">
+        <input type="hidden" name="_csrf" value="<%= it.csrf %>">
+        <label>Tapez <b><%= it.word %></b> pour confirmer
+          <input type="text" name="confirm" required pattern="<%= it.word %>" autocomplete="off">
+        </label>
+        <button type="submit" class="danger">Recommencer la partie</button>
+      </form>
+    </div>
+
+    <% if (it.testTools) { %>
+      <div class="card">
+        <h2>Outils de test</h2>
+        <p class="muted">Préproduction seulement. Engage une escouade pleine de niveau 30 (Briseur, Acolyte, Chasseur, Milicien, Frondeurs, Apprenti pyromancien), en ville ; vos troupes engagées passent en caserne.</p>
+        <form method="post" action="/compte/escouade-test">
+          <input type="hidden" name="_csrf" value="<%= it.csrf %>">
+          <button type="submit"<%= it.v.kind === 'city' ? '' : ' disabled' %>>Donner une escouade de test</button>
+        </form>
+        <% if (it.v.kind !== 'city') { %><p class="muted">Disponible en ville.</p><% } %>
+      </div>
+    <% } %>
+  </div>
+</section>

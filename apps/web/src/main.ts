@@ -15,6 +15,7 @@ const app = await buildApp({
   logLevel: cfg.LOG_LEVEL,
   version: cfg.APP_VERSION,
   content,
+  testTools: cfg.ENABLE_TEST_TOOLS,
 });
 
 // Arrêt propre (guide 17.5) : plus de nouvelles requêtes, fin des requêtes en cours, puis fermeture de la base.

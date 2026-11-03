@@ -19,6 +19,11 @@ const Env = z.object({
   MAIL_FROM: z.string().min(3),
   LOG_LEVEL: z.enum(['fatal', 'error', 'warn', 'info', 'debug', 'trace']).default('info'),
   APP_VERSION: z.string().default('dev'),
+  // Outils de test (escouade de niveau 30) : préproduction seulement, jamais en production.
+  ENABLE_TEST_TOOLS: z
+    .enum(['true', 'false'])
+    .default('false')
+    .transform((v) => v === 'true'),
 });
 
 export interface SmtpOptions {

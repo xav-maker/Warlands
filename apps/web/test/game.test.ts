@@ -242,6 +242,20 @@ describe('parcours de jeu (J2)', () => {
     expect((await req('GET', '/boutique/historique/bandage')).body).toContain('Aucune vente récente');
   });
 
+  it('recommence la partie depuis la page Compte ; pas d’outils de test sans ENABLE_TEST_TOOLS', async () => {
+    const page = await req('GET', '/compte');
+    expect(page.statusCode).toBe(200);
+    expect(page.body).toContain('Recommencer la partie');
+    expect(page.body).not.toContain('Outils de test');
+    expect((await req('POST', '/compte/escouade-test', {})).statusCode).toBe(404);
+    expect((await req('POST', '/compte/recommencer', { confirm: 'non' })).headers.location).toMatch(/^\/compte\?e=/);
+    await endWatch();
+    expect((await req('POST', '/compte/recommencer', { confirm: 'RECOMMENCER' })).headers.location).toBe('/ville');
+    const city = await req('GET', '/ville');
+    expect(city.body).toContain('Havre-Gris');
+    expect(city.body).toContain('200 or');
+  });
+
   it('sert le Codex, même sans être connecté', async () => {
     jar.clear();
     for (const [p, text] of [
