@@ -1,5 +1,4 @@
 // Outils DOM du prototype (prototype-extrait/dom.js), inchangés.
-/* eslint-disable */
 function h(tag, attrs = {}, ...kids) {
   const el = document.createElement(tag);
   for (const [k, v] of Object.entries(attrs)) {
