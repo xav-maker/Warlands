@@ -1,0 +1,24 @@
+{
+  "name": "@cr/worker",
+  "private": true,
+  "type": "module",
+  "version": "0.0.0",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "dependencies": {
+    "@cr/db": "workspace:*",
+    "@cr/domain": "workspace:*",
+    "@node-rs/argon2": "^2.2.2",
+    "kysely": "^0.29.8",
+    "pg": "^8.23.1",
+    "pg-boss": "^12.38.0",
+    "pino": "^10.4.0",
+    "zod": "^4.6.7"
+  },
+  "scripts": {
+    "dev": "tsx watch --env-file-if-exists=../../.env src/main.ts",
+    "start": "node dist/main.js",
+    "build": "node build.mjs"
+  }
+}

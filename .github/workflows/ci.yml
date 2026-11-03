@@ -1,0 +1,95 @@
+# Intégration continue et déploiement (guide 17.2). Étapes 1 à 6 à chaque demande de fusion ;
+# à la fusion sur main : publication de l'image (7) et déploiement en préproduction sur Render (8).
+# La mise en production sur approbation (9) viendra avec l'environnement de production.
+name: ci
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:17
+        env:
+          POSTGRES_USER: cr
+          POSTGRES_PASSWORD: cr
+          POSTGRES_DB: cr
+        ports: ['5432:5432']
+        options: >-
+          --health-cmd "pg_isready -U cr" --health-interval 2s --health-timeout 3s --health-retries 30
+    env:
+      TEST_DATABASE_URL: postgres://cr:cr@localhost:5432/postgres
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm typecheck
+      - run: pnpm lint
+      - run: pnpm format:check
+      - run: pnpm deps:check
+      - run: pnpm test
+      - run: pnpm build
+
+  image:
+    runs-on: ubuntu-latest
+    needs: check
+    permissions:
+      contents: read
+      packages: write
+    env:
+      IMAGE: ghcr.io/${{ github.repository_owner }}/cinq-regions
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Secrets (gitleaks)
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Nom de l'image # ghcr.io exige des minuscules
+        run: echo "IMAGE_REF=${IMAGE,,}:${{ github.sha }}" >> "$GITHUB_ENV"
+      - name: Image
+        run: docker build -f infra/docker/Dockerfile --build-arg APP_VERSION=${{ github.sha }} -t "$IMAGE_REF" .
+      - name: Vulnérabilités (Trivy)
+        uses: aquasecurity/trivy-action@0.28.0
+        with:
+          image-ref: ${{ env.IMAGE_REF }}
+          severity: CRITICAL,HIGH
+          exit-code: '1'
+          ignore-unfixed: true
+      - name: Publication (ghcr.io)
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: |
+          echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u "${{ github.actor }}" --password-stdin
+          docker push "$IMAGE_REF"
+
+  deploy-preprod:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    needs: image
+    environment:
+      name: preproduction
+      url: ${{ vars.PREPROD_URL }}
+    concurrency:
+      group: deploy-preprod
+      cancel-in-progress: false
+    env:
+      IMAGE: ghcr.io/${{ github.repository_owner }}/cinq-regions
+      SHA: ${{ github.sha }}
+      HOOK_WEB: ${{ secrets.RENDER_DEPLOY_HOOK_WEB }}
+      HOOK_WORKER: ${{ secrets.RENDER_DEPLOY_HOOK_WORKER }}
+      PREPROD_URL: ${{ vars.PREPROD_URL }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Déploiement Render, puis fumée
+        run: infra/deploy/deploy-render.sh

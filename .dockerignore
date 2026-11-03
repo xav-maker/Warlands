@@ -1,0 +1,9 @@
+# Hors de l'image : dépendances de l'hôte, sorties de build, secrets locaux.
+**/node_modules
+**/dist
+**/*.tsbuildinfo
+coverage
+.git
+.env
+.env.*
+!.env.example

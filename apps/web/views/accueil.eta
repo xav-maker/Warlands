@@ -1,0 +1,6 @@
+<% layout('./layout', { title: '' }) %>
+<section class="hero">
+  <h1>Les Cinq Régions</h1>
+  <p>Menez une escouade à travers vingt régions, préparez vos troupes, et regardez-les combattre. Échangez avec les autres joueurs ce qui vous est inutile et qui leur manque.</p>
+  <p><a class="btn primary" href="/inscription">Créer un compte</a> <a class="btn" href="/connexion">Se connecter</a></p>
+</section>

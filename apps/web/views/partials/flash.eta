@@ -1,0 +1,1 @@
+<p class="flash<%= it.bad ? ' bad' : '' %>" role="status"><%= it.text %></p>

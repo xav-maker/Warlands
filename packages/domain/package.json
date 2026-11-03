@@ -1,0 +1,19 @@
+{
+  "name": "@cr/domain",
+  "private": true,
+  "type": "module",
+  "version": "0.0.0",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "dependencies": {
+    "@cr/db": "workspace:*",
+    "@cr/shared": "workspace:*",
+    "@node-rs/argon2": "^2.2.2",
+    "kysely": "^0.29.8",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@cr/testing": "workspace:*"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "name": "@cr/db",
+  "private": true,
+  "type": "module",
+  "version": "0.0.0",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "dependencies": {
+    "kysely": "^0.29.8",
+    "pg": "^8.23.1"
+  },
+  "devDependencies": {
+    "@types/pg": "^8.23.1"
+  },
+  "scripts": {
+    "migrate": "tsx --env-file-if-exists=../../.env src/migrate.ts"
+  }
+}

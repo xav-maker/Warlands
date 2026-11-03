@@ -1,0 +1,16 @@
+<% layout('./layout', { title: 'Créer un compte' }) %>
+<section class="card narrow">
+  <h1>Créer un compte</h1>
+  <% if (it.error) { %><p class="flash bad" role="alert"><%= it.error %></p><% } %>
+  <form method="post" action="/inscription" class="stack">
+    <input type="hidden" name="_csrf" value="<%= it.csrf %>">
+    <label>Adresse e-mail<input type="email" name="email" required maxlength="254" autocomplete="email" value="<%= it.form.email ?? '' %>"></label>
+    <label>Pseudo<input type="text" name="pseudo" required minlength="3" maxlength="20" autocomplete="nickname" value="<%= it.form.pseudo ?? '' %>">
+      <small>3 à 20 caractères : lettres, chiffres, tiret ou espace.</small></label>
+    <label>Mot de passe<input type="password" name="password" required minlength="<%= it.passwordMin %>" maxlength="200" autocomplete="new-password">
+      <small><%= it.passwordMin %> caractères au moins.</small></label>
+    <label class="check"><input type="checkbox" name="acceptTos" required> J’accepte les conditions d’utilisation.</label>
+    <button type="submit" class="primary">Créer le compte</button>
+  </form>
+  <p class="muted">Déjà inscrit ? <a href="/connexion">Se connecter</a></p>
+</section>

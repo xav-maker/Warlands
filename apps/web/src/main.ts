@@ -1,0 +1,30 @@
+import { createDb } from '@cr/db';
+import { buildApp } from './app.ts';
+import { loadConfig } from './config.ts';
+import { smtpMailer } from './mailer.ts';
+
+const cfg = loadConfig();
+const db = createDb(cfg.DATABASE_URL);
+const app = await buildApp({
+  db,
+  mailer: smtpMailer(cfg.SMTP_URL, cfg.MAIL_FROM),
+  appUrl: cfg.APP_URL,
+  cookieSecure: cfg.SESSION_COOKIE_SECURE,
+  logLevel: cfg.LOG_LEVEL,
+  version: cfg.APP_VERSION,
+});
+
+// Arrêt propre (guide 17.5) : plus de nouvelles requêtes, fin des requêtes en cours, puis fermeture de la base.
+let stopping = false;
+for (const sig of ['SIGTERM', 'SIGINT'] as const) {
+  process.on(sig, async () => {
+    if (stopping) return;
+    stopping = true;
+    app.log.info({ sig }, 'arrêt demandé');
+    await app.close();
+    await db.destroy();
+    process.exit(0);
+  });
+}
+
+await app.listen({ port: cfg.PORT, host: cfg.HOST });

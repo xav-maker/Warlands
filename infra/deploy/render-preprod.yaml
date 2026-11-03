@@ -1,0 +1,76 @@
+# Blueprint Render de la préproduction (guide 17.1 et 18). Région Francfort (UE).
+# Les services tournent sur l'image publiée par la CI dans ghcr.io : la CI déclenche chaque
+# déploiement avec l'image du commit (crochets de déploiement), d'où autoDeploy: false.
+# Mise en place et exploitation : infra/deploy/README.md.
+
+envVarGroups:
+  - name: cr-preprod-commun
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: LOG_LEVEL
+        value: info
+
+services:
+  - type: web
+    name: cr-preprod-web
+    runtime: image
+    image:
+      url: ghcr.io/xav-maker/cinq-regions:latest # remplacé à chaque déploiement par l'image du commit
+      creds:
+        fromRegistryCreds:
+          name: ghcr
+    region: frankfurt
+    plan: starter
+    numInstances: 1
+    healthCheckPath: /health
+    autoDeploy: false
+    # Migrations avant la bascule (guide 17.2, étape 8). Elles doivent rester compatibles avec
+    # l'ancienne version, qui sert encore les joueurs pendant ce temps (guide 17.4).
+    preDeployCommand: sh -c "APP_ROLE=migrate exec /entrypoint.sh"
+    envVars:
+      - fromGroup: cr-preprod-commun
+      - key: APP_ROLE
+        value: web
+      - key: DATABASE_URL
+        fromDatabase:
+          name: cr-preprod-db
+          property: connectionString
+      # APP_URL : sans valeur, l'adresse onrender.com du service est utilisée. À renseigner avec un domaine personnalisé.
+      - key: APP_URL
+        sync: false
+      - key: SESSION_COOKIE_SECURE
+        value: 'true'
+      - key: SMTP_URL # fournisseur d'e-mail transactionnel, par exemple smtps://utilisateur:clé@smtp.fournisseur:465
+        sync: false
+      - key: MAIL_FROM
+        sync: false
+
+  - type: worker
+    name: cr-preprod-worker
+    runtime: image
+    image:
+      url: ghcr.io/xav-maker/cinq-regions:latest
+      creds:
+        fromRegistryCreds:
+          name: ghcr
+    region: frankfurt
+    plan: starter
+    autoDeploy: false
+    envVars:
+      - fromGroup: cr-preprod-commun
+      - key: APP_ROLE
+        value: worker
+      - key: DATABASE_URL
+        fromDatabase:
+          name: cr-preprod-db
+          property: connectionString
+
+databases:
+  - name: cr-preprod-db
+    region: frankfurt
+    plan: basic-256mb
+    postgresMajorVersion: '17'
+    databaseName: cr
+    user: cr
+    ipAllowList: [] # accès par le réseau privé de Render seulement

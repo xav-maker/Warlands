@@ -1,0 +1,6 @@
+<% layout('./layout', { title: it.title }) %>
+<section class="card narrow">
+  <h1><%= it.title %></h1>
+  <p class="<%= it.bad ? 'bad' : '' %>"><%= it.text %></p>
+  <% if (it.link) { %><p><a class="btn primary" href="<%= it.link.href %>"><%= it.link.label %></a></p><% } %>
+</section>

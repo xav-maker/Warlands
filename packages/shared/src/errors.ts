@@ -1,0 +1,42 @@
+/**
+ * Codes d'erreur métier stables (guide technique 3.3). Le code ne change jamais une fois publié :
+ * les templates le traduisent en français via `messages.ts`.
+ */
+export const ERROR_CODES = [
+  // Validation et cadre
+  'INVALID_INPUT',
+  'RATE_LIMITED',
+  'NOT_AUTHENTICATED',
+  'CSRF_INVALID',
+  'IDEMPOTENCY_CONFLICT',
+  'WRONG_POSITION',
+  'WATCH_IN_PROGRESS',
+  // Identité
+  'EMAIL_TAKEN',
+  'PSEUDO_TAKEN',
+  'PSEUDO_INVALID',
+  'PSEUDO_FORBIDDEN',
+  'PASSWORD_TOO_SHORT',
+  'BAD_CREDENTIALS',
+  'ACCOUNT_SUSPENDED',
+  'EMAIL_NOT_VERIFIED',
+  'VERIFY_TOKEN_INVALID',
+  'PLAYER_NOT_FOUND',
+] as const;
+
+export type ErrorCode = (typeof ERROR_CODES)[number];
+
+/** Erreur métier : affichée au joueur, jamais journalisée comme une panne. */
+export class GameError extends Error {
+  readonly code: ErrorCode;
+  readonly details: Record<string, string | number> | undefined;
+
+  constructor(code: ErrorCode, details?: Record<string, string | number>) {
+    super(code);
+    this.name = 'GameError';
+    this.code = code;
+    this.details = details;
+  }
+}
+
+export const isGameError = (e: unknown): e is GameError => e instanceof GameError;

@@ -1,0 +1,12 @@
+<% layout('./layout', { title: 'Connexion' }) %>
+<section class="card narrow">
+  <h1>Connexion</h1>
+  <% if (it.error) { %><p class="flash bad" role="alert"><%= it.error %></p><% } %>
+  <form method="post" action="/connexion" class="stack">
+    <input type="hidden" name="_csrf" value="<%= it.csrf %>">
+    <label>Adresse e-mail<input type="email" name="email" required maxlength="254" autocomplete="email" value="<%= it.form.email ?? '' %>"></label>
+    <label>Mot de passe<input type="password" name="password" required maxlength="200" autocomplete="current-password"></label>
+    <button type="submit" class="primary">Se connecter</button>
+  </form>
+  <p class="muted">Pas encore de compte ? <a href="/inscription">Créer un compte</a></p>
+</section>

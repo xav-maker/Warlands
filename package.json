@@ -1,0 +1,37 @@
+{
+  "name": "cinq-regions",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@10.34.9",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "dev": "pnpm --filter @cr/web dev",
+    "dev:worker": "pnpm --filter @cr/worker dev",
+    "db:up": "docker compose -f infra/docker/compose.yaml up -d",
+    "db:down": "docker compose -f infra/docker/compose.yaml down",
+    "migrate": "pnpm --filter @cr/db migrate",
+    "typecheck": "tsc -b && tsc -p tsconfig.test.json",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "deps:check": "depcruise apps packages --config .dependency-cruiser.cjs",
+    "test": "vitest run",
+    "build": "pnpm -r --filter ./apps/* build"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@testcontainers/postgresql": "^12.2.1",
+    "@types/node": "^24.19.2",
+    "dependency-cruiser": "^18.7.2",
+    "esbuild": "^0.28.2",
+    "eslint": "^10.14.0",
+    "prettier": "^3.9.10",
+    "testcontainers": "^12.2.1",
+    "tsx": "^4.23.15",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.72.1",
+    "vitest": "^5.1.0"
+  }
+}

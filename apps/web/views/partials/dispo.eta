@@ -1,0 +1,6 @@
+<div id="dispo" class="row">
+  <span>Disponible pour un donjon à deux : <b><%= it.dungeonAvailable ? 'oui' : 'non' %></b></span>
+  <button hx-post="/joueur/donjon-disponible" hx-vals='<%= JSON.stringify({ available: String(!it.dungeonAvailable) }) %>' hx-target="#dispo" hx-swap="outerHTML">
+    <%= it.dungeonAvailable ? 'Ne plus être disponible' : 'Me déclarer disponible' %>
+  </button>
+</div>
