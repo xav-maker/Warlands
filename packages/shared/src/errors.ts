@@ -41,6 +41,13 @@ export const ERROR_CODES = [
   'NOT_CONSUMABLE',
   'GAUGE_FULL',
   'UNIT_NOT_FOUND',
+  // Progression (J3)
+  'TROOP_NOT_FOUND',
+  'TROOP_COMPLETE',
+  'NOT_RECRUITED_HERE',
+  'SQUAD_FULL',
+  'BASIC_ATTACK_LOCKED',
+  'SKILL_UNKNOWN',
 ] as const;
 
 export type ErrorCode = (typeof ERROR_CODES)[number];

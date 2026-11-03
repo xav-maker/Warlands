@@ -33,11 +33,12 @@
     <div class="card">
       <h2>Services</h2>
       <ul class="links">
+        <li><a href="/caserne">Caserne</a> <span class="muted">— recruter, engager, racheter des unités</span></li>
         <li><a href="/marchand">Marchand</a> <span class="muted">— équipement et consommables du palier <%= it.R.tier %></span></li>
         <li><a href="/sac">Sac et banque</a> <span class="muted">— sac <%= it.v.bag.used %> / <%= it.v.bag.cap %>, banque <%= it.v.bank.used %> / <%= it.v.bank.cap %></span></li>
         <li><a href="/codex">Codex</a></li>
       </ul>
-      <p class="muted">Caserne, atelier et quêtes arrivent au jalon suivant.</p>
+      <p class="muted">Atelier et quêtes arrivent bientôt.</p>
       <p class="muted"><%= it.v.stats.fights %> combats, <%= it.v.stats.wins %> victoires, <%= it.v.stats.deaths %> unités perdues.</p>
     </div>
   </div>

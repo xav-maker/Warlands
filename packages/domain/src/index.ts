@@ -13,3 +13,5 @@ export * from './game/battle.ts';
 export * from './game/loot.ts';
 export * from './game/city.ts';
 export * from './game/view.ts';
+export * from './game/recipes.ts';
+export * from './game/barracks.ts';

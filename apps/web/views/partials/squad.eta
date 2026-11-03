@@ -4,7 +4,7 @@
 <ul class="squad">
   <% for (const t of squad) { %>
     <li class="troop">
-      <div class="row between"><b><%= t.name %></b><span class="muted">niv. <%= t.level %> · rang <%= t.rank %><%= t.loaned ? ' · prêtée par la garde' : '' %></span></div>
+      <div class="row between"><a href="/troupe/<%= t.id %>"><b><%= t.name %></b></a><span class="muted">niv. <%= t.level %> · rang <%= t.rank %><%= t.loaned ? ' · prêtée par la garde' : '' %></span></div>
       <% for (const u of t.units) { %>
         <div class="unit">
           <span class="muted"><%= t.units.length > 1 ? 'unité ' + u.n : '' %></span>

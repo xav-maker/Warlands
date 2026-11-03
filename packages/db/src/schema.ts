@@ -206,6 +206,22 @@ export interface BattleParticipantTable {
   rewards: ColumnType<unknown, string, never>;
 }
 
+export interface PlayerRecipeTable {
+  player_id: number;
+  out: string;
+  kind: 'equip' | 'consommable' | 'recrue' | 'evolution';
+  ingredients: ColumnType<[string, number][], string, string>;
+  gold: number;
+  budget: number;
+  content_version: string;
+  created_at: CreatedAt;
+}
+
+export interface PlayerReservedMaterialTable {
+  player_id: number;
+  item: string;
+}
+
 export interface IdempotencyKeyTable {
   player_id: number;
   key: string;
@@ -232,6 +248,8 @@ export interface Database {
   encounter: EncounterTable;
   battle: BattleTable;
   battle_participant: BattleParticipantTable;
+  player_recipe: PlayerRecipeTable;
+  player_reserved_material: PlayerReservedMaterialTable;
 }
 
 export type Account = Selectable<AccountTable>;

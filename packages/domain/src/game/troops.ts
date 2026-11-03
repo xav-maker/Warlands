@@ -2,12 +2,13 @@
  * Troupes du joueur (guide 6.2, README 4) : création, lecture avec unités et équipement, soin complet,
  * kit de départ (README 8.1) et prêt de la garde (README 3.4).
  */
-import { genRecipes, unitStats } from '@cr/gen';
+import { unitStats } from '@cr/gen';
 import type { EquipInstance, PlayerTroop, PlayerUnit, UnitStats } from '@cr/gen';
 import type { Database, Player, Transaction, TroopContainer } from '@cr/db';
 import { baseForm } from './rules.ts';
 import { addStack } from './inventory.ts';
 import { transferGold } from './gold.ts';
+import { recipes } from './recipes.ts';
 import type { GameContent } from './content.ts';
 
 type Tx = Transaction<Database>;
@@ -88,6 +89,7 @@ export const asPlayerTroop = (t: LoadedTroop): PlayerTroop => ({
   form: t.form,
   rank: t.rank,
   units: t.units.map((u): PlayerUnit => ({ hp: u.hp, mana: u.mana, equip: u.equip })),
+  ...(t.disabledSkills.length ? { disabled: t.disabledSkills } : {}),
 });
 
 export const statsOf = (c: GameContent, t: LoadedTroop, u: LoadedUnit): UnitStats =>
@@ -193,7 +195,7 @@ export async function startPlayer(tx: Tx, c: GameContent, player: Player, now: D
   await transferGold(tx, { system: 'SOURCE_START' }, { player: player.id }, eco.startGold, 'départ');
   for (const [type, level] of eco.startTroops) await createTroop(tx, c, player.id, { type, level, container: 'SQUAD', reason: 'départ' });
   const items: Record<string, number> = { ...eco.startItems };
-  for (const [id, q] of genRecipes(c.pack, player.seed)[eco.startRecipe]!.ingredients) items[id] = (items[id] ?? 0) + q;
+  for (const [id, q] of (await recipes(tx, c, player)).get(eco.startRecipe)!.ingredients) items[id] = (items[id] ?? 0) + q;
   for (const [id, q] of Object.entries(items)) await addStack(tx, c, player.id, 'BANK', id, q, 'SYSTEM', 'départ');
   await tx.updateTable('player').set({ started_at: now, content_version: c.hash }).where('id', '=', player.id).execute();
 }

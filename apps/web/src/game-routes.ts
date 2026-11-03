@@ -27,12 +27,21 @@ import {
   sellPrice,
   takeLoot,
   useConsumable,
+  engage,
+  withdraw,
+  rebuyUnits,
+  recruit,
+  recipeView,
+  scaled,
+  setDisabledSkills,
+  setRank,
+  xpToNext,
   type AuthContext,
   type CommandDef,
   type GameContent,
   type GameView,
 } from '@cr/domain';
-import { computeStats, itemValue, quality } from '@cr/gen';
+import { basicAttack, computeStats, itemValue, learned, quality, troopActive } from '@cr/gen';
 import type { z } from 'zod';
 
 export interface GameRouteDeps {
@@ -69,7 +78,7 @@ export function labels(c: GameContent) {
 }
 
 /** Chemins de retour autorisés après une action (jamais une URL fournie telle quelle). */
-const BACK = new Set(['/ville', '/route', '/sac', '/marchand']);
+const BACK = new Set(['/ville', '/route', '/sac', '/marchand', '/caserne']);
 const backOf = (b: Record<string, string>, fallback: string): string => (BACK.has(b.back ?? '') ? b.back! : fallback);
 const errorOf = (q: unknown): string | undefined => {
   const e = (q as Record<string, string | undefined>).e;
@@ -229,6 +238,55 @@ export function registerGameRoutes(app: FastifyInstance, d: GameRouteDeps): void
       backOf(b, '/route'),
       async () => void (await d.run(req, useConsumable, { item: b.item, troop: int(b.troop), unit: int(b.unit) })),
     );
+  });
+
+  // ---------- Caserne et troupes ----------
+  app.get('/caserne', async (req, reply) => {
+    const v = await view(req);
+    if (v.kind !== 'city') return reply.redirect('/route');
+    const rv = await recipeView(d.db, d.requireAuth(req).player.id);
+    return d.page(req, reply, 'caserne', {
+      v,
+      L,
+      R: region(d.content, v.region),
+      rv,
+      c: d.content.pack,
+      xpToNext,
+      scaled,
+      error: errorOf(req.query),
+    });
+  });
+  app.post('/caserne/recruter', (req, reply) =>
+    act(req, reply, '/caserne', async () => void (await d.run(req, recruit, { type: body(req).type }))),
+  );
+  const troopActs: Record<string, CommandDef<z.ZodType, unknown>> = { engager: engage, retirer: withdraw, racheter: rebuyUnits } as Record<
+    string,
+    CommandDef<z.ZodType, unknown>
+  >;
+  app.post('/troupe/:id/:action', (req, reply) => {
+    const { id, action } = req.params as { id: string; action: string };
+    const b = body(req);
+    const back = backOf(b, `/troupe/${int(id)}`);
+    return act(req, reply, back, async () => {
+      if (action === 'rang') await d.run(req, setRank, { troop: int(id), rank: int(b.rank) });
+      else if (action === 'capacites') {
+        const skills = Object.keys(b)
+          .filter((k) => k.startsWith('off_'))
+          .map((k) => k.slice(4));
+        await d.run(req, setDisabledSkills, { troop: int(id), skills });
+      } else if (troopActs[action]) await d.run(req, troopActs[action]!, { troop: int(id) });
+      return back;
+    });
+  });
+  app.get('/troupe/:id', async (req, reply) => {
+    const v = await view(req);
+    const t = v.troops.find((x) => x.id === int((req.params as { id: string }).id));
+    if (!t) return d.page(req, reply, 'message', { title: 'Troupe introuvable', text: 'Cette troupe n’existe pas.' }, 404);
+    const p = d.content.pack;
+    const def = p.troops[t.type]!;
+    const known = learned(def, t.form, t.level);
+    const active = troopActive(p, { type: t.type, level: t.level, form: t.form, rank: t.rank, units: [], disabled: t.disabledSkills });
+    return d.page(req, reply, 'troupe', { v, L, t, def, known, active, base: basicAttack(def), xpToNext, error: errorOf(req.query) });
   });
 
   // ---------- Marchand ----------

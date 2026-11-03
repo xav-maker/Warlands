@@ -14,14 +14,19 @@ import { freshSeed } from './expedition.ts';
 import { transferGold } from './gold.ts';
 import { addInstance, addStack, moveInstance, stackQty, takeStack } from './inventory.ts';
 import { loadTroops, setUnit, statsOf } from './troops.ts';
+import { recipes } from './recipes.ts';
 
-/** Commande neutre : remet le kit de départ si besoin (les pages l'appellent avant de s'afficher). */
+/**
+ * Commande neutre appelée avant chaque page : remet le kit de départ si besoin et matérialise les recettes
+ * personnelles, pour que la page les lise ensuite sans rien écrire.
+ */
 export const ensureStarted = command({
   name: 'game.start',
   input: z.object({}),
   rate: { perMinute: 600 },
   allowedDuringWatch: true,
-  async run() {
+  async run(ctx) {
+    await recipes(ctx.tx, ctx.content, ctx.player);
     return {};
   },
 });

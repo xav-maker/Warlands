@@ -1,0 +1,51 @@
+<% layout('./layout', { title: it.t.name }) %>
+<% const t = it.t; const next = it.xpToNext(t.level) %>
+<section>
+  <p class="eyebrow"><%= it.def.name %> · <%= t.container === 'SQUAD' ? 'en escouade' : 'en caserne' %></p>
+  <h1><%= t.name %></h1>
+  <p class="muted">Niveau <%= t.level %><%= t.level < 30 ? ' · ' + t.xp + ' / ' + next + ' XP' : ' (maximum)' %> · <%= it.def.role %></p>
+  <div class="grid">
+    <div class="card">
+      <h2>Unités</h2>
+      <ul class="group">
+        <% for (const u of t.units) { %>
+          <li class="unit">
+            <span class="muted"><%= t.units.length > 1 ? 'unité ' + u.n : '' %></span>
+            <span class="gauge hp"><i style="width:<%= Math.round(100 * u.hp / u.hpMax) %>%"></i></span><span class="num"><%= u.hp %> / <%= u.hpMax %> PV</span>
+            <% if (u.manaMax) { %><span class="gauge mana"><i style="width:<%= Math.round(100 * u.mana / u.manaMax) %>%"></i></span><span class="num"><%= u.mana %> / <%= u.manaMax %></span><% } %>
+          </li>
+        <% } %>
+      </ul>
+      <form method="post" action="/troupe/<%= t.id %>/rang" class="row">
+        <input type="hidden" name="_csrf" value="<%= it.csrf %>">
+        <label>Rang de départ
+          <select name="rank">
+            <% for (const r of [1, 2, 3]) { %><option value="<%= r %>"<%= r === t.rank ? ' selected' : '' %>><%= r %><%= r === 1 ? ' (contact)' : r === 3 ? ' (arrière)' : '' %></option><% } %>
+          </select>
+        </label>
+        <button type="submit">Changer</button>
+      </form>
+    </div>
+
+    <div class="card">
+      <h2>Capacités</h2>
+      <p class="muted">Cochez une capacité pour que la troupe ne s’en serve plus. Au combat, elle utilise l’attaque de base et ses 5 capacités les plus récentes parmi celles qui restent.</p>
+      <form method="post" action="/troupe/<%= t.id %>/capacites">
+        <input type="hidden" name="_csrf" value="<%= it.csrf %>">
+        <ul class="items">
+          <% for (const s of it.known) { const off = t.disabledSkills.includes(s) %>
+            <li class="row between">
+              <label class="check">
+                <input type="checkbox" name="off_<%= s %>"<%= off ? ' checked' : '' %><%= s === it.base ? ' disabled' : '' %>>
+                Désactiver <b><%= it.L.skill(s) %></b><%= s === it.base ? ' (attaque de base)' : '' %>
+              </label>
+              <span class="<%= it.active.includes(s) ? 'good' : 'muted' %>"><%= it.active.includes(s) ? 'active' : off ? 'désactivée' : 'en réserve' %></span>
+            </li>
+          <% } %>
+        </ul>
+        <button type="submit">Enregistrer</button>
+      </form>
+    </div>
+  </div>
+  <p><a href="<%= it.v.kind === 'city' ? '/caserne' : '/route' %>">Retour</a></p>
+</section>

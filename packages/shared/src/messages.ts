@@ -37,6 +37,12 @@ const FR: Record<ErrorCode, string> = {
   NOT_CONSUMABLE: 'Ce n’est pas un consommable.',
   GAUGE_FULL: 'Déjà au maximum.',
   UNIT_NOT_FOUND: 'Unité introuvable.',
+  TROOP_NOT_FOUND: 'Troupe introuvable.',
+  TROOP_COMPLETE: 'La troupe est déjà complète.',
+  NOT_RECRUITED_HERE: 'Cette troupe ne se recrute pas dans cette ville.',
+  SQUAD_FULL: 'L’escouade est pleine (8 unités et 11 de population au plus).',
+  BASIC_ATTACK_LOCKED: 'L’attaque de base ne peut pas être désactivée.',
+  SKILL_UNKNOWN: 'Cette troupe ne connaît pas cette capacité.',
 };
 
 export function messageFr(code: ErrorCode, details?: Record<string, string | number>): string {

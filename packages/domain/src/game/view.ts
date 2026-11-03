@@ -122,3 +122,24 @@ export async function battleView(db: Db, playerId: number, battleId: number) {
 }
 
 export { region };
+
+/** Recettes et possessions du joueur (lecture seule ; les recettes sont matérialisées par game.start). */
+export async function recipeView(db: Db, playerId: number) {
+  const rows = await db
+    .selectFrom('player_recipe')
+    .select(['out', 'kind', 'ingredients', 'gold'])
+    .where('player_id', '=', playerId)
+    .execute();
+  const stacks = await db
+    .selectFrom('item_stack')
+    .select(['item', 'qty'])
+    .where('player_id', '=', playerId)
+    .where('container', 'in', ['BANK', 'BAG'])
+    .execute();
+  const owned = new Map<string, number>();
+  for (const s of stacks) owned.set(s.item, (owned.get(s.item) ?? 0) + s.qty);
+  const reserved = new Set(
+    (await db.selectFrom('player_reserved_material').select('item').where('player_id', '=', playerId).execute()).map((r) => r.item),
+  );
+  return { recipes: new Map(rows.map((r) => [r.out, r])), owned, reserved };
+}

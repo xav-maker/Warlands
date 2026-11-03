@@ -141,6 +141,34 @@ describe('parcours de jeu (J2)', () => {
     expect(sac.body).toContain('médiocre');
   });
 
+  it('recrute à la caserne, engage et retire, désactive une capacité', async () => {
+    const page = await req('GET', '/caserne');
+    expect(page.statusCode).toBe(200);
+    expect(page.body).toContain('Acolyte');
+    expect((await req('POST', '/caserne/recruter', { type: 'acolyte' })).headers.location).toBe('/caserne');
+    const pid = await playerId();
+    // L'escouade de haut niveau est pleine : la recrue attend en caserne.
+    const acolyte = await t.db
+      .selectFrom('troop')
+      .selectAll()
+      .where('player_id', '=', pid)
+      .where('type', '=', 'acolyte')
+      .where('level', '=', 1)
+      .executeTakeFirstOrThrow();
+    expect(acolyte.container).toBe('BARRACKS');
+    expect((await req('POST', '/caserne/recruter', { type: 'acolyte' })).headers.location).toBe('/caserne?e=NOT_ENOUGH_ITEMS');
+    expect((await req('POST', `/troupe/${acolyte.id}/engager`, { back: '/caserne' })).headers.location).toBe('/caserne?e=SQUAD_FULL');
+
+    const troop = await req('GET', `/troupe/${acolyte.id}`);
+    expect(troop.body).toContain('Soin mineur');
+    await req('POST', `/troupe/${acolyte.id}/capacites`, { off_soin_mineur: 'on' });
+    expect(
+      (await t.db.selectFrom('troop').select('disabled_skills').where('id', '=', acolyte.id).executeTakeFirstOrThrow()).disabled_skills,
+    ).toEqual(['soin_mineur']);
+    await req('POST', `/troupe/${acolyte.id}/rang`, { rank: '2' });
+    expect((await t.db.selectFrom('troop').select('rank').where('id', '=', acolyte.id).executeTakeFirstOrThrow()).rank).toBe(2);
+  });
+
   it('sert le Codex, même sans être connecté', async () => {
     jar.clear();
     for (const [p, text] of [
