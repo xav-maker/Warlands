@@ -34,6 +34,12 @@ Les déploiements de préproduction passent l'un après l'autre (`concurrency`).
    - la variable `PREPROD_URL` (par exemple `https://cr-preprod-web.onrender.com`).
 7. Relancer le job `deploy-preprod`. Créer un compte sur la préproduction et vérifier que l'e-mail arrive : J0 est alors fini.
 
+## État
+
+Mis en place le 3 novembre 2026 : https://cr-preprod-web.onrender.com. Inscription, e-mail de vérification (Brevo) et connexion vérifiés ; le job `deploy-preprod` déploie et vérifie chaque push sur `main`.
+
+**Synchronisation du Blueprint.** L'image fixée dans `render-preprod.yaml` ne sert qu'à la création des services : ensuite, c'est la CI qui choisit l'image (crochets de déploiement). Désactiver la synchronisation automatique du Blueprint dans Render (_Blueprints → le Blueprint → Settings_), sinon un push qui touche ce fichier pourrait redéployer l'image qui y est écrite. Synchroniser à la main quand on change l'infrastructure (plans, variables, services).
+
 ## À vérifier sur Render avant la production
 
 C'est la grille de la section 18 du guide. Ces points sont à confirmer sur les offres du moment :
