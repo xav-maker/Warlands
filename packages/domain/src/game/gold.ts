@@ -18,7 +18,8 @@ export type SystemAccount =
   | 'SINK_EVOLUTION'
   | 'SINK_REBUY_UNIT'
   | 'SINK_CRAFT'
-  | 'SINK_SHOP_TAX';
+  | 'SINK_SHOP_TAX'
+  | 'SINK_QUEST_ABANDON';
 export type GoldParty = { player: number } | { system: SystemAccount };
 
 async function accountId(tx: Tx, p: GoldParty): Promise<number> {

@@ -53,6 +53,9 @@ export const ERROR_CODES = [
   'LEVEL_TOO_LOW',
   'CANNOT_WEAR',
   'FORM_UNAVAILABLE',
+  'QUEST_NOT_FOUND',
+  'QUEST_ELSEWHERE',
+  'NOT_ENOUGH_SLOTS',
 ] as const;
 
 export type ErrorCode = (typeof ERROR_CODES)[number];

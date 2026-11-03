@@ -48,6 +48,9 @@ const FR: Record<ErrorCode, string> = {
   LEVEL_TOO_LOW: 'Niveau insuffisant pour porter cet objet.',
   CANNOT_WEAR: 'Cette troupe ne peut pas porter cette catégorie d’objet.',
   FORM_UNAVAILABLE: 'Cette évolution n’est pas accessible depuis la forme actuelle.',
+  QUEST_NOT_FOUND: 'Quête introuvable.',
+  QUEST_ELSEWHERE: 'Cette quête se rend à {ville}.',
+  NOT_ENOUGH_SLOTS: 'Il faut {n} emplacements libres en banque ou dans le sac.',
 };
 
 export function messageFr(code: ErrorCode, details?: Record<string, string | number>): string {

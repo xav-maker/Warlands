@@ -1,6 +1,6 @@
 /** Lecture de l'état d'un joueur pour les pages (aucune écriture). */
 import type { Db } from '@cr/db';
-import type { MonsterGroup } from '@cr/gen';
+import type { MonsterGroup, Quest } from '@cr/gen';
 import { departures, destination, region } from './content.ts';
 import type { Departure, GameContent } from './content.ts';
 import { balance } from './gold.ts';
@@ -143,4 +143,25 @@ export async function recipeView(db: Db, playerId: number) {
     (await db.selectFrom('player_reserved_material').select('item').where('player_id', '=', playerId).execute()).map((r) => r.item),
   );
   return { recipes: new Map(rows.map((r) => [r.out, r])), owned, reserved };
+}
+
+/** Quêtes proposées au joueur, par ville, avec les trophées possédés. */
+export async function questView(db: Db, playerId: number) {
+  const rows = await db
+    .selectFrom('quest')
+    .select(['id', 'region', 'n', 'data'])
+    .where('player_id', '=', playerId)
+    .where('status', '=', 'offered')
+    .orderBy('region')
+    .orderBy('n')
+    .execute();
+  const stacks = await db
+    .selectFrom('item_stack')
+    .select(['item', 'qty'])
+    .where('player_id', '=', playerId)
+    .where('container', 'in', ['BANK', 'BAG'])
+    .execute();
+  const owned = new Map<string, number>();
+  for (const s of stacks) owned.set(s.item, (owned.get(s.item) ?? 0) + s.qty);
+  return { quests: rows.map((r) => ({ id: r.id, region: r.region, q: r.data as Quest })), owned };
 }

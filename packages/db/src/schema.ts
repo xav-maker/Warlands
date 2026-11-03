@@ -222,6 +222,18 @@ export interface PlayerReservedMaterialTable {
   item: string;
 }
 
+export interface QuestTable {
+  id: Generated<number>;
+  player_id: number;
+  region: string;
+  n: number;
+  data: ColumnType<unknown, string, string>;
+  status: 'offered' | 'done' | 'abandoned';
+  content_version: string;
+  created_at: CreatedAt;
+  closed_at: Date | null;
+}
+
 export interface IdempotencyKeyTable {
   player_id: number;
   key: string;
@@ -250,6 +262,7 @@ export interface Database {
   battle_participant: BattleParticipantTable;
   player_recipe: PlayerRecipeTable;
   player_reserved_material: PlayerReservedMaterialTable;
+  quest: QuestTable;
 }
 
 export type Account = Selectable<AccountTable>;

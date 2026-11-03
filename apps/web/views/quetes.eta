@@ -1,0 +1,31 @@
+<% layout('./layout', { title: 'Quêtes' }) %>
+<% const qv = it.qv; const regions = [...new Set(qv.quests.map((x) => x.region))] %>
+<% const order = it.here ? [it.here, ...regions.filter((r) => r !== it.here)] : regions %>
+<% const reward = (rw) => rw.kind === 'equip' ? it.L.item(rw.base) + ' (qualité ' + it.L.quality(rw.roll) + ')' : rw.kind === 'troop' ? it.L.troop(rw.type) + ' niveau ' + rw.level : rw.items.map(([i, k]) => it.L.item(i) + ' × ' + k).join(', ') %>
+<section>
+  <h1>Quêtes</h1>
+  <p class="muted">Chaque ville propose 5 quêtes : rapporter des trophées de monstres rares. Les monstres rares apparaissent une fois 10 victoires remportées. Une quête se rend dans sa ville ; renoncer coûte 10 or × palier de la ville.</p>
+  <% for (const rid of order) { const R = it.L.region(rid); const list = qv.quests.filter((x) => x.region === rid) %>
+    <div class="card">
+      <h2><%= R.city.name %><%= rid === it.here ? ' (vous y êtes)' : '' %></h2>
+      <ul class="items">
+        <% for (const { id, q } of list) { const ok = q.needs.every(([t, k]) => (qv.owned.get(t) ?? 0) >= k) %>
+          <li>
+            <div class="row between">
+              <span><b><%= q.title %></b> <span class="muted">— <%= q.giver %></span></span>
+              <% if (rid === it.here) { %>
+                <span class="actions">
+                  <form method="post" action="/quetes/<%= id %>/rendre" class="inline"><input type="hidden" name="_csrf" value="<%= it.csrf %>"><button type="submit" class="primary"<%= ok ? '' : ' disabled' %>>Rendre</button></form>
+                  <form method="post" action="/quetes/<%= id %>/renoncer" class="inline"><input type="hidden" name="_csrf" value="<%= it.csrf %>"><button type="submit">Renoncer (<%= 10 * R.tier %> or)</button></form>
+                </span>
+              <% } %>
+            </div>
+            <p class="muted"><%= q.text %></p>
+            <p>Demande : <%= q.needs.map(([t, k]) => it.L.item(t) + ' ' + (qv.owned.get(t) ?? 0) + '/' + k).join(', ') %> · Récompense : <b><%= q.gold %> or</b> et <%= reward(q.reward) %></p>
+          </li>
+        <% } %>
+      </ul>
+    </div>
+  <% } %>
+  <p><a href="/jeu">Retour</a></p>
+</section>

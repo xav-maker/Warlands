@@ -215,6 +215,14 @@ describe('parcours de jeu (J2)', () => {
     expect((await req('GET', '/sac')).body).toContain('inutile pour vous');
   });
 
+  it('affiche les quêtes de chaque ville, rendables dans la ville actuelle', async () => {
+    const r = await req('GET', '/quetes');
+    expect(r.statusCode).toBe(200);
+    expect(r.body).toContain('Havre-Gris (vous y êtes)');
+    expect(r.body).toContain('Port-Salant');
+    expect(r.body).toContain('Renoncer (10 or)');
+  });
+
   it('sert le Codex, même sans être connecté', async () => {
     jar.clear();
     for (const [p, text] of [

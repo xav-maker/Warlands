@@ -15,6 +15,7 @@ import { transferGold } from './gold.ts';
 import { addInstance, addStack, moveInstance, stackQty, takeStack } from './inventory.ts';
 import { loadTroops, setUnit, statsOf } from './troops.ts';
 import { recipes } from './recipes.ts';
+import { ensureQuests } from './quests.ts';
 
 /**
  * Commande neutre appelée avant chaque page : remet le kit de départ si besoin et matérialise les recettes
@@ -27,6 +28,7 @@ export const ensureStarted = command({
   allowedDuringWatch: true,
   async run(ctx) {
     await recipes(ctx.tx, ctx.content, ctx.player);
+    await ensureQuests(ctx.tx, ctx.content, ctx.player);
     return {};
   },
 });

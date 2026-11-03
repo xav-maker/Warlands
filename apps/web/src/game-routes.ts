@@ -38,6 +38,9 @@ import {
   workshopOf,
   evolve,
   evolutionPreview,
+  questView,
+  turnInQuest,
+  abandonQuest,
   scaled,
   setDisabledSkills,
   setRank,
@@ -84,7 +87,7 @@ export function labels(c: GameContent) {
 }
 
 /** Chemins de retour autorisés après une action (jamais une URL fournie telle quelle). */
-const BACK = new Set(['/ville', '/route', '/sac', '/marchand', '/caserne', '/atelier']);
+const BACK = new Set(['/ville', '/route', '/sac', '/marchand', '/caserne', '/atelier', '/quetes']);
 const backOf = (b: Record<string, string>, fallback: string): string => (BACK.has(b.back ?? '') ? b.back! : fallback);
 const errorOf = (q: unknown): string | undefined => {
   const e = (q as Record<string, string | undefined>).e;
@@ -365,6 +368,21 @@ export function registerGameRoutes(app: FastifyInstance, d: GameRouteDeps): void
     const id = int((req.params as { id: string }).id);
     const b = body(req);
     return act(req, reply, `/troupe/${id}`, async () => void (await d.run(req, unequip, { troop: id, unit: int(b.unit), slot: b.slot })));
+  });
+
+  // ---------- Quêtes ----------
+  app.get('/quetes', async (req, reply) => {
+    const v = await view(req);
+    const qv = await questView(d.db, d.requireAuth(req).player.id);
+    return d.page(req, reply, 'quetes', { v, L, qv, here: v.kind === 'city' ? v.region : null, error: errorOf(req.query) });
+  });
+  app.post('/quetes/:id/:action', (req, reply) => {
+    const { id, action } = req.params as { id: string; action: string };
+    return act(req, reply, '/quetes', async () => {
+      if (action === 'rendre') await d.run(req, turnInQuest, { quest: int(id) });
+      else if (action === 'renoncer') await d.run(req, abandonQuest, { quest: int(id) });
+      return '/quetes';
+    });
   });
 
   // ---------- Marchand ----------
