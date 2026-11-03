@@ -18,7 +18,8 @@
     "format:check": "prettier --check .",
     "deps:check": "depcruise apps packages --config .dependency-cruiser.cjs",
     "test": "vitest run",
-    "build": "pnpm -r --filter \"./apps/*\" build"
+    "build": "pnpm -r --filter \"./apps/*\" build",
+    "golden:v0.4": "pnpm --filter @cr/extract-prototype golden:v0.4"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",

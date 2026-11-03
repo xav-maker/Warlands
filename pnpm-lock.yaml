@@ -168,6 +168,14 @@ importers:
         specifier: workspace:*
         version: link:../testing
 
+  packages/engine:
+    dependencies:
+      '@cr/rng':
+        specifier: workspace:*
+        version: link:../rng
+
+  packages/rng: {}
+
   packages/shared:
     dependencies:
       zod:
@@ -189,6 +197,8 @@ importers:
       '@types/pg':
         specifier: ^8.23.1
         version: 8.23.1
+
+  tools/extract-prototype: {}
 
 packages:
 

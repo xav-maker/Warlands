@@ -3,3 +3,4 @@ dist/
 prototype-extrait/
 docs/
 *.eta
+packages/engine/golden/

@@ -4,10 +4,11 @@ Version en ligne du jeu décrit dans [`docs/README-jeu.md`](docs/README-jeu.md),
 
 ## État
 
-| Jalon     | État                                                                                                                                                                 |
-| --------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| J0. Socle | en cours : dépôt, CI, comptes, sessions, squelette de commande faits ; déploiement Render préparé, mise en place à faire ([`infra/deploy/`](infra/deploy/README.md)) |
-| J1 à J10  | à venir                                                                                                                                                              |
+| Jalon                 | État                                                                                                                                                                                       |
+| --------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| J0. Socle             | en cours : dépôt, CI, comptes, sessions, squelette de commande faits ; déploiement Render préparé, mise en place à faire ([`infra/deploy/`](infra/deploy/README.md))                       |
+| J1. Moteur et contenu | en cours : `packages/rng` et `packages/engine` (proto-0.4-ville) portés, 227 combats de référence verts ; à faire : corrections du README 16, moteur v1, `packages/gen`, YAML, content-cli |
+| J2 à J10              | à venir                                                                                                                                                                                    |
 
 ## Démarrer en local
 
@@ -37,11 +38,14 @@ pnpm test           # démarre un Postgres par Testcontainers, ou utilise TEST_D
 apps/web          serveur HTTP (Fastify, templates Eta, htmx)
 apps/worker       tâches pg-boss
 packages/shared   codes d'erreur métier et leurs textes
+packages/rng      aléa déterministe (xoshiro128**, FNV-1a), copie du prototype
+packages/engine   moteur de combat pur ; golden/ : combats de référence
 packages/db       schéma Kysely, migrations
 packages/domain   commandes métier : squelette transactionnel, identité
 packages/testing  base de test réelle pour les tests d'intégration
 infra/docker      compose de développement, Dockerfile (rôles web, worker, migrate)
 infra/deploy      Blueprint Render et script de déploiement de la préproduction
+tools/extract-prototype  charge le prototype et en tire les combats de référence (pnpm golden:v0.4)
 docs/             spécifications du jeu
 prototype-extrait/ code du prototype (proto-0.4-ville), extrait du bundle publié : référence pour J1
 ```

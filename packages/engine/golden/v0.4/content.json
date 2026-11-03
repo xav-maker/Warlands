@@ -1,0 +1,1756 @@
+{
+ "engineVersion": "proto-0.4-ville",
+ "params": {
+  "timeLimit": 3000,
+  "tick": 20,
+  "waitRegen": 50,
+  "waitManaRegen": 50,
+  "woundWill": 500,
+  "allyDeathWill": 100,
+  "sameTroopDeathWill": 200,
+  "killWill": 100,
+  "hasteMod": 750,
+  "slowMod": 1250,
+  "resCap": 750,
+  "resFloor": -1000,
+  "moveMult": 1000,
+  "fleeMult": 2000,
+  "manaSkipsRule": 1,
+  "stallTime": 100,
+  "dotTick": 4,
+  "healMult": 1200,
+  "healCooldown": 60,
+  "hotCooldown": 100
+ },
+ "skills": {
+  "emploi": {
+   "kind": "active",
+   "target": "enemy",
+   "range": 1,
+   "energy": 0,
+   "mana": 0,
+   "durBase": "weapon",
+   "durMult": 1000,
+   "p": {},
+   "name": "Emploi d'arme",
+   "energyW": 1000,
+   "dtype": "weapon",
+   "attack": true,
+   "melee": true,
+   "desc": "1x dégâts de l'arme. DE : un autre ennemi. EC : se frappe."
+  },
+  "exploit": {
+   "kind": "active",
+   "target": "enemy",
+   "range": 1,
+   "energy": 0,
+   "mana": 0,
+   "durBase": "weapon",
+   "durMult": 1500,
+   "p": {
+    "mult": 2000,
+    "bleed": 4,
+    "bleedDur": 60,
+    "stun": 20
+   },
+   "name": "Exploit d'arme",
+   "energyW": 2000,
+   "dtype": "weapon",
+   "attack": true,
+   "melee": true,
+   "desc": "2x dégâts + spécial (Saignement si tranchant, Étourdi si contondant). DE : rien. EC : frappe un allié."
+  },
+  "meditation": {
+   "kind": "active",
+   "target": "self",
+   "range": 1,
+   "energy": 10,
+   "mana": 0,
+   "durBase": "unit",
+   "durMult": 2000,
+   "p": {
+    "ok": 200,
+    "half": 50,
+    "crit": 100
+   },
+   "name": "Méditation",
+   "desc": "+20 % de volonté. DE : +5 %. EC : perd 10 % de PV."
+  },
+  "repos": {
+   "kind": "active",
+   "target": "self",
+   "range": 1,
+   "energy": 0,
+   "mana": 0,
+   "durBase": "unit",
+   "durMult": 1000,
+   "p": {
+    "ok": 100,
+    "crit": 75
+   },
+   "name": "Repos",
+   "desc": "+10 % d'énergie. DE : rien. EC : perd 7,5 % de PV."
+  },
+  "coup_bouclier": {
+   "kind": "active",
+   "target": "enemy",
+   "range": 1,
+   "energy": 15,
+   "mana": 0,
+   "durBase": "weapon",
+   "durMult": 1000,
+   "p": {
+    "mult": 500,
+    "stun": 30
+   },
+   "name": "Coup de bouclier",
+   "dtype": "contondant",
+   "attack": true,
+   "melee": true,
+   "desc": "0,5x dégâts + Étourdi 30. DE : sans étourdir. EC : s’étourdit."
+  },
+  "repousser": {
+   "kind": "active",
+   "target": "enemy",
+   "range": 1,
+   "energy": 15,
+   "mana": 0,
+   "durBase": "weapon",
+   "durMult": 1000,
+   "p": {
+    "mult": 500,
+    "stun": 30
+   },
+   "name": "Repousser",
+   "dtype": "contondant",
+   "attack": true,
+   "melee": true,
+   "desc": "0,5x dégâts, la cible recule (Étourdi 30 si déjà à 3). DE : sans recul. EC : le lanceur recule."
+  },
+  "repousser_renforce": {
+   "kind": "active",
+   "target": "self",
+   "range": 1,
+   "energy": 20,
+   "mana": 0,
+   "durBase": "weapon",
+   "durMult": 1000,
+   "p": {
+    "mult": 500,
+    "stun": 30
+   },
+   "name": "Repousser renforcé",
+   "dtype": "contondant",
+   "melee": true,
+   "desc": "Repousser sur tous les ennemis au contact."
+  },
+  "provocation": {
+   "kind": "active",
+   "target": "self",
+   "range": 1,
+   "energy": 15,
+   "mana": 0,
+   "durBase": "unit",
+   "durMult": 1000,
+   "p": {
+    "dur": 60,
+    "halfDur": 30,
+    "crit": 150
+   },
+   "name": "Provocation",
+   "desc": "Les attaques ennemies doivent le viser s’il est à portée, 60 instants. DE : 30. EC : −15 % de volonté."
+  },
+  "riposte": {
+   "kind": "reaction",
+   "target": "self",
+   "range": 1,
+   "energy": 10,
+   "mana": 0,
+   "durBase": "unit",
+   "durMult": 1000,
+   "p": {
+    "mult": 500
+   },
+   "name": "Riposte",
+   "desc": "Réaction : touché au corps à corps, contre-attaque à 0,5x (10 énergie)."
+  },
+  "dernier_rempart": {
+   "kind": "passive",
+   "target": "self",
+   "range": 1,
+   "energy": 0,
+   "mana": 0,
+   "durBase": "unit",
+   "durMult": 1000,
+   "p": {
+    "will": 200
+   },
+   "name": "Dernier rempart",
+   "desc": "Passif, une fois : un allié du même rang qui devrait mourir reste à 1 PV ; −20 % de volonté."
+  },
+  "mur_boucliers": {
+   "kind": "active",
+   "target": "self",
+   "range": 1,
+   "energy": 25,
+   "mana": 0,
+   "durBase": "unit",
+   "durMult": 2000,
+   "p": {
+    "shield": 25,
+    "dur": 80
+   },
+   "name": "Mur de boucliers",
+   "desc": "Bouclier de 25 aux alliés de son rang, 80 instants. DE : sur lui seul."
+  },
+  "execution": {
+   "kind": "active",
+   "target": "enemy",
+   "range": 1,
+   "energy": 25,
+   "mana": 0,
+   "durBase": "weapon",
+   "durMult": 1500,
+   "p": {
+    "threshold": 250,
+    "bonusMult": 3000
+   },
+   "name": "Exécution",
+   "dtype": "tranchant",
+   "attack": true,
+   "melee": true,
+   "desc": "1x dégâts, triplés sous 25 % de PV. DE : rien. EC : frappe un allié."
+  },
+  "fracas": {
+   "kind": "active",
+   "target": "enemy",
+   "range": 1,
+   "energy": 20,
+   "mana": 0,
+   "durBase": "weapon",
+   "durMult": 1500,
+   "p": {
+    "half": 500,
+    "bonusMult": 3000
+   },
+   "name": "Fracas",
+   "dtype": "contondant",
+   "attack": true,
+   "melee": true,
+   "desc": "1x dégâts, triplés si la cible est Gelée (brise le gel). DE : 0,5x. EC : frappe un allié."
+  },
+  "brise_armure": {
+   "kind": "active",
+   "target": "enemy",
+   "range": 1,
+   "energy": 15,
+   "mana": 0,
+   "durBase": "weapon",
+   "durMult": 1000,
+   "p": {
+    "mult": 500,
+    "res": 200,
+    "cap": 3,
+    "dur": 100
+   },
+   "name": "Brise-armure",
+   "dtype": "tranchant",
+   "attack": true,
+   "melee": true,
+   "desc": "0,5x dégâts et −20 % de résistance physique, cumulable 3. DE : sans l’affaiblissement. EC : sur soi."
+  },
+  "charge": {
+   "kind": "active",
+   "target": "enemy",
+   "range": 4,
+   "energy": 25,
+   "mana": 0,
+   "durBase": "unit",
+   "durMult": 1500,
+   "p": {
+    "mult": 1500,
+    "stun": 20
+   },
+   "name": "Charge",
+   "minRange": 2,
+   "dtype": "contondant",
+   "attack": true,
+   "melee": true,
+   "desc": "Avance au rang 1 et frappe à 1,5x. DE : avance sans frapper. EC : avance et s’étourdit."
+  },
+  "tir_fronde": {
+   "kind": "active",
+   "target": "enemy",
+   "range": 3,
+   "energy": 0,
+   "mana": 0,
+   "durBase": "weapon",
+   "durMult": 1000,
+   "p": {},
+   "name": "Tir de fronde",
+   "energyW": 1000,
+   "dtype": "weapon",
+   "attack": true,
+   "desc": "1x dégâts de l'arme, portée 3. DE : autre ennemi. EC : touche un allié."
+  },
+  "volee": {
+   "kind": "active",
+   "target": "enemy",
+   "range": 4,
+   "energy": 30,
+   "mana": 0,
+   "durBase": "weapon",
+   "durMult": 2000,
+   "p": {
+    "mult": 600
+   },
+   "name": "Volée",
+   "dtype": "weapon",
+   "attack": true,
+   "desc": "0,6x dégâts à tout un rang. DE : une seule unité. EC : rien."
+  },
+  "tir_arc": {
+   "kind": "active",
+   "target": "enemy",
+   "range": 4,
+   "energy": 0,
+   "mana": 0,
+   "durBase": "weapon",
+   "durMult": 1000,
+   "p": {},
+   "name": "Tir à l'arc",
+   "energyW": 1000,
+   "dtype": "weapon",
+   "attack": true,
+   "desc": "1x dégâts de l'arme, portée 4. DE : autre ennemi. EC : touche un allié."
+  },
+  "tir_precis": {
+   "kind": "active",
+   "target": "enemy",
+   "range": 5,
+   "energy": 25,
+   "mana": 0,
+   "durBase": "weapon",
+   "durMult": 2000,
+   "p": {
+    "mult": 2000
+   },
+   "name": "Tir précis",
+   "dtype": "weapon",
+   "attack": true,
+   "desc": "2x dégâts, ignore 50 % des résistances. DE : 1x. EC : rien."
+  },
+  "marque": {
+   "kind": "active",
+   "target": "enemy",
+   "range": 5,
+   "energy": 10,
+   "mana": 0,
+   "durBase": "unit",
+   "durMult": 1000,
+   "p": {
+    "uses": 3,
+    "dur": 100,
+    "bonus": 300
+   },
+   "name": "Marque du chasseur",
+   "desc": "Les 3 prochaines attaques alliées sur la cible font +30 %. DE : 1 attaque. EC : sur un allié."
+  },
+  "soin_mineur": {
+   "kind": "active",
+   "target": "ally",
+   "range": 2,
+   "energy": 0,
+   "mana": 8,
+   "durBase": "unit",
+   "durMult": 1000,
+   "p": {
+    "ok": 250,
+    "half": 100,
+    "crit": 100
+   },
+   "name": "Soin mineur",
+   "desc": "+25 % des PV max. DE : +10 %. EC : −10 %."
+  },
+  "regeneration": {
+   "kind": "active",
+   "target": "ally",
+   "range": 2,
+   "energy": 0,
+   "mana": 10,
+   "durBase": "unit",
+   "durMult": 1000,
+   "p": {
+    "perTick": 30,
+    "dur": 100,
+    "halfDur": 50
+   },
+   "name": "Régénération",
+   "desc": "+3 % des PV max par tic, 100 instants. DE : 50. EC : sur un ennemi."
+  },
+  "priere": {
+   "kind": "active",
+   "target": "self",
+   "range": 1,
+   "energy": 0,
+   "mana": 18,
+   "durBase": "unit",
+   "durMult": 3000,
+   "p": {
+    "ok": 100,
+    "crit": 200
+   },
+   "name": "Prière collective",
+   "desc": "+10 % des PV max à tous les alliés. DE : son rang. EC : −20 % de volonté."
+  },
+  "purification": {
+   "kind": "active",
+   "target": "ally",
+   "range": 2,
+   "energy": 0,
+   "mana": 10,
+   "durBase": "unit",
+   "durMult": 1000,
+   "p": {},
+   "name": "Purification",
+   "desc": "Retire les états négatifs. DE : le plus récent. EC : retire les positifs."
+  },
+  "trait_sacre": {
+   "kind": "active",
+   "target": "enemy",
+   "range": 5,
+   "energy": 0,
+   "mana": 10,
+   "durBase": "unit",
+   "durMult": 1000,
+   "p": {
+    "dmg": 20,
+    "tagMult": 2000
+   },
+   "name": "Trait sacré",
+   "attack": true,
+   "desc": "20 dégâts sacrés, x2 contre mort-vivant et démon. DE : moitié. EC : soigne la cible."
+  },
+  "trait_sacre_renforce": {
+   "kind": "active",
+   "target": "enemy",
+   "range": 5,
+   "energy": 0,
+   "mana": 12,
+   "durBase": "unit",
+   "durMult": 1000,
+   "p": {
+    "dmg": 20,
+    "tagMult": 3000
+   },
+   "name": "Trait sacré renforcé",
+   "attack": true,
+   "desc": "Trait sacré, x3 contre mort-vivant et démon."
+  },
+  "bouclier_foi": {
+   "kind": "active",
+   "target": "ally",
+   "range": 2,
+   "energy": 0,
+   "mana": 12,
+   "durBase": "unit",
+   "durMult": 1000,
+   "p": {
+    "ok": 40,
+    "half": 15,
+    "dur": 100
+   },
+   "name": "Bouclier de foi",
+   "desc": "Bouclier de 40 PV, 100 instants. DE : 15. EC : rien."
+  },
+  "aura_serenite": {
+   "kind": "passive",
+   "target": "self",
+   "range": 1,
+   "energy": 0,
+   "mana": 0,
+   "durBase": "unit",
+   "durMult": 1000,
+   "p": {
+    "will": 50
+   },
+   "name": "Aura de sérénité",
+   "desc": "Passif : +5 % de volonté par tic aux alliés de son rang."
+  },
+  "confusion": {
+   "kind": "active",
+   "target": "enemy",
+   "range": 5,
+   "energy": 0,
+   "mana": 10,
+   "durBase": "unit",
+   "durMult": 1000,
+   "p": {
+    "dur": 200,
+    "half": 100
+   },
+   "name": "Confusion",
+   "desc": "La prochaine action de la cible est un demi-échec. DE : −10 % de volonté. EC : sur soi."
+  },
+  "confusion_moine": {
+   "kind": "active",
+   "target": "enemy",
+   "range": 5,
+   "energy": 20,
+   "mana": 0,
+   "durBase": "unit",
+   "durMult": 1000,
+   "p": {
+    "dur": 200,
+    "half": 100
+   },
+   "name": "Confusion (moine)",
+   "desc": "Confusion sans mana, 20 énergie."
+  },
+  "trait_flammes": {
+   "kind": "active",
+   "target": "enemy",
+   "range": 4,
+   "energy": 0,
+   "mana": 5,
+   "durBase": "unit",
+   "durMult": 1000,
+   "p": {
+    "dmg": 15,
+    "burn": 6,
+    "burnDur": 20
+   },
+   "name": "Trait de flammes",
+   "attack": true,
+   "desc": "15 dégâts de feu + Brûlure courte. DE : sans brûlure. EC : Brûlure sur soi."
+  },
+  "boule_feu": {
+   "kind": "active",
+   "target": "enemy",
+   "range": 5,
+   "energy": 0,
+   "mana": 15,
+   "durBase": "unit",
+   "durMult": 2000,
+   "p": {
+    "dmg": 30,
+    "splash": 10,
+    "burn": 6,
+    "burnDur": 40
+   },
+   "name": "Boule de feu",
+   "attack": true,
+   "desc": "30 à la cible, 10 à son rang, Brûlure. DE : autre unité du rang. EC : explose sur son rang."
+  },
+  "arme_enflammee": {
+   "kind": "active",
+   "target": "ally",
+   "range": 1,
+   "energy": 0,
+   "mana": 10,
+   "durBase": "unit",
+   "durMult": 1000,
+   "p": {
+    "dur": 80,
+    "halfDur": 40,
+    "bonus": 8,
+    "burn": 4,
+    "burnDur": 40
+   },
+   "name": "Arme enflammée",
+   "desc": "Les attaques d’arme de l’allié ajoutent 8 feu et Brûlure, 80 instants. DE : 40. EC : Brûlure sur l’allié."
+  },
+  "mur_flammes": {
+   "kind": "active",
+   "target": "enemy",
+   "range": 5,
+   "energy": 0,
+   "mana": 18,
+   "durBase": "unit",
+   "durMult": 2000,
+   "p": {
+    "burn": 6,
+    "burnDur": 60
+   },
+   "name": "Mur de flammes",
+   "desc": "Brûlure à tout un rang ennemi. DE : une unité. EC : son propre rang."
+  },
+  "embrasement": {
+   "kind": "active",
+   "target": "enemy",
+   "range": 5,
+   "energy": 0,
+   "mana": 20,
+   "durBase": "unit",
+   "durMult": 2000,
+   "p": {},
+   "name": "Embrasement",
+   "desc": "Chaque ennemi qui brûle subit le double des dégâts de brûlure restants. DE : le plus proche. EC : les alliés."
+  },
+  "coeur_ardent": {
+   "kind": "passive",
+   "target": "self",
+   "range": 1,
+   "energy": 0,
+   "mana": 0,
+   "durBase": "unit",
+   "durMult": 1000,
+   "p": {
+    "bonus": 200
+   },
+   "name": "Cœur ardent",
+   "desc": "Passif : dégâts de feu +20 % sur les cibles qui brûlent."
+  },
+  "lame_saignante": {
+   "kind": "active",
+   "target": "enemy",
+   "range": 1,
+   "energy": 15,
+   "mana": 0,
+   "durBase": "weapon",
+   "durMult": 1000,
+   "p": {
+    "mult": 800,
+    "bleed": 5,
+    "bleedDur": 60
+   },
+   "name": "Lame saignante",
+   "dtype": "tranchant",
+   "attack": true,
+   "melee": true,
+   "desc": "0,8x dégâts + Saignement. DE : sans saignement. EC : saigne lui-même."
+  },
+  "cri_guerre": {
+   "kind": "active",
+   "target": "self",
+   "range": 1,
+   "energy": 20,
+   "mana": 0,
+   "durBase": "unit",
+   "durMult": 1000,
+   "p": {
+    "will": 200,
+    "atk": 100,
+    "dur": 80,
+    "crit": 100
+   },
+   "name": "Cri de guerre",
+   "desc": "+20 % de volonté et +10 % d’attaque aux alliés, 80 instants. DE : lui seul. EC : −10 % de volonté."
+  },
+  "rage": {
+   "kind": "passive",
+   "target": "self",
+   "range": 1,
+   "energy": 0,
+   "mana": 0,
+   "durBase": "unit",
+   "durMult": 1000,
+   "p": {
+    "atkPer10": 20
+   },
+   "name": "Rage",
+   "desc": "Passif : +2 % d’attaque par 10 % de PV perdus ; ses blessures ne baissent pas sa volonté."
+  },
+  "tourbillon": {
+   "kind": "active",
+   "target": "self",
+   "range": 1,
+   "energy": 35,
+   "mana": 0,
+   "durBase": "weapon",
+   "durMult": 2000,
+   "p": {
+    "half": 500
+   },
+   "name": "Tourbillon",
+   "dtype": "tranchant",
+   "melee": true,
+   "desc": "1x dégâts à tous les ennemis au contact. DE : moitié. EC : touche aussi son rang."
+  },
+  "morsure": {
+   "kind": "active",
+   "target": "enemy",
+   "range": 1,
+   "energy": 0,
+   "mana": 0,
+   "durBase": "weapon",
+   "durMult": 1000,
+   "p": {
+    "threshold": 500,
+    "bleed": 5,
+    "bleedDur": 60
+   },
+   "name": "Morsure",
+   "energyW": 1000,
+   "dtype": "tranchant",
+   "attack": true,
+   "melee": true,
+   "desc": "1x dégâts + Saignement si la cible est sous 50 %. DE : sans saignement. EC : rien."
+  },
+  "hurlement": {
+   "kind": "active",
+   "target": "self",
+   "range": 1,
+   "energy": 20,
+   "mana": 0,
+   "durBase": "unit",
+   "durMult": 1000,
+   "p": {
+    "ally": 150,
+    "enemy": 100,
+    "crit": 100
+   },
+   "name": "Hurlement",
+   "desc": "+15 % de volonté aux alliés, −10 % aux ennemis des rangs 1 et 2. DE : alliés seulement. EC : −10 % aux alliés."
+  },
+  "instinct_meute": {
+   "kind": "passive",
+   "target": "self",
+   "range": 1,
+   "energy": 0,
+   "mana": 0,
+   "durBase": "unit",
+   "durMult": 1000,
+   "p": {
+    "bonus": 150
+   },
+   "name": "Instinct de meute",
+   "desc": "Passif : +15 % sur une cible déjà attaquée par l’autre loup depuis le dernier tic."
+  },
+  "drain": {
+   "kind": "active",
+   "target": "enemy",
+   "range": 3,
+   "energy": 0,
+   "mana": 12,
+   "durBase": "unit",
+   "durMult": 2000,
+   "p": {
+    "dmg": 20,
+    "crit": 10
+   },
+   "name": "Drain de vie",
+   "attack": true,
+   "desc": "20 ténèbres, récupère la moitié. DE : sans soin. EC : le lien s’inverse."
+  },
+  "murmure": {
+   "kind": "active",
+   "target": "enemy",
+   "range": 5,
+   "energy": 0,
+   "mana": 10,
+   "durBase": "unit",
+   "durMult": 1000,
+   "p": {
+    "dmg": 10,
+    "will": 250,
+    "half": 100,
+    "crit": 150
+   },
+   "name": "Murmure de terreur",
+   "attack": true,
+   "desc": "10 psychiques et −25 % de volonté. DE : −10 %. EC : −15 % sur soi."
+  },
+  "terreur_masse": {
+   "kind": "active",
+   "target": "enemy",
+   "range": 5,
+   "energy": 0,
+   "mana": 18,
+   "durBase": "unit",
+   "durMult": 2000,
+   "p": {
+    "dmg": 10,
+    "will": 250,
+    "half": 100,
+    "crit": 150
+   },
+   "name": "Terreur de masse",
+   "desc": "Murmure de terreur sur tout un rang."
+  },
+  "malediction": {
+   "kind": "active",
+   "target": "enemy",
+   "range": 5,
+   "energy": 0,
+   "mana": 12,
+   "durBase": "unit",
+   "durMult": 2000,
+   "p": {
+    "res": 250,
+    "dur": 80,
+    "halfDur": 40
+   },
+   "name": "Malédiction de faiblesse",
+   "desc": "−25 % de résistance à tout, 80 instants. DE : 40. EC : sur soi."
+  },
+  "nuage": {
+   "kind": "active",
+   "target": "enemy",
+   "range": 4,
+   "energy": 0,
+   "mana": 12,
+   "durBase": "unit",
+   "durMult": 2000,
+   "p": {
+    "dmg": 3,
+    "dur": 100,
+    "cap": 3
+   },
+   "name": "Nuage pestilentiel",
+   "desc": "Poison sur un rang (3 par tic, cumulable 3). DE : une unité. EC : son propre rang."
+  },
+  "nuage_renforce": {
+   "kind": "active",
+   "target": "enemy",
+   "range": 4,
+   "energy": 0,
+   "mana": 14,
+   "durBase": "unit",
+   "durMult": 2000,
+   "p": {
+    "dmg": 3,
+    "dur": 100,
+    "cap": 5
+   },
+   "name": "Nuage renforcé",
+   "desc": "Nuage pestilentiel, 5 charges max."
+  },
+  "lien_vital": {
+   "kind": "active",
+   "target": "enemy",
+   "range": 4,
+   "energy": 0,
+   "mana": 15,
+   "durBase": "unit",
+   "durMult": 2000,
+   "p": {
+    "dur": 60,
+    "halfDur": 30,
+    "share": 300
+   },
+   "name": "Lien vital",
+   "desc": "30 % des dégâts subis par le lanceur sont renvoyés sur la cible, 60 instants. DE : 30. EC : sens inverse."
+  },
+  "non_mort": {
+   "kind": "passive",
+   "target": "self",
+   "range": 1,
+   "energy": 0,
+   "mana": 0,
+   "durBase": "unit",
+   "durMult": 1000,
+   "p": {},
+   "name": "Non-mort",
+   "desc": "Passif : insensible au Poison et au Saignement."
+  },
+  "contagion": {
+   "kind": "passive",
+   "target": "self",
+   "range": 1,
+   "energy": 0,
+   "mana": 0,
+   "durBase": "unit",
+   "durMult": 1000,
+   "p": {
+    "cap": 5
+   },
+   "name": "Contagion",
+   "desc": "Passif : quand un ennemi empoisonné meurt, son poison passe au plus proche."
+  },
+  "pieges_glace": {
+   "kind": "passive",
+   "target": "self",
+   "range": 1,
+   "energy": 0,
+   "mana": 0,
+   "durBase": "unit",
+   "durMult": 1000,
+   "p": {
+    "dur": 60
+   },
+   "name": "Pièges de glace",
+   "desc": "Passif : le premier ennemi qui avance au contact est Ralenti."
+  },
+  "esprit_inebranlable": {
+   "kind": "passive",
+   "target": "self",
+   "range": 1,
+   "energy": 0,
+   "mana": 0,
+   "durBase": "unit",
+   "durMult": 1000,
+   "p": {},
+   "name": "Esprit inébranlable",
+   "desc": "Passif : sa volonté ne descend jamais sous 50 %."
+  },
+  "hate": {
+   "kind": "active",
+   "target": "self",
+   "range": 1,
+   "energy": 25,
+   "mana": 0,
+   "durBase": "unit",
+   "durMult": 1000,
+   "p": {
+    "dur": 80,
+    "halfDur": 40
+   },
+   "name": "Hâte",
+   "desc": "Hâte sur soi, 80 instants. DE : 40. EC : Ralenti."
+  },
+  "paume_vide": {
+   "kind": "active",
+   "target": "enemy",
+   "range": 1,
+   "energy": 30,
+   "mana": 0,
+   "durBase": "unit",
+   "durMult": 1500,
+   "p": {
+    "dmg": 25,
+    "will": 200,
+    "confDur": 200
+   },
+   "name": "Paume du vide",
+   "attack": true,
+   "melee": true,
+   "desc": "25 psychiques + Confusion + −20 % de volonté. DE : dégâts seuls. EC : se confond."
+  },
+  "seisme": {
+   "kind": "active",
+   "target": "self",
+   "range": 1,
+   "energy": 40,
+   "mana": 0,
+   "durBase": "unit",
+   "durMult": 3000,
+   "p": {
+    "dmg": 20,
+    "stun": 20,
+    "crit": 100
+   },
+   "name": "Séisme",
+   "desc": "20 dégâts aux ennemis des rangs 1 et 2, Étourdi au contact. DE : sans étourdir. EC : s’étourdit et perd 10 %."
+  },
+  "fleche_givre": {
+   "kind": "active",
+   "target": "enemy",
+   "range": 4,
+   "energy": 15,
+   "mana": 0,
+   "durBase": "weapon",
+   "durMult": 1000,
+   "p": {
+    "dmg": 15,
+    "slowDur": 60,
+    "freezeDur": 20,
+    "freezeImmune": 100
+   },
+   "name": "Flèche de givre",
+   "attack": true,
+   "desc": "15 glace + Ralenti ; Gelé 20 si déjà ralenti (pas de nouveau gel sur la même cible pendant 100 instants). DE : Ralenti seul. EC : se ralentit."
+  },
+  "grappin": {
+   "kind": "active",
+   "target": "enemy",
+   "range": 4,
+   "energy": 20,
+   "mana": 0,
+   "durBase": "unit",
+   "durMult": 2000,
+   "p": {},
+   "name": "Grappin",
+   "desc": "Attire la cible au rang 1. DE : d’un cran. EC : le lanceur est tiré au rang 1."
+  },
+  "eclat_glace": {
+   "kind": "active",
+   "target": "enemy",
+   "range": 4,
+   "energy": 0,
+   "mana": 8,
+   "durBase": "unit",
+   "durMult": 1000,
+   "p": {},
+   "name": "Éclat de glace",
+   "attack": true,
+   "ai": "attack",
+   "fx": [
+    {
+     "k": "dmg",
+     "v": 16,
+     "type": "glace"
+    },
+    {
+     "k": "state",
+     "s": "ralenti",
+     "dur": 40
+    }
+   ],
+   "desc": "16 glace + Ralenti 40."
+  },
+  "tempete_givre": {
+   "kind": "active",
+   "target": "enemy",
+   "range": 5,
+   "energy": 0,
+   "mana": 20,
+   "durBase": "unit",
+   "durMult": 2000,
+   "p": {},
+   "name": "Tempête de givre",
+   "attack": true,
+   "ai": "aoe",
+   "fx": [
+    {
+     "k": "dmg",
+     "v": 14,
+     "type": "glace",
+     "area": "rank"
+    },
+    {
+     "k": "state",
+     "s": "ralenti",
+     "dur": 60,
+     "area": "rank"
+    }
+   ],
+   "desc": "14 glace et Ralenti 60 à tout un rang."
+  },
+  "pluie_feu": {
+   "kind": "active",
+   "target": "enemy",
+   "range": 5,
+   "energy": 0,
+   "mana": 24,
+   "durBase": "unit",
+   "durMult": 2500,
+   "p": {},
+   "name": "Pluie de feu",
+   "attack": true,
+   "ai": "aoe",
+   "fx": [
+    {
+     "k": "dmg",
+     "v": 12,
+     "type": "feu",
+     "area": "allEnemies"
+    },
+    {
+     "k": "state",
+     "s": "brulure",
+     "v": 4,
+     "dur": 40,
+     "area": "allEnemies"
+    }
+   ],
+   "desc": "12 feu et Brûlure à tous les ennemis."
+  },
+  "eruption": {
+   "kind": "active",
+   "target": "enemy",
+   "range": 5,
+   "energy": 0,
+   "mana": 30,
+   "durBase": "unit",
+   "durMult": 3000,
+   "p": {},
+   "name": "Éruption",
+   "attack": true,
+   "ai": "aoe",
+   "fx": [
+    {
+     "k": "dmg",
+     "v": 24,
+     "type": "feu",
+     "area": "allEnemies"
+    },
+    {
+     "k": "stun",
+     "v": 10,
+     "area": "front"
+    }
+   ],
+   "desc": "24 feu à tous les ennemis, Étourdi 10 aux rangs 1-2."
+  },
+  "souffle_feu": {
+   "kind": "active",
+   "target": "enemy",
+   "range": 2,
+   "energy": 30,
+   "mana": 0,
+   "durBase": "unit",
+   "durMult": 2000,
+   "p": {},
+   "name": "Souffle de feu",
+   "attack": true,
+   "ai": "aoe",
+   "fx": [
+    {
+     "k": "dmg",
+     "v": 18,
+     "type": "feu",
+     "area": "rank"
+    },
+    {
+     "k": "state",
+     "s": "brulure",
+     "v": 5,
+     "dur": 40,
+     "area": "rank"
+    }
+   ],
+   "desc": "18 feu et Brûlure à un rang proche."
+  },
+  "javelot_lumiere": {
+   "kind": "active",
+   "target": "enemy",
+   "range": 5,
+   "energy": 0,
+   "mana": 12,
+   "durBase": "unit",
+   "durMult": 1000,
+   "p": {},
+   "name": "Javelot de lumière",
+   "attack": true,
+   "ai": "attack",
+   "fx": [
+    {
+     "k": "dmg",
+     "v": 22,
+     "type": "sacre",
+     "tag": "mort-vivant",
+     "tagMult": 2000
+    }
+   ],
+   "desc": "22 sacré, x2 contre les morts-vivants."
+  },
+  "nova_sacree": {
+   "kind": "active",
+   "target": "enemy",
+   "range": 5,
+   "energy": 0,
+   "mana": 18,
+   "durBase": "unit",
+   "durMult": 2000,
+   "p": {},
+   "name": "Nova sacrée",
+   "attack": true,
+   "ai": "aoe",
+   "fx": [
+    {
+     "k": "dmg",
+     "v": 15,
+     "type": "sacre",
+     "area": "front",
+     "tag": "mort-vivant",
+     "tagMult": 2000
+    }
+   ],
+   "desc": "15 sacré aux ennemis des rangs 1-2."
+  },
+  "fleau": {
+   "kind": "active",
+   "target": "enemy",
+   "range": 4,
+   "energy": 0,
+   "mana": 14,
+   "durBase": "unit",
+   "durMult": 1000,
+   "p": {},
+   "name": "Fléau",
+   "attack": true,
+   "ai": "debuff",
+   "fx": [
+    {
+     "k": "state",
+     "s": "poison",
+     "v": 4,
+     "dur": 100,
+     "cap": 3
+    },
+    {
+     "k": "dmg",
+     "v": 8,
+     "type": "maladie"
+    }
+   ],
+   "desc": "Poison 4 par tic (3 charges) et 8 maladie."
+  },
+  "toucher_spectral": {
+   "kind": "active",
+   "target": "enemy",
+   "range": 3,
+   "energy": 0,
+   "mana": 10,
+   "durBase": "unit",
+   "durMult": 1000,
+   "p": {},
+   "name": "Toucher spectral",
+   "attack": true,
+   "ai": "attack",
+   "fx": [
+    {
+     "k": "drain",
+     "v": 18,
+     "type": "tenebres"
+    }
+   ],
+   "desc": "18 ténèbres, rend la moitié en PV."
+  },
+  "lame_ombre": {
+   "kind": "active",
+   "target": "enemy",
+   "range": 1,
+   "energy": 20,
+   "mana": 0,
+   "durBase": "weapon",
+   "durMult": 1000,
+   "p": {},
+   "name": "Lame d'ombre",
+   "attack": true,
+   "melee": true,
+   "ai": "attack",
+   "fx": [
+    {
+     "k": "wdmg",
+     "v": 1300,
+     "type": "tenebres"
+    }
+   ],
+   "desc": "1,3x l'arme en ténèbres."
+  },
+  "cri_effroi": {
+   "kind": "active",
+   "target": "enemy",
+   "range": 5,
+   "energy": 20,
+   "mana": 0,
+   "durBase": "unit",
+   "durMult": 1000,
+   "p": {},
+   "name": "Cri d'effroi",
+   "ai": "control",
+   "fx": [
+    {
+     "k": "will",
+     "v": -150,
+     "area": "front"
+    }
+   ],
+   "desc": "−15 % de volonté aux ennemis des rangs 1-2."
+  },
+  "mot_silence": {
+   "kind": "active",
+   "target": "enemy",
+   "range": 5,
+   "energy": 0,
+   "mana": 12,
+   "durBase": "unit",
+   "durMult": 1000,
+   "p": {},
+   "name": "Mot de silence",
+   "ai": "debuff",
+   "fx": [
+    {
+     "k": "state",
+     "s": "silence",
+     "dur": 80
+    }
+   ],
+   "desc": "Silence 80 : la cible ne peut plus lancer de sort à mana."
+  },
+  "affaiblissement": {
+   "kind": "active",
+   "target": "enemy",
+   "range": 5,
+   "energy": 0,
+   "mana": 10,
+   "durBase": "unit",
+   "durMult": 1000,
+   "p": {},
+   "name": "Affaiblissement",
+   "ai": "debuff",
+   "fx": [
+    {
+     "k": "state",
+     "s": "affaibli",
+     "v": 250,
+     "dur": 80
+    }
+   ],
+   "desc": "−25 % d’attaque pendant 80."
+  },
+  "jet_toile": {
+   "kind": "active",
+   "target": "enemy",
+   "range": 4,
+   "energy": 15,
+   "mana": 0,
+   "durBase": "unit",
+   "durMult": 1000,
+   "p": {},
+   "name": "Jet de toile",
+   "ai": "control",
+   "fx": [
+    {
+     "k": "state",
+     "s": "ralenti",
+     "dur": 80
+    },
+    {
+     "k": "pull",
+     "v": 1
+    }
+   ],
+   "desc": "Ralenti 80 et attire d’un rang."
+  },
+  "coup_jarret": {
+   "kind": "active",
+   "target": "enemy",
+   "range": 1,
+   "energy": 15,
+   "mana": 0,
+   "durBase": "weapon",
+   "durMult": 1000,
+   "p": {},
+   "name": "Coup au jarret",
+   "attack": true,
+   "melee": true,
+   "ai": "control",
+   "fx": [
+    {
+     "k": "wdmg",
+     "v": 700
+    },
+    {
+     "k": "state",
+     "s": "ralenti",
+     "dur": 60
+    }
+   ],
+   "desc": "0,7x l’arme et Ralenti 60."
+  },
+  "tir_recul": {
+   "kind": "active",
+   "target": "enemy",
+   "range": 4,
+   "energy": 18,
+   "mana": 0,
+   "durBase": "weapon",
+   "durMult": 1000,
+   "p": {},
+   "name": "Tir repoussant",
+   "attack": true,
+   "ai": "control",
+   "fx": [
+    {
+     "k": "wdmg",
+     "v": 800
+    },
+    {
+     "k": "push",
+     "v": 1
+    }
+   ],
+   "desc": "0,8x l’arme et repousse d’un rang."
+  },
+  "coup_tonnerre": {
+   "kind": "active",
+   "target": "enemy",
+   "range": 1,
+   "energy": 25,
+   "mana": 0,
+   "durBase": "weapon",
+   "durMult": 1500,
+   "p": {},
+   "name": "Coup de tonnerre",
+   "attack": true,
+   "melee": true,
+   "ai": "control",
+   "fx": [
+    {
+     "k": "wdmg",
+     "v": 1200
+    },
+    {
+     "k": "stun",
+     "v": 15
+    }
+   ],
+   "desc": "1,2x l’arme et Étourdi 15."
+  },
+  "frappe_sismique": {
+   "kind": "active",
+   "target": "enemy",
+   "range": 1,
+   "energy": 30,
+   "mana": 0,
+   "durBase": "weapon",
+   "durMult": 2000,
+   "p": {},
+   "name": "Frappe sismique",
+   "attack": true,
+   "melee": true,
+   "ai": "aoe",
+   "fx": [
+    {
+     "k": "wdmg",
+     "v": 900,
+     "area": "rank"
+    }
+   ],
+   "desc": "0,9x l’arme à tout le rang au contact."
+  },
+  "assassinat": {
+   "kind": "active",
+   "target": "enemy",
+   "range": 1,
+   "energy": 30,
+   "mana": 0,
+   "durBase": "weapon",
+   "durMult": 1500,
+   "p": {},
+   "name": "Assassinat",
+   "attack": true,
+   "melee": true,
+   "ai": "finisher",
+   "fx": [
+    {
+     "k": "wdmg",
+     "v": 1800
+    },
+    {
+     "k": "state",
+     "s": "saignement",
+     "v": 5,
+     "dur": 60
+    }
+   ],
+   "desc": "1,8x l’arme et Saignement."
+  },
+  "coup_massue": {
+   "kind": "active",
+   "target": "enemy",
+   "range": 1,
+   "energy": 22,
+   "mana": 0,
+   "durBase": "weapon",
+   "durMult": 1500,
+   "p": {},
+   "name": "Coup de massue",
+   "attack": true,
+   "melee": true,
+   "ai": "attack",
+   "fx": [
+    {
+     "k": "wdmg",
+     "v": 1400
+    },
+    {
+     "k": "push",
+     "v": 1
+    }
+   ],
+   "desc": "1,4x l’arme et repousse d’un rang."
+  },
+  "tir_perforant": {
+   "kind": "active",
+   "target": "enemy",
+   "range": 5,
+   "energy": 20,
+   "mana": 0,
+   "durBase": "weapon",
+   "durMult": 1500,
+   "p": {},
+   "name": "Tir perforant",
+   "attack": true,
+   "ai": "aoe",
+   "fx": [
+    {
+     "k": "wdmg",
+     "v": 900,
+     "area": "rank"
+    }
+   ],
+   "desc": "0,9x l’arme à tout le rang visé."
+  },
+  "tir_empoisonne": {
+   "kind": "active",
+   "target": "enemy",
+   "range": 4,
+   "energy": 15,
+   "mana": 0,
+   "durBase": "weapon",
+   "durMult": 1000,
+   "p": {},
+   "name": "Tir empoisonné",
+   "attack": true,
+   "ai": "debuff",
+   "fx": [
+    {
+     "k": "state",
+     "s": "poison",
+     "v": 3,
+     "dur": 80,
+     "cap": 3
+    },
+    {
+     "k": "wdmg",
+     "v": 900
+    }
+   ],
+   "desc": "0,9x l’arme et Poison."
+  },
+  "fleche_feu": {
+   "kind": "active",
+   "target": "enemy",
+   "range": 4,
+   "energy": 15,
+   "mana": 0,
+   "durBase": "weapon",
+   "durMult": 1000,
+   "p": {},
+   "name": "Flèche enflammée",
+   "attack": true,
+   "ai": "attack",
+   "fx": [
+    {
+     "k": "wdmg",
+     "v": 1000,
+     "type": "feu"
+    },
+    {
+     "k": "state",
+     "s": "brulure",
+     "v": 4,
+     "dur": 40
+    }
+   ],
+   "desc": "1x l’arme en feu et Brûlure."
+  },
+  "morsure_venin": {
+   "kind": "active",
+   "target": "enemy",
+   "range": 1,
+   "energy": 12,
+   "mana": 0,
+   "durBase": "weapon",
+   "durMult": 1000,
+   "p": {},
+   "name": "Morsure venimeuse",
+   "attack": true,
+   "melee": true,
+   "ai": "debuff",
+   "fx": [
+    {
+     "k": "state",
+     "s": "poison",
+     "v": 3,
+     "dur": 80,
+     "cap": 3
+    },
+    {
+     "k": "wdmg",
+     "v": 900
+    }
+   ],
+   "desc": "0,9x l’arme et Poison."
+  },
+  "soin_majeur": {
+   "kind": "active",
+   "target": "ally",
+   "range": 3,
+   "energy": 0,
+   "mana": 16,
+   "durBase": "unit",
+   "durMult": 1000,
+   "p": {},
+   "name": "Soin majeur",
+   "ai": "heal",
+   "fx": [
+    {
+     "k": "heal",
+     "v": 450
+    }
+   ],
+   "desc": "+45 % des PV max."
+  },
+  "cercle_soins": {
+   "kind": "active",
+   "target": "self",
+   "range": 1,
+   "energy": 0,
+   "mana": 20,
+   "durBase": "unit",
+   "durMult": 2000,
+   "p": {},
+   "name": "Cercle de soins",
+   "ai": "groupHeal",
+   "fx": [
+    {
+     "k": "heal",
+     "v": 180,
+     "area": "allies"
+    }
+   ],
+   "desc": "+18 % des PV max à tous les alliés."
+  },
+  "seve": {
+   "kind": "active",
+   "target": "ally",
+   "range": 2,
+   "energy": 0,
+   "mana": 12,
+   "durBase": "unit",
+   "durMult": 1000,
+   "p": {},
+   "name": "Sève régénératrice",
+   "ai": "buffAlly",
+   "fx": [
+    {
+     "k": "state",
+     "s": "regeneration",
+     "v": 40,
+     "dur": 100
+    }
+   ],
+   "desc": "Régénération +4 % par tic pendant 100."
+  },
+  "peau_ecorce": {
+   "kind": "active",
+   "target": "ally",
+   "range": 2,
+   "energy": 0,
+   "mana": 10,
+   "durBase": "unit",
+   "durMult": 1000,
+   "p": {},
+   "name": "Peau d'écorce",
+   "ai": "buffAlly",
+   "fx": [
+    {
+     "k": "state",
+     "s": "garde",
+     "v": 250,
+     "dur": 100
+    }
+   ],
+   "desc": "+25 % de résistance à tout pendant 100."
+  },
+  "benediction": {
+   "kind": "active",
+   "target": "self",
+   "range": 1,
+   "energy": 0,
+   "mana": 16,
+   "durBase": "unit",
+   "durMult": 2000,
+   "p": {},
+   "name": "Bénédiction",
+   "ai": "buffGroup",
+   "fx": [
+    {
+     "k": "state",
+     "s": "garde",
+     "v": 150,
+     "dur": 80,
+     "area": "allies"
+    }
+   ],
+   "desc": "+15 % de résistance à tout aux alliés pendant 80."
+  },
+  "chant_guerre": {
+   "kind": "active",
+   "target": "self",
+   "range": 1,
+   "energy": 0,
+   "mana": 12,
+   "durBase": "unit",
+   "durMult": 1500,
+   "p": {},
+   "name": "Chant de guerre",
+   "ai": "buffGroup",
+   "fx": [
+    {
+     "k": "state",
+     "s": "cri",
+     "v": 150,
+     "dur": 80,
+     "area": "allies"
+    },
+    {
+     "k": "will",
+     "v": 100,
+     "area": "allies"
+    }
+   ],
+   "desc": "+15 % d’attaque et +10 % de volonté aux alliés."
+  },
+  "vent_rapide": {
+   "kind": "active",
+   "target": "self",
+   "range": 1,
+   "energy": 0,
+   "mana": 18,
+   "durBase": "unit",
+   "durMult": 1500,
+   "p": {},
+   "name": "Vent rapide",
+   "ai": "buffGroup",
+   "fx": [
+    {
+     "k": "state",
+     "s": "hate",
+     "dur": 60,
+     "area": "allyRank"
+    }
+   ],
+   "desc": "Hâte 60 aux alliés de son rang."
+  },
+  "carapace_epines": {
+   "kind": "active",
+   "target": "self",
+   "range": 1,
+   "energy": 15,
+   "mana": 0,
+   "durBase": "unit",
+   "durMult": 1000,
+   "p": {},
+   "name": "Carapace d'épines",
+   "ai": "buffSelf",
+   "fx": [
+    {
+     "k": "state",
+     "s": "epines",
+     "v": 6,
+     "dur": 100
+    }
+   ],
+   "desc": "Renvoie 6 dégâts à chaque attaque au contact pendant 100."
+  },
+  "second_souffle": {
+   "kind": "active",
+   "target": "self",
+   "range": 1,
+   "energy": 0,
+   "mana": 0,
+   "durBase": "unit",
+   "durMult": 1500,
+   "p": {},
+   "name": "Second souffle",
+   "ai": "restore",
+   "fx": [
+    {
+     "k": "energy",
+     "v": 300
+    },
+    {
+     "k": "heal",
+     "v": 80
+    }
+   ],
+   "desc": "+30 % d’énergie et +8 % de PV."
+  }
+ }
+}

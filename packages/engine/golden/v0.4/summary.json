@@ -1,0 +1,11 @@
+{
+  "engineVersion": "proto-0.4-ville",
+  "fights": 227,
+  "wins": 69,
+  "timeouts": 1,
+  "events": 166731,
+  "activeSkillsUsed": 84,
+  "passivesPresent": 10,
+  "skillsTotal": 92,
+  "notCovered": []
+}

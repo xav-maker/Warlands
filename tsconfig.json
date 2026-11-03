@@ -1,11 +1,32 @@
 {
   "files": [],
   "references": [
-    { "path": "packages/shared" },
-    { "path": "packages/db" },
-    { "path": "packages/domain" },
-    { "path": "packages/testing" },
-    { "path": "apps/web" },
-    { "path": "apps/worker" }
+    {
+      "path": "packages/rng"
+    },
+    {
+      "path": "packages/engine"
+    },
+    {
+      "path": "packages/shared"
+    },
+    {
+      "path": "packages/db"
+    },
+    {
+      "path": "packages/domain"
+    },
+    {
+      "path": "packages/testing"
+    },
+    {
+      "path": "apps/web"
+    },
+    {
+      "path": "apps/worker"
+    },
+    {
+      "path": "tools/extract-prototype"
+    }
   ]
 }

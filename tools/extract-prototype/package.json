@@ -1,0 +1,9 @@
+{
+  "name": "@cr/extract-prototype",
+  "private": true,
+  "type": "module",
+  "version": "0.0.0",
+  "scripts": {
+    "golden:v0.4": "tsx src/golden.ts"
+  }
+}
