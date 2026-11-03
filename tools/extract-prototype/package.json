@@ -4,6 +4,7 @@
   "type": "module",
   "version": "0.0.0",
   "scripts": {
-    "golden:v0.4": "tsx src/golden.ts"
+    "golden:v0.4": "tsx src/golden.ts",
+    "golden:gen": "tsx src/gen-vectors.ts"
   }
 }

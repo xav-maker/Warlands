@@ -4,3 +4,4 @@ prototype-extrait/
 docs/
 *.eta
 packages/engine/golden/
+packages/gen/golden/

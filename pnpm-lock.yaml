@@ -177,6 +177,15 @@ importers:
         specifier: workspace:*
         version: link:../rng
 
+  packages/gen:
+    dependencies:
+      '@cr/engine':
+        specifier: workspace:*
+        version: link:../engine
+      '@cr/rng':
+        specifier: workspace:*
+        version: link:../rng
+
   packages/rng: {}
 
   packages/shared:

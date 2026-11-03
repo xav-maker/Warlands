@@ -9,6 +9,13 @@ module.exports = {
       to: { path: '^(packages|apps)/', pathNot: '^packages/(engine|rng|content)/' },
     },
     {
+      name: 'gen-pur',
+      comment: 'gen ne dépend que du moteur, de l’aléa et du contenu (fonctions pures, guide 4.1).',
+      severity: 'error',
+      from: { path: '^packages/gen/' },
+      to: { path: '^(packages|apps)/', pathNot: '^packages/(gen|engine|rng|content)/' },
+    },
+    {
       name: 'paquets-sans-apps',
       comment: 'Un paquet n’importe jamais une application.',
       severity: 'error',
