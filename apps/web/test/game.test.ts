@@ -6,7 +6,7 @@ import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import type { FastifyInstance } from 'fastify';
 import { Rng } from '@cr/rng';
 import { startTestDb, type TestDb } from '@cr/testing';
-import { createTroop, memoryMailer, noRateLimit } from '@cr/domain';
+import { addStack, createTroop, memoryMailer, noRateLimit, recipes } from '@cr/domain';
 import { buildApp } from '../src/app.ts';
 import { loadGameContent } from '../src/content.ts';
 
@@ -167,6 +167,49 @@ describe('parcours de jeu (J2)', () => {
     ).toEqual(['soin_mineur']);
     await req('POST', `/troupe/${acolyte.id}/rang`, { rank: '2' });
     expect((await t.db.selectFrom('troop').select('rank').where('id', '=', acolyte.id).executeTakeFirstOrThrow()).rank).toBe(2);
+  });
+
+  it('fabrique à l’atelier, puis équipe et retire depuis la page de troupe', async () => {
+    const pid = await playerId();
+    expect((await req('GET', '/atelier?p=1')).body).toContain('Épée courte');
+    await t.db.transaction().execute(async (tx) => {
+      const seed = (await tx.selectFrom('player').select('seed').where('id', '=', pid).executeTakeFirstOrThrow()).seed;
+      const r = (await recipes(tx, content, { id: pid, seed })).get('lame_1')!;
+      for (const [item, q] of r.ingredients) await addStack(tx, content, pid, 'BANK', item, q, 'SYSTEM', 'test');
+    });
+    expect((await req('POST', '/atelier/fabriquer', { out: 'lame_1', p: '1' })).headers.location).toBe('/atelier?p=1');
+    const sword = await t.db
+      .selectFrom('item_instance')
+      .select('id')
+      .where('player_id', '=', pid)
+      .where('base', '=', 'lame_1')
+      .where('container', '=', 'BANK')
+      .orderBy('id', 'desc')
+      .executeTakeFirstOrThrow();
+    const milicien = await t.db
+      .selectFrom('troop')
+      .select('id')
+      .where('player_id', '=', pid)
+      .where('type', '=', 'milicien')
+      .where('container', '=', 'SQUAD')
+      .executeTakeFirstOrThrow();
+    const page = await req('GET', `/troupe/${milicien.id}`);
+    expect(page.body).toContain('Équiper');
+    await req('POST', `/troupe/${milicien.id}/equiper`, { unit: '1', instance: String(sword.id) });
+    expect(
+      (await t.db.selectFrom('item_instance').select('container').where('id', '=', sword.id).executeTakeFirstOrThrow()).container,
+    ).toBe('EQUIPPED');
+    expect((await req('GET', `/troupe/${milicien.id}`)).body).toContain('Retirer');
+    await req('POST', `/troupe/${milicien.id}/desequiper`, { unit: '1', slot: 'arme' });
+    expect(
+      (await t.db.selectFrom('item_instance').select('container').where('id', '=', sword.id).executeTakeFirstOrThrow()).container,
+    ).toBe('BANK');
+    // Les matériaux réservés à l'échange sont signalés dans le sac.
+    const reserved = (
+      await t.db.selectFrom('player_reserved_material').select('item').where('player_id', '=', pid).executeTakeFirstOrThrow()
+    ).item;
+    await t.db.transaction().execute((tx) => addStack(tx, content, pid, 'BAG', reserved, 1, 'SYSTEM', 'test'));
+    expect((await req('GET', '/sac')).body).toContain('inutile pour vous');
   });
 
   it('sert le Codex, même sans être connecté', async () => {

@@ -15,6 +15,7 @@ export interface UnitView {
   hpMax: number;
   mana: number;
   manaMax: number;
+  equip: Record<string, { uid: string; base: string; roll: number; stats: { k: string; v: number; type?: string }[] }>;
 }
 export interface TroopView extends Omit<LoadedTroop, 'units'> {
   name: string;
@@ -48,7 +49,7 @@ export async function gameView(db: Db, c: GameContent, playerId: number): Promis
       name: c.pack.troops[t.type]!.forms.find((f) => f.id === t.form)?.name ?? c.pack.troops[t.type]!.name,
       units: t.units.map((u) => {
         const s = statsOf(c, t, u);
-        return { n: u.n, hp: u.hp, hpMax: s.hpMax, mana: u.mana, manaMax: s.manaMax };
+        return { n: u.n, hp: u.hp, hpMax: s.hpMax, mana: u.mana, manaMax: s.manaMax, equip: u.equip };
       }),
     }));
     const bag = await contents(tx, playerId, 'BAG');

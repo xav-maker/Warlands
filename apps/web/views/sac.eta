@@ -6,12 +6,12 @@
   <div class="grid">
     <div class="card">
       <h2>Sac <span class="muted"><%= it.v.bag.used %> / <%= it.v.bag.cap %></span></h2>
-      <%~ include('./partials/items', { x: it.v.bag, from: 'BAG', L: it.L, csrf: it.csrf, back: '/sac', actions: inCity ? ['banque', 'jeter'] : ['jeter'] }) %>
+      <%~ include('./partials/items', { x: it.v.bag, from: 'BAG', L: it.L, csrf: it.csrf, back: '/sac', reserved: it.reserved, actions: inCity ? ['banque', 'jeter'] : ['jeter'] }) %>
     </div>
     <% if (inCity) { %>
       <div class="card">
         <h2>Banque <span class="muted"><%= it.v.bank.used %> / <%= it.v.bank.cap %></span></h2>
-        <%~ include('./partials/items', { x: it.v.bank, from: 'BANK', L: it.L, csrf: it.csrf, back: '/sac', actions: ['banque'] }) %>
+        <%~ include('./partials/items', { x: it.v.bank, from: 'BANK', L: it.L, csrf: it.csrf, back: '/sac', reserved: it.reserved, actions: ['banque'] }) %>
       </div>
     <% } %>
     <div class="card">

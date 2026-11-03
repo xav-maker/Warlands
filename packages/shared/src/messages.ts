@@ -43,6 +43,10 @@ const FR: Record<ErrorCode, string> = {
   SQUAD_FULL: 'L’escouade est pleine (8 unités et 11 de population au plus).',
   BASIC_ATTACK_LOCKED: 'L’attaque de base ne peut pas être désactivée.',
   SKILL_UNKNOWN: 'Cette troupe ne connaît pas cette capacité.',
+  RECIPE_UNKNOWN: 'Recette inconnue.',
+  WORKSHOP_ELSEWHERE: 'Seul l’atelier de {ville} sait fabriquer cet objet.',
+  LEVEL_TOO_LOW: 'Niveau insuffisant pour porter cet objet.',
+  CANNOT_WEAR: 'Cette troupe ne peut pas porter cette catégorie d’objet.',
 };
 
 export function messageFr(code: ErrorCode, details?: Record<string, string | number>): string {

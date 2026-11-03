@@ -32,6 +32,10 @@ import {
   rebuyUnits,
   recruit,
   recipeView,
+  craft,
+  equip,
+  unequip,
+  workshopOf,
   scaled,
   setDisabledSkills,
   setRank,
@@ -41,7 +45,7 @@ import {
   type GameContent,
   type GameView,
 } from '@cr/domain';
-import { basicAttack, computeStats, itemValue, learned, quality, troopActive } from '@cr/gen';
+import { basicAttack, canWear, computeStats, itemValue, learned, quality, troopActive } from '@cr/gen';
 import type { z } from 'zod';
 
 export interface GameRouteDeps {
@@ -78,7 +82,7 @@ export function labels(c: GameContent) {
 }
 
 /** Chemins de retour autorisés après une action (jamais une URL fournie telle quelle). */
-const BACK = new Set(['/ville', '/route', '/sac', '/marchand', '/caserne']);
+const BACK = new Set(['/ville', '/route', '/sac', '/marchand', '/caserne', '/atelier']);
 const backOf = (b: Record<string, string>, fallback: string): string => (BACK.has(b.back ?? '') ? b.back! : fallback);
 const errorOf = (q: unknown): string | undefined => {
   const e = (q as Record<string, string | undefined>).e;
@@ -226,7 +230,11 @@ export function registerGameRoutes(app: FastifyInstance, d: GameRouteDeps): void
   app.post('/sac/jeter', (req, reply) =>
     act(req, reply, backOf(body(req), '/sac'), async () => void (await d.run(req, discard, goods(body(req))))),
   );
-  app.get('/sac', async (req, reply) => d.page(req, reply, 'sac', { v: await view(req), L, error: errorOf(req.query) }));
+  app.get('/sac', async (req, reply) => {
+    const v = await view(req);
+    const { reserved } = await recipeView(d.db, d.requireAuth(req).player.id);
+    return d.page(req, reply, 'sac', { v, L, reserved, error: errorOf(req.query) });
+  });
   app.post('/banque', (req, reply) =>
     act(req, reply, '/sac', async () => void (await d.run(req, bankMove, { ...goods(body(req)), from: body(req).from }))),
   );
@@ -286,7 +294,67 @@ export function registerGameRoutes(app: FastifyInstance, d: GameRouteDeps): void
     const def = p.troops[t.type]!;
     const known = learned(def, t.form, t.level);
     const active = troopActive(p, { type: t.type, level: t.level, form: t.form, rank: t.rank, units: [], disabled: t.disabledSkills });
-    return d.page(req, reply, 'troupe', { v, L, t, def, known, active, base: basicAttack(def), xpToNext, error: errorOf(req.query) });
+    const slots = p.troopSlots[t.type] ?? {};
+    const pool = [
+      ...v.bag.instances.map((i) => ({ ...i, from: 'sac' })),
+      ...(v.kind === 'city' ? v.bank.instances.map((i) => ({ ...i, from: 'banque' })) : []),
+    ];
+    const wearable = (slot: string) => pool.filter((i) => p.equip[i.base]?.slot === slot && canWear(p, t.type, t.level, i.base) === null);
+    return d.page(req, reply, 'troupe', {
+      v,
+      L,
+      t,
+      def,
+      known,
+      active,
+      base: basicAttack(def),
+      xpToNext,
+      slots,
+      wearable,
+      error: errorOf(req.query),
+    });
+  });
+
+  // ---------- Atelier et équipement ----------
+  app.get('/atelier', async (req, reply) => {
+    const v = await view(req);
+    if (v.kind !== 'city') return reply.redirect('/route');
+    const R = region(d.content, v.region);
+    const q = int((req.query as { p?: string }).p);
+    const tier = q >= 1 && q <= 5 ? q : R.tier;
+    const rv = await recipeView(d.db, d.requireAuth(req).player.id);
+    return d.page(req, reply, 'atelier', {
+      v,
+      L,
+      R,
+      rv,
+      tier,
+      c: d.content.pack,
+      workshopOf: (id: string) => workshopOf(d.content, id),
+      error: errorOf(req.query),
+    });
+  });
+  app.post('/atelier/fabriquer', (req, reply) => {
+    const b = body(req);
+    return act(req, reply, `/atelier?p=${int(b.p) || ''}`, async () => {
+      await d.run(req, craft, { out: b.out });
+      return `/atelier?p=${int(b.p) || ''}`;
+    });
+  });
+  app.post('/troupe/:id/equiper', (req, reply) => {
+    const id = int((req.params as { id: string }).id);
+    const b = body(req);
+    return act(
+      req,
+      reply,
+      `/troupe/${id}`,
+      async () => void (await d.run(req, equip, { troop: id, unit: int(b.unit), instance: int(b.instance) })),
+    );
+  });
+  app.post('/troupe/:id/desequiper', (req, reply) => {
+    const id = int((req.params as { id: string }).id);
+    const b = body(req);
+    return act(req, reply, `/troupe/${id}`, async () => void (await d.run(req, unequip, { troop: id, unit: int(b.unit), slot: b.slot })));
   });
 
   // ---------- Marchand ----------

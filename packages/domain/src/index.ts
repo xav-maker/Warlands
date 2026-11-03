@@ -15,3 +15,4 @@ export * from './game/city.ts';
 export * from './game/view.ts';
 export * from './game/recipes.ts';
 export * from './game/barracks.ts';
+export * from './game/workshop.ts';

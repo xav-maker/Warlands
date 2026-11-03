@@ -2,7 +2,7 @@
 <ul class="items">
   <% for (const s of it.x.stacks) { %>
     <li class="row between">
-      <span><%= it.L.item(s.item) %> × <%= s.qty %><% if (it.actions.includes('vendre')) { %> <span class="muted">— <%= it.L.sellPrice(s.item) %> or l’unité</span><% } %></span>
+      <span><%= it.L.item(s.item) %> × <%= s.qty %><% if (it.reserved && it.reserved.has(s.item)) { %> <span class="tag" title="Matériau réservé à l’échange : il n’entre dans aucune de vos recettes">inutile pour vous</span><% } %><% if (it.actions.includes('vendre')) { %> <span class="muted">— <%= it.L.sellPrice(s.item) %> or l’unité</span><% } %></span>
       <span class="actions">
         <% for (const a of it.actions) { %>
           <form method="post" action="<%= a === 'banque' ? '/banque' : a === 'vendre' ? '/marchand/vendre' : '/sac/jeter' %>" class="inline">

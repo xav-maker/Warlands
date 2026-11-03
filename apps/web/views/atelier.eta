@@ -1,0 +1,53 @@
+<% layout('./layout', { title: 'Atelier' }) %>
+<% const rv = it.rv; const c = it.c %>
+<% const canPay = (r) => it.v.gold >= r.gold && r.ingredients.every(([i, q]) => (rv.owned.get(i) ?? 0) >= q) %>
+<% const cost = (r) => (r.gold ? r.gold + ' or · ' : '') + r.ingredients.map(([i, q]) => it.L.item(i) + ' ' + (rv.owned.get(i) ?? 0) + '/' + q).join(', ') %>
+<section>
+  <p class="eyebrow"><%= it.R.city.name %></p>
+  <h1>Atelier</h1>
+  <p class="muted">Vos recettes sont personnelles. Ce qui est fabriqué arrive en banque ; la qualité de l’équipement est tirée à la fabrication.</p>
+  <nav class="tabs" aria-label="Palier">
+    <% for (const p of [1, 2, 3, 4, 5]) { %><a href="/atelier?p=<%= p %>"<%~ p === it.tier ? ' aria-current="page"' : '' %>>Palier <%= p %></a><% } %>
+  </nav>
+  <div class="grid">
+    <div class="card">
+      <h2>Équipement de palier <%= it.tier %></h2>
+      <ul class="items">
+        <% for (const b of Object.values(c.equip)) { if (b.tier !== it.tier || b.craft === false) continue; const r = rv.recipes.get(b.id); if (!r) continue; const ws = it.workshopOf(b.id); const here = !ws || ws === it.v.region %>
+          <li>
+            <div class="row between">
+              <span><b><%= b.name %></b> <span class="muted">— <%= b.slot %> (<%= b.cat %>)<%= ws ? ' · atelier de ' + it.L.region(ws).city.name + ' seulement' : '' %></span></span>
+              <form method="post" action="/atelier/fabriquer" class="inline">
+                <input type="hidden" name="_csrf" value="<%= it.csrf %>">
+                <input type="hidden" name="out" value="<%= b.id %>">
+                <input type="hidden" name="p" value="<%= it.tier %>">
+                <button type="submit"<%= here && canPay(r) ? '' : ' disabled' %>>Fabriquer</button>
+              </form>
+            </div>
+            <p class="muted"><%= cost(r) %></p>
+          </li>
+        <% } %>
+      </ul>
+    </div>
+    <div class="card">
+      <h2>Consommables</h2>
+      <ul class="items">
+        <% for (const r of rv.recipes.values()) { if (r.kind !== 'consommable') continue %>
+          <li>
+            <div class="row between">
+              <span><b><%= it.L.item(r.out) %></b></span>
+              <form method="post" action="/atelier/fabriquer" class="inline">
+                <input type="hidden" name="_csrf" value="<%= it.csrf %>">
+                <input type="hidden" name="out" value="<%= r.out %>">
+                <input type="hidden" name="p" value="<%= it.tier %>">
+                <button type="submit"<%= canPay(r) ? '' : ' disabled' %>>Fabriquer</button>
+              </form>
+            </div>
+            <p class="muted"><%= cost(r) %></p>
+          </li>
+        <% } %>
+      </ul>
+    </div>
+  </div>
+  <p><a href="/ville">Retour à la ville</a></p>
+</section>

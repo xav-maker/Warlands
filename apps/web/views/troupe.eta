@@ -28,6 +28,42 @@
     </div>
 
     <div class="card">
+      <h2>Équipement</h2>
+      <p class="muted"><%= it.v.kind === 'city' ? 'En ville : depuis la banque ou le sac ; un changement soigne l’unité.' : 'En expédition : depuis le sac seulement ; un objet retiré va dans le sac.' %></p>
+      <% for (const u of t.units) { %>
+        <% if (t.units.length > 1) { %><h3>Unité <%= u.n %></h3><% } %>
+        <ul class="items">
+          <% for (const [slot, cats] of Object.entries(it.slots)) { const cur = u.equip[slot]; const options = it.wearable(slot) %>
+            <li>
+              <div class="row between">
+                <span><b><%= slot %></b> <span class="muted">(<%= cats.join(', ') %>)</span> : <%= cur ? it.L.item(cur.base) + ' — ' + it.L.quality(cur.roll) + ' : ' + cur.stats.map(it.L.statText).join(', ') : 'rien' %></span>
+                <% if (cur) { %>
+                  <form method="post" action="/troupe/<%= t.id %>/desequiper" class="inline">
+                    <input type="hidden" name="_csrf" value="<%= it.csrf %>">
+                    <input type="hidden" name="unit" value="<%= u.n %>">
+                    <input type="hidden" name="slot" value="<%= slot %>">
+                    <button type="submit">Retirer</button>
+                  </form>
+                <% } %>
+              </div>
+              <% if (options.length) { %>
+                <form method="post" action="/troupe/<%= t.id %>/equiper" class="row">
+                  <input type="hidden" name="_csrf" value="<%= it.csrf %>">
+                  <input type="hidden" name="unit" value="<%= u.n %>">
+                  <select name="instance" aria-label="Objet à porter (<%= slot %>)">
+                    <% for (const o of options) { %><option value="<%= o.id %>"><%= it.L.item(o.base) %> — <%= it.L.quality(o.roll) %> (<%= o.from %>) : <%= o.stats.map(it.L.statText).join(', ') %></option><% } %>
+                  </select>
+                  <button type="submit">Équiper</button>
+                </form>
+              <% } %>
+            </li>
+          <% } %>
+          <% if (!Object.keys(it.slots).length) { %><li class="muted">Ce type ne porte pas d’équipement.</li><% } %>
+        </ul>
+      <% } %>
+    </div>
+
+    <div class="card">
       <h2>Capacités</h2>
       <p class="muted">Cochez une capacité pour que la troupe ne s’en serve plus. Au combat, elle utilise l’attaque de base et ses 5 capacités les plus récentes parmi celles qui restent.</p>
       <form method="post" action="/troupe/<%= t.id %>/capacites">

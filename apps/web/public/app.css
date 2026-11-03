@@ -365,3 +365,11 @@ table.data td {
 [hidden] {
   display: none !important;
 }
+
+.tag {
+  font-size: 0.75rem;
+  padding: 0 0.35rem;
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  color: var(--muted);
+}

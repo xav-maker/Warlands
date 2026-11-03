@@ -48,6 +48,10 @@ export const ERROR_CODES = [
   'SQUAD_FULL',
   'BASIC_ATTACK_LOCKED',
   'SKILL_UNKNOWN',
+  'RECIPE_UNKNOWN',
+  'WORKSHOP_ELSEWHERE',
+  'LEVEL_TOO_LOW',
+  'CANNOT_WEAR',
 ] as const;
 
 export type ErrorCode = (typeof ERROR_CODES)[number];
