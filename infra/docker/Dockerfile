@@ -2,12 +2,20 @@
 FROM node:24-slim AS build
 WORKDIR /app
 RUN corepack enable
+# Tous les package.json de l'espace de travail : pnpm doit voir chaque paquet pour l'installer et le lier.
 COPY pnpm-lock.yaml pnpm-workspace.yaml package.json ./
 COPY apps/web/package.json apps/web/
 COPY apps/worker/package.json apps/worker/
 COPY packages/shared/package.json packages/shared/
 COPY packages/db/package.json packages/db/
 COPY packages/domain/package.json packages/domain/
+COPY packages/rng/package.json packages/rng/
+COPY packages/engine/package.json packages/engine/
+COPY packages/gen/package.json packages/gen/
+COPY packages/content/package.json packages/content/
+COPY packages/testing/package.json packages/testing/
+COPY tools/content-cli/package.json tools/content-cli/
+COPY tools/extract-prototype/package.json tools/extract-prototype/
 RUN pnpm install --frozen-lockfile
 COPY . .
 RUN pnpm -r --filter "./apps/*" build \
