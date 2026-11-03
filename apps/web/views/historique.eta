@@ -1,0 +1,10 @@
+<% layout('./layout', { title: 'Historique des prix' }) %>
+<section>
+  <p class="eyebrow"><%= it.R.city.name %> · boutique</p>
+  <h1><%= it.L.item(it.item) === it.item ? it.L.troop(it.item) : it.L.item(it.item) %></h1>
+  <p><%= it.h.average === null ? 'Aucune vente récente dans cette ville.' : 'Prix moyen des 20 dernières ventes : ' + it.h.average + ' or l’unité.' %></p>
+  <ul class="items card">
+    <% for (const s of it.h.rows) { %><li class="row between"><span><%= s.created_at.toLocaleDateString('fr-FR') %></span><span><%= s.qty > 1 ? s.qty + ' pour ' : '' %><b><%= s.price %> or</b></span></li><% } %>
+  </ul>
+  <p><a href="/boutique">Retour à la boutique</a></p>
+</section>

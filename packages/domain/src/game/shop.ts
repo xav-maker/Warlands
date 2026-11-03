@@ -342,3 +342,20 @@ export async function expireListings(db: Db, now = new Date(), limit = 200): Pro
     return due.length;
   });
 }
+
+/** Marque toutes les notifications du joueur comme lues. */
+export const markNotificationsRead = command({
+  name: 'notifications.markRead',
+  input: z.object({}),
+  rate: { perMinute: 60 },
+  allowedDuringWatch: true,
+  async run(ctx) {
+    await ctx.tx
+      .updateTable('notification')
+      .set({ read_at: ctx.now })
+      .where('player_id', '=', ctx.player.id)
+      .where('read_at', 'is', null)
+      .execute();
+    return {};
+  },
+});

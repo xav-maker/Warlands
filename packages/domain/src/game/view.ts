@@ -39,6 +39,8 @@ export interface GameView {
   encounter: null | { side: MonsterGroup; rare: string | null; guardian: boolean };
   lastBattle: null | { id: number; won: boolean; createdAt: Date };
   stats: { fights: number; wins: number; deaths: number };
+  /** Notifications non lues (ventes en boutique, expirations…). */
+  unread: number;
 }
 
 export async function gameView(db: Db, c: GameContent, playerId: number): Promise<GameView> {
@@ -94,6 +96,16 @@ export async function gameView(db: Db, c: GameContent, playerId: number): Promis
       encounter: enc ? { side: enc.side as MonsterGroup, rare: enc.rare, guardian: enc.guardian } : null,
       lastBattle: last ? { id: last.id, won: last.won, createdAt: last.created_at } : null,
       stats: { fights: p.stat_fights, wins: p.stat_wins, deaths: p.stat_deaths },
+      unread: Number(
+        (
+          await tx
+            .selectFrom('notification')
+            .select((eb) => eb.fn.countAll<number>().as('n'))
+            .where('player_id', '=', playerId)
+            .where('read_at', 'is', null)
+            .executeTakeFirstOrThrow()
+        ).n,
+      ),
     };
   });
 }

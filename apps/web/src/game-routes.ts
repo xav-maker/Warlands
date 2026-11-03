@@ -41,6 +41,15 @@ import {
   questView,
   turnInQuest,
   abandonQuest,
+  SHOP,
+  buyListing,
+  listGoods,
+  markNotificationsRead,
+  myListings,
+  notifications,
+  priceHistory,
+  searchListings,
+  withdrawListing,
   scaled,
   setDisabledSkills,
   setRank,
@@ -87,7 +96,7 @@ export function labels(c: GameContent) {
 }
 
 /** Chemins de retour autorisés après une action (jamais une URL fournie telle quelle). */
-const BACK = new Set(['/ville', '/route', '/sac', '/marchand', '/caserne', '/atelier', '/quetes']);
+const BACK = new Set(['/ville', '/route', '/sac', '/marchand', '/caserne', '/atelier', '/quetes', '/boutique']);
 const backOf = (b: Record<string, string>, fallback: string): string => (BACK.has(b.back ?? '') ? b.back! : fallback);
 const errorOf = (q: unknown): string | undefined => {
   const e = (q as Record<string, string | undefined>).e;
@@ -384,6 +393,63 @@ export function registerGameRoutes(app: FastifyInstance, d: GameRouteDeps): void
       return '/quetes';
     });
   });
+
+  // ---------- Boutique des joueurs ----------
+  app.get('/boutique', async (req, reply) => {
+    const v = await view(req);
+    if (v.kind !== 'city') return reply.redirect('/route');
+    const pid = d.requireAuth(req).player.id;
+    const q = req.query as Record<string, string | undefined>;
+    const filters = { q: q.q, family: q.f || undefined, tier: int(q.p) || undefined, slot: q.s || undefined, after: q.apres };
+    const found = await searchListings(d.db, v.region, filters);
+    const mine = await myListings(d.db, pid);
+    const troops = v.troops.filter((x) => x.container === 'BARRACKS' && x.units.length && !x.loaned);
+    return d.page(req, reply, 'boutique', {
+      v,
+      L,
+      R: region(d.content, v.region),
+      found,
+      filters,
+      mine,
+      troops,
+      minTroop: (type: string) =>
+        40 * d.content.pack.troops[type]!.pop * (d.content.pack.regions.findIndex((r) => r.city.recruit.includes(type)) + 1),
+      taxPermille: SHOP.taxPermille,
+      error: errorOf(req.query),
+    });
+  });
+  app.get('/boutique/historique/:item', async (req, reply) => {
+    const v = await view(req);
+    if (v.kind !== 'city') return reply.redirect('/route');
+    const item = (req.params as { item: string }).item;
+    const h = await priceHistory(d.db, v.region, item);
+    return d.page(req, reply, 'historique', { v, L, R: region(d.content, v.region), item, h });
+  });
+  app.post('/boutique/vendre', (req, reply) => {
+    const b = body(req);
+    const price = int(b.price);
+    const input =
+      b.kind === 'instance'
+        ? { kind: 'instance', instance: int(b.instance), price }
+        : b.kind === 'troop'
+          ? { kind: 'troop', troop: int(b.troop), price }
+          : { kind: 'stack', item: b.item, qty: int(b.qty) || 1, price };
+    return act(req, reply, '/boutique', async () => void (await d.run(req, listGoods, input)));
+  });
+  app.post('/boutique/:id/acheter', (req, reply) =>
+    act(req, reply, '/boutique', async () => void (await d.run(req, buyListing, { listing: int((req.params as { id: string }).id) }))),
+  );
+  app.post('/boutique/:id/retirer', (req, reply) =>
+    act(req, reply, '/boutique', async () => void (await d.run(req, withdrawListing, { listing: int((req.params as { id: string }).id) }))),
+  );
+  app.get('/notifications', async (req, reply) => {
+    const v = await view(req);
+    const list = await notifications(d.db, d.requireAuth(req).player.id);
+    return d.page(req, reply, 'notifications', { v, L, list });
+  });
+  app.post('/notifications/lues', (req, reply) =>
+    act(req, reply, '/notifications', async () => void (await d.run(req, markNotificationsRead, {}))),
+  );
 
   // ---------- Marchand ----------
   app.get('/marchand', async (req, reply) => {

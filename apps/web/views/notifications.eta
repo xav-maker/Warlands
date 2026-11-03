@@ -1,0 +1,13 @@
+<% layout('./layout', { title: 'Notifications' }) %>
+<% const text = (n) => n.type === 'shop.sold' ? 'Vente à ' + it.L.region(n.data.ville).city.name + ' : ' + n.data.name + (n.data.qty > 1 ? ' × ' + n.data.qty : '') + ' pour ' + n.data.price + ' or (taxe ' + n.data.tax + ' or).' : n.type === 'shop.expired' ? 'Annonce expirée à ' + it.L.region(n.data.ville).city.name + ' : ' + n.data.name + (n.data.qty > 1 ? ' × ' + n.data.qty : '') + ', revenu dans votre banque.' : n.type %>
+<section>
+  <h1>Notifications</h1>
+  <% if (it.list.some((n) => !n.read_at)) { %>
+    <form method="post" action="/notifications/lues"><input type="hidden" name="_csrf" value="<%= it.csrf %>"><button type="submit">Tout marquer comme lu</button></form>
+  <% } %>
+  <ul class="items card">
+    <% for (const n of it.list) { %><li class="row between<%= n.read_at ? ' muted' : '' %>"><span><%= text(n) %></span><span class="muted"><%= n.created_at.toLocaleString('fr-FR') %></span></li><% } %>
+    <% if (!it.list.length) { %><li class="muted">Rien pour l’instant.</li><% } %>
+  </ul>
+  <p><a href="/jeu">Retour</a></p>
+</section>

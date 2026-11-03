@@ -1,0 +1,94 @@
+<% layout('./layout', { title: 'Boutique' }) %>
+<% const f = it.filters; const FAM = { materiau: 'matériaux', composant: 'composants', consommable: 'consommables', trophee: 'trophées', equipement: 'équipement', troupe: 'troupes' } %>
+<% const SLOTS = { arme: 'arme', armure: 'armure', accessoire: 'accessoire' } %>
+<section>
+  <p class="eyebrow"><%= it.R.city.name %></p>
+  <h1>Boutique</h1>
+  <p class="muted">Les annonces de cette boutique ne sont visibles et achetables qu’ici : chaque ville est un marché à part. Ce qui est acheté arrive en banque (une troupe en caserne). Le vendeur paie une taxe de <%= it.taxPermille / 10 %> % à la vente.</p>
+
+  <form method="get" action="/boutique" class="card row filters">
+    <label>Nom <input type="search" name="q" value="<%= f.q ?? '' %>" maxlength="40"></label>
+    <label>Famille
+      <select name="f"><option value="">toutes</option><% for (const [k, l] of Object.entries(FAM)) { %><option value="<%= k %>"<%= f.family === k ? ' selected' : '' %>><%= l %></option><% } %></select>
+    </label>
+    <label>Palier
+      <select name="p"><option value="">tous</option><% for (const p of [1, 2, 3, 4, 5]) { %><option value="<%= p %>"<%= f.tier === p ? ' selected' : '' %>><%= p %></option><% } %></select>
+    </label>
+    <label>Emplacement
+      <select name="s"><option value="">tous</option><% for (const [k, l] of Object.entries(SLOTS)) { %><option value="<%= k %>"<%= f.slot === k ? ' selected' : '' %>><%= l %></option><% } %></select>
+    </label>
+    <button type="submit">Chercher</button>
+  </form>
+
+  <div class="card">
+    <h2>Annonces <span class="muted">— par prix croissant</span></h2>
+    <ul class="items">
+      <% for (const l of it.found.rows) { const own = l.seller_id === it.auth.player.id %>
+        <li class="row between">
+          <span>
+            <b><%= l.name %></b><%= l.qty > 1 ? ' × ' + l.qty : '' %>
+            <span class="muted">— <%= FAM[l.family] ?? l.family %>, palier <%= l.tier %><%= l.level ? ', niveau ' + l.level : '' %><%= l.roll ? ', ' + it.L.quality(l.roll) : '' %><%= l.stats ? ' : ' + l.stats.map(it.L.statText).join(', ') : '' %> · par <%= l.seller %></span>
+            <a href="/boutique/historique/<%= l.item %>" class="muted">historique</a>
+          </span>
+          <span class="actions">
+            <b><%= l.price %> or</b><%= l.qty > 1 ? ' (' + Math.round(l.price / l.qty) + ' l’unité)' : '' %>
+            <% if (!own) { %>
+              <form method="post" action="/boutique/<%= l.id %>/acheter" class="inline"><input type="hidden" name="_csrf" value="<%= it.csrf %>"><button type="submit" class="primary"<%= it.v.gold < l.price ? ' disabled' : '' %>>Acheter</button></form>
+            <% } else { %><span class="muted">votre annonce</span><% } %>
+          </span>
+        </li>
+      <% } %>
+      <% if (!it.found.rows.length) { %><li class="muted">Aucune annonce ne correspond.</li><% } %>
+    </ul>
+    <% if (it.found.next) { %><p><a href="/boutique?<%= new URLSearchParams({ ...(f.q ? { q: f.q } : {}), ...(f.family ? { f: f.family } : {}), ...(f.tier ? { p: String(f.tier) } : {}), ...(f.slot ? { s: f.slot } : {}), apres: it.found.next }).toString() %>">Annonces suivantes</a></p><% } %>
+  </div>
+
+  <div class="grid">
+    <div class="card">
+      <h2>Vendre</h2>
+      <p class="muted">Depuis la banque, ou une troupe de la caserne. Prix minimal : le rachat du marchand. 20 annonces au plus, 7 jours chacune.</p>
+      <% if (it.v.bank.stacks.length) { %>
+        <form method="post" action="/boutique/vendre" class="row">
+          <input type="hidden" name="_csrf" value="<%= it.csrf %>">
+          <input type="hidden" name="kind" value="stack">
+          <select name="item" aria-label="Objet"><% for (const s of it.v.bank.stacks) { %><option value="<%= s.item %>"><%= it.L.item(s.item) %> (<%= s.qty %>, rachat <%= it.L.sellPrice(s.item) %> or l’unité)</option><% } %></select>
+          <input type="number" name="qty" value="1" min="1" class="qty" aria-label="Quantité" placeholder="qté">
+          <input type="number" name="price" min="1" required class="qty" aria-label="Prix total" placeholder="prix">
+          <button type="submit">Mettre en vente</button>
+        </form>
+      <% } %>
+      <% if (it.v.bank.instances.length) { %>
+        <form method="post" action="/boutique/vendre" class="row">
+          <input type="hidden" name="_csrf" value="<%= it.csrf %>">
+          <input type="hidden" name="kind" value="instance">
+          <select name="instance" aria-label="Équipement"><% for (const i of it.v.bank.instances) { %><option value="<%= i.id %>"><%= it.L.item(i.base) %> — <%= it.L.quality(i.roll) %> (rachat <%= it.L.sellInstance(i.base, i.roll) %> or)</option><% } %></select>
+          <input type="number" name="price" min="1" required class="qty" aria-label="Prix" placeholder="prix">
+          <button type="submit">Mettre en vente</button>
+        </form>
+      <% } %>
+      <% if (it.troops.length) { %>
+        <form method="post" action="/boutique/vendre" class="row">
+          <input type="hidden" name="_csrf" value="<%= it.csrf %>">
+          <input type="hidden" name="kind" value="troop">
+          <select name="troop" aria-label="Troupe"><% for (const t of it.troops) { %><option value="<%= t.id %>"><%= t.name %> niv. <%= t.level %> (au moins <%= it.minTroop(t.type) %> or)</option><% } %></select>
+          <input type="number" name="price" min="1" required class="qty" aria-label="Prix" placeholder="prix">
+          <button type="submit">Mettre en vente</button>
+        </form>
+      <% } %>
+    </div>
+
+    <div class="card">
+      <h2>Vos annonces</h2>
+      <ul class="items">
+        <% for (const l of it.mine) { const here = l.region === it.v.region %>
+          <li class="row between">
+            <span><b><%= l.name %></b><%= l.qty > 1 ? ' × ' + l.qty : '' %> <span class="muted">— <%= l.price %> or · <%= it.L.region(l.region).city.name %> · jusqu’au <%= l.expires_at.toLocaleDateString('fr-FR') %></span></span>
+            <% if (here) { %><form method="post" action="/boutique/<%= l.id %>/retirer" class="inline"><input type="hidden" name="_csrf" value="<%= it.csrf %>"><button type="submit">Retirer</button></form><% } else { %><span class="muted">se retire à <%= it.L.region(l.region).city.name %></span><% } %>
+          </li>
+        <% } %>
+        <% if (!it.mine.length) { %><li class="muted">Aucune annonce en cours.</li><% } %>
+      </ul>
+    </div>
+  </div>
+  <p><a href="/ville">Retour à la ville</a></p>
+</section>

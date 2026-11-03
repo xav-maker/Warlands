@@ -223,6 +223,25 @@ describe('parcours de jeu (J2)', () => {
     expect(r.body).toContain('Renoncer (10 or)');
   });
 
+  it('met en vente à la boutique, retrouve l’annonce, la retire', async () => {
+    expect((await req('POST', '/boutique/vendre', { kind: 'stack', item: 'bandage', qty: '3', price: '2' })).headers.location).toBe(
+      '/boutique?e=PRICE_TOO_LOW',
+    );
+    expect((await req('POST', '/boutique/vendre', { kind: 'stack', item: 'bandage', qty: '1', price: '25' })).headers.location).toBe(
+      '/boutique',
+    );
+    const page = await req('GET', '/boutique?q=band');
+    expect(page.body).toContain('Bandage');
+    expect(page.body).toContain('votre annonce');
+    expect((await req('GET', '/boutique?q=introuvable')).body).toContain('Aucune annonce ne correspond');
+    const l = await t.db.selectFrom('shop_listing').select('id').where('status', '=', 'active').executeTakeFirstOrThrow();
+    expect((await req('POST', `/boutique/${l.id}/retirer`, {})).headers.location).toBe('/boutique');
+    expect((await t.db.selectFrom('shop_listing').select('status').where('id', '=', l.id).executeTakeFirstOrThrow()).status).toBe(
+      'withdrawn',
+    );
+    expect((await req('GET', '/boutique/historique/bandage')).body).toContain('Aucune vente récente');
+  });
+
   it('sert le Codex, même sans être connecté', async () => {
     jar.clear();
     for (const [p, text] of [
