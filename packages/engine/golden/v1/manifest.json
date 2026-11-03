@@ -1,0 +1,1763 @@
+{
+ "engineVersion": "v1",
+ "previous": "proto-0.4.2",
+ "fights": {
+  "001-r1-lisiere.json.gz": {
+   "log": "a8035cf6489dd6bcd52c49876a96e3aa5a59912742f6ee834626ada613fa20ac",
+   "events": 287,
+   "winner": 0,
+   "reason": "wipe",
+   "time": 110
+  },
+  "002-r1-lisiere.json.gz": {
+   "log": "3915894d96702b89ddaa784c736c6526af90811b377e6a19f303d376f0199828",
+   "events": 124,
+   "winner": 0,
+   "reason": "wipe",
+   "time": 59
+  },
+  "003-r1-lisiere.json.gz": {
+   "log": "51213489808e2aea564246579e8a420a53bce101d3793a734c0b7fb4b3d01464",
+   "events": 169,
+   "winner": 0,
+   "reason": "wipe",
+   "time": 108
+  },
+  "004-r1-lisiere.json.gz": {
+   "log": "ec51fbbe881a1c5d3a84ac537bd91b538be8b26f33c1631f25e6d69d6e4465d1",
+   "events": 419,
+   "winner": 0,
+   "reason": "wipe",
+   "time": 180
+  },
+  "005-r1-lisiere.json.gz": {
+   "log": "1a0f718fdd708ed0b8cd79dd0b4659f2da07de1e1a9b1a4141361a64b9c1dcac",
+   "events": 160,
+   "winner": 0,
+   "reason": "wipe",
+   "time": 72
+  },
+  "006-r1-lisiere.json.gz": {
+   "log": "9432cf45136c63fd3e9094ba2e564795b91743d0f8b9faf7f9bc42af8d2da55c",
+   "events": 314,
+   "winner": 0,
+   "reason": "wipe",
+   "time": 126
+  },
+  "007-r1-lisiere.json.gz": {
+   "log": "000a3e4f3e83dabceeeee59aee93d2ede9d198ade1168723a8a92a7025568b19",
+   "events": 185,
+   "winner": 0,
+   "reason": "wipe",
+   "time": 90
+  },
+  "008-r1-lisiere.json.gz": {
+   "log": "26e777accdff1bb42e1dc6ba9165ca03338f3ad0f3c828b5fdd7bba1662cceba",
+   "events": 207,
+   "winner": 0,
+   "reason": "wipe",
+   "time": 78
+  },
+  "009-r1-sentier.json.gz": {
+   "log": "50cdb8ee40755e3b607b2cfe4353b60cea6de7abf2686c0d650630cca76555b2",
+   "events": 411,
+   "winner": 0,
+   "reason": "wipe",
+   "time": 116
+  },
+  "010-r1-sentier.json.gz": {
+   "log": "cd74e2c6253073fb85d61b80701729104355609d6f14be7b049f38266161e239",
+   "events": 226,
+   "winner": 0,
+   "reason": "wipe",
+   "time": 110
+  },
+  "011-r1-sentier.json.gz": {
+   "log": "0e4872007df2e97ab28e769eb42e4cf0ff803f1a3fd1412e0a6bbd348717f90e",
+   "events": 443,
+   "winner": 0,
+   "reason": "wipe",
+   "time": 128
+  },
+  "012-r1-sentier.json.gz": {
+   "log": "5ff9cedfcf143b6e48a71f4ed5533bca07054fe45aa59e950aaca7cb37bb1d16",
+   "events": 384,
+   "winner": 0,
+   "reason": "wipe",
+   "time": 110
+  },
+  "013-r1-sentier.json.gz": {
+   "log": "fd08fcbeb488e3789ab88551641fc389455efd6885e81bf0b7cb01b5e11a77f4",
+   "events": 511,
+   "winner": 0,
+   "reason": "wipe",
+   "time": 170
+  },
+  "014-r1-sentier.json.gz": {
+   "log": "dd14bf7e85aac2e0cf7990caa5be9c969538d7e252daf08a1f49bae28b498fc2",
+   "events": 631,
+   "winner": 0,
+   "reason": "wipe",
+   "time": 360
+  },
+  "015-r1-sentier.json.gz": {
+   "log": "ece4e9347abe02be6fd8e7416e2636c4560f26f68782a1233edcfe8896485036",
+   "events": 380,
+   "winner": 0,
+   "reason": "wipe",
+   "time": 126
+  },
+  "016-r1-sentier.json.gz": {
+   "log": "a3cd3a55209405acbc8a0357d232bcf44b9740d57cb31ef24dbadaafb3c145f4",
+   "events": 339,
+   "winner": 0,
+   "reason": "wipe",
+   "time": 90
+  },
+  "017-r1-nids.json.gz": {
+   "log": "47f75258df3cd688728d38b7f1a580f1c07bd4e4e98f6be08c5fcb993f1c60a3",
+   "events": 415,
+   "winner": 0,
+   "reason": "wipe",
+   "time": 240
+  },
+  "018-r1-nids.json.gz": {
+   "log": "384735a07105d2a7a3e72c7b45c08df83e3eecc8e873747668fb088e9a5c38a7",
+   "events": 811,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 371
+  },
+  "019-r1-nids.json.gz": {
+   "log": "e416bcb92eb93bf8eb513c55331b537fdd41b6f19023b0ba93525bbb444856d4",
+   "events": 354,
+   "winner": 0,
+   "reason": "wipe",
+   "time": 179
+  },
+  "020-r1-nids.json.gz": {
+   "log": "cee19fb720131ab754da05ff35ba298123f3f9f046daa8c966a17c9865f9ed3e",
+   "events": 407,
+   "winner": 0,
+   "reason": "wipe",
+   "time": 144
+  },
+  "021-r1-nids.json.gz": {
+   "log": "3f9fcdf332ea91967d08b3f776204c600f114695d4489c56444f211109ea8789",
+   "events": 528,
+   "winner": 0,
+   "reason": "wipe",
+   "time": 198
+  },
+  "022-r1-nids.json.gz": {
+   "log": "cb46cc492f7f5b9e72b0b7c4093d2a046a24d0aaba8149d1399d0221d774c362",
+   "events": 426,
+   "winner": 0,
+   "reason": "wipe",
+   "time": 162
+  },
+  "023-r1-nids.json.gz": {
+   "log": "b63d6fddf510c6ef40b0204434c500f95ca5bc294147a5f2710f75f416fb8aea",
+   "events": 677,
+   "winner": 0,
+   "reason": "wipe",
+   "time": 200
+  },
+  "024-r1-nids.json.gz": {
+   "log": "7e4d17887aa43d4ed0dd6bd96056e07419120ee4b604f879d95826055e6e4ae8",
+   "events": 548,
+   "winner": 0,
+   "reason": "wipe",
+   "time": 156
+  },
+  "025-r1-camp.json.gz": {
+   "log": "fdfa14015c15f8397e0000c60c60e9db7e4bbc1a4bc10844e64e7a733fecb646",
+   "events": 475,
+   "winner": 0,
+   "reason": "wipe",
+   "time": 234
+  },
+  "026-r1-camp.json.gz": {
+   "log": "01a4bc16cf8f1b7087c56e6434d923a99e1b83fe92539b77d6ac97f31c8395c9",
+   "events": 1301,
+   "winner": 0,
+   "reason": "wipe",
+   "time": 682
+  },
+  "027-r1-camp.json.gz": {
+   "log": "3988fc90be2a2d7e250e72298f724f3b3c94c161e0000d643ca1dfbceb58ccdc",
+   "events": 524,
+   "winner": 0,
+   "reason": "wipe",
+   "time": 230
+  },
+  "028-r1-camp.json.gz": {
+   "log": "50b74cde10951b60ffa6576618fb91e57445232a173c1b8313557d1f1e0e543a",
+   "events": 810,
+   "winner": 0,
+   "reason": "wipe",
+   "time": 419
+  },
+  "029-r1-camp.json.gz": {
+   "log": "2621971b763882b02b433b5386d4abe110faaa8a995d86d8c26359067d38184e",
+   "events": 770,
+   "winner": 0,
+   "reason": "wipe",
+   "time": 240
+  },
+  "030-r1-camp.json.gz": {
+   "log": "e3ea8834edaffc5c1c4a2a71c0204b535a3b0baf77f42bfb52bf993dc8457364",
+   "events": 356,
+   "winner": 0,
+   "reason": "wipe",
+   "time": 120
+  },
+  "031-r1-camp.json.gz": {
+   "log": "6370324ff94f9c28d16009c17e4590d6786e6984dbfc66cdfcbe183f08c21387",
+   "events": 643,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 484
+  },
+  "032-r1-camp.json.gz": {
+   "log": "4c3681b3c290b59f8f5f7e247492301dc2b4522f6aea10fe9ee01c731d67592d",
+   "events": 492,
+   "winner": 0,
+   "reason": "wipe",
+   "time": 288
+  },
+  "033-r1-coeur-gardien.json.gz": {
+   "log": "613686868b3dced2255c9501597fa9d0e498cdf6cadc2c4e432e27da056395cd",
+   "events": 565,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 284
+  },
+  "034-r1-coeur-gardien.json.gz": {
+   "log": "a9e4fa7cddbc807e6ea50e5cdfc79e6aa9c413ef9d3edad1a1eced22b1cd9f6a",
+   "events": 1593,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 637
+  },
+  "035-r1-coeur-gardien.json.gz": {
+   "log": "624b20db697669260be36d774e05818ee0ce44723782a70add377bf3eccf9c4c",
+   "events": 947,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 625
+  },
+  "036-r1-coeur-gardien.json.gz": {
+   "log": "fce0a3ed9e341b68b7c68ce14c619480c597f506ae86fb5376ffa6d46b270b0c",
+   "events": 1163,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 477
+  },
+  "037-r1-coeur-gardien.json.gz": {
+   "log": "cb5b2d0841863a2ebf7095f67e22067b585591948c2f85b811814c835daf7c9d",
+   "events": 860,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 292
+  },
+  "038-r1-coeur-gardien.json.gz": {
+   "log": "e609a6880c9068725ada001fb31a216ab4fdea48071eb9b4c10202dced6092a7",
+   "events": 1216,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 571
+  },
+  "039-r1-coeur-gardien.json.gz": {
+   "log": "79ba18a4271abd6ccef28a60d25655e059f3b13f2820ae4d08c551c67743463d",
+   "events": 2197,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 492
+  },
+  "040-r1-coeur-gardien.json.gz": {
+   "log": "e4c65334a6df3f6ab772b9a0edf0faa6b0d4369aa702d1baa6b7a01467f14794",
+   "events": 1297,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 565
+  },
+  "041-r2-berges.json.gz": {
+   "log": "9861ffa07777d393d5b62bc3e76f73accd01820935212e25d39f6af611ed50a2",
+   "events": 565,
+   "winner": 0,
+   "reason": "wipe",
+   "time": 320
+  },
+  "042-r2-berges.json.gz": {
+   "log": "d6db902afe07fe3c39c074e77b0f3815171b537f310eb8d34317959715171a35",
+   "events": 339,
+   "winner": 0,
+   "reason": "wipe",
+   "time": 113
+  },
+  "043-r2-berges.json.gz": {
+   "log": "3ca2475d6710ca4a7459fa16d7c592a1f15b86236015d359671a532ac0960bfc",
+   "events": 234,
+   "winner": 0,
+   "reason": "wipe",
+   "time": 158
+  },
+  "044-r2-berges.json.gz": {
+   "log": "ae6b7b762fd0fcff6298f327472f3c4e53ef428fae7e636fe453a0611b920ea1",
+   "events": 945,
+   "winner": 0,
+   "reason": "wipe",
+   "time": 500
+  },
+  "045-r2-berges.json.gz": {
+   "log": "f13bbaef1cad1677ceb2ba84710194a5ccddb8e882ee6203ae583eb2b77cf2cc",
+   "events": 1227,
+   "winner": 0,
+   "reason": "wipe",
+   "time": 557
+  },
+  "046-r2-berges.json.gz": {
+   "log": "dff2a18ba8cb95ee2ded2106d5812614b9358e7d0d0b9e3e1cfc87076fabb998",
+   "events": 532,
+   "winner": 0,
+   "reason": "wipe",
+   "time": 282
+  },
+  "047-r2-berges.json.gz": {
+   "log": "44bafaa3f14a305179ebb6c51d088fb85f4af4d76ea9ea8ca1e66506ebe48fe0",
+   "events": 990,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 252
+  },
+  "048-r2-berges.json.gz": {
+   "log": "becdb6173c26e292042976b7c9651400c2d70cd56f4f0035246270b80465aa59",
+   "events": 640,
+   "winner": 0,
+   "reason": "wipe",
+   "time": 198
+  },
+  "049-r2-roselieres.json.gz": {
+   "log": "8dbd1b99e54bdad697695400302b7ab3151861d41914c2615bbc6b170e94622f",
+   "events": 601,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 306
+  },
+  "050-r2-roselieres.json.gz": {
+   "log": "a49932f230afb31571c30e50abeb14c088ba59f5afada530ba098c382983e7c0",
+   "events": 759,
+   "winner": 0,
+   "reason": "wipe",
+   "time": 340
+  },
+  "051-r2-roselieres.json.gz": {
+   "log": "99ca960accb1f19db113b54b09d21a08c3603474f23494b9cfc85a0e563a4e8a",
+   "events": 863,
+   "winner": 0,
+   "reason": "wipe",
+   "time": 408
+  },
+  "052-r2-roselieres.json.gz": {
+   "log": "fad0b07751af6e95a3bfef5c1ae49b30e2d486bcc66c9be8c5b0fc4b05851d06",
+   "events": 859,
+   "winner": 0,
+   "reason": "wipe",
+   "time": 510
+  },
+  "053-r2-roselieres.json.gz": {
+   "log": "515e6bd9284c01c37271e2e1f07cfa62bfdec182e0f3f386a807868959fa6a69",
+   "events": 1050,
+   "winner": 0,
+   "reason": "wipe",
+   "time": 504
+  },
+  "054-r2-roselieres.json.gz": {
+   "log": "520f5efba4bcc85d4d008ffbc40773b654e62bc8e83e6459f441e8a8f674e3b8",
+   "events": 558,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 414
+  },
+  "055-r2-roselieres.json.gz": {
+   "log": "37dc73d3e88b44b7f93abbc7ee10323fbd7d255305a1e6123077a44a3a3d6388",
+   "events": 726,
+   "winner": 0,
+   "reason": "wipe",
+   "time": 580
+  },
+  "056-r2-roselieres.json.gz": {
+   "log": "0427cfbe3f5d037304df52d5cc3a6adcacfe8b9f7b1c7eefc77e2b16e331328e",
+   "events": 585,
+   "winner": 0,
+   "reason": "wipe",
+   "time": 265
+  },
+  "057-r2-epaves.json.gz": {
+   "log": "00ae8f88bff5a98f489eb4e992f75b4e6aefc804d7e91573a94e6422c2d4e51b",
+   "events": 163,
+   "winner": 0,
+   "reason": "wipe",
+   "time": 101
+  },
+  "058-r2-epaves.json.gz": {
+   "log": "b995196f4519b90265c0807ba667045b4223981839033e90ddb2ac41edf10628",
+   "events": 670,
+   "winner": 0,
+   "reason": "wipe",
+   "time": 200
+  },
+  "059-r2-epaves.json.gz": {
+   "log": "ee562eb757b503e020a85363ef2a14711be78cfc960da19e0da6aecf8487f906",
+   "events": 362,
+   "winner": 0,
+   "reason": "wipe",
+   "time": 327
+  },
+  "060-r2-epaves.json.gz": {
+   "log": "823063f70e4ed536096b29004f9913f3474e611e98d63af7df5bbe702bc7ba12",
+   "events": 641,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 250
+  },
+  "061-r2-epaves.json.gz": {
+   "log": "73581d46fe1db82aba46cb1e124194ec085471b68b90fdf1a258c94587a5ccf2",
+   "events": 640,
+   "winner": 0,
+   "reason": "wipe",
+   "time": 304
+  },
+  "062-r2-epaves.json.gz": {
+   "log": "f505416c4990dc19dcabb6b9c9d8fa6ede99a9efd49b34a4b3934489f4123f39",
+   "events": 564,
+   "winner": 0,
+   "reason": "wipe",
+   "time": 216
+  },
+  "063-r2-epaves.json.gz": {
+   "log": "c2bc21efc343112c00fdf74a195834be2e946e0109860a96f47c2cef31ba4205",
+   "events": 516,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 216
+  },
+  "064-r2-epaves.json.gz": {
+   "log": "9a101ad22518e5ee04dc5a68b6e7671114c7650dd95f130dd1a3697348ef4f60",
+   "events": 556,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 302
+  },
+  "065-r2-tertre.json.gz": {
+   "log": "ca2d1e27a43c9676424ff7d18e98a0e3b7ace768b93ee7aa84bfb2f4948c8803",
+   "events": 1464,
+   "winner": 0,
+   "reason": "wipe",
+   "time": 450
+  },
+  "066-r2-tertre.json.gz": {
+   "log": "54ca801703efab6be667c12c9b3e201c9f43b96c7a7bc89dd57a188e194eb433",
+   "events": 875,
+   "winner": 0,
+   "reason": "wipe",
+   "time": 356
+  },
+  "067-r2-tertre.json.gz": {
+   "log": "7d6a6595388a091b576a3b9c5209db4e15b166068109a9e733e5f20ac538cb43",
+   "events": 521,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 167
+  },
+  "068-r2-tertre.json.gz": {
+   "log": "9d468414cdc621d4fafcab727c1465c75031617f8af1d742d23096944558f113",
+   "events": 1294,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 852
+  },
+  "069-r2-tertre.json.gz": {
+   "log": "661a944afbbc172a26e828e856562110c711f6a19169c743add779c302c1efd4",
+   "events": 688,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 225
+  },
+  "070-r2-tertre.json.gz": {
+   "log": "824d53ca25935ce0dc9d854a829dcf4376368e30a34d6fbee1f06af9beff1552",
+   "events": 1255,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 966
+  },
+  "071-r2-tertre.json.gz": {
+   "log": "235ac2b3f921c5e13f4df7bce4a34119b9c2dc4dfcb44099d3fe7fa85de26482",
+   "events": 1303,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 536
+  },
+  "072-r2-tertre.json.gz": {
+   "log": "a6aed982532e16412d7620aedef14816d890ea8073197a4d130379d087e187c6",
+   "events": 1569,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 1183
+  },
+  "073-r2-gouffre-gardien.json.gz": {
+   "log": "0dab821707fcca3b4e01abd1b1b26563bccf09e0a5139ec477c45d8c7dd6d29b",
+   "events": 835,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 286
+  },
+  "074-r2-gouffre-gardien.json.gz": {
+   "log": "47ab37de332a5f8fb8453fbf7225eea064cf2fb4b7022700784d2931be9cfc82",
+   "events": 1021,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 494
+  },
+  "075-r2-gouffre-gardien.json.gz": {
+   "log": "a06f4e29af28c04b1af00d520d747a976e19836836f13e4fe70cb5c2af509dc7",
+   "events": 1010,
+   "winner": 0,
+   "reason": "wipe",
+   "time": 568
+  },
+  "076-r2-gouffre-gardien.json.gz": {
+   "log": "6240e6e4919b380d9cbc41e663d4263332cdca9fccca4789419be78f2a2195b7",
+   "events": 921,
+   "winner": 0,
+   "reason": "wipe",
+   "time": 607
+  },
+  "077-r2-gouffre-gardien.json.gz": {
+   "log": "4a8c4f9b7d4623d64ba5c9c61c6898fd94e2c817ff712c3386f7ee6162f0a6f0",
+   "events": 2227,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 1564
+  },
+  "078-r2-gouffre-gardien.json.gz": {
+   "log": "a53e93f81c91038f33427564e48f207598048b232fb0195258253a7706532c7f",
+   "events": 1502,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 506
+  },
+  "079-r2-gouffre-gardien.json.gz": {
+   "log": "5fa4170865084d6fdee8aa38b9f2f8728a590115b728da3e999f171e5893ad9d",
+   "events": 469,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 202
+  },
+  "080-r2-gouffre-gardien.json.gz": {
+   "log": "2a11ccd5c1dde9843161425c6b4f7e28ef739173dd76858810771f0cd41aafe1",
+   "events": 1169,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 618
+  },
+  "081-r3-entree.json.gz": {
+   "log": "4800233b7b2f72f7b31727c1bf7fb358c4dd13f2ab029c335b71aaaf6f28d5d5",
+   "events": 696,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 177
+  },
+  "082-r3-entree.json.gz": {
+   "log": "60bf1d4c30f66a44d8dea320b17e8111d43cabde36fde763cd26c416d2670d28",
+   "events": 417,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 163
+  },
+  "083-r3-entree.json.gz": {
+   "log": "cf5f0af2cde34a8335d3dfabc5de76e9f3ad135e7cfd5d5aee8d18d943d357c0",
+   "events": 635,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 194
+  },
+  "084-r3-entree.json.gz": {
+   "log": "e2865e87523d955fede268414590caf1edfaab2739c4c31938fff575c33f5cfe",
+   "events": 738,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 198
+  },
+  "085-r3-entree.json.gz": {
+   "log": "212a174ee246c52fd4d15a0b57f324c9f10da5f9d471b21c25eeb18db625ff3a",
+   "events": 244,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 111
+  },
+  "086-r3-entree.json.gz": {
+   "log": "8b362284774b55ecb071c66096b0a8eed1306833426455cf824551b2f03f4f5a",
+   "events": 549,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 206
+  },
+  "087-r3-entree.json.gz": {
+   "log": "d8df4334ee57c670201e521c8b7eacffb1db6f60d4ee1f700a1d7d161713aead",
+   "events": 618,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 225
+  },
+  "088-r3-entree.json.gz": {
+   "log": "1ea7b1fb067bb03fcdfa973abc2fcada92b134ae26b4af4ccc8768e670957b71",
+   "events": 451,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 142
+  },
+  "089-r3-galeries.json.gz": {
+   "log": "7bd352e83b7818038e3bfa55397dfe69a283a0ba2eef955777cac2a3559865c1",
+   "events": 337,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 320
+  },
+  "090-r3-galeries.json.gz": {
+   "log": "724abd33af52e4d727072efc90b25b817abe1406a271426616f3e9f0550a6fc8",
+   "events": 1382,
+   "winner": 0,
+   "reason": "wipe",
+   "time": 836
+  },
+  "091-r3-galeries.json.gz": {
+   "log": "a0ea93914ddefa378fc78e5953752b9a4b9041c64febd43b91a7e6f4f85f1bba",
+   "events": 1290,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 290
+  },
+  "092-r3-galeries.json.gz": {
+   "log": "5247369c27744ff36d1c97ad96a810e2981bb1e54f371d63eaa979a2671fe5e1",
+   "events": 656,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 203
+  },
+  "093-r3-galeries.json.gz": {
+   "log": "f4337202f2c9fa93ff73aba191fd501933267acb4dd530a01aa321143867c43e",
+   "events": 407,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 127
+  },
+  "094-r3-galeries.json.gz": {
+   "log": "675c7316ed71b5146210b892f8d05c36a8f5d7c48740594089d9a574df40e4dd",
+   "events": 753,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 182
+  },
+  "095-r3-galeries.json.gz": {
+   "log": "aa2a27d75a72aa6af08a8fd76ac0b9ff6570fd205b600a0e568ae61a89a2ecaa",
+   "events": 876,
+   "winner": 0,
+   "reason": "wipe",
+   "time": 414
+  },
+  "096-r3-galeries.json.gz": {
+   "log": "a2b5355768c6c208e16d7c457544621cabcd17cd786c334b3ec6d3cc40a3f141",
+   "events": 1819,
+   "winner": 0,
+   "reason": "wipe",
+   "time": 549
+  },
+  "097-r3-filons.json.gz": {
+   "log": "47b27e8690c85353bd2bf8b266db4d8e90ea69c83c4398981e4ac88e26275934",
+   "events": 607,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 329
+  },
+  "098-r3-filons.json.gz": {
+   "log": "c235708d99842574d32fe04c4be969563692be29b91f30ee8af7a0ced47e030e",
+   "events": 404,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 145
+  },
+  "099-r3-filons.json.gz": {
+   "log": "d63d4329c45c9bd884bedee3e2b36f6c8655b656b32f3e7729a1409252adbcf5",
+   "events": 969,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 1004
+  },
+  "100-r3-filons.json.gz": {
+   "log": "e7d466febd31ebb358b08b8d5be993292f6cd5eb85e7815d84705fc958d0675b",
+   "events": 490,
+   "winner": 0,
+   "reason": "wipe",
+   "time": 260
+  },
+  "101-r3-filons.json.gz": {
+   "log": "aa6e6e7f183952e838763557a90efeaae22dfca93af18847da6883e27a3c6dbf",
+   "events": 334,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 198
+  },
+  "102-r3-filons.json.gz": {
+   "log": "c9a28fb5437f4008fb2660cac97b3d976dc1ff1e49b4b61624d3c6d75916469d",
+   "events": 747,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 343
+  },
+  "103-r3-filons.json.gz": {
+   "log": "34f85f84e87f8549b98564335e0ed3d8cfa505d9ff04682bda42459f2bd24bcc",
+   "events": 497,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 289
+  },
+  "104-r3-filons.json.gz": {
+   "log": "acfbafa5ad500d666650c71b7cedac532f1395de0aa6d8fc88bc44ab22874210",
+   "events": 626,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 464
+  },
+  "105-r3-puits.json.gz": {
+   "log": "b6ba3b925e785b9aab812d4478434115c5c19ba3ae7156de522c204f48716a66",
+   "events": 964,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 463
+  },
+  "106-r3-puits.json.gz": {
+   "log": "6b37174725f4c005758179c4da7730d30570c2da24ef3e70d7bb8ab12ab835fe",
+   "events": 665,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 413
+  },
+  "107-r3-puits.json.gz": {
+   "log": "6151a3f6b22d585157f4716fdf54a499bf19c7f1b4e4549abbb2bb52cfa90452",
+   "events": 226,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 126
+  },
+  "108-r3-puits.json.gz": {
+   "log": "71e3ea9329af80c9576f2cefac3be06643765335a4975a74e06de091e736d165",
+   "events": 412,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 162
+  },
+  "109-r3-puits.json.gz": {
+   "log": "46b827af64c1e4424054ac01e76481d2b1b425c9674674b8a7d5b798e49dd7c8",
+   "events": 552,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 295
+  },
+  "110-r3-puits.json.gz": {
+   "log": "6f2f421fbbfdd6f526d1227afe121c555e74e87de7f3d5f9ea8d98bb173dcbb4",
+   "events": 247,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 173
+  },
+  "111-r3-puits.json.gz": {
+   "log": "e910bda8a50d59fb1702e2b9a3ddf733273615b1d17d47f0cc587a9a95f812ab",
+   "events": 518,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 240
+  },
+  "112-r3-puits.json.gz": {
+   "log": "a060db704f09de36c5ddc7e8a6e5ff889fd874d4126758e2e6372e53945f9abc",
+   "events": 471,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 294
+  },
+  "113-r3-forge-gardien.json.gz": {
+   "log": "db7a6cad79b704817f6f9dc48cdd09a1e599af8bfd72e79cf6b486f15f297965",
+   "events": 2028,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 1862
+  },
+  "114-r3-forge-gardien.json.gz": {
+   "log": "4a9ada096f8f87a9f970ace82aeaecdb9877e3774fdfb9f61b593e9d50657ede",
+   "events": 420,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 130
+  },
+  "115-r3-forge-gardien.json.gz": {
+   "log": "953de10cd446e215fad49ae52e01e352c59a53cf35cee67afc77762a59aed66a",
+   "events": 650,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 264
+  },
+  "116-r3-forge-gardien.json.gz": {
+   "log": "dc4d66677d8365b0c0a9511093c7857f3f8f3fb744b88ca9303196bf6ecd6bdb",
+   "events": 682,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 224
+  },
+  "117-r3-forge-gardien.json.gz": {
+   "log": "bad420c8b137b6a40fd12153063b8089fbcc4575a97324fafa0d827ee06d9127",
+   "events": 709,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 723
+  },
+  "118-r3-forge-gardien.json.gz": {
+   "log": "77749ce59695a6927d63070c89f2267b5a26696271e3ebfae4b11f56436c560f",
+   "events": 725,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 452
+  },
+  "119-r3-forge-gardien.json.gz": {
+   "log": "cbc282ffcafb5ea74b2612c67476073211592da36bd1512afc5eeb6fde7c0b23",
+   "events": 358,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 264
+  },
+  "120-r3-forge-gardien.json.gz": {
+   "log": "ae29bf6bdcc441f0dd8e2f2f99518ebe19de56fa5cc98deb27930eaef424789c",
+   "events": 333,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 111
+  },
+  "121-r4-dunes.json.gz": {
+   "log": "e76f8a89f8f27edfda1f05a2bab5a7ba418e256b5f0f27ca80e844632ea7347d",
+   "events": 96,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 66
+  },
+  "122-r4-dunes.json.gz": {
+   "log": "bc44d3a0c354bec14c0156d571fe8f8430d8dfab21e5810b2e9d5f95b08c3b96",
+   "events": 185,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 66
+  },
+  "123-r4-dunes.json.gz": {
+   "log": "865f05ff7a0c2452efcdc6b572e4ac3cc05f658c08941af58afa6e63b1f40a3e",
+   "events": 318,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 109
+  },
+  "124-r4-dunes.json.gz": {
+   "log": "70a7fa7f39a036e2e4f48b5b9ef72c93c110a36753c5997b5db91b72d48d31a1",
+   "events": 235,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 67
+  },
+  "125-r4-dunes.json.gz": {
+   "log": "4d9d5fe30bfb9567fbedc9fa20c57d3e3792f8b3f330b13a71e4844b146af63c",
+   "events": 262,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 92
+  },
+  "126-r4-dunes.json.gz": {
+   "log": "80e443650fb1e165300dc9f43aa8171f9301246c46a2435b79b71d49d8595a0a",
+   "events": 302,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 96
+  },
+  "127-r4-dunes.json.gz": {
+   "log": "c85762afb0bca61ad55c22a4da8b5caea26f15ed67bfea848e7fd0ca5f943d75",
+   "events": 166,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 54
+  },
+  "128-r4-dunes.json.gz": {
+   "log": "786389cc549e635e0f345deff584c10e821d670e76a4e18270bfecf02c36d92f",
+   "events": 872,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 363
+  },
+  "129-r4-caravane.json.gz": {
+   "log": "06b8029920753f750a6be72680b890e539f9638cbd3ac35f981fabc092df88f8",
+   "events": 979,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 512
+  },
+  "130-r4-caravane.json.gz": {
+   "log": "407e8a0fe0ba14fba237f2d68618afc3d4b2f0cc4182a1f7ef51304bb968756b",
+   "events": 341,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 107
+  },
+  "131-r4-caravane.json.gz": {
+   "log": "bff928ef4ebbeafce5ecd0fb491834b51ad9c1ce16889c4c6da6e968e883e28a",
+   "events": 167,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 71
+  },
+  "132-r4-caravane.json.gz": {
+   "log": "d5b4bb405bde0b8e1535e3820075458db4cb92eb7fc621f2f675cd3898347993",
+   "events": 282,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 80
+  },
+  "133-r4-caravane.json.gz": {
+   "log": "9daa71d89e40208a0c5e87cdfcb6eee95fd653bbab3b1bb1875b7fd6e4c2f58d",
+   "events": 140,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 73
+  },
+  "134-r4-caravane.json.gz": {
+   "log": "38d71a5331fff20252654a3de38ef7873866c77e4fcd99d8ab98e52ea589eb9c",
+   "events": 321,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 185
+  },
+  "135-r4-caravane.json.gz": {
+   "log": "c13a5b2405192c61090584ec201f5cb717cbf18a53a721fe08daacc2c30f8e44",
+   "events": 280,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 137
+  },
+  "136-r4-caravane.json.gz": {
+   "log": "8a11622ea1309763d5a816592337dfed9493731101074e09eea98bff48ea16dd",
+   "events": 251,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 171
+  },
+  "137-r4-tombeaux.json.gz": {
+   "log": "6aee8b8c2cf8bffcef59bbdbb62a602861872ff041b42a81d0796a19e94e6b74",
+   "events": 1365,
+   "winner": 0,
+   "reason": "wipe",
+   "time": 528
+  },
+  "138-r4-tombeaux.json.gz": {
+   "log": "14502e2fa45b288892c99259e69ad3fb676f7bc10d25f3ce57e37c4ef856d910",
+   "events": 1039,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 730
+  },
+  "139-r4-tombeaux.json.gz": {
+   "log": "64abdab241c1ad68371ca8862d9ff8ee78f52d153054ce94380fa3d1ea141ecb",
+   "events": 657,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 324
+  },
+  "140-r4-tombeaux.json.gz": {
+   "log": "95ac8c20a46cc95c4881e6d4a9dd3405698ad36ea64ea64e1b646b1497c2876a",
+   "events": 365,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 260
+  },
+  "141-r4-tombeaux.json.gz": {
+   "log": "adf063c2fefd51097251291a11bebac33b851cae6360bc6c0d6f31d7e15347f3",
+   "events": 2318,
+   "winner": 0,
+   "reason": "wipe",
+   "time": 1293
+  },
+  "142-r4-tombeaux.json.gz": {
+   "log": "c6899add5d2680f06d0da980308c9cff7884c90c45f76e1a7ccb7fc1820b1c44",
+   "events": 1022,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 233
+  },
+  "143-r4-tombeaux.json.gz": {
+   "log": "0f0f93535705d59070e08ad604562db14c5f1b9557a8e1e6fb33c87a5e2c552d",
+   "events": 694,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 245
+  },
+  "144-r4-tombeaux.json.gz": {
+   "log": "38c1b53ccfc1b0bb4dc5a892149e48ce772d46597d744385a9c5e89d2a2a7f29",
+   "events": 309,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 130
+  },
+  "145-r4-verrerie.json.gz": {
+   "log": "66360f8e40e95f32e68ceee92d6deb6c8cbefc815d9530710f351d8e0e98bd3e",
+   "events": 436,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 285
+  },
+  "146-r4-verrerie.json.gz": {
+   "log": "9d2898fe177fe61e4ad8bdf5d809123b902ed28295970d38196f2037ba0c4583",
+   "events": 333,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 186
+  },
+  "147-r4-verrerie.json.gz": {
+   "log": "0105d6e7d3e77a70c641731a0ee9ee34116e972c090807da9d05115cfc6b251a",
+   "events": 494,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 201
+  },
+  "148-r4-verrerie.json.gz": {
+   "log": "7f1bedfbdb47f9ee971b5ead1f95935bcdf3d67c74aa052db0abdefbdc724e51",
+   "events": 111,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 80
+  },
+  "149-r4-verrerie.json.gz": {
+   "log": "14a07df7f0054efefe885e94188a2c3d490d7c5ddbbba427852b334f1077cbe0",
+   "events": 1125,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 418
+  },
+  "150-r4-verrerie.json.gz": {
+   "log": "534cf3caada55b6157305681bb3dbf3c218da9975b81ae5e21a2835452adb685",
+   "events": 326,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 180
+  },
+  "151-r4-verrerie.json.gz": {
+   "log": "0f30258e89946c048171136afe1adcb1ea54da101b4a971488de4bb62cd9a686",
+   "events": 229,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 116
+  },
+  "152-r4-verrerie.json.gz": {
+   "log": "4c7668525f274acd2f57b3807b97b6983d1e38cb6c225abe09a6852a0f6f817d",
+   "events": 285,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 162
+  },
+  "153-r4-antre-gardien.json.gz": {
+   "log": "b79acf61c921d099377d3f8e7c2e2fae078013b5a371a91b40aee6990258538b",
+   "events": 1566,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 1484
+  },
+  "154-r4-antre-gardien.json.gz": {
+   "log": "cccdd72c0f30f61285d88ae160350b57228f96f4280484c57588b4ad589cfeb5",
+   "events": 512,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 241
+  },
+  "155-r4-antre-gardien.json.gz": {
+   "log": "d57d927e03cfc2f80cc7513734ae3e9f6869b647c4328f6d38125cebf88abe71",
+   "events": 2185,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 1848
+  },
+  "156-r4-antre-gardien.json.gz": {
+   "log": "45abd14ae0bf5336f93df0074f4c2e3e65e8d8854b674729027d09c99a10f8cd",
+   "events": 1040,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 266
+  },
+  "157-r4-antre-gardien.json.gz": {
+   "log": "efa8b36e2b0e80a76519d4e58282619c26026d9e517590bbb62b03abcf83ba94",
+   "events": 3363,
+   "winner": 0,
+   "reason": "wipe",
+   "time": 2150
+  },
+  "158-r4-antre-gardien.json.gz": {
+   "log": "41d1f92ebbf11117429daa8c305ff72bf49c68ef2c4fc85449a768553b6b6885",
+   "events": 650,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 208
+  },
+  "159-r4-antre-gardien.json.gz": {
+   "log": "416de295b70aff2c69d36b407fede85126d85000cf7c093f498cef3e151dc20f",
+   "events": 995,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 208
+  },
+  "160-r4-antre-gardien.json.gz": {
+   "log": "a3123f661c7edca4a594b4542be449bc3a4fe27164db8591d38e7dcf4f2122e1",
+   "events": 712,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 192
+  },
+  "161-r5-marches.json.gz": {
+   "log": "19b7f7b538d32468db455fff1d2c9cf01dc385f4de2a475dc9bdd687f6e7273a",
+   "events": 2155,
+   "winner": 0,
+   "reason": "wipe",
+   "time": 880
+  },
+  "162-r5-marches.json.gz": {
+   "log": "f6901b65d4b46957ffcf49ef9b3b42ad3411b3db98e0c14b9954e7310e07b329",
+   "events": 236,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 203
+  },
+  "163-r5-marches.json.gz": {
+   "log": "b50df19513499e9fdc5d195149a63ce485e107d867a0387cfd6c7e724d78077d",
+   "events": 351,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 162
+  },
+  "164-r5-marches.json.gz": {
+   "log": "fd02eeadc846faae09ffe62cbaa882a8673bfc28a8a371b98f5f6e910bf7fc17",
+   "events": 354,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 349
+  },
+  "165-r5-marches.json.gz": {
+   "log": "d17028a38c438bdb7a76e33712c9c8ff213bfd8127bfc1d809674b1e70ae5850",
+   "events": 286,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 136
+  },
+  "166-r5-marches.json.gz": {
+   "log": "15c296b1e8c0fb8bc0b2817a2a7a2b4ecb6d3192c28a3521c019ad4a4f971ba3",
+   "events": 1266,
+   "winner": 0,
+   "reason": "wipe",
+   "time": 846
+  },
+  "167-r5-marches.json.gz": {
+   "log": "20b09af02bb2a472dc7a88e565b6f9509448443cc7449828a643f8d26aeb3466",
+   "events": 513,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 254
+  },
+  "168-r5-marches.json.gz": {
+   "log": "05f2b881c7daf7c54084a2b3218805f8ba309cfc17d54c3dddc52b24944ce26b",
+   "events": 400,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 192
+  },
+  "169-r5-parvis.json.gz": {
+   "log": "b515c94275f9bee79e6153590488223d768a415efd0341914d0e36874a5edb52",
+   "events": 467,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 222
+  },
+  "170-r5-parvis.json.gz": {
+   "log": "6b96519d7f21febdcd28456e98309180dd0d59cd60fa5c0f45ec8363f324c9ae",
+   "events": 250,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 150
+  },
+  "171-r5-parvis.json.gz": {
+   "log": "a8917f45580e4f065a03b8a7b24d5f1a7debebe15461e771e70aa1bcb5a955d3",
+   "events": 353,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 180
+  },
+  "172-r5-parvis.json.gz": {
+   "log": "7846a4f4327df5f841e93ee8a0d2d3b64b253f750fc8d2448e526b7a0f4868fd",
+   "events": 439,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 260
+  },
+  "173-r5-parvis.json.gz": {
+   "log": "496eaffa339d805b0852415c45b91e803e6174bf1f166d55b92446a9427d73f0",
+   "events": 544,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 230
+  },
+  "174-r5-parvis.json.gz": {
+   "log": "b643cf8dae29a71b437db3574f7bf35bb17921d13e61e37d744c32e0814f72a4",
+   "events": 268,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 148
+  },
+  "175-r5-parvis.json.gz": {
+   "log": "c5c8674516a3d78ffd69a3c7dc6f86fbbd141e20179e6a9c3b5db060680ac739",
+   "events": 769,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 444
+  },
+  "176-r5-parvis.json.gz": {
+   "log": "885aa9a27e8c247b86d2519c61f1abe3c26ba6c826508528810b3ba9cacb7538",
+   "events": 53,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 17
+  },
+  "177-r5-observatoire.json.gz": {
+   "log": "1dd1150d3e050e2cc0997ef2b6058245c13d778cd2c1b79d8aa6d8277f646a42",
+   "events": 147,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 80
+  },
+  "178-r5-observatoire.json.gz": {
+   "log": "f2197c316d1d27a58d6f0ea2bc76ada48aad704ec9a6c8fbeb041e45971f2364",
+   "events": 1382,
+   "winner": 0,
+   "reason": "wipe",
+   "time": 593
+  },
+  "179-r5-observatoire.json.gz": {
+   "log": "51c93175947e0c08b705788b0ef655268ea20f5a03380b8a8044d126c15f177b",
+   "events": 330,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 320
+  },
+  "180-r5-observatoire.json.gz": {
+   "log": "118b84565bf7bc56e16b61110fe24765d044fba0159a358b02c0e76a491af3d9",
+   "events": 265,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 120
+  },
+  "181-r5-observatoire.json.gz": {
+   "log": "7e93ade85b7bbe2cc2e82b6a4529301439fa20f12b95a87155bdff49c9c2fc87",
+   "events": 232,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 120
+  },
+  "182-r5-observatoire.json.gz": {
+   "log": "181f085f80c721737c2b0f3237ab616ec43f342069b79c2a44cca6b8495f3d98",
+   "events": 290,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 164
+  },
+  "183-r5-observatoire.json.gz": {
+   "log": "8263cfede2f5f5e07935aeeb98c6270df192616e6f2b815096863187cf442a8d",
+   "events": 656,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 614
+  },
+  "184-r5-observatoire.json.gz": {
+   "log": "3aeb29df8cc6c04a7f1b9e0bb2e649641f3c853a4b2aae23405558e97b23fec2",
+   "events": 251,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 100
+  },
+  "185-r5-jardins.json.gz": {
+   "log": "ec09dce8134aabf285211172601a41dc3a4ce0b3ae5101f18545e1da43742275",
+   "events": 409,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 421
+  },
+  "186-r5-jardins.json.gz": {
+   "log": "b0788462b38befec9d73bfd6de3e7c028560461299646010f061f1e6122d6b26",
+   "events": 254,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 369
+  },
+  "187-r5-jardins.json.gz": {
+   "log": "d1e2dbef4fb71cdf6f86b825912da5bc6f5a192cfe38f747ae896180e91bff73",
+   "events": 467,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 405
+  },
+  "188-r5-jardins.json.gz": {
+   "log": "e41d7e99ba0a0f545c361016945bb91733b8675779069928bfb9560932064d94",
+   "events": 301,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 258
+  },
+  "189-r5-jardins.json.gz": {
+   "log": "2dad470c2060029e471fa9ab55815876492fa92003be94e741dc96da18f44171",
+   "events": 261,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 376
+  },
+  "190-r5-jardins.json.gz": {
+   "log": "5d77283ad6cc44922cf5851f413dbd1af1a0156ff12605b20dcf4318a65e890c",
+   "events": 153,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 90
+  },
+  "191-r5-jardins.json.gz": {
+   "log": "f4750942e650a6527607d2d3d0e300b7f574a47987cde102a94d91de9bbc7899",
+   "events": 205,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 162
+  },
+  "192-r5-jardins.json.gz": {
+   "log": "e1ebd97a908744ab6098f9afeed9def8c52cc8d24609e3c33e0088f569b4a3bc",
+   "events": 581,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 234
+  },
+  "193-r5-trone-gardien.json.gz": {
+   "log": "214d7cca85f5ed193e3f6a5045ea718d8121cbc824b9e50ac6ff82d614d19372",
+   "events": 1902,
+   "winner": 0,
+   "reason": "wipe",
+   "time": 958
+  },
+  "194-r5-trone-gardien.json.gz": {
+   "log": "55bb3582a406e863ba98e1fe92c9241918025570467c9b3dc07e671022418de0",
+   "events": 371,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 462
+  },
+  "195-r5-trone-gardien.json.gz": {
+   "log": "75e845d400ee5eb54c74804f4ee77b9f9c0e2e07304537479e7cf964a11fd7dd",
+   "events": 1453,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 1240
+  },
+  "196-r5-trone-gardien.json.gz": {
+   "log": "cf9a5b32a14797200f85174bd89ad3b47a47978351a509363652c6c399c20467",
+   "events": 832,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 798
+  },
+  "197-r5-trone-gardien.json.gz": {
+   "log": "ea797ea710f02d1d2509ade87299314125af4b21343fdd54c3ee60cc2f45510f",
+   "events": 1595,
+   "winner": 0,
+   "reason": "wipe",
+   "time": 865
+  },
+  "198-r5-trone-gardien.json.gz": {
+   "log": "b797c893d49ecf781a357080996fda9df087a94d5e4185030f779a2f059a23db",
+   "events": 1575,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 1351
+  },
+  "199-r5-trone-gardien.json.gz": {
+   "log": "16e1340ea1abd1ce791418b34e5fca2095defd51e00011c99f0a4573351b7120",
+   "events": 1938,
+   "winner": 0,
+   "reason": "wipe",
+   "time": 1183
+  },
+  "200-r5-trone-gardien.json.gz": {
+   "log": "8942bc7e0a4b1258b4e54cd29378a7b48e3db05671513f10f9dfad9add3f75a9",
+   "events": 1673,
+   "winner": 0,
+   "reason": "wipe",
+   "time": 1183
+  },
+  "201-r1-lisiere-rare.json.gz": {
+   "log": "da9b45ca6b2189d4835f96db06111786a6803b2cee18f840d76247cdc4dcab30",
+   "events": 346,
+   "winner": 0,
+   "reason": "wipe",
+   "time": 152
+  },
+  "202-r1-sentier-rare.json.gz": {
+   "log": "5c0763773069cbe1836bece41c4b963c09d3207d83e4c49ba49d994839fe123a",
+   "events": 682,
+   "winner": 0,
+   "reason": "wipe",
+   "time": 342
+  },
+  "203-r1-nids-rare.json.gz": {
+   "log": "c511720a4df489b13a6be9d15e108fd9947f7235faf89b3199070c366d5f132a",
+   "events": 1015,
+   "winner": 0,
+   "reason": "wipe",
+   "time": 288
+  },
+  "204-r1-camp-rare.json.gz": {
+   "log": "aa55d122aa78149542f317ddd6d2bf5ae6461d59a958c08d6e0b9e11db00e3cf",
+   "events": 1059,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 794
+  },
+  "205-r2-berges-rare.json.gz": {
+   "log": "f16c5208e297d721621686b04ad283412afd9214f9ecc5a0dee4ad87b21dd8eb",
+   "events": 983,
+   "winner": 0,
+   "reason": "wipe",
+   "time": 462
+  },
+  "206-r2-roselieres-rare.json.gz": {
+   "log": "aed6a421d950b97ef2c58b213831e465be54f522dd400a50ab097629bddef937",
+   "events": 401,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 326
+  },
+  "207-r2-epaves-rare.json.gz": {
+   "log": "c61128d422fecc051825a876d4fbeef64c80257d900d0199fedf4579dba1e69b",
+   "events": 408,
+   "winner": 0,
+   "reason": "wipe",
+   "time": 330
+  },
+  "208-r2-tertre-rare.json.gz": {
+   "log": "130f9f474d0ef5ed604973fffd0e5714a137a7745b7302ee0a16b8b08d7f5c07",
+   "events": 637,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 249
+  },
+  "209-r3-entree-rare.json.gz": {
+   "log": "8cc5f1be5a8225d275fe22b8867ee4e6833d9c12de4e790fc5cdcd57fa2614c0",
+   "events": 699,
+   "winner": 0,
+   "reason": "wipe",
+   "time": 379
+  },
+  "210-r3-galeries-rare.json.gz": {
+   "log": "9708ae671c7c1f0586dd92c27382baffd3afa841f1fe16a7b6ee943fd2cf3ac3",
+   "events": 1244,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 694
+  },
+  "211-r3-filons-rare.json.gz": {
+   "log": "9811ac3f147ee81a12c0c9a0b912f2890672c8ea240ee5823edc5ed385b15ad8",
+   "events": 488,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 220
+  },
+  "212-r3-puits-rare.json.gz": {
+   "log": "7c7a8b71a1df94d50e4a0b31bb83a45d9d0d90cbb690d62444413d63fcdbb27b",
+   "events": 733,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 433
+  },
+  "213-r4-dunes-rare.json.gz": {
+   "log": "1557306983a249a81512b8f7efffaff0e17c88500d0687a7778a6456c866f947",
+   "events": 543,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 174
+  },
+  "214-r4-caravane-rare.json.gz": {
+   "log": "082f30b8d088d5e60ab9f70a96175f43465c82d34f1f0f290122db5a7393807e",
+   "events": 421,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 230
+  },
+  "215-r4-tombeaux-rare.json.gz": {
+   "log": "cce93637a0137bc2caca4547f41bc8ccb2a91618cd803b874935b2f63fa1b48c",
+   "events": 301,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 168
+  },
+  "216-r4-verrerie-rare.json.gz": {
+   "log": "98232eb00c2182f4a95693f4a8e6f674437767bb6752d8a6b928c6b00492707b",
+   "events": 133,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 93
+  },
+  "217-r5-marches-rare.json.gz": {
+   "log": "b8ca662553b19216e3f9578e685c8544145ab46b092c7bf9ae92a522dafeb08b",
+   "events": 582,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 246
+  },
+  "218-r5-parvis-rare.json.gz": {
+   "log": "31407c0b8e3cf0a0f18208696032fdd4dc34d4c28dbf5ea3d8a870b7936c1b12",
+   "events": 530,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 287
+  },
+  "219-r5-observatoire-rare.json.gz": {
+   "log": "993365da84b2f483e294c0a9520eefd78ac7f4978dad9d4c8a663deea6841ca7",
+   "events": 1622,
+   "winner": 0,
+   "reason": "wipe",
+   "time": 785
+  },
+  "220-r5-jardins-rare.json.gz": {
+   "log": "6d7d589f1ad175c3f1d008a92ea4b31e85febc49cc083d194404211c117caf4f",
+   "events": 712,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 314
+  },
+  "221-couverture-confusion.json.gz": {
+   "log": "2e96afb9197fe31f7989de6d7f8538881ca00b6b8e211f671c94a95f18f88213",
+   "events": 432,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 102
+  },
+  "222-couverture-drain.json.gz": {
+   "log": "7e8e22d377400b8454af8f5dc13d5d2c924bbf50de1b99b5dd175efce5c2d37a",
+   "events": 266,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 217
+  },
+  "223-couverture-non_mort.json.gz": {
+   "log": "69a72a1ac4e73934ec5ce86cadaed7787bb5cd047c26488f9e3c0538b627c880",
+   "events": 1148,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 599
+  },
+  "224-couverture-nuage_renforce.json.gz": {
+   "log": "2e13db49fd103a8874f474ac0aef02903284f67cee68728347ad0920dfba038c",
+   "events": 644,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 166
+  },
+  "225-couverture-paume_vide.json.gz": {
+   "log": "d689a542c4e83ccf9aa6d83e4347c1d057042f9522ad7c4f4c1f6cfaa87ea64d",
+   "events": 501,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 241
+  },
+  "226-couverture-seisme.json.gz": {
+   "log": "b96b43450da2d3fdd94034a5060be7186d50b201e7533fd3767076693bd8e45a",
+   "events": 634,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 212
+  },
+  "227-couverture-terreur_masse.json.gz": {
+   "log": "07766a6ae069528d033152222cf16271d6cb2d27e413ffbc75fd5f315d35e3c1",
+   "events": 1179,
+   "winner": 0,
+   "reason": "wipe",
+   "time": 381
+  },
+  "x01-embrasement-196-r5-trone-gardien": {
+   "log": "bd743d1d21592e9ceee143996f846e6b8e70c59b1d3053e47459bee9672f57a6",
+   "events": 816,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 653
+  },
+  "x02-embrasement-110-r3-puits": {
+   "log": "2641de6c9bba07dd9348e7fe1f548dc5b0efc0a9ce0c51979af7f94b9da974d6",
+   "events": 278,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 166
+  },
+  "x03-embrasement-117-r3-forge-gardien": {
+   "log": "f58536437d3f511b3e105f81841a9531eaac6fd543b0f6da74419f2c22de1664",
+   "events": 741,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 697
+  },
+  "x04-embrasement-083-r3-entree": {
+   "log": "e77ec522deb351673299227da0cfadff0fe663acedf4e037231516334df18ebd",
+   "events": 827,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 192
+  },
+  "x05-embrasement-021-r1-nids": {
+   "log": "81a9bf2bd8aa6012e0adca0ede71af7d118f2f0a4ef2417e1500509962ad8abe",
+   "events": 282,
+   "winner": 0,
+   "reason": "wipe",
+   "time": 92
+  },
+  "x06-embrasement-207-r2-epaves-rare": {
+   "log": "c5d87df6b52173caf5e2d3d8cbde69ceb3aaf55ae8267f9c856448f79931c901",
+   "events": 475,
+   "winner": 0,
+   "reason": "wipe",
+   "time": 340
+  },
+  "x07-embrasement-147-r4-verrerie": {
+   "log": "9bbc86e615264ac0d91f3c79ff725eb8b051841a999c8da563b2db5f9260156c",
+   "events": 578,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 223
+  },
+  "x08-embrasement-076-r2-gouffre-gardien": {
+   "log": "700306e802659a1cb7d90eb22e081846a8fc3105b386d951386f157641762914",
+   "events": 934,
+   "winner": 0,
+   "reason": "wipe",
+   "time": 592
+  },
+  "x09-embrasement-169-r5-parvis": {
+   "log": "9ee15f313c9603b81ed46346e94235a521f92fb7bf2f1d3373e625f481b8578e",
+   "events": 511,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 203
+  },
+  "x10-embrasement-142-r4-tombeaux": {
+   "log": "013d2b13becc4c8ecb7238bf291287a23628243def70644efd04908527e52082",
+   "events": 1296,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 279
+  },
+  "x11-embrasement-120-r3-forge-gardien": {
+   "log": "71d8082d06a7650994ae95f30ed04452b600f6423fbd3ef04f6eebe43870717f",
+   "events": 429,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 111
+  },
+  "x12-embrasement-018-r1-nids": {
+   "log": "18bc105e5f02b48616d54da33493e147d841064d9ad204ae39e48537f58c7523",
+   "events": 829,
+   "winner": 0,
+   "reason": "wipe",
+   "time": 340
+  },
+  "x13-embrasement-003-r1-lisiere": {
+   "log": "d07ae04e4daa1f9b30fb6f9bdc65e2cacf0f65de1e15351a825794d96265b61f",
+   "events": 95,
+   "winner": 0,
+   "reason": "wipe",
+   "time": 36
+  },
+  "x14-embrasement-214-r4-caravane-rare": {
+   "log": "a98104e3219d43558ed4c73a5fc05d8c6f4c37d174b046919769170be54e400c",
+   "events": 452,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 230
+  },
+  "x15-embrasement-100-r3-filons": {
+   "log": "6796d7a1aa0c4042bc5bc554d50cea3f745aff33f81943d5cb395748745030e0",
+   "events": 411,
+   "winner": 0,
+   "reason": "wipe",
+   "time": 166
+  },
+  "x16-embrasement-009-r1-sentier": {
+   "log": "cbe1a899e87ed0c48931021b86ab617729070b82637198444c1fd9e73e187365",
+   "events": 344,
+   "winner": 0,
+   "reason": "wipe",
+   "time": 72
+  },
+  "x17-embrasement-206-r2-roselieres-rare": {
+   "log": "734104fec46b48691ee06eb6a9bf427504a313a42ef20fda13172d69788bdd00",
+   "events": 549,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 387
+  },
+  "x18-embrasement-220-r5-jardins-rare": {
+   "log": "7268e4f82ef89c71b866002a8a93aa21da908f4287c5ff6cd1525d7492b4c79e",
+   "events": 788,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 314
+  },
+  "x19-embrasement-056-r2-roselieres": {
+   "log": "ab52a721131efcc1e1968b11a509a86d1a23c9fddfb8462210c559862d4cee6e",
+   "events": 540,
+   "winner": 0,
+   "reason": "wipe",
+   "time": 208
+  },
+  "x20-embrasement-077-r2-gouffre-gardien": {
+   "log": "04cc464e9bdbb926d9750c88763fc8e527dc651615d33960b3efb3077841b923",
+   "events": 1727,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 1072
+  },
+  "x21-embrasement-123-r4-dunes": {
+   "log": "1ae51c19c96040d23e0450f1b28995decc80b4be2c7cb149ed662fc53b6531b1",
+   "events": 341,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 109
+  },
+  "x22-embrasement-102-r3-filons": {
+   "log": "8ac6a2df3b70adb14a56a57348ade59ef7b88c4ffe824dc59b6a7b1011b65f60",
+   "events": 1069,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 471
+  },
+  "x23-embrasement-211-r3-filons-rare": {
+   "log": "8d22b8b4fd2d6772f730282beddac865fe6bef41f0ab2acdc238c88228412585",
+   "events": 841,
+   "winner": 0,
+   "reason": "wipe",
+   "time": 434
+  },
+  "x24-embrasement-038-r1-coeur-gardien": {
+   "log": "eb38e36c731c747cd31360385175e8b02955ff0f1db765e99f2279d89ae00f34",
+   "events": 907,
+   "winner": 1,
+   "reason": "wipe",
+   "time": 301
+  }
+ }
+}

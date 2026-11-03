@@ -2,6 +2,11 @@
 
 export type Side = 0 | 1;
 
+/** Les 5 puissances du moteur v1 (README 19.1). */
+export type Power = 'for' | 'ele' | 'esp' | 'foi' | 'omb';
+export const POWERS: readonly Power[] = ['for', 'ele', 'esp', 'foi', 'omb'];
+export type Powers = Record<Power, number>;
+
 export interface Weapon {
   name?: string;
   type: string;
@@ -47,7 +52,12 @@ export interface Skill {
   p: Record<string, number>;
   attack?: boolean;
   melee?: boolean;
+  /** Type de dégâts ; `weapon` (ou absent pour une capacité d'arme) : celui de l'arme. */
   dtype?: string;
+  /** v1 : puissance utilisée (README 19.1). Absente : déduite du type de dégâts (voir `powerOf`). */
+  power?: Power;
+  /** v1 : coefficient de la puissance, en ‰ (défaut 1 000). */
+  coef?: number;
   ai?: string;
   fx?: Fx[];
   desc?: string;
@@ -88,7 +98,14 @@ export interface UnitInput {
   willMax: number;
   energyMax: number;
   manaMax: number;
-  atk: number;
+  /** Attaque unique, jusqu'à proto-0.4.2. */
+  atk?: number;
+  /** v1 : les 5 puissances (remplacent `atk`). */
+  pow?: Powers;
+  /** v1 : types de dégâts auxquels l'unité est immunisée (monstres seulement, au plus 2 ; README 19.4). */
+  immune?: string[];
+  /** Joueur qui possède l'unité (camp de 16 en duo). Rendu tel quel dans le résultat. */
+  owner?: string;
   speed: number;
   res: Record<string, number>;
   weapon: Weapon;
@@ -115,6 +132,7 @@ export interface LogEvent {
 
 export interface UnitResult {
   id: string;
+  owner?: string;
   hp: number;
   mana: number;
   dead: boolean;

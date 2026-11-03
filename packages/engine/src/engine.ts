@@ -10,11 +10,15 @@
  *   proto-0.4-ville  le prototype, bizarreries comprises
  *   proto-0.4.1      Embrasement compte les tics restants à la période des brûlures (README 16.1)
  *   proto-0.4.2      allyHpBelow ne compte plus l'unité elle-même (README 16.4)
+ *   v1               jeu cible (README 19) : 5 puissances et coefficients, immunités, soins et boucliers
+ *                    en valeurs fixes, passifs de stats (contenu-cible-unites 3.6), camp de 16 en duo.
+ *                    Avec des puissances égales à l'ancienne attaque et des coefficients de 1 000, la v1
+ *                    rejoue proto-0.4.2 à l'identique sauf pour les soins et boucliers (README 19.3).
  */
 import { Rng } from '@cr/rng';
-import type { BattleInput, BattleOutput, Fx, LogEvent, Rule, Side, Skill, UnitInput } from './types.ts';
+import type { BattleInput, BattleOutput, Fx, LogEvent, Power, Rule, Side, Skill, UnitInput } from './types.ts';
 
-export const ENGINE_VERSIONS = ['proto-0.4-ville', 'proto-0.4.1', 'proto-0.4.2'] as const;
+export const ENGINE_VERSIONS = ['proto-0.4-ville', 'proto-0.4.1', 'proto-0.4.2', 'v1'] as const;
 export type EngineVersion = (typeof ENGINE_VERSIONS)[number];
 /** Version jouée quand l'entrée n'en précise pas. */
 export const ENGINE_VERSION: EngineVersion = ENGINE_VERSIONS[ENGINE_VERSIONS.length - 1]!;
@@ -28,6 +32,44 @@ function versionLevel(v: string | undefined): number {
 export const DMG_TYPES = ['contondant', 'tranchant', 'maladie', 'psychique', 'feu', 'glace', 'tenebres', 'sacre'];
 
 const DOT: Record<string, string> = { saignement: 'tranchant', poison: 'maladie', brulure: 'feu' };
+
+/** Type de dégâts des capacités codées en dur qui ne le déclarent pas (v1 : immunités et puissance par défaut). */
+const HARD_TYPE: Record<string, string> = {
+  trait_sacre: 'sacre',
+  trait_sacre_renforce: 'sacre',
+  trait_flammes: 'feu',
+  boule_feu: 'feu',
+  mur_flammes: 'feu',
+  embrasement: 'feu',
+  arme_enflammee: 'feu',
+  fleche_givre: 'glace',
+  drain: 'tenebres',
+  malediction: 'tenebres',
+  nuage: 'maladie',
+  nuage_renforce: 'maladie',
+  murmure: 'psychique',
+  terreur_masse: 'psychique',
+  paume_vide: 'psychique',
+  confusion: 'psychique',
+  confusion_moine: 'psychique',
+  hurlement: 'psychique',
+  seisme: 'contondant',
+};
+
+/** Puissance par défaut d'un type de dégâts (README 19.1). */
+const TYPE_POWER: Record<string, Power> = {
+  contondant: 'for',
+  tranchant: 'for',
+  feu: 'ele',
+  glace: 'ele',
+  psychique: 'esp',
+  sacre: 'foi',
+  tenebres: 'omb',
+  maladie: 'omb',
+};
+
+/** Soins, régénération et boucliers : Foi par défaut (README 19.5). */
+const FAITH = new Set(['soin_mineur', 'priere', 'regeneration', 'bouclier_foi', 'mur_boucliers', 'purification']);
 
 export const STATE_NAMES: Record<string, string> = {
   saignement: 'Saignement',
@@ -134,6 +176,8 @@ export function simuler(input: BattleInput, seed: number): BattleOutput {
   const level = versionLevel(input.engineVersion);
   const FIX_EMBRASEMENT = level >= 1;
   const FIX_ALLY_HP_BELOW = level >= 2;
+  const V1 = level >= 3;
+  if (V1) for (const u of input.units) if (!u.pow) throw new Error(`unité ${u.id} sans puissances : le moteur v1 lit pow, plus atk`);
   /** Alliés comptés par allyHpBelow : l'unité elle-même en est exclue depuis proto-0.4.2. */
   const otherAllies = (u2: Unit): Unit[] => (FIX_ALLY_HP_BELOW ? alliesOf(u2).filter((a) => a !== u2) : alliesOf(u2));
   const SK = input.skills;
@@ -143,6 +187,11 @@ export function simuler(input: BattleInput, seed: number): BattleOutput {
   let stateOrder = 0;
   let ended: { winner: Side | null; reason: 'wipe' | 'timeout' } | null = null;
   let inReaction = false;
+  /** v1 : capacité en cours de résolution (puissance, coefficient, type). Vide hors action. */
+  let curSk: Skill | undefined;
+  let curId = '';
+  let curType: string | undefined;
+  let curOut: Outcome = 'ok';
   let lastWound = 0;
   const units: Unit[] = input.units.map((u2) => ({
     ...u2,
@@ -201,13 +250,58 @@ export function simuler(input: BattleInput, seed: number): BattleOutput {
     const aff = has(u2, 'affaibli');
     if (aff) m2 -= aff.v;
     if (passive(u2, 'rage')) m2 += sp('rage', 'atkPer10') * Math.floor(pct(u2.hpMax - u2.hp, u2.hpMax) / 100);
-    return Math.max(0, Math.floor((u2.atk * Math.max(0, m2)) / 1e3));
+    return Math.max(0, Math.floor((u2.atk! * Math.max(0, m2)) / 1e3));
   }
+  /** v1 : la capacité s'appuie-t-elle sur l'arme ? */
+  const weaponBased = (sk: Skill): boolean =>
+    sk.dtype === 'weapon' || sk.durBase === 'weapon' || !!sk.energyW || !!sk.melee || !!sk.fx?.some((f) => f.k === 'wdmg');
+  /** v1 : type de dégâts d'une capacité pour une unité (immunités, ciblage, puissance par défaut). */
+  function skillType(u2: Unit, id: string, sk: Skill | undefined): string | undefined {
+    if (!sk) return undefined;
+    if (sk.dtype && sk.dtype !== 'weapon') return sk.dtype;
+    if (HARD_TYPE[id]) return HARD_TYPE[id];
+    const f = sk.fx?.find((x) => x.k === 'dmg' || x.k === 'wdmg' || x.k === 'drain');
+    if (f?.type) return f.type;
+    if (f?.k === 'drain') return 'tenebres';
+    if (f?.k === 'dmg') return 'contondant';
+    return weaponBased(sk) ? u2.weapon.type : undefined;
+  }
+  /** v1 : puissance utilisée par une capacité. */
+  function powerOf(u2: Unit, id: string, sk: Skill | undefined): Power {
+    if (!sk) return 'for';
+    if (sk.power) return sk.power;
+    if (FAITH.has(id) || sk.ai === 'heal' || sk.ai === 'groupHeal') return 'foi';
+    if (weaponBased(sk)) return 'for';
+    return TYPE_POWER[skillType(u2, id, sk) ?? ''] ?? 'for';
+  }
+  /** v1 : puissance effective (README 19.2). Cri et Affaibli touchent les 5 puissances, Rage la Force seule. */
+  function effPow(u2: Unit, power: Power): number {
+    let m2 = 1e3;
+    const cri = has(u2, 'cri');
+    if (cri) m2 += cri.v;
+    const aff = has(u2, 'affaibli');
+    if (aff) m2 -= aff.v;
+    if (power === 'for' && passive(u2, 'rage')) m2 += sp('rage', 'atkPer10') * Math.floor(pct(u2.hpMax - u2.hp, u2.hpMax) / 100);
+    if (power === 'ele' && passive(u2, 'maitrise_elem')) m2 += sp('maitrise_elem', 'pow');
+    return Math.max(0, Math.floor((u2.pow![power] * Math.max(0, m2)) / 1e3));
+  }
+  /** Part de la puissance ajoutée aux dégâts : l'attaque jusqu'à proto-0.4.2, puissance × coefficient en v1. */
+  function powerBonus(u2: Unit): number {
+    if (!V1) return atk(u2);
+    return Math.floor((effPow(u2, powerOf(u2, curId, curSk)) * (curSk?.coef ?? 1e3)) / 1e3);
+  }
+  /** v1 : soin, régénération ou bouclier = base + puissance × coefficient (README 19.2, 19.5). */
+  const fixedAmount = (u2: Unit, base: number | undefined): number => (base ?? 0) + powerBonus(u2);
+  const isImmune = (u2: Unit, type: string | undefined): boolean => V1 && !!type && !!u2.immune?.includes(type);
   function res(u2: Unit, t: string): number {
     let r = u2.res[t] || 0;
     for (const s3 of u2.states) {
       if (s3.id === 'malediction' || s3.id === 'garde') r += s3.v;
       if ((s3.id === 'peau' || s3.id === 'brise') && (t === 'contondant' || t === 'tranchant')) r += s3.v * s3.charges;
+    }
+    if (V1) {
+      if (passive(u2, 'peau_dure') && (t === 'contondant' || t === 'tranchant')) r += sp('peau_dure', 'res');
+      if (alliesOf(u2).some((a) => a.dist === u2.dist && passive(a, 'aura_protection'))) r += sp('aura_protection', 'res');
     }
     return clamp(r, P.resFloor, P.resCap);
   }
@@ -222,6 +316,8 @@ export function simuler(input: BattleInput, seed: number): BattleOutput {
     const max = g2 === 'hp' ? u2.hpMax : g2 === 'will' ? u2.willMax : g2 === 'energy' ? u2.energyMax : u2.manaMax;
     let floor = 0;
     if (g2 === 'will' && passive(u2, 'esprit_inebranlable')) floor = Math.floor(u2.willMax / 2);
+    if (V1 && g2 === 'will' && passive(u2, 'sang_froid'))
+      floor = Math.max(floor, Math.floor((u2.willMax * sp('sang_froid', 'floor')) / 1e3));
     to = clamp(to, Math.min(floor, max), max);
     const from = u2[g2];
     if (to === from || ended) return;
@@ -229,14 +325,17 @@ export function simuler(input: BattleInput, seed: number): BattleOutput {
     emit({ k: 'gauge', u: u2.id, g: g2, from, to, cause });
   }
   const changeWill = (u2: Unit, permille: number, cause: string): void => {
+    // v1 : l'immunité psychique protège des pertes de volonté causées par une capacité psychique.
+    if (V1 && permille < 0 && curType === 'psychique' && cause === curSk?.name && isImmune(u2, 'psychique')) return;
     if (inPlay(u2)) setGauge(u2, 'will', u2.will + Math.trunc((u2.willMax * permille) / 1e3), cause);
   };
   const healCdUntil = new Map<string, number>();
   const healReady = (x: Unit): boolean => !P.healCooldown || (healCdUntil.get(x.id) ?? -1) <= now;
   const hotCdUntil = new Map<string, number>();
   const hotReady = (x: Unit): boolean => !P.hotCooldown || (hotCdUntil.get(x.id) ?? -1) <= now;
-  const heal2 = (u2: Unit, amount: number, cause: string, direct = false): void => {
+  const heal2 = (u2: Unit, amount: number, cause: string, direct = false, healer?: Unit): void => {
     if (!inPlay(u2)) return;
+    if (V1 && healer && passive(healer, 'ferveur')) amount = Math.floor((amount * (1e3 + sp('ferveur', 'heal'))) / 1e3);
     if (direct && P.healCooldown) {
       if (!healReady(u2)) {
         emit({ k: 'passive', u: u2.id, name: cause, text: 'soin sans effet : recharge en cours' });
@@ -302,6 +401,14 @@ export function simuler(input: BattleInput, seed: number): BattleOutput {
   const thawUntil = new Map<string, number>();
   function addState(u2: Unit, id: string, caster: Unit, dur: number, v = 0, o: StateOpts = {}): void {
     if (!inPlay(u2) || dur <= 0) return;
+    if (V1) {
+      // README 19.4 : pas d'état de dégâts sur la durée du type ; glace : pas de Gel ; psychique : pas de Confusion.
+      const blockedBy = DOT[id] ?? (id === 'gele' ? 'glace' : id === 'confusion' ? 'psychique' : undefined);
+      if (isImmune(u2, blockedBy)) {
+        emit({ k: 'state', u: u2.id, s: id, op: 'immune' });
+        return;
+      }
+    }
     if (id === 'regeneration' && P.hotCooldown) {
       if (!hotReady(u2)) {
         emit({ k: 'passive', u: u2.id, name: STATE_NAMES[id], text: 'sans effet : recharge en cours' });
@@ -350,6 +457,11 @@ export function simuler(input: BattleInput, seed: number): BattleOutput {
   }
   function stun(u2: Unit, by: Unit, amount: number): void {
     if (!inPlay(u2)) return;
+    // v1 : un étourdissement psychique (Sommeil) est sans effet sur un immunisé au psychique.
+    if (V1 && by.side !== u2.side && curType === 'psychique' && isImmune(u2, 'psychique')) {
+      emit({ k: 'state', u: u2.id, s: 'etourdi', op: 'immune' });
+      return;
+    }
     if (u2.acting) u2.extraDelay += amount;
     else u2.nextAt += amount;
     addState(u2, 'etourdi', by, amount);
@@ -373,6 +485,11 @@ export function simuler(input: BattleInput, seed: number): BattleOutput {
   function damage(src: Unit | undefined, t: Unit, raw: number, type: string, o: DamageOpts): number {
     if (!inPlay(t) || ended) return 0;
     raw = Math.max(0, raw);
+    if (isImmune(t, type)) {
+      // README 19.4 : 0 dégât, sans minimum de 1 ; aucun bonus ni effet lié.
+      emit({ k: 'hit', src: src?.id, u: t.id, type, raw, final: 0, absorbed: 0, cause: o.cause, immune: true });
+      return 0;
+    }
     if (src && !o.tick && src.side !== t.side) {
       const m2 = has(t, 'marque');
       if (m2) {
@@ -383,6 +500,8 @@ export function simuler(input: BattleInput, seed: number): BattleOutput {
         raw = Math.floor((raw * (1e3 + sp('instinct_meute', 'bonus'))) / 1e3);
       if (type === 'feu' && passive(src, 'coeur_ardent') && has(t, 'brulure'))
         raw = Math.floor((raw * (1e3 + sp('coeur_ardent', 'bonus'))) / 1e3);
+      if (V1 && passive(src, 'predateur') && t.hp * 1e3 < t.hpMax * sp('predateur', 'threshold'))
+        raw = Math.floor((raw * (1e3 + sp('predateur', 'bonus'))) / 1e3);
       t.attackers.add(src.id);
     }
     let r = res(t, type);
@@ -422,7 +541,10 @@ export function simuler(input: BattleInput, seed: number): BattleOutput {
       inReaction = true;
       emit({ k: 'passive', u: t.id, name: 'Riposte', text: `contre-attaque ${src.name}` });
       setGauge(t, 'energy', t.energy - SK.riposte!.energy, 'Riposte');
+      const saved = [curSk, curId, curType] as const;
+      [curSk, curId, curType] = [SK.riposte, 'riposte', t.weapon.type];
       damage(t, src, weaponRaw(t, sp('riposte', 'mult')), t.weapon.type, { cause: 'Riposte' });
+      [curSk, curId, curType] = saved;
       inReaction = false;
     }
     const th = has(t, 'epines');
@@ -433,7 +555,7 @@ export function simuler(input: BattleInput, seed: number): BattleOutput {
     }
     return final;
   }
-  const weaponRaw = (u2: Unit, mult: number): number => Math.floor((u2.weapon.dmg * mult) / 1e3) + atk(u2);
+  const weaponRaw = (u2: Unit, mult: number): number => Math.floor((u2.weapon.dmg * mult) / 1e3) + powerBonus(u2);
   function weaponHit(u2: Unit, t: Unit, mult: number, sk: Skill, cause: string, o: DamageOpts = {}): number {
     const type = !sk.dtype || sk.dtype === 'weapon' ? u2.weapon.type : sk.dtype;
     const dealt = damage(u2, t, weaponRaw(u2, mult), type, { cause, melee: sk.melee, ...o });
@@ -445,7 +567,7 @@ export function simuler(input: BattleInput, seed: number): BattleOutput {
     return dealt;
   }
   const spellHit = (u2: Unit, t: Unit, base: number, type: string, cause: string, o: DamageOpts = {}): number =>
-    damage(u2, t, base + atk(u2), type, { cause, ...o });
+    damage(u2, t, base + powerBonus(u2), type, { cause, ...o });
   const pick = <T>(list: T[]): T | undefined => (list.length ? list[rng2.int(list.length)] : void 0);
   function selfValid(u2: Unit, id: string): boolean {
     switch (id) {
@@ -480,8 +602,12 @@ export function simuler(input: BattleInput, seed: number): BattleOutput {
     return u2.skills.some((id) => {
       const sk = SK[id];
       if (!sk || sk.kind !== 'active' || u2.mana < sk.mana) return false;
-      if (sk.target === 'enemy')
-        return (!!sk.attack || !!sk.fx?.some((f) => f.k === 'dmg' || f.k === 'wdmg' || f.k === 'drain')) && candidates(u2, id).length > 0;
+      if (sk.target === 'enemy') {
+        if (!(!!sk.attack || !!sk.fx?.some((f) => f.k === 'dmg' || f.k === 'wdmg' || f.k === 'drain'))) return false;
+        // v1 : une attaque qui ne vise que des immunisés ne compte pas (README 19.4).
+        const type = skillType(u2, id, sk);
+        return candidates(u2, id).some((e) => !isImmune(e, type));
+      }
       return (id === 'tourbillon' || id === 'repousser_renforce' || id === 'seisme') && selfValid(u2, id);
     });
   }
@@ -581,6 +707,16 @@ export function simuler(input: BattleInput, seed: number): BattleOutput {
       }
       if (r.cond === 'targetHasState') list = list.filter((x) => has(x, r.s ?? ''));
       if (r.cond === 'targetLacksState') list = list.filter((x) => !has(x, r.s ?? ''));
+      if (V1 && !COMMON.has(id) && SK[id]!.target === 'enemy') {
+        const type = skillType(u2, id, SK[id]);
+        if (r.cond === 'targetImmune') list = list.filter((x) => isImmune(x, type));
+        else if (r.cond === 'targetNotImmune') list = list.filter((x) => !isImmune(x, type));
+        else if (SK[id]!.attack || SK[id]!.fx?.some((f) => f.k === 'dmg' || f.k === 'wdmg' || f.k === 'drain')) {
+          // Une attaque évite les immunisés tant qu'il reste une autre cible valide.
+          const open = list.filter((x) => !isImmune(x, type));
+          if (open.length) list = open;
+        }
+      }
       const kind = COMMON.has(id) ? 'self' : SK[id]!.target;
       const target = select2(u2, list, r.target, kind);
       if (!target) continue;
@@ -661,7 +797,9 @@ export function simuler(input: BattleInput, seed: number): BattleOutput {
         }
         if (energy) setGauge(u2, 'energy', u2.energy - energy, sk.name);
         if (sk.mana) setGauge(u2, 'mana', u2.mana - sk.mana, sk.name);
+        [curSk, curId, curType, curOut] = [sk, c.id, skillType(u2, c.id, sk), out];
         resolve(u2, c.id, sk, c.target, out);
+        [curSk, curId, curType, curOut] = [undefined, '', undefined, 'ok'];
         const base = sk.durBase === 'weapon' ? u2.weapon.speed : u2.speed;
         dur = durMod(u2, Math.floor((base * sk.durMult) / 1e3));
       }
@@ -748,7 +886,9 @@ export function simuler(input: BattleInput, seed: number): BattleOutput {
         break;
       case 'mur_boucliers':
         if (out === 'crit') lost('rien ne se passe');
-        else for (const a of out === 'ok' ? rankOf(u2) : [u2]) addState(a, 'bouclier', u2, n('dur'), n('shield'));
+        else
+          for (const a of out === 'ok' ? rankOf(u2) : [u2])
+            addState(a, 'bouclier', u2, n('dur'), V1 ? fixedAmount(u2, p.shield) : n('shield'));
         break;
       case 'execution':
       case 'fracas': {
@@ -806,18 +946,30 @@ export function simuler(input: BattleInput, seed: number): BattleOutput {
         } else addState(t, 'marque', u2, n('dur'), out === 'ok' ? n('uses') : 1);
         break;
       case 'soin_mineur':
+        if (V1) {
+          // 40 + 4 × FOI ; DE : moitié ; EC : inflige critDmg à la cible.
+          const amount = fixedAmount(u2, p.heal);
+          if (out === 'crit') loseHp(t, p.critDmg ?? 0, 'Soin raté', u2);
+          else heal2(t, out === 'ok' ? amount : Math.floor(amount / 2), name, true, u2);
+          break;
+        }
         if (out === 'crit') loseHp(t, Math.floor((t.hpMax * n('crit')) / 1e3), 'Soin raté', u2);
         else heal2(t, Math.floor((t.hpMax * (out === 'ok' ? n('ok') : n('half'))) / 1e3), name, true);
         break;
-      case 'regeneration':
+      case 'regeneration': {
+        // v1 : la valeur de l'état est le soin par tic, en PV (5 + 0,6 × FOI) ; avant, des ‰ des PV max.
+        const perTick = V1 ? fixedAmount(u2, p.perTick) : n('perTick');
         if (out === 'crit') {
           const e = pick(enemiesOf(u2));
-          if (e) addState(e, 'regeneration', u2, n('dur'), n('perTick'));
-        } else addState(t, 'regeneration', u2, out === 'ok' ? n('dur') : n('halfDur'), n('perTick'));
+          if (e) addState(e, 'regeneration', u2, n('dur'), perTick);
+        } else addState(t, 'regeneration', u2, out === 'ok' ? n('dur') : n('halfDur'), perTick);
         break;
+      }
       case 'priere':
         if (out === 'crit') changeWill(u2, -n('crit'), 'Prière ratée');
-        else for (const a of out === 'ok' ? alliesOf(u2) : rankOf(u2)) heal2(a, Math.floor((a.hpMax * n('ok')) / 1e3), name, true);
+        else
+          for (const a of out === 'ok' ? alliesOf(u2) : rankOf(u2))
+            heal2(a, V1 ? fixedAmount(u2, p.heal) : Math.floor((a.hpMax * n('ok')) / 1e3), name, true, u2);
         break;
       case 'purification': {
         if (out === 'crit') {
@@ -837,14 +989,17 @@ export function simuler(input: BattleInput, seed: number): BattleOutput {
         }
         let base = n('dmg');
         if (out === 'half') base = Math.floor(base / 2);
-        const raw = base + atk(u2);
+        const raw = base + powerBonus(u2);
         const bonus = t.tags.some((x) => x === 'mort-vivant' || x === 'demon') ? n('tagMult') : 1e3;
         damage(u2, t, Math.floor((raw * bonus) / 1e3), 'sacre', { cause: name });
         break;
       }
       case 'bouclier_foi':
         if (out === 'crit') lost('mana perdu');
-        else addState(t, 'bouclier', u2, n('dur'), out === 'ok' ? n('ok') : n('half'));
+        else if (V1) {
+          const amount = fixedAmount(u2, p.shield ?? p.ok);
+          addState(t, 'bouclier', u2, n('dur'), out === 'ok' ? amount : Math.floor(amount / 2));
+        } else addState(t, 'bouclier', u2, n('dur'), out === 'ok' ? n('ok') : n('half'));
         break;
       case 'confusion':
       case 'confusion_moine':
@@ -1058,7 +1213,8 @@ export function simuler(input: BattleInput, seed: number): BattleOutput {
         out === 'half'
           ? {
               ...f,
-              v: f.k === 'push' || f.k === 'pull' ? f.v! : Math.floor((f.v ?? 0) / 2),
+              // v1 : soins, boucliers et régénération sont divisés par deux en entier (base + puissance), dans applyFx.
+              v: f.k === 'push' || f.k === 'pull' || fixedFx(f) ? f.v! : Math.floor((f.v ?? 0) / 2),
               dur: Math.floor((f.dur ?? 0) / 2),
               area: f.area === 'self' ? 'self' : 'target',
             }
@@ -1066,6 +1222,12 @@ export function simuler(input: BattleInput, seed: number): BattleOutput {
       applyFx(u2, g2, t, name);
     }
   }
+  const fixedFx = (f: Fx): boolean => V1 && (f.k === 'heal' || (f.k === 'state' && (f.s === 'bouclier' || f.s === 'regeneration')));
+  /** v1 : valeur fixe d'un effet de soin, bouclier ou régénération, divisée par deux sur un demi-échec. */
+  const fxAmount = (u2: Unit, v: number): number => {
+    const amount = fixedAmount(u2, v);
+    return curOut === 'half' ? Math.floor(amount / 2) : amount;
+  };
   function fxTargets(u2: Unit, t: Unit, area: string): Unit[] {
     switch (area) {
       case 'target':
@@ -1107,7 +1269,7 @@ export function simuler(input: BattleInput, seed: number): BattleOutput {
           break;
         }
         case 'heal':
-          heal2(x, Math.floor((x.hpMax * v) / 1e3), cause, fxDirectHeal);
+          heal2(x, V1 ? fxAmount(u2, v) : Math.floor((x.hpMax * v) / 1e3), cause, fxDirectHeal, u2);
           break;
         case 'will':
           changeWill(x, v, cause);
@@ -1132,7 +1294,7 @@ export function simuler(input: BattleInput, seed: number): BattleOutput {
           break;
         case 'state':
           if (f.s === 'etourdi') stun(x, u2, f.dur ?? 0);
-          else addState(x, f.s!, u2, f.dur ?? 0, v, f.cap ? { cap: f.cap } : {});
+          else addState(x, f.s!, u2, f.dur ?? 0, fixedFx(f) ? fxAmount(u2, v) : v, f.cap ? { cap: f.cap } : {});
           break;
       }
     }
@@ -1145,7 +1307,7 @@ export function simuler(input: BattleInput, seed: number): BattleOutput {
         const caster = byId.get(s3.caster);
         if (P.dotTick) continue;
         if (DOT[s3.id]) damage(caster, u2, s3.v * s3.charges, DOT[s3.id]!, { cause: STATE_NAMES[s3.id], tick: true });
-        if (s3.id === 'regeneration') heal2(u2, Math.floor((u2.hpMax * s3.v) / 1e3), 'Régénération');
+        if (s3.id === 'regeneration') heal2(u2, V1 ? s3.v : Math.floor((u2.hpMax * s3.v) / 1e3), 'Régénération', false, caster);
       }
     }
     for (const u2 of ordered())
@@ -1160,7 +1322,7 @@ export function simuler(input: BattleInput, seed: number): BattleOutput {
         if (!inPlay(u2)) break;
         const caster = byId.get(s3.caster);
         if (DOT[s3.id]) damage(caster, u2, s3.v * s3.charges, DOT[s3.id]!, { cause: STATE_NAMES[s3.id], tick: true });
-        if (s3.id === 'regeneration') heal2(u2, Math.floor((u2.hpMax * s3.v) / 1e3), 'Régénération');
+        if (s3.id === 'regeneration') heal2(u2, V1 ? s3.v : Math.floor((u2.hpMax * s3.v) / 1e3), 'Régénération', false, caster);
       }
     }
   }
@@ -1200,6 +1362,7 @@ export function simuler(input: BattleInput, seed: number): BattleOutput {
       reason: fin.reason,
       time: now,
       units: units.map((u2) => ({
+        ...(u2.owner !== undefined ? { owner: u2.owner } : {}),
         id: u2.id,
         hp: u2.hp,
         mana: u2.mana,

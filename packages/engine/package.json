@@ -10,6 +10,7 @@
     "@cr/rng": "workspace:*"
   },
   "scripts": {
-    "golden": "tsx scripts/golden.ts"
+    "golden": "tsx scripts/golden.ts",
+    "bench": "tsx scripts/bench.ts"
   }
 }

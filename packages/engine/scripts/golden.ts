@@ -73,13 +73,33 @@ export function loadInputs(): GoldenInput[] {
   return [...base, ...readGz<GoldenInput[]>(join(ROOT, 'extra/inputs.json.gz'))];
 }
 
+/**
+ * Migration neutre vers le moteur v1 (README 19.3, guide 4.2 étape 4) : les 5 puissances valent l'ancienne
+ * attaque, les coefficients restent à 1 000. Seuls les soins et boucliers doivent alors changer.
+ */
+export const toV1 = (units: UnitInput[]): UnitInput[] =>
+  units.map(({ atk, ...u }) => ({ ...u, pow: { for: atk!, ele: atk!, esp: atk!, foi: atk!, omb: atk! } }));
+
 export const play = (version: string, g: GoldenInput): BattleOutput =>
-  simuler({ ...content, engineVersion: version, units: g.units }, g.seed);
+  simuler({ ...content, engineVersion: version, units: version === 'v1' ? toV1(g.units) : g.units }, g.seed);
+
+/** Empreinte du déroulé, sans l'événement de départ (qui recopie l'entrée, migrée en v1). */
+const bodyHash = (out: BattleOutput): string => logHash({ ...out, log: out.log.slice(1) });
+
+/** Un combat fait-il intervenir un soin, une régénération ou un bouclier ? */
+const healsOrShields = (out: BattleOutput): boolean =>
+  out.log.some(
+    (e) =>
+      (e.k === 'gauge' && e.g === 'hp' && (e.to as number) > (e.from as number)) ||
+      (e.k === 'state' && (e.s === 'bouclier' || e.s === 'regeneration')) ||
+      (e.k === 'passive' && typeof e.text === 'string' && e.text.includes('recharge')),
+  );
 
 /** Ce qui, dans un combat, relève de chaque correction : sert au rapport de relecture. */
 const touches: Record<string, (g: GoldenInput, out: BattleOutput) => boolean> = {
   'proto-0.4.1': (_g, out) => out.log.some((e) => e.k === 'act' && e.skill === 'embrasement'),
   'proto-0.4.2': (g) => g.units.some((u) => u.rules.some((r) => r.cond === 'allyHpBelow')),
+  v1: (_g, out) => healsOrShields(out),
 };
 
 if (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]) {
@@ -107,7 +127,7 @@ if (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]) {
         reason: out.result.reason,
         time: out.result.time,
       };
-      if (logHash(before) !== manifest[g.file]!.log) {
+      if (bodyHash(before) !== bodyHash(out)) {
         const related = touches[version]?.(g, out) || touches[version]?.(g, before) || false;
         changed.push({ file: g.file, related, winner: `${before.result.winner} → ${out.result.winner}` });
         writeFileSync(

@@ -4,11 +4,11 @@ Version en ligne du jeu décrit dans [`docs/README-jeu.md`](docs/README-jeu.md),
 
 ## État
 
-| Jalon                 | État                                                                                                                                                                                                    |
-| --------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| J0. Socle             | en cours : dépôt, CI, comptes, sessions, squelette de commande faits ; déploiement Render préparé, mise en place à faire ([`infra/deploy/`](infra/deploy/README.md))                                    |
-| J1. Moteur et contenu | en cours : `packages/rng` et `packages/engine` portés, 227 combats de référence verts ; corrections README 16.1 et 16.4 (moteur `proto-0.4.2`) ; à faire : moteur v1, `packages/gen`, YAML, content-cli |
-| J2 à J10              | à venir                                                                                                                                                                                                 |
+| Jalon                 | État                                                                                                                                                                                                                                                                      |
+| --------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| J0. Socle             | en cours : dépôt, CI, comptes, sessions, squelette de commande faits ; déploiement Render préparé, mise en place à faire ([`infra/deploy/`](infra/deploy/README.md))                                                                                                      |
+| J1. Moteur et contenu | en cours : `packages/rng` et `packages/engine` portés, 227 combats de référence verts ; corrections README 16.1 et 16.4 ; moteur v1 (puissances, immunités, soins fixes, passifs de stats, camp de 16 ; 0,96 ms par combat) ; à faire : `packages/gen`, YAML, content-cli |
+| J2 à J10              | à venir                                                                                                                                                                                                                                                                   |
 
 ## Démarrer en local
 
