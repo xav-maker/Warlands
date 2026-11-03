@@ -1,5 +1,10 @@
 {
   "extends": "./tsconfig.base.json",
-  "compilerOptions": { "composite": false, "declaration": false, "emitDeclarationOnly": false, "noEmit": true },
-  "include": ["packages/*/test", "apps/*/test", "vitest.config.ts", "vitest.global-setup.ts"]
+  "compilerOptions": {
+    "composite": false,
+    "declaration": false,
+    "emitDeclarationOnly": false,
+    "noEmit": true
+  },
+  "include": ["packages/*/test", "apps/*/test", "vitest.config.ts", "vitest.global-setup.ts", "tools/*/test"]
 }

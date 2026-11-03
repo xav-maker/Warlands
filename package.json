@@ -20,7 +20,8 @@
     "test": "vitest run",
     "build": "pnpm -r --filter \"./apps/*\" build",
     "golden:v0.4": "pnpm --filter @cr/extract-prototype golden:v0.4",
-    "golden:gen": "pnpm --filter @cr/extract-prototype golden:gen"
+    "golden:gen": "pnpm --filter @cr/extract-prototype golden:gen",
+    "content": "pnpm --filter @cr/content-cli cli"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",

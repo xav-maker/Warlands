@@ -223,6 +223,18 @@ importers:
         specifier: ^8.23.1
         version: 8.23.1
 
+  tools/content-cli:
+    dependencies:
+      '@cr/content':
+        specifier: workspace:*
+        version: link:../../packages/content
+      '@cr/engine':
+        specifier: workspace:*
+        version: link:../../packages/engine
+      '@cr/gen':
+        specifier: workspace:*
+        version: link:../../packages/gen
+
   tools/extract-prototype:
     devDependencies:
       yaml:

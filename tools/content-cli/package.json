@@ -1,0 +1,17 @@
+{
+  "name": "@cr/content-cli",
+  "private": true,
+  "type": "module",
+  "version": "0.0.0",
+  "bin": {
+    "content-cli": "./src/cli.ts"
+  },
+  "scripts": {
+    "cli": "tsx src/cli.ts"
+  },
+  "dependencies": {
+    "@cr/content": "workspace:*",
+    "@cr/engine": "workspace:*",
+    "@cr/gen": "workspace:*"
+  }
+}

@@ -33,6 +33,9 @@
     },
     {
       "path": "tools/extract-prototype"
+    },
+    {
+      "path": "tools/content-cli"
     }
   ]
 }

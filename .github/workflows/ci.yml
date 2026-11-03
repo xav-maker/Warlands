@@ -37,6 +37,8 @@ jobs:
       - run: pnpm lint
       - run: pnpm format:check
       - run: pnpm deps:check
+      - name: Contenu (guide 5.2)
+        run: pnpm content validate
       - run: pnpm test
       - run: pnpm build
 
