@@ -156,6 +156,14 @@ export const Params = z.strictObject({
     recruitValue: z.array(num),
   }),
   rares: z.strictObject({ chance: int, minWins: int }),
+  online: z.strictObject({
+    engineVersion: id,
+    guardianAdjust: z.enum(['all', 'guardian']),
+    squad: z.strictObject({ maxUnits: int.min(1), maxPop: int.min(1) }),
+    encounters: z.strictObject({ popMult: num.positive(), slots: int.min(1) }),
+    stack: z.record(z.string(), int.min(1)),
+    watch: z.strictObject({ instantsPerSecond: int.min(1) }),
+  }),
 });
 
 export const PackFile = z.strictObject({

@@ -10,6 +10,8 @@ export interface MonsterSpec {
   pop: [number, number];
   pool: string[];
   forced?: string[];
+  /** Emplacements du groupe (5 dans le prototype ; 8 en ligne, README 20). */
+  slots?: number;
 }
 
 export interface MonsterGroup {
@@ -25,7 +27,7 @@ export function genMonsters(c: GenContent, spec: MonsterSpec, seed: number): Mon
   const r = new Rng(hash(seed, 'monstres'));
   const troops: MonsterTroop[] = [];
   let pop = between(r, spec.pop[0], spec.pop[1]),
-    slots = 5;
+    slots = spec.slots ?? 5;
   const add = (type: string): void => {
     const t = c.troops[type]!;
     const lvl = between(r, spec.level[0], spec.level[1]);

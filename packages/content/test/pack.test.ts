@@ -38,7 +38,8 @@ describe('pack du prototype', () => {
   it('redonne le contenu du prototype', () => {
     const { id: _id, engineVersion: _ev, ...pack } = v.pack!;
     for (const key of Object.keys(snapshot)) expect({ key, value: canon(pack[key]) }).toEqual({ key, value: canon(snapshot[key]) });
-    expect(Object.keys(pack).sort()).toEqual(Object.keys(snapshot).sort());
+    // Seules s'ajoutent les règles propres au jeu en ligne (params.yaml › online).
+    expect(Object.keys(pack).sort()).toEqual([...Object.keys(snapshot), 'online'].sort());
   });
 
   it("garde l'ordre des collections", () => {

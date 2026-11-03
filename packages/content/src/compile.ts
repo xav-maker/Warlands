@@ -94,6 +94,7 @@ export function compile(raw: RawContent): Compiled {
     rareMinWins: P.rares.minWins,
     questGivers: raw.givers,
     dmgTypes: raw.damageTypes,
+    online: P.online,
   };
   for (const key of Object.keys(raw.texts))
     if (!used.has(key)) issues.push({ level: 'warning', where: 'texts/fr.yaml', message: `texte inutilisé : ${key}` });

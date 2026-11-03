@@ -5,7 +5,8 @@ import { GameError } from '@cr/shared';
 import type { Account, Db, Player, Session } from '@cr/db';
 import type { Mailer } from './mailer.ts';
 
-export const START_REGION = 'region.havre_gris';
+/** Région de départ : Havre-Gris (README 8.1), identifiant du contenu. */
+export const START_REGION = 'ronces';
 export const TOS_VERSION = '2026-11-03';
 export const PASSWORD_MIN = 10;
 const SESSION_DAYS = 30;

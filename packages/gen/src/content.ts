@@ -147,4 +147,15 @@ export interface GenContent {
   rareMinWins: number;
   questGivers: string[][];
   dmgTypes: string[];
+  /** Règles du jeu en ligne (params.yaml › online) ; absentes du contenu du prototype. */
+  online?: OnlineRules;
+}
+
+export interface OnlineRules {
+  engineVersion: string;
+  guardianAdjust: 'all' | 'guardian';
+  squad: { maxUnits: number; maxPop: number };
+  encounters: { popMult: number; slots: number };
+  stack: Record<string, number>;
+  watch: { instantsPerSecond: number };
 }

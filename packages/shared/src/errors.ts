@@ -22,6 +22,25 @@ export const ERROR_CODES = [
   'EMAIL_NOT_VERIFIED',
   'VERIFY_TOKEN_INVALID',
   'PLAYER_NOT_FOUND',
+  // Jeu (J2)
+  'SQUAD_EMPTY',
+  'NO_SUCH_ROUTE',
+  'STEP_NOT_CLEARED',
+  'LAST_STEP',
+  'FIRST_STEP',
+  'NOT_AT_ROUTE_END',
+  'DEAD_END',
+  'ENCOUNTER_VISIBLE',
+  'NO_ENCOUNTER',
+  'BAG_FULL',
+  'BANK_FULL',
+  'NOT_ENOUGH_GOLD',
+  'NOT_ENOUGH_ITEMS',
+  'NOT_SOLD_HERE',
+  'ITEM_NOT_FOUND',
+  'NOT_CONSUMABLE',
+  'GAUGE_FULL',
+  'UNIT_NOT_FOUND',
 ] as const;
 
 export type ErrorCode = (typeof ERROR_CODES)[number];

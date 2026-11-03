@@ -1,8 +1,10 @@
-import { createHash } from 'node:crypto';
+import { createHash, randomInt } from 'node:crypto';
 import type { z } from 'zod';
 import { GameError } from '@cr/shared';
 import { sql, type Db, type Player, type PositionKind, type Transaction, type Database } from '@cr/db';
 import type { RateLimiter } from './rate-limit.ts';
+import type { GameContent } from './game/content.ts';
+import { startPlayer } from './game/troops.ts';
 
 /** Événement à diffuser après le commit (SSE, J6). Jamais envoyé si la transaction échoue. */
 export interface DomainEvent {
@@ -17,6 +19,10 @@ export interface CommandContext {
   player: Player;
   now: Date;
   emit(event: DomainEvent): void;
+  /** Contenu actif ; une commande de jeu échoue sans lui. */
+  content: GameContent;
+  /** Tirage frais côté serveur (guide 8.1) : entier dans [0, max[. */
+  random(max: number): number;
 }
 
 export interface CommandDef<S extends z.ZodType, R> {
@@ -41,6 +47,10 @@ export interface CommandDeps {
   rateLimiter: RateLimiter;
   publish(events: DomainEvent[]): void;
   clock?: () => Date;
+  /** Pack de contenu actif (nécessaire aux commandes de jeu). */
+  content?: GameContent;
+  /** Aléa des tirages de jeu ; par défaut crypto.randomInt (imprévisible, guide 8.1). Remplacé dans les tests. */
+  random?: (max: number) => number;
 }
 
 export interface CommandCall {
@@ -72,7 +82,7 @@ export async function executeCommand<S extends z.ZodType, R>(deps: CommandDeps, 
   const events: DomainEvent[] = [];
 
   const result = await deps.db.transaction().execute(async (tx) => {
-    const player = await tx.selectFrom('player').selectAll().where('id', '=', call.playerId).forUpdate().executeTakeFirst();
+    let player = await tx.selectFrom('player').selectAll().where('id', '=', call.playerId).forUpdate().executeTakeFirst();
     if (!player) throw new GameError('PLAYER_NOT_FOUND');
 
     if (call.idempotencyKey) {
@@ -91,12 +101,31 @@ export async function executeCommand<S extends z.ZodType, R>(deps: CommandDeps, 
     // L'heure de la transaction, pas celle du processus : toutes les comparaisons se font sur la même horloge.
     const now = deps.clock?.() ?? (await sql<{ now: Date }>`select now() as now`.execute(tx)).rows[0]!.now;
 
+    // Kit de départ (README 8.1), remis à la première commande de jeu.
+    if (deps.content && !player.started_at) {
+      await startPlayer(tx, deps.content, player, now);
+      player = await tx.selectFrom('player').selectAll().where('id', '=', player.id).executeTakeFirstOrThrow();
+    }
+
     if (def.where && !def.where.includes(player.pos_kind)) throw new GameError('WRONG_POSITION');
     if (!def.allowedDuringWatch && player.watch_until && now < player.watch_until) {
       throw new GameError('WATCH_IN_PROGRESS', { secondes: Math.ceil((player.watch_until.getTime() - now.getTime()) / 1000) });
     }
 
-    const value = await def.run({ tx, player, now, emit: (e) => events.push(e) }, parsed.data);
+    const random = deps.random ?? ((max: number) => randomInt(0, max));
+    const content = deps.content;
+    const ctx: CommandContext = {
+      tx,
+      player,
+      now,
+      emit: (e) => events.push(e),
+      get content(): GameContent {
+        if (!content) throw new Error(`commande ${def.name} sans contenu`);
+        return content;
+      },
+      random,
+    };
+    const value = await def.run(ctx, parsed.data);
 
     if (call.idempotencyKey) {
       await tx

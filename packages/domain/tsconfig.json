@@ -1,6 +1,25 @@
 {
   "extends": "../../tsconfig.base.json",
-  "compilerOptions": { "rootDir": "src", "outDir": "dist" },
+  "compilerOptions": {
+    "rootDir": "src",
+    "outDir": "dist"
+  },
   "include": ["src"],
-  "references": [{ "path": "../shared" }, { "path": "../db" }]
+  "references": [
+    {
+      "path": "../shared"
+    },
+    {
+      "path": "../db"
+    },
+    {
+      "path": "../engine"
+    },
+    {
+      "path": "../gen"
+    },
+    {
+      "path": "../rng"
+    }
+  ]
 }

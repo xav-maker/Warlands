@@ -70,3 +70,16 @@ recipes:
   consumableValueMult: 0.7
   recruitValue: [0, 1, 2.5, 5, 9, 15]
 rares: { chance: 15, minWins: 10 }
+
+# Règles du jeu en ligne qui n'existent pas dans le prototype (README partie II) ; [H] = à régler.
+online:
+  # Moteur joué pour ce contenu (encore celui du prototype : attaque unique) ; ajustement du gardien
+  # limité au gardien lui-même (README 16, point 2).
+  engineVersion: proto-0.4.2
+  guardianAdjust: guardian
+  squad: { maxUnits: 8, maxPop: 11 } # README 20 [Xavier]
+  encounters: { popMult: 2, slots: 8 } # README 20 [H] : population des étapes ×2, 8 emplacements
+  # Taille des piles par famille (prototype : constante STACK de monde.ts).
+  stack: { materiau: 50, composant: 20, consommable: 10, trophee: 20 }
+  # Blocage de rediffusion : durée du combat lue à cette vitesse (README 10.2, point ouvert 2) [H].
+  watch: { instantsPerSecond: 100 }
