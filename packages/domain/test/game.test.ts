@@ -15,7 +15,12 @@ import {
   arrive,
   back,
   balance,
+  bankMove,
   command,
+  merchantBuy,
+  merchantSell,
+  setUnit,
+  useConsumable,
   contents,
   createTroop,
   depart,
@@ -264,6 +269,50 @@ describe('monstre rare (README 9.1)', () => {
     const r = await run(pid, fight);
     expect(r.won).toBe(true);
     expect([...r.rewards.loot, ...r.rewards.left].some((x) => 'item' in x && x.item === 'fourrure_givre')).toBe(true);
+  });
+});
+
+describe('services de ville (README 7.2, 7.5, 8.3)', () => {
+  it('marchand : achat en banque au prix ×1,5, revente à 20 %, refus hors catalogue', async () => {
+    const pid = await newPlayer();
+    await run(pid, searchOrStart);
+    const gold = () => t.db.transaction().execute((tx) => balance(tx, pid));
+    expect(await run(pid, merchantBuy, { id: 'bandage' })).toEqual({ price: Math.ceil(6 * 1.5) });
+    expect(await gold()).toBe(200 - 9);
+    await expect(run(pid, merchantBuy, { id: 'lame_5' })).rejects.toMatchObject({ code: 'NOT_SOLD_HERE' });
+    await run(pid, merchantBuy, { id: 'lame_1' });
+    const bank = await t.db.transaction().execute((tx) => contents(tx, pid, 'BANK'));
+    expect(bank.stacks.find((x) => x.item === 'bandage')?.qty).toBe(4);
+    const sword = bank.instances.find((i) => i.base === 'lame_1')!;
+    expect(sword.roll).toBe(800); // jet fixe du marchand
+    const g = await gold();
+    expect(await run(pid, merchantSell, { from: 'BANK', instance: sword.id })).toEqual({
+      gold: Math.max(1, Math.floor(Math.round((30 * 800) / 1000) * 0.2)),
+    });
+    expect(await run(pid, merchantSell, { from: 'BANK', item: 'bandage', qty: 2 })).toEqual({ gold: 2 });
+    expect(await gold()).toBe(g + 4 + 2);
+  });
+
+  it('banque : transferts en ville seulement', async () => {
+    const pid = await newPlayer();
+    await run(pid, searchOrStart);
+    expect(await run(pid, bankMove, { from: 'BANK', item: 'bandage', qty: 2 })).toEqual({ moved: 2 });
+    await expect(run(pid, bankMove, { from: 'BANK', item: 'bandage', qty: 5 })).rejects.toMatchObject({ code: 'NOT_ENOUGH_ITEMS' });
+    await run(pid, depart, { direction: 1 });
+    await expect(run(pid, bankMove, { from: 'BAG', item: 'bandage', qty: 1 })).rejects.toMatchObject({ code: 'WRONG_POSITION' });
+  });
+
+  it('consommable : soigne une unité blessée, refuse une jauge pleine', async () => {
+    const pid = await newPlayer();
+    await run(pid, searchOrStart);
+    await run(pid, bankMove, { from: 'BANK', item: 'bandage', qty: 2 });
+    await run(pid, depart, { direction: 1 });
+    const [m] = await t.db.transaction().execute((tx) => loadTroops(tx, pid, ['SQUAD']));
+    const max = statsOf(content, m!, m!.units[0]!).hpMax;
+    await expect(run(pid, useConsumable, { item: 'bandage', troop: m!.id, unit: 1 })).rejects.toMatchObject({ code: 'GAUGE_FULL' });
+    await t.db.transaction().execute((tx) => setUnit(tx, m!.id, 1, { hp: 10, mana: 0 }));
+    expect((await run(pid, useConsumable, { item: 'bandage', troop: m!.id, unit: 1 })).hp).toBe(10 + Math.ceil((max * 15) / 100));
+    await expect(run(pid, useConsumable, { item: 'bois_tordu', troop: m!.id, unit: 1 })).rejects.toMatchObject({ code: 'NOT_CONSUMABLE' });
   });
 });
 

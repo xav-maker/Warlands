@@ -1,0 +1,1 @@
+<form method="post" action="/route/<%= it.action %>" class="inline"><input type="hidden" name="_csrf" value="<%= it.csrf %>"><button type="submit" class="<%= it.cls || '' %>"><%= it.label %></button></form>

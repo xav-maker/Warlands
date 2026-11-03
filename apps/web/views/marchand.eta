@@ -1,0 +1,32 @@
+<% layout('./layout', { title: 'Marchand' }) %>
+<section>
+  <p class="eyebrow"><%= it.R.city.name %></p>
+  <h1>Marchand</h1>
+  <p class="muted">Ce que vous achetez arrive en banque. L’équipement du marchand est de qualité « médiocre ». Il rachète tout à 20 % de la valeur.</p>
+  <div class="grid">
+    <div class="card">
+      <h2>À vendre</h2>
+      <ul class="items">
+        <% for (const id of it.R.city.shop) { %>
+          <li class="row between">
+            <span><%= it.L.item(id) %> <span class="muted">— <%= it.L.buyPrice(id) %> or</span></span>
+            <form method="post" action="/marchand/acheter" class="inline">
+              <input type="hidden" name="_csrf" value="<%= it.csrf %>">
+              <input type="hidden" name="id" value="<%= id %>">
+              <button type="submit"<%= it.v.gold < it.L.buyPrice(id) ? ' disabled' : '' %>>Acheter</button>
+            </form>
+          </li>
+        <% } %>
+      </ul>
+    </div>
+    <div class="card">
+      <h2>Vendre depuis le sac</h2>
+      <%~ include('./partials/items', { x: it.v.bag, from: 'BAG', L: it.L, csrf: it.csrf, back: '/marchand', actions: ['vendre'] }) %>
+    </div>
+    <div class="card">
+      <h2>Vendre depuis la banque</h2>
+      <%~ include('./partials/items', { x: it.v.bank, from: 'BANK', L: it.L, csrf: it.csrf, back: '/marchand', actions: ['vendre'] }) %>
+    </div>
+  </div>
+  <p><a href="/ville">Retour à la ville</a></p>
+</section>

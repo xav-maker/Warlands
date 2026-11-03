@@ -22,7 +22,12 @@
     "nodemailer": "^10.3.1",
     "pg": "^8.23.1",
     "pino": "^10.4.0",
-    "zod": "^4.6.7"
+    "zod": "^4.6.7",
+    "@cr/content": "workspace:*",
+    "@cr/engine": "workspace:*",
+    "@cr/gen": "workspace:*",
+    "@cr/rng": "workspace:*",
+    "yaml": "2.9.1"
   },
   "devDependencies": {
     "@cr/testing": "workspace:*",

@@ -25,10 +25,12 @@ import {
   type AuthContext,
   type CommandDef,
   type DomainEvent,
+  type GameContent,
   type Mailer,
   type RateLimiter,
 } from '@cr/domain';
 import type { z } from 'zod';
+import { registerGameRoutes } from './game-routes.ts';
 
 declare module 'fastify' {
   interface FastifyRequest {
@@ -46,6 +48,10 @@ export interface AppDeps {
   version?: string;
   rateLimiter?: RateLimiter;
   publish?: (events: DomainEvent[]) => void;
+  /** Contenu actif ; sans lui, les pages de jeu ne sont pas servies (tests du socle). */
+  content?: GameContent;
+  /** Aléa des tirages de jeu (tests) ; par défaut crypto.randomInt. */
+  random?: (max: number) => number;
 }
 
 const here = dirname(fileURLToPath(import.meta.url));
@@ -139,11 +145,21 @@ export async function buildApp(deps: AppDeps): Promise<FastifyInstance> {
   async function run<S extends z.ZodType, R>(req: FastifyRequest, def: CommandDef<S, R>, input: unknown): Promise<R> {
     const auth = requireAuth(req);
     const key = req.headers['idempotency-key'];
-    return executeCommand({ db: deps.db, rateLimiter: limiter, publish }, def, {
-      playerId: auth.player.id,
-      input,
-      idempotencyKey: typeof key === 'string' ? key : undefined,
-    });
+    return executeCommand(
+      {
+        db: deps.db,
+        rateLimiter: limiter,
+        publish,
+        ...(deps.content ? { content: deps.content } : {}),
+        ...(deps.random ? { random: deps.random } : {}),
+      },
+      def,
+      {
+        playerId: auth.player.id,
+        input,
+        idempotencyKey: typeof key === 'string' ? key : undefined,
+      },
+    );
   }
 
   app.setErrorHandler((err, req, reply) => {
@@ -179,9 +195,9 @@ export async function buildApp(deps: AppDeps): Promise<FastifyInstance> {
   });
 
   // ---------- Pages publiques ----------
-  app.get('/', (req, reply) => (req.auth ? reply.redirect('/ville') : page(req, reply, 'accueil')));
+  app.get('/', (req, reply) => (req.auth ? reply.redirect('/jeu') : page(req, reply, 'accueil')));
 
-  app.get('/inscription', (req, reply) => (req.auth ? reply.redirect('/ville') : page(req, reply, 'inscription', { form: {} })));
+  app.get('/inscription', (req, reply) => (req.auth ? reply.redirect('/jeu') : page(req, reply, 'inscription', { form: {} })));
   app.post('/inscription', async (req, reply) => {
     ipLimit(req, 'signup', 5);
     const b = (req.body ?? {}) as Record<string, string>;
@@ -200,7 +216,7 @@ export async function buildApp(deps: AppDeps): Promise<FastifyInstance> {
     });
   });
 
-  app.get('/connexion', (req, reply) => (req.auth ? reply.redirect('/ville') : page(req, reply, 'connexion', { form: {} })));
+  app.get('/connexion', (req, reply) => (req.auth ? reply.redirect('/jeu') : page(req, reply, 'connexion', { form: {} })));
   app.post('/connexion', async (req, reply) => {
     ipLimit(req, 'login', 10);
     const b = (req.body ?? {}) as Record<string, string>;
@@ -208,7 +224,7 @@ export async function buildApp(deps: AppDeps): Promise<FastifyInstance> {
       const s = await login(deps.db, { email: b.email, password: b.password }, { ip: req.ip, userAgent: req.headers['user-agent'] });
       reply.setCookie(SID, s.token, { ...cookieBase, expires: s.expiresAt });
       reply.clearCookie(PRE, { path: '/' });
-      return reply.redirect('/ville', 303);
+      return reply.redirect('/jeu', 303);
     } catch (e) {
       if (isGameError(e) && (e.code === 'BAD_CREDENTIALS' || e.code === 'ACCOUNT_SUSPENDED')) {
         return page(req, reply, 'connexion', { form: { email: b.email ?? '' }, error: messageFr(e.code) }, 422);
@@ -229,7 +245,7 @@ export async function buildApp(deps: AppDeps): Promise<FastifyInstance> {
     return page(req, reply, 'message', {
       title: 'Adresse vérifiée',
       text: 'Merci, votre adresse e-mail est confirmée.',
-      link: { href: '/ville', label: 'Continuer' },
+      link: { href: '/jeu', label: 'Continuer' },
     });
   });
   app.post('/verifier/renvoyer', async (req, reply) => {
@@ -239,12 +255,8 @@ export async function buildApp(deps: AppDeps): Promise<FastifyInstance> {
     return reply.type('text/html; charset=utf-8').send(eta.render('partials/flash', { text: 'E-mail renvoyé.' }));
   });
 
-  // ---------- Jeu (J0 : page vide de la ville de départ) ----------
-  app.get('/ville', async (req, reply) => {
-    const auth = requireAuth(req);
-    const p = await deps.db.selectFrom('player').select(['dungeon_available']).where('id', '=', auth.player.id).executeTakeFirstOrThrow();
-    return page(req, reply, 'ville', { dungeonAvailable: p.dungeon_available });
-  });
+  // ---------- Jeu ----------
+  if (deps.content) registerGameRoutes(app, { db: deps.db, content: deps.content, page, run, requireAuth });
 
   app.post('/joueur/donjon-disponible', async (req, reply) => {
     const b = (req.body ?? {}) as Record<string, string>;

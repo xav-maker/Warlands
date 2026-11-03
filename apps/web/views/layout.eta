@@ -6,6 +6,7 @@
   <meta name="htmx-config" content='{"allowEval":false,"includeIndicatorStyles":false,"selfRequestsOnly":true}'>
   <title><%= it.title ? it.title + ' · ' : '' %>Les Cinq Régions</title>
   <link rel="stylesheet" href="/static/app.css">
+  <% if (it.refresh) { %><meta http-equiv="refresh" content="<%= it.refresh %>"><% } %>
   <script src="/static/htmx.min.js" defer></script>
 </head>
 <body hx-headers='<%= JSON.stringify({ "x-csrf-token": it.csrf }) %>'>
@@ -14,6 +15,10 @@
       <a class="brand" href="/">Les Cinq Régions</a>
       <nav>
         <% if (it.auth) { %>
+          <a href="/jeu">Jouer</a>
+          <a href="/sac">Sac</a>
+          <a href="/codex">Codex</a>
+          <% if (it.v) { %><span class="gold" title="Or"><%= it.v.gold %> or</span><% } %>
           <span class="who"><%= it.auth.player.pseudo %></span>
           <form method="post" action="/deconnexion" class="inline">
             <input type="hidden" name="_csrf" value="<%= it.csrf %>">
@@ -27,7 +32,7 @@
     </div>
   </header>
   <main class="wrap">
-    <div id="flash" aria-live="polite"></div>
+    <div id="flash" aria-live="polite"><% if (it.error) { %><p class="flash bad" role="alert"><%= it.error %></p><% } %></div>
     <%~ it.body %>
   </main>
 </body>

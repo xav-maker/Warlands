@@ -224,3 +224,139 @@ form.inline {
   gap: 12px;
   flex-wrap: wrap;
 }
+
+/* ---------- Jeu (J2) ---------- */
+.gold {
+  font-weight: 600;
+  color: var(--brass);
+}
+.grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
+  margin-top: 1rem;
+}
+.between {
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+.actions {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+.links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 0.35rem;
+}
+.squad,
+.group,
+.items {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 0.5rem;
+}
+.troop {
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 0.5rem;
+}
+.unit {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  font-size: 0.9rem;
+}
+.bar {
+  display: inline-block;
+  width: 6rem;
+  height: 0.55rem;
+  background: var(--sunk);
+  border-radius: 3px;
+  overflow: hidden;
+}
+.bar i {
+  display: block;
+  height: 100%;
+}
+.bar.hp i {
+  background: var(--good);
+}
+.bar.mana i {
+  background: var(--a);
+}
+.num {
+  font-variant-numeric: tabular-nums;
+  color: var(--muted);
+}
+.steps {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+  margin: 0.75rem 0;
+}
+.steps li {
+  padding: 0.25rem 0.6rem;
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+.steps li span {
+  font-weight: 700;
+}
+.steps li.cleared {
+  border-color: var(--good);
+  color: var(--good);
+}
+.steps li.current {
+  border-color: var(--a);
+  color: var(--ink);
+  background: var(--a-soft);
+}
+.flash.rare {
+  border-color: var(--brass);
+}
+.good {
+  color: var(--good);
+}
+.qty {
+  width: 4.5rem;
+}
+.tabs {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin: 0.5rem 0 1rem;
+}
+.tabs a[aria-current='page'] {
+  font-weight: 700;
+  text-decoration: none;
+}
+table.data {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+table.data th,
+table.data td {
+  text-align: left;
+  padding: 0.35rem 0.5rem;
+  border-bottom: 1px solid var(--line);
+  vertical-align: top;
+}
+@media (max-width: 40rem) {
+  table.data {
+    display: block;
+    overflow-x: auto;
+  }
+}

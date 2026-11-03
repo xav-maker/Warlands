@@ -1,4 +1,4 @@
-<% layout('./layout', { title: 'Havre-Gris' }) %>
+<% layout('./layout', { title: it.R.city.name, v: it.v, error: it.error }) %>
 <% if (!it.auth.account.email_verified_at) { %>
   <div class="flash">
     Votre adresse e-mail n’est pas encore vérifiée : elle le sera avant d’accéder aux boutiques et au chat.
@@ -6,11 +6,39 @@
   </div>
 <% } %>
 <section class="city">
-  <p class="eyebrow">Pays de Havre-Gris</p>
-  <h1>Havre-Gris</h1>
-  <p class="muted">Bienvenue, <%= it.auth.player.pseudo %>. La ville ouvrira ses portes au jalon J2 : caserne, atelier, marchand, banque, quêtes et départ vers la Forêt des Ronces.</p>
-  <div class="card">
-    <h2>Donjons</h2>
-    <%~ include('./partials/dispo', { dungeonAvailable: it.dungeonAvailable, csrf: it.csrf }) %>
+  <p class="eyebrow"><%= it.R.name %> · palier <%= it.R.tier %></p>
+  <h1><%= it.R.city.name %></h1>
+  <p class="muted"><%= it.R.city.desc %> Vos troupes sont soignées dès leur entrée en ville.</p>
+
+  <div class="grid">
+    <div class="card">
+      <h2>Partir</h2>
+      <% for (const d of it.v.departures) { const T = it.L.region(d.route) %>
+        <form method="post" action="/depart" class="row between">
+          <input type="hidden" name="_csrf" value="<%= it.csrf %>">
+          <input type="hidden" name="direction" value="<%= d.direction %>">
+          <span><b><%= T.territory.name %></b><br><span class="muted"><%= d.to ? 'vers ' + it.L.region(d.to).city.name : 'cul-de-sac' %><%= d.direction < 0 ? ' (à rebours)' : '' %></span></span>
+          <button type="submit" class="primary">Partir</button>
+        </form>
+      <% } %>
+    </div>
+
+    <div class="card">
+      <h2>Escouade</h2>
+      <%~ include('./partials/squad', { v: it.v, L: it.L, csrf: it.csrf, back: '/ville', consumables: false }) %>
+      <% const barracks = it.v.troops.filter((t) => t.container === 'BARRACKS' && t.units.length) %>
+      <% if (barracks.length) { %><p class="muted">En caserne : <%= barracks.map((t) => t.name + ' (niv. ' + t.level + ')').join(', ') %>.</p><% } %>
+    </div>
+
+    <div class="card">
+      <h2>Services</h2>
+      <ul class="links">
+        <li><a href="/marchand">Marchand</a> <span class="muted">— équipement et consommables du palier <%= it.R.tier %></span></li>
+        <li><a href="/sac">Sac et banque</a> <span class="muted">— sac <%= it.v.bag.used %> / <%= it.v.bag.cap %>, banque <%= it.v.bank.used %> / <%= it.v.bank.cap %></span></li>
+        <li><a href="/codex">Codex</a></li>
+      </ul>
+      <p class="muted">Caserne, atelier et quêtes arrivent au jalon suivant.</p>
+      <p class="muted"><%= it.v.stats.fights %> combats, <%= it.v.stats.wins %> victoires, <%= it.v.stats.deaths %> unités perdues.</p>
+    </div>
   </div>
 </section>

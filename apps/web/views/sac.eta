@@ -1,0 +1,23 @@
+<% layout('./layout', { title: 'Sac et banque' }) %>
+<% const inCity = it.v.kind === 'city' %>
+<section>
+  <h1>Sac et banque</h1>
+  <p class="muted"><%= inCity ? 'En ville : transferts entre le sac et la banque, commune à toutes les villes.' : 'En expédition : le sac seulement. Jetez un objet pour faire de la place.' %></p>
+  <div class="grid">
+    <div class="card">
+      <h2>Sac <span class="muted"><%= it.v.bag.used %> / <%= it.v.bag.cap %></span></h2>
+      <%~ include('./partials/items', { x: it.v.bag, from: 'BAG', L: it.L, csrf: it.csrf, back: '/sac', actions: inCity ? ['banque', 'jeter'] : ['jeter'] }) %>
+    </div>
+    <% if (inCity) { %>
+      <div class="card">
+        <h2>Banque <span class="muted"><%= it.v.bank.used %> / <%= it.v.bank.cap %></span></h2>
+        <%~ include('./partials/items', { x: it.v.bank, from: 'BANK', L: it.L, csrf: it.csrf, back: '/sac', actions: ['banque'] }) %>
+      </div>
+    <% } %>
+    <div class="card">
+      <h2>Escouade</h2>
+      <%~ include('./partials/squad', { v: it.v, L: it.L, csrf: it.csrf, back: '/sac', consumables: true }) %>
+    </div>
+  </div>
+  <p><a href="/jeu">Retour</a></p>
+</section>

@@ -1,0 +1,37 @@
+<%/* Liste d'un conteneur avec ses actions. it.x (Contents), it.from ('BAG'|'BANK'), it.L, it.csrf, it.actions : banque | vendre | jeter */%>
+<ul class="items">
+  <% for (const s of it.x.stacks) { %>
+    <li class="row between">
+      <span><%= it.L.item(s.item) %> × <%= s.qty %><% if (it.actions.includes('vendre')) { %> <span class="muted">— <%= it.L.sellPrice(s.item) %> or l’unité</span><% } %></span>
+      <span class="actions">
+        <% for (const a of it.actions) { %>
+          <form method="post" action="<%= a === 'banque' ? '/banque' : a === 'vendre' ? '/marchand/vendre' : '/sac/jeter' %>" class="inline">
+            <input type="hidden" name="_csrf" value="<%= it.csrf %>">
+            <input type="hidden" name="from" value="<%= it.from %>">
+            <input type="hidden" name="back" value="<%= it.back %>">
+            <input type="hidden" name="item" value="<%= s.item %>">
+            <input type="number" name="qty" value="<%= s.qty %>" min="1" max="<%= s.qty %>" aria-label="Quantité" class="qty">
+            <button type="submit"><%= a === 'banque' ? (it.from === 'BAG' ? 'Déposer' : 'Retirer') : a === 'vendre' ? 'Vendre' : 'Jeter' %></button>
+          </form>
+        <% } %>
+      </span>
+    </li>
+  <% } %>
+  <% for (const i of it.x.instances) { %>
+    <li class="row between">
+      <span><%= it.L.item(i.base) %> <span class="muted">(<%= it.L.quality(i.roll) %> : <%= i.stats.map(it.L.statText).join(', ') %>)</span><% if (it.actions.includes('vendre')) { %> <span class="muted">— <%= it.L.sellInstance(i.base, i.roll) %> or</span><% } %></span>
+      <span class="actions">
+        <% for (const a of it.actions) { %>
+          <form method="post" action="<%= a === 'banque' ? '/banque' : a === 'vendre' ? '/marchand/vendre' : '/sac/jeter' %>" class="inline">
+            <input type="hidden" name="_csrf" value="<%= it.csrf %>">
+            <input type="hidden" name="from" value="<%= it.from %>">
+            <input type="hidden" name="back" value="<%= it.back %>">
+            <input type="hidden" name="instance" value="<%= i.id %>">
+            <button type="submit"><%= a === 'banque' ? (it.from === 'BAG' ? 'Déposer' : 'Retirer') : a === 'vendre' ? 'Vendre' : 'Jeter' %></button>
+          </form>
+        <% } %>
+      </span>
+    </li>
+  <% } %>
+  <% if (!it.x.stacks.length && !it.x.instances.length) { %><li class="muted">Vide.</li><% } %>
+</ul>

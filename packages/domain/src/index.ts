@@ -11,3 +11,5 @@ export * from './game/troops.ts';
 export * from './game/expedition.ts';
 export * from './game/battle.ts';
 export * from './game/loot.ts';
+export * from './game/city.ts';
+export * from './game/view.ts';

@@ -1,0 +1,30 @@
+<%/* Escouade : jauges et consommables. it.v (GameView), it.L (libellés), it.back (retour), it.consumables (bool). */%>
+<% const squad = it.v.troops.filter((t) => t.container === 'SQUAD' && t.units.length) %>
+<% const items = it.v.bag.stacks.filter((s) => it.L.isConsumable(s.item)) %>
+<ul class="squad">
+  <% for (const t of squad) { %>
+    <li class="troop">
+      <div class="row between"><b><%= t.name %></b><span class="muted">niv. <%= t.level %> · rang <%= t.rank %><%= t.loaned ? ' · prêtée par la garde' : '' %></span></div>
+      <% for (const u of t.units) { %>
+        <div class="unit">
+          <span class="muted"><%= t.units.length > 1 ? 'unité ' + u.n : '' %></span>
+          <span class="bar hp" title="PV"><i style="width:<%= Math.round(100 * u.hp / u.hpMax) %>%"></i></span>
+          <span class="num"><%= u.hp %> / <%= u.hpMax %> PV</span>
+          <% if (u.manaMax) { %><span class="bar mana" title="Mana"><i style="width:<%= Math.round(100 * u.mana / u.manaMax) %>%"></i></span><span class="num"><%= u.mana %> / <%= u.manaMax %></span><% } %>
+          <% if (it.consumables && items.length && (u.hp < u.hpMax || u.mana < u.manaMax)) { %>
+            <form method="post" action="/consommable" class="inline">
+              <input type="hidden" name="_csrf" value="<%= it.csrf %>">
+              <input type="hidden" name="back" value="<%= it.back %>">
+              <input type="hidden" name="troop" value="<%= t.id %>">
+              <input type="hidden" name="unit" value="<%= u.n %>">
+              <select name="item" aria-label="Consommable">
+                <% for (const s of items) { %><option value="<%= s.item %>"><%= it.L.item(s.item) %> (<%= s.qty %>)</option><% } %>
+              </select>
+              <button type="submit">Utiliser</button>
+            </form>
+          <% } %>
+        </div>
+      <% } %>
+    </li>
+  <% } %>
+</ul>

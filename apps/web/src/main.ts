@@ -1,9 +1,11 @@
 import { createDb } from '@cr/db';
 import { buildApp } from './app.ts';
 import { loadConfig } from './config.ts';
+import { loadGameContent } from './content.ts';
 import { smtpMailer } from './mailer.ts';
 
 const cfg = loadConfig();
+const content = loadGameContent();
 const db = createDb(cfg.DATABASE_URL);
 const app = await buildApp({
   db,
@@ -12,6 +14,7 @@ const app = await buildApp({
   cookieSecure: cfg.SESSION_COOKIE_SECURE,
   logLevel: cfg.LOG_LEVEL,
   version: cfg.APP_VERSION,
+  content,
 });
 
 // Arrêt propre (guide 17.5) : plus de nouvelles requêtes, fin des requêtes en cours, puis fermeture de la base.

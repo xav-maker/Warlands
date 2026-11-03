@@ -1,0 +1,65 @@
+<% layout('./layout', { title: 'Codex' }) %>
+<% const c = it.c; const L = it.L %>
+<% const LABEL = { regions: 'Régions', troupes: 'Troupes', monstres: 'Monstres', capacites: 'Capacités', objets: 'Objets' } %>
+<section class="codex">
+  <h1>Codex</h1>
+  <nav class="tabs" aria-label="Parties du Codex">
+    <% for (const p of it.parts) { %><a href="/codex?p=<%= p %>"<%~ p === it.part ? ' aria-current="page"' : '' %>><%= LABEL[p] %></a><% } %>
+  </nav>
+
+  <% if (it.part === 'regions') { %>
+    <% c.regions.forEach((R, i) => { %>
+      <div class="card">
+        <h2><%= i + 1 %>. <%= R.name %> <span class="muted">— palier <%= R.tier %>, niveau <%= R.minLevel %></span></h2>
+        <p><b><%= R.city.name %></b> : <%= R.city.desc %></p>
+        <p class="muted">Recrute : <%= R.city.recruit.map(L.troop).join(', ') %>.</p>
+        <p><b><%= R.territory.name %></b> : <%= R.territory.desc %></p>
+        <ol>
+          <% for (const s of R.territory.steps) { %>
+            <li><b><%= s.name %></b> <span class="muted">— niveaux <%= s.level[0] %>-<%= s.level[1] %> ; <%= s.pool.map(L.troop).join(', ') %><%= s.forced?.length ? ' ; gardien : ' + s.forced.map(L.troop).join(', ') : '' %></span></li>
+          <% } %>
+        </ol>
+      </div>
+    <% }) %>
+  <% } %>
+
+  <% if (it.part === 'troupes' || it.part === 'monstres') { %>
+    <% const monsters = it.part === 'monstres' %>
+    <table class="data">
+      <thead><tr><th>Nom</th><th>Pop.</th><th>Unités</th><th><%= monsters ? 'Région' : 'Ville' %></th><th>Rôle</th><th>Capacités (niveau)</th></tr></thead>
+      <tbody>
+        <% for (const [id, t] of Object.entries(c.troops)) { if (!!c.monsters[id] !== monsters) continue; const m = c.monsters[id] %>
+          <tr>
+            <td><b><%= t.name %></b><%= m?.boss ? ' (gardien)' : m?.rare ? ' (rare)' : '' %></td>
+            <td><%= t.pop %></td><td><%= t.units %></td>
+            <td><%= monsters ? (m.region + 1) : (c.regions.find((r) => r.city.recruit.includes(id))?.city.name ?? '—') %></td>
+            <td><%= t.role %></td>
+            <td><%= t.forms[0].skills.map(([s, l]) => L.skill(s) + ' ' + l).join(', ') %></td>
+          </tr>
+        <% } %>
+      </tbody>
+    </table>
+  <% } %>
+
+  <% if (it.part === 'capacites') { %>
+    <table class="data">
+      <thead><tr><th>Nom</th><th>Genre</th><th>Coût</th><th>Effet</th></tr></thead>
+      <tbody>
+        <% for (const s of Object.values(c.skills)) { %>
+          <tr><td><b><%= s.name %></b></td><td><%= s.kind === 'active' ? 'active' : s.kind === 'passive' ? 'passif' : 'réaction' %></td>
+            <td><%= [s.energy ? s.energy + ' én.' : '', s.mana ? s.mana + ' mana' : ''].filter(Boolean).join(', ') || '—' %></td><td><%= s.desc %></td></tr>
+        <% } %>
+      </tbody>
+    </table>
+  <% } %>
+
+  <% if (it.part === 'objets') { %>
+    <table class="data">
+      <thead><tr><th>Nom</th><th>Famille</th><th>Palier</th><th>Valeur</th><th>Note</th></tr></thead>
+      <tbody>
+        <% for (const i of Object.values(c.items)) { %><tr><td><b><%= i.name %></b></td><td><%= i.kind %></td><td><%= i.tier %></td><td><%= i.value %></td><td><%= i.desc %></td></tr><% } %>
+        <% for (const b of Object.values(c.equip)) { %><tr><td><b><%= b.name %></b></td><td><%= b.slot %> (<%= b.cat %>)</td><td><%= b.tier %></td><td><%= b.value %></td><td><%= b.craft === false ? 'butin de gardien' : '' %></td></tr><% } %>
+      </tbody>
+    </table>
+  <% } %>
+</section>

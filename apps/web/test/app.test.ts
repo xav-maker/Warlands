@@ -3,6 +3,7 @@ import type { FastifyInstance } from 'fastify';
 import { startTestDb, type TestDb } from '@cr/testing';
 import { memoryMailer, noRateLimit } from '@cr/domain';
 import { buildApp } from '../src/app.ts';
+import { loadGameContent } from '../src/content.ts';
 
 const APP = 'http://localhost:3000';
 let t: TestDb;
@@ -11,7 +12,15 @@ const mailer = memoryMailer();
 
 beforeAll(async () => {
   t = await startTestDb();
-  app = await buildApp({ db: t.db, mailer, appUrl: APP, cookieSecure: false, logLevel: 'silent', rateLimiter: noRateLimit });
+  app = await buildApp({
+    db: t.db,
+    mailer,
+    appUrl: APP,
+    cookieSecure: false,
+    logLevel: 'silent',
+    rateLimiter: noRateLimit,
+    content: loadGameContent(),
+  });
 });
 afterAll(async () => {
   await app?.close();
@@ -132,7 +141,7 @@ describe('parcours J0', () => {
 
     const ok = await b.req('POST', '/connexion', { _csrf: b.csrf, email: 'x@example.org', password: 'motdepasse-long' });
     expect(ok.statusCode).toBe(303);
-    expect(ok.headers.location).toBe('/ville');
+    expect(ok.headers.location).toBe('/jeu');
     const cookie = ok.cookies.find((c) => c.name === 'sid')!;
     expect(cookie.httpOnly).toBe(true);
     expect(cookie.sameSite).toBe('Lax');

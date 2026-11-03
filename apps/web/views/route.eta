@@ -1,0 +1,66 @@
+<% layout('./layout', { title: it.R.territory.name }) %>
+<% const r = it.v.route; const steps = it.R.territory.steps; const st = steps[r.step]; const last = r.step === steps.length - 1; const cleared = r.cleared[r.step] %>
+<section class="route">
+  <p class="eyebrow"><%= it.R.territory.name %> · <%= r.to ? 'vers ' + it.L.region(r.to).city.name : 'cul-de-sac' %> · départ de <%= it.home.city.name %></p>
+  <h1><%= st.name %></h1>
+  <ol class="steps" aria-label="Étapes">
+    <% steps.forEach((s, i) => { %>
+      <li class="<%= i === r.step ? 'current' : '' %> <%= r.cleared[i] ? 'cleared' : '' %>"><span><%= i + 1 %></span> <%= s.name %><%= s.guardian ? ' (gardien)' : '' %></li>
+    <% }) %>
+  </ol>
+  <p class="muted"><%= st.desc %></p>
+
+  <div class="grid">
+    <div class="card">
+      <h2><%= it.v.encounter ? 'Groupe en vue' : cleared ? 'Étape dégagée' : 'Personne en vue' %></h2>
+      <% if (it.v.encounter) { const e = it.v.encounter %>
+        <% if (e.rare) { %><p class="flash rare">Monstre rare : <b><%= it.L.troop(e.rare) %></b></p><% } %>
+        <ul class="group">
+          <% for (const t of e.side.troops) { %>
+            <li><b><%= it.L.troop(t.type) %></b> <span class="muted">niv. <%= t.level %><%= t.units.length > 1 ? ' · ' + t.units.length + ' unités' : '' %></span></li>
+          <% } %>
+        </ul>
+        <form method="post" action="/combat">
+          <input type="hidden" name="_csrf" value="<%= it.csrf %>">
+          <button type="submit" class="primary">Combattre</button>
+        </form>
+      <% } else { %>
+        <%~ include('./partials/action', { action: 'chercher', label: 'Chercher un combat', cls: '', csrf: it.csrf }) %>
+      <% } %>
+    </div>
+
+    <div class="card">
+      <h2>Avancer</h2>
+      <div class="actions">
+        <% if (!last) { %><%~ include('./partials/action', { action: 'avancer', label: 'Avancer', cls: cleared ? 'primary' : '', csrf: it.csrf }) %><% } %>
+        <% if (last && r.to) { %><%~ include('./partials/action', { action: 'arriver', label: 'Arriver à ' + it.L.region(r.to).city.name, cls: cleared ? 'primary' : '', csrf: it.csrf }) %><% } %>
+        <% if (r.step > 0) { %><%~ include('./partials/action', { action: 'rebrousser', label: 'Rebrousser', cls: '', csrf: it.csrf }) %><% } %>
+        <%~ include('./partials/action', { action: 'rentrer', label: 'Rentrer à ' + it.home.city.name, cls: '', csrf: it.csrf }) %>
+      </div>
+      <% if (!cleared) { %><p class="muted">Il faut vaincre le groupe de l’étape pour avancer.</p><% } %>
+    </div>
+
+    <div class="card">
+      <h2>Escouade</h2>
+      <%~ include('./partials/squad', { v: it.v, L: it.L, csrf: it.csrf, back: '/route', consumables: true }) %>
+    </div>
+
+    <div class="card">
+      <h2>Sac <span class="muted"><%= it.v.bag.used %> / <%= it.v.bag.cap %></span></h2>
+      <% if (it.v.pending.stacks.length || it.v.pending.instances.length) { %>
+        <p><b>Au sol</b> <span class="muted">— perdu si vous quittez l’étape</span></p>
+        <ul class="items">
+          <% for (const s of it.v.pending.stacks) { %>
+            <li class="row between"><span><%= it.L.item(s.item) %> × <%= s.qty %></span>
+              <form method="post" action="/butin/prendre" class="inline"><input type="hidden" name="_csrf" value="<%= it.csrf %>"><input type="hidden" name="item" value="<%= s.item %>"><input type="hidden" name="qty" value="<%= s.qty %>"><button type="submit">Ramasser</button></form></li>
+          <% } %>
+          <% for (const i of it.v.pending.instances) { %>
+            <li class="row between"><span><%= it.L.item(i.base) %> <span class="muted">(<%= it.L.quality(i.roll) %>)</span></span>
+              <form method="post" action="/butin/prendre" class="inline"><input type="hidden" name="_csrf" value="<%= it.csrf %>"><input type="hidden" name="instance" value="<%= i.id %>"><button type="submit">Ramasser</button></form></li>
+          <% } %>
+        </ul>
+      <% } %>
+      <p><a href="/sac">Voir le sac</a></p>
+    </div>
+  </div>
+</section>

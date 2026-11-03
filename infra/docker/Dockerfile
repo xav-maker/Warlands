@@ -21,7 +21,7 @@ COPY . .
 RUN pnpm -r --filter "./apps/*" build \
  && pnpm --filter @cr/web deploy --prod --legacy /out/web \
  && pnpm --filter @cr/worker deploy --prod --legacy /out/worker \
- && cp -r apps/web/dist apps/web/views apps/web/public /out/web/ \
+ && cp -r apps/web/dist apps/web/views apps/web/public content /out/web/ \
  && cp -r apps/worker/dist /out/worker/
 
 FROM node:24-slim
