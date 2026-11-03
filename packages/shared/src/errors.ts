@@ -52,6 +52,7 @@ export const ERROR_CODES = [
   'WORKSHOP_ELSEWHERE',
   'LEVEL_TOO_LOW',
   'CANNOT_WEAR',
+  'FORM_UNAVAILABLE',
 ] as const;
 
 export type ErrorCode = (typeof ERROR_CODES)[number];

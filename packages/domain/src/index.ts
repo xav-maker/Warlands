@@ -16,3 +16,4 @@ export * from './game/view.ts';
 export * from './game/recipes.ts';
 export * from './game/barracks.ts';
 export * from './game/workshop.ts';
+export * from './game/evolution.ts';

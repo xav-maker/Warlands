@@ -36,6 +36,8 @@ import {
   equip,
   unequip,
   workshopOf,
+  evolve,
+  evolutionPreview,
   scaled,
   setDisabledSkills,
   setRank,
@@ -300,6 +302,8 @@ export function registerGameRoutes(app: FastifyInstance, d: GameRouteDeps): void
       ...(v.kind === 'city' ? v.bank.instances.map((i) => ({ ...i, from: 'banque' })) : []),
     ];
     const wearable = (slot: string) => pool.filter((i) => p.equip[i.base]?.slot === slot && canWear(p, t.type, t.level, i.base) === null);
+    const evolutions = await evolutionPreview(d.db, d.content, d.requireAuth(req).player.id, t);
+    const canEvolveHere = v.kind === 'city' && region(d.content, v.region).city.recruit.includes(t.type);
     return d.page(req, reply, 'troupe', {
       v,
       L,
@@ -311,6 +315,8 @@ export function registerGameRoutes(app: FastifyInstance, d: GameRouteDeps): void
       xpToNext,
       slots,
       wearable,
+      evolutions,
+      canEvolveHere,
       error: errorOf(req.query),
     });
   });
@@ -340,6 +346,10 @@ export function registerGameRoutes(app: FastifyInstance, d: GameRouteDeps): void
       await d.run(req, craft, { out: b.out });
       return `/atelier?p=${int(b.p) || ''}`;
     });
+  });
+  app.post('/troupe/:id/evoluer', (req, reply) => {
+    const id = int((req.params as { id: string }).id);
+    return act(req, reply, `/troupe/${id}`, async () => void (await d.run(req, evolve, { troop: id, form: body(req).form })));
   });
   app.post('/troupe/:id/equiper', (req, reply) => {
     const id = int((req.params as { id: string }).id);

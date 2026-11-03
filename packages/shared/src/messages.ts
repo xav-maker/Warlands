@@ -47,6 +47,7 @@ const FR: Record<ErrorCode, string> = {
   WORKSHOP_ELSEWHERE: 'Seul l’atelier de {ville} sait fabriquer cet objet.',
   LEVEL_TOO_LOW: 'Niveau insuffisant pour porter cet objet.',
   CANNOT_WEAR: 'Cette troupe ne peut pas porter cette catégorie d’objet.',
+  FORM_UNAVAILABLE: 'Cette évolution n’est pas accessible depuis la forme actuelle.',
 };
 
 export function messageFr(code: ErrorCode, details?: Record<string, string | number>): string {

@@ -195,6 +195,9 @@ describe('parcours de jeu (J2)', () => {
       .executeTakeFirstOrThrow();
     const page = await req('GET', `/troupe/${milicien.id}`);
     expect(page.body).toContain('Équiper');
+    // Milicien de niveau 30 dans sa ville de recrutement : l'évolution vers le Fantassin est proposée.
+    expect(page.body).toContain('Fantassin');
+    expect(page.body).toContain('Évoluer');
     await req('POST', `/troupe/${milicien.id}/equiper`, { unit: '1', instance: String(sword.id) });
     expect(
       (await t.db.selectFrom('item_instance').select('container').where('id', '=', sword.id).executeTakeFirstOrThrow()).container,

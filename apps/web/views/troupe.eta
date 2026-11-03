@@ -27,6 +27,31 @@
       </form>
     </div>
 
+    <% if (it.evolutions.length) { %>
+      <div class="card">
+        <h2>Évolutions</h2>
+        <p class="muted">Facultatives et définitives. La troupe garde son niveau, son XP et ses unités, et apprend les capacités de sa nouvelle forme.<%= it.canEvolveHere ? '' : ' Elle évolue dans une ville qui la recrute.' %></p>
+        <ul class="items">
+          <% for (const e of it.evolutions) { const f = e.form; const r = e.recipe; const ok = t.level >= f.level && it.v.gold >= r.gold && r.ingredients.every(([i, q]) => (e.owned[i] ?? 0) >= q) %>
+            <li>
+              <div class="row between">
+                <span><b><%= f.name %></b> <span class="muted">— niveau <%= f.level %> requis · PV ×<%= (f.hpMult ?? 1000) / 1000 %> · vitesse <%= f.speed %></span></span>
+                <% if (it.canEvolveHere) { %>
+                  <form method="post" action="/troupe/<%= t.id %>/evoluer" class="inline">
+                    <input type="hidden" name="_csrf" value="<%= it.csrf %>">
+                    <input type="hidden" name="form" value="<%= f.id %>">
+                    <button type="submit"<%= ok ? '' : ' disabled' %>>Évoluer</button>
+                  </form>
+                <% } %>
+              </div>
+              <p class="muted">Capacités : <%= f.skills.map(([s, l]) => it.L.skill(s) + ' ' + l).join(', ') %></p>
+              <p class="muted"><%= r.gold %> or · <%= r.ingredients.map(([i, q]) => it.L.item(i) + ' ' + (e.owned[i] ?? 0) + '/' + q).join(', ') %></p>
+            </li>
+          <% } %>
+        </ul>
+      </div>
+    <% } %>
+
     <div class="card">
       <h2>Équipement</h2>
       <p class="muted"><%= it.v.kind === 'city' ? 'En ville : depuis la banque ou le sac ; un changement soigne l’unité.' : 'En expédition : depuis le sac seulement ; un objet retiré va dans le sac.' %></p>
