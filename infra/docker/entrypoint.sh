@@ -1,7 +1,14 @@
 #!/bin/sh
 set -e
-# Une commande explicite (par exemple la commande de prédéploiement de Render) passe avant APP_ROLE.
-if [ "$#" -gt 0 ]; then exec "$@"; fi
+# Rôle : premier argument (web, worker, migrate), sinon APP_ROLE, sinon web.
+# Render lance la commande de prédéploiement sans interpréter les guillemets : elle doit être
+# « /entrypoint.sh migrate », sans sh -c ni variable en préfixe.
+# Toute autre commande passée en argument est exécutée telle quelle.
+case "${1:-}" in
+  web | worker | migrate) APP_ROLE="$1" ;;
+  "") ;;
+  *) exec "$@" ;;
+esac
 case "${APP_ROLE:-web}" in
   web) cd /app/web && exec node --enable-source-maps dist/main.js ;;
   migrate) cd /app/web && exec node --enable-source-maps dist/migrate.js ;;

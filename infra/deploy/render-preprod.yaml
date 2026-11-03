@@ -24,7 +24,7 @@ services:
     autoDeploy: false
     # Migrations avant la bascule (guide 17.2, étape 8). Elles doivent rester compatibles avec
     # l'ancienne version, qui sert encore les joueurs pendant ce temps (guide 17.4).
-    preDeployCommand: sh -c "APP_ROLE=migrate exec /entrypoint.sh"
+    preDeployCommand: /entrypoint.sh migrate
     envVars:
       - fromGroup: cr-preprod-commun
       - key: APP_ROLE
