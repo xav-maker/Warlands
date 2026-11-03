@@ -23,7 +23,9 @@ ENV NODE_ENV=production APP_VERSION=$APP_VERSION
 WORKDIR /app
 COPY --from=build /out /app
 COPY infra/docker/entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
+# npm, corepack et yarn ne servent pas à l'exécution : on les retire (moins de surface, moins d'alertes Trivy).
+RUN chmod +x /entrypoint.sh \
+ && rm -rf /usr/local/lib/node_modules /usr/local/bin/npm /usr/local/bin/npx /usr/local/bin/corepack /usr/local/bin/yarn* /opt/yarn*
 USER node
 EXPOSE 3000
 ENTRYPOINT ["/entrypoint.sh"]
