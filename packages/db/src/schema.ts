@@ -73,9 +73,9 @@ export interface PlayerTable {
   updated_at: UpdatedAt;
 }
 
-export type TroopContainer = 'BARRACKS' | 'SQUAD' | 'GRAVE';
+export type TroopContainer = 'BARRACKS' | 'SQUAD' | 'GRAVE' | 'ESCROW';
 export type StackContainer = 'BAG' | 'BANK' | 'PENDING_LOOT';
-export type InstanceContainer = StackContainer | 'EQUIPPED' | 'GRAVE' | 'SYSTEM';
+export type InstanceContainer = StackContainer | 'EQUIPPED' | 'GRAVE' | 'SYSTEM' | 'ESCROW';
 
 export interface TroopTable {
   id: Generated<number>;
@@ -234,6 +234,61 @@ export interface QuestTable {
   closed_at: Date | null;
 }
 
+export type ListingStatus = 'active' | 'sold' | 'withdrawn' | 'expired';
+
+export interface ShopListingTable {
+  id: Generated<number>;
+  region: string;
+  seller_id: number;
+  kind: 'stack' | 'instance' | 'troop';
+  item: string;
+  qty: ColumnType<number, number | undefined, number>;
+  instance_id: number | null;
+  troop_id: number | null;
+  price: number;
+  status: ListingStatus;
+  expires_at: Date;
+  name: string;
+  family: string;
+  tier: number;
+  slot: string | null;
+  level: number | null;
+  lock_version: ColumnType<number, number | undefined, number>;
+  created_at: CreatedAt;
+  closed_at: Date | null;
+}
+
+export interface ShopSaleTable {
+  id: Generated<number>;
+  listing_id: number;
+  region: string;
+  item: string;
+  qty: number;
+  buyer_id: number | null;
+  seller_id: number | null;
+  price: number;
+  tax: number;
+  created_at: CreatedAt;
+}
+
+export interface NotificationTable {
+  id: Generated<number>;
+  player_id: number;
+  type: string;
+  data: ColumnType<unknown, string, string>;
+  read_at: Date | null;
+  created_at: CreatedAt;
+}
+
+export interface TroopOwnershipTable {
+  id: Generated<number>;
+  troop_id: number;
+  player_id: number | null;
+  reason: string;
+  from_at: ColumnType<Date, Date | undefined, Date>;
+  to_at: Date | null;
+}
+
 export interface IdempotencyKeyTable {
   player_id: number;
   key: string;
@@ -263,6 +318,10 @@ export interface Database {
   player_recipe: PlayerRecipeTable;
   player_reserved_material: PlayerReservedMaterialTable;
   quest: QuestTable;
+  shop_listing: ShopListingTable;
+  shop_sale: ShopSaleTable;
+  notification: NotificationTable;
+  troop_ownership: TroopOwnershipTable;
 }
 
 export type Account = Selectable<AccountTable>;

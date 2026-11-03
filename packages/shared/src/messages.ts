@@ -51,6 +51,14 @@ const FR: Record<ErrorCode, string> = {
   QUEST_NOT_FOUND: 'Quête introuvable.',
   QUEST_ELSEWHERE: 'Cette quête se rend à {ville}.',
   NOT_ENOUGH_SLOTS: 'Il faut {n} emplacements libres en banque ou dans le sac.',
+  TOO_MANY_LISTINGS: 'Vous avez déjà {max} annonces en cours.',
+  PRICE_TOO_LOW: 'Prix trop bas : {min} or au moins (le prix de rachat du marchand).',
+  TROOP_LOANED: 'Une troupe prêtée par la garde ne se vend pas.',
+  ACCOUNT_TOO_NEW: 'Votre compte doit avoir plus de 24 heures pour vendre une troupe.',
+  LISTING_NOT_FOUND: 'Annonce introuvable.',
+  LISTING_GONE: 'Cette annonce n’est plus en vente.',
+  LISTING_ELSEWHERE: 'Cette annonce est à la boutique de {ville}.',
+  OWN_LISTING: 'Vous ne pouvez pas acheter votre propre annonce.',
 };
 
 export function messageFr(code: ErrorCode, details?: Record<string, string | number>): string {

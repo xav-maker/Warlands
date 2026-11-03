@@ -173,6 +173,8 @@ export async function createTroop(
       reason: o.reason,
     })
     .execute();
+  // Historique de propriété (guide 6.2) : la troupe peut ensuite changer de mains en boutique.
+  await tx.insertInto('troop_ownership').values({ troop_id: row.id, player_id: playerId, reason: o.reason }).execute();
   return row.id;
 }
 

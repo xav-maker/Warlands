@@ -82,7 +82,9 @@ export async function executeCommand<S extends z.ZodType, R>(deps: CommandDeps, 
   const events: DomainEvent[] = [];
 
   const result = await deps.db.transaction().execute(async (tx) => {
-    let player = await tx.selectFrom('player').selectAll().where('id', '=', call.playerId).forUpdate().executeTakeFirst();
+    // FOR NO KEY UPDATE : sérialise les commandes d'un même joueur, sans bloquer les clés étrangères qui le
+    // référencent (une vente ou une notification écrite par un autre joueur) : pas d'interblocage entre achats croisés.
+    let player = await tx.selectFrom('player').selectAll().where('id', '=', call.playerId).forNoKeyUpdate().executeTakeFirst();
     if (!player) throw new GameError('PLAYER_NOT_FOUND');
 
     if (call.idempotencyKey) {

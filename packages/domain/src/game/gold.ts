@@ -38,15 +38,16 @@ export async function transferGold(tx: Tx, from: GoldParty, to: GoldParty, amoun
   if (!Number.isInteger(amount) || amount <= 0) throw new Error(`montant invalide : ${amount}`);
   const a = await accountId(tx, from);
   const b = await accountId(tx, to);
-  if ('player' in from) {
-    const { balance: bal } = await tx
-      .selectFrom('gold_account')
-      .select('balance')
-      .where('id', '=', a)
-      .forUpdate()
-      .executeTakeFirstOrThrow();
-    if (bal < amount) throw new GameError('NOT_ENOUGH_GOLD', { prix: amount });
-  }
+  // Verrou des deux comptes dans l'ordre de leurs ids : deux transferts croisés (A paie B pendant que B paie A)
+  // ne peuvent pas s'interbloquer.
+  const locked = await tx
+    .selectFrom('gold_account')
+    .select(['id', 'balance'])
+    .where('id', 'in', [a, b])
+    .orderBy('id')
+    .forUpdate()
+    .execute();
+  if ('player' in from && locked.find((x) => x.id === a)!.balance < amount) throw new GameError('NOT_ENOUGH_GOLD', { prix: amount });
   const id = randomUUID();
   await tx
     .insertInto('gold_entry')

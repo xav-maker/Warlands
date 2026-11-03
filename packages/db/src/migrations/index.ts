@@ -3,6 +3,7 @@ import * as m0001 from './0001_socle.ts';
 import * as m0002 from './0002_boucle_solo.ts';
 import * as m0003 from './0003_progression.ts';
 import * as m0004 from './0004_quetes.ts';
+import * as m0005 from './0005_boutiques.ts';
 
 /**
  * Liste explicite des migrations, dans l'ordre. On évite `FileMigrationProvider`, qui charge
@@ -13,4 +14,5 @@ export const migrations: Record<string, Migration> = {
   '0002_boucle_solo': m0002,
   '0003_progression': m0003,
   '0004_quetes': m0004,
+  '0005_boutiques': m0005,
 };

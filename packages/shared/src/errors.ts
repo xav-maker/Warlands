@@ -56,6 +56,15 @@ export const ERROR_CODES = [
   'QUEST_NOT_FOUND',
   'QUEST_ELSEWHERE',
   'NOT_ENOUGH_SLOTS',
+  // Boutiques (J5)
+  'TOO_MANY_LISTINGS',
+  'PRICE_TOO_LOW',
+  'TROOP_LOANED',
+  'ACCOUNT_TOO_NEW',
+  'LISTING_NOT_FOUND',
+  'LISTING_GONE',
+  'LISTING_ELSEWHERE',
+  'OWN_LISTING',
 ] as const;
 
 export type ErrorCode = (typeof ERROR_CODES)[number];
