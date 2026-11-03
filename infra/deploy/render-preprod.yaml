@@ -16,7 +16,7 @@ services:
     name: cr-preprod-web
     runtime: image
     image:
-      url: ghcr.io/xav-maker/cinq-regions:cb4b5164e565c19e3d4cf961351d1e413c318fb4 # image publique ; remplacée à chaque déploiement par celle du commit
+      url: ghcr.io/xav-maker/cinq-regions:73a4a62b1230368fac5c6c37aecaa4d3b50550d7 # image publique ; remplacée à chaque déploiement par celle du commit
     region: frankfurt
     plan: starter
     numInstances: 1
@@ -54,7 +54,7 @@ services:
     name: cr-preprod-worker
     runtime: image
     image:
-      url: ghcr.io/xav-maker/cinq-regions:cb4b5164e565c19e3d4cf961351d1e413c318fb4
+      url: ghcr.io/xav-maker/cinq-regions:73a4a62b1230368fac5c6c37aecaa4d3b50550d7
     region: frankfurt
     plan: starter
     autoDeploy: false
