@@ -7,7 +7,7 @@ const cfg = loadConfig();
 const db = createDb(cfg.DATABASE_URL);
 const app = await buildApp({
   db,
-  mailer: smtpMailer(cfg.SMTP_URL, cfg.MAIL_FROM),
+  mailer: smtpMailer(cfg.smtp, cfg.MAIL_FROM),
   appUrl: cfg.APP_URL,
   cookieSecure: cfg.SESSION_COOKIE_SECURE,
   logLevel: cfg.LOG_LEVEL,

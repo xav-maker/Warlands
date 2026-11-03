@@ -38,7 +38,14 @@ services:
         sync: false
       - key: SESSION_COOKIE_SECURE
         value: 'true'
-      - key: SMTP_URL # fournisseur d'e-mail transactionnel, par exemple smtps://utilisateur:clé@smtp.fournisseur:465
+      # Fournisseur d'e-mail transactionnel (Brevo : smtp-relay.brevo.com, port 587, identifiant et clé SMTP).
+      - key: SMTP_HOST
+        sync: false
+      - key: SMTP_PORT
+        value: '587'
+      - key: SMTP_USER
+        sync: false
+      - key: SMTP_PASS
         sync: false
       - key: MAIL_FROM
         sync: false

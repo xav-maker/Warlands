@@ -26,7 +26,7 @@ Les déploiements de préproduction passent l'un après l'autre (`concurrency`).
 2. **Accès de Render à ghcr.io.** L'image est publique (le dépôt l'est aussi, et l'image ne contient aucun secret) : aucun identifiant n'est nécessaire. Si elle redevenait privée, il faudrait un jeton GitHub _classic_ `read:packages`, déclaré dans Render (_Workspace Settings → Container Registry Credentials_), et un bloc `creds` dans le Blueprint.
 3. **Blueprint.** `render-preprod.yaml` pointe sur une image déjà publiée (les déploiements suivants la remplacent par celle du commit). Dans Render, choisir _New → Blueprint_, prendre le dépôt, puis indiquer le chemin `infra/deploy/render-preprod.yaml`.
 4. **Valeurs secrètes**, demandées à la création :
-   - `SMTP_URL` et `MAIL_FROM` : un fournisseur d'e-mail transactionnel, car Render n'envoie pas d'e-mails. Brevo, Scaleway TEM ou Postmark conviennent ; pour l'UE, préférer Brevo ou Scaleway TEM.
+   - `SMTP_HOST`, `SMTP_USER`, `SMTP_PASS` (et `SMTP_PORT`, 587 par défaut) et `MAIL_FROM` : un fournisseur d'e-mail transactionnel, car Render n'envoie pas d'e-mails. Pour Brevo : `smtp-relay.brevo.com`, l'identifiant SMTP tel quel (avec son `@`) et la clé SMTP. `SMTP_URL` reste acceptée, mais il faut y encoder les caractères spéciaux. Brevo, Scaleway TEM ou Postmark conviennent ; pour l'UE, préférer Brevo ou Scaleway TEM.
    - `APP_URL` : laisser vide pour utiliser l'adresse `onrender.com`, ou indiquer le domaine personnalisé.
 5. **Crochets de déploiement.** Dans Render, ouvrir _Settings → Deploy Hook_ de chacun des deux services et copier l'URL.
 6. **GitHub.** Aller dans _Settings → Environments_ et créer l'environnement **`preproduction`**, avec :
