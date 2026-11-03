@@ -14,8 +14,10 @@ COPY packages/engine/package.json packages/engine/
 COPY packages/gen/package.json packages/gen/
 COPY packages/content/package.json packages/content/
 COPY packages/testing/package.json packages/testing/
+COPY packages/ui-combat/package.json packages/ui-combat/
 COPY tools/content-cli/package.json tools/content-cli/
 COPY tools/extract-prototype/package.json tools/extract-prototype/
+COPY tools/seed-dev/package.json tools/seed-dev/
 RUN pnpm install --frozen-lockfile
 COPY . .
 RUN pnpm -r --filter "./apps/*" build \

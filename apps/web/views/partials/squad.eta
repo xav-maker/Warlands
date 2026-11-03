@@ -8,9 +8,9 @@
       <% for (const u of t.units) { %>
         <div class="unit">
           <span class="muted"><%= t.units.length > 1 ? 'unité ' + u.n : '' %></span>
-          <span class="bar hp" title="PV"><i style="width:<%= Math.round(100 * u.hp / u.hpMax) %>%"></i></span>
+          <span class="gauge hp" title="PV"><i style="width:<%= Math.round(100 * u.hp / u.hpMax) %>%"></i></span>
           <span class="num"><%= u.hp %> / <%= u.hpMax %> PV</span>
-          <% if (u.manaMax) { %><span class="bar mana" title="Mana"><i style="width:<%= Math.round(100 * u.mana / u.manaMax) %>%"></i></span><span class="num"><%= u.mana %> / <%= u.manaMax %></span><% } %>
+          <% if (u.manaMax) { %><span class="gauge mana" title="Mana"><i style="width:<%= Math.round(100 * u.mana / u.manaMax) %>%"></i></span><span class="num"><%= u.mana %> / <%= u.manaMax %></span><% } %>
           <% if (it.consumables && items.length && (u.hp < u.hpMax || u.mana < u.manaMax)) { %>
             <form method="post" action="/consommable" class="inline">
               <input type="hidden" name="_csrf" value="<%= it.csrf %>">

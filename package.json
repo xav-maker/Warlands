@@ -12,7 +12,7 @@
     "db:up": "docker compose -f infra/docker/compose.yaml up -d",
     "db:down": "docker compose -f infra/docker/compose.yaml down",
     "migrate": "pnpm --filter @cr/db migrate",
-    "typecheck": "tsc -b && tsc -p tsconfig.test.json",
+    "typecheck": "tsc -b && tsc -p tsconfig.test.json && tsc -p packages/ui-combat/tsconfig.json",
     "lint": "eslint .",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
@@ -21,10 +21,13 @@
     "build": "pnpm -r --filter \"./apps/*\" build",
     "golden:v0.4": "pnpm --filter @cr/extract-prototype golden:v0.4",
     "golden:gen": "pnpm --filter @cr/extract-prototype golden:gen",
-    "content": "pnpm --filter @cr/content-cli cli"
+    "content": "pnpm --filter @cr/content-cli cli",
+    "seed-dev": "pnpm --filter @cr/seed-dev seed",
+    "e2e": "playwright test -c e2e/playwright.config.ts"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
+    "@playwright/test": "^1.64.1",
     "@testcontainers/postgresql": "^12.2.1",
     "@types/node": "^24.19.2",
     "dependency-cruiser": "^18.7.2",

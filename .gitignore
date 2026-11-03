@@ -7,3 +7,8 @@ coverage/
 .env.*
 !.env.example
 .DS_Store
+apps/web/public/combat.js
+apps/web/public/combat.js.map
+e2e/rapport/
+test-results/
+e2e/test-results/

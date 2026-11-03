@@ -6,7 +6,9 @@
   <meta name="htmx-config" content='{"allowEval":false,"includeIndicatorStyles":false,"selfRequestsOnly":true}'>
   <title><%= it.title ? it.title + ' · ' : '' %>Les Cinq Régions</title>
   <link rel="stylesheet" href="/static/app.css">
-  <% if (it.refresh) { %><meta http-equiv="refresh" content="<%= it.refresh %>"><% } %>
+  <% if (it.refresh) { %><noscript><meta http-equiv="refresh" content="<%= it.refresh %>"></noscript><% } %>
+  <% if (it.css) { %><link rel="stylesheet" href="<%= it.css %>"><% } %>
+  <% if (it.script) { %><script src="<%= it.script %>" defer></script><% } %>
   <script src="/static/htmx.min.js" defer></script>
 </head>
 <body hx-headers='<%= JSON.stringify({ "x-csrf-token": it.csrf }) %>'>

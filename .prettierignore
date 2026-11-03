@@ -5,3 +5,7 @@ docs/
 *.eta
 packages/engine/golden/
 packages/gen/golden/
+packages/ui-combat/src/pixel.js
+packages/ui-combat/src/replay.js
+packages/ui-combat/src/dom.js
+apps/web/public/combat.js

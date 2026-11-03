@@ -274,7 +274,7 @@ form.inline {
   flex-wrap: wrap;
   font-size: 0.9rem;
 }
-.bar {
+.gauge {
   display: inline-block;
   width: 6rem;
   height: 0.55rem;
@@ -282,14 +282,14 @@ form.inline {
   border-radius: 3px;
   overflow: hidden;
 }
-.bar i {
+.gauge i {
   display: block;
   height: 100%;
 }
-.bar.hp i {
+.gauge.hp i {
   background: var(--good);
 }
-.bar.mana i {
+.gauge.mana i {
   background: var(--a);
 }
 .num {
@@ -359,4 +359,9 @@ table.data td {
     display: block;
     overflow-x: auto;
   }
+}
+
+/* L’attribut hidden l’emporte toujours, même sur un display fixé par une classe (grid, pixel-view…). */
+[hidden] {
+  display: none !important;
 }

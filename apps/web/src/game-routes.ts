@@ -32,7 +32,7 @@ import {
   type GameContent,
   type GameView,
 } from '@cr/domain';
-import { itemValue, quality } from '@cr/gen';
+import { computeStats, itemValue, quality } from '@cr/gen';
 import type { z } from 'zod';
 
 export interface GameRouteDeps {
@@ -158,7 +158,37 @@ export function registerGameRoutes(app: FastifyInstance, d: GameRouteDeps): void
     if (!b) return d.page(req, reply, 'message', { title: 'Combat introuvable', text: 'Ce combat n’existe pas.' }, 404);
     const isLast = v.lastBattle?.id === b.id;
     const waitMs = isLast && v.watchUntil ? Math.max(0, v.watchUntil.getTime() - Date.now()) : 0;
-    const units = (b.input as { units: { id: string; side: number; name: string; hpMax: number }[] }).units;
+    const units = (b.input as { units: { id: string; side: number; name: string; hpMax: number; kind: string; skills: string[] }[] }).units;
+    const p = d.content.pack;
+    // Apparences 8 bits, déduites du type comme dans le prototype (app.ts, registerLooks).
+    const looks = Object.fromEntries(
+      [...new Set(units.map((u) => u.kind))]
+        .filter((k) => p.troops[k])
+        .map((k) => {
+          const t = p.troops[k]!;
+          const st = computeStats(p, t, t.forms[0]!.id, 10);
+          const caster = st.manaMax > 0 && p.weapons[t.weapon]?.type !== 'tranchant' && /baton|sceptre|os|spectral/.test(t.weapon);
+          return [k, { tags: t.tags, pop: t.pop, units: t.units, caster, weapon: t.weapon, ranged: t.defaultDist >= 3 }];
+        }),
+    );
+    const used = [...new Set(units.flatMap((u) => u.skills))].filter((s) => p.skills[s]);
+    const skillNames = Object.fromEntries(used.map((s) => [s, p.skills[s]!.name]));
+    // La vue 8 bits choisit ses animations d'après la capacité (cible, portée, type de dégâts).
+    const skills = Object.fromEntries(used.map((s) => [s, p.skills[s]!]));
+    const replay = {
+      journal: `/combat/${b.id}/journal.json`,
+      theme: Math.max(
+        0,
+        p.regions.findIndex((r) => r.id === b.route),
+      ),
+      waitMs,
+      next: v.kind === 'route' ? '/route' : '/ville',
+      timeLimit: p.params.timeLimit,
+      result: b.result,
+      skillNames,
+      skills,
+      looks,
+    };
     return d.page(req, reply, 'combat', {
       v,
       L,
@@ -168,6 +198,8 @@ export function registerGameRoutes(app: FastifyInstance, d: GameRouteDeps): void
       R: region(d.content, b.route),
       waitMs,
       next: v.kind === 'route' ? '/route' : '/ville',
+      // JSON dans un <script type="application/json"> : « < » échappé, rien ne peut fermer la balise.
+      replayJson: JSON.stringify(replay).replace(/</g, '\\u003c'),
       error: errorOf(req.query),
     });
   });

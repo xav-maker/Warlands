@@ -1,0 +1,15 @@
+{
+  "name": "@cr/seed-dev",
+  "private": true,
+  "type": "module",
+  "version": "0.0.0",
+  "scripts": {
+    "seed": "tsx src/main.ts"
+  },
+  "dependencies": {
+    "@cr/content": "workspace:*",
+    "@cr/db": "workspace:*",
+    "@cr/domain": "workspace:*",
+    "@cr/gen": "workspace:*"
+  }
+}

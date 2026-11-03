@@ -2,7 +2,19 @@ import js from '@eslint/js';
 import tseslint from 'typescript-eslint';
 
 export default tseslint.config(
-  { ignores: ['.dependency-cruiser.cjs', '**/dist/**', '**/node_modules/**', 'prototype-extrait/**', 'docs/**', '**/*.tsbuildinfo'] },
+  {
+    ignores: [
+      '.dependency-cruiser.cjs',
+      '**/dist/**',
+      '**/node_modules/**',
+      'prototype-extrait/**',
+      'docs/**',
+      '**/*.tsbuildinfo',
+      'apps/web/public/combat.js',
+      'e2e/rapport/**',
+      'test-results/**',
+    ],
+  },
   js.configs.recommended,
   ...tseslint.configs.recommended,
   {
@@ -16,6 +28,24 @@ export default tseslint.config(
         'error',
         { selector: "MemberExpression[property.name='innerHTML']", message: 'Pas de innerHTML (guide 13.1).' },
       ],
+    },
+  },
+  {
+    // Code du navigateur (rediffusion des combats).
+    files: ['packages/ui-combat/src/**'],
+    languageOptions: {
+      globals: {
+        window: 'readonly',
+        document: 'readonly',
+        localStorage: 'readonly',
+        fetch: 'readonly',
+        HTMLElement: 'readonly',
+        setTimeout: 'readonly',
+        performance: 'readonly',
+        matchMedia: 'readonly',
+        requestAnimationFrame: 'readonly',
+        cancelAnimationFrame: 'readonly',
+      },
     },
   },
 );

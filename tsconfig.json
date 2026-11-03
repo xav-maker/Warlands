@@ -36,6 +36,9 @@
     },
     {
       "path": "tools/content-cli"
+    },
+    {
+      "path": "tools/seed-dev"
     }
   ]
 }

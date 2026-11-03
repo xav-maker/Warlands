@@ -95,7 +95,20 @@ describe('parcours de jeu (J2)', () => {
     const page = await req('GET', battle);
     expect(page.body).toContain('Victoire');
     expect(page.body).toContain('Rediffusion en cours');
-    expect(page.body).toMatch(/<meta http-equiv="refresh" content="\d+">/);
+    // Sans JavaScript, la page se recharge à la fin du blocage ; avec, la rediffusion prend le relais.
+    expect(page.body).toMatch(/<noscript><meta http-equiv="refresh" content="\d+"><\/noscript>/);
+    expect(page.body).toContain('/static/combat.js');
+    const data = /<script type="application\/json" id="replay-data">([^<]*)<\/script>/.exec(page.body);
+    const replay = JSON.parse(data![1]!) as {
+      journal: string;
+      waitMs: number;
+      looks: Record<string, unknown>;
+      skillNames: Record<string, string>;
+    };
+    expect(replay.journal).toBe(`${battle}/journal.json`);
+    expect(replay.waitMs).toBeGreaterThan(0);
+    expect(Object.keys(replay.looks).length).toBeGreaterThan(0);
+    expect(replay.skillNames.emploi).toBe("Emploi d'arme");
 
     // Pendant la rediffusion, toute action ramène au combat.
     expect((await req('POST', '/route/avancer', {})).headers.location).toBe(`${battle}?e=WATCH_IN_PROGRESS`);

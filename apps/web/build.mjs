@@ -4,6 +4,8 @@ import { build } from 'esbuild';
 import { rmSync } from 'node:fs';
 
 rmSync('dist', { recursive: true, force: true });
+// Rediffusion des combats pour le navigateur (packages/ui-combat) → public/combat.js.
+await import('../../packages/ui-combat/build.mjs');
 await build({
   entryPoints: { main: 'src/main.ts', migrate: '../../packages/db/src/migrate.ts' },
   outdir: 'dist',

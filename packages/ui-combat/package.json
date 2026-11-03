@@ -1,0 +1,12 @@
+{
+  "name": "@cr/ui-combat",
+  "private": true,
+  "type": "module",
+  "version": "0.0.0",
+  "scripts": {
+    "build": "node build.mjs"
+  },
+  "dependencies": {
+    "@cr/engine": "workspace:*"
+  }
+}

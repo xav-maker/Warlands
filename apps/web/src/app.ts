@@ -82,6 +82,8 @@ export async function buildApp(deps: AppDeps): Promise<FastifyInstance> {
         defaultSrc: ["'self'"],
         scriptSrc: ["'self'"],
         styleSrc: ["'self'"],
+        // Attributs style (largeur des jauges) : seuls autorisés en ligne ; feuilles et <style> restent 'self'.
+        styleSrcAttr: ["'unsafe-inline'"],
         imgSrc: ["'self'", 'data:'],
         fontSrc: ["'self'"],
         connectSrc: ["'self'"],

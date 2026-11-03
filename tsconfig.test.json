@@ -6,5 +6,5 @@
     "emitDeclarationOnly": false,
     "noEmit": true
   },
-  "include": ["packages/*/test", "apps/*/test", "vitest.config.ts", "vitest.global-setup.ts", "tools/*/test"]
+  "include": ["packages/*/test", "apps/*/test", "vitest.config.ts", "vitest.global-setup.ts", "tools/*/test", "e2e"]
 }

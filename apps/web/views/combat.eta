@@ -1,19 +1,23 @@
 <% const waitS = Math.ceil(it.waitMs / 1000) %>
-<% layout('./layout', { title: 'Combat', refresh: waitS > 0 ? waitS : undefined }) %>
+<% layout('./layout', { title: 'Combat', refresh: waitS > 0 ? waitS : undefined, css: '/static/combat.css', script: '/static/combat.js' }) %>
 <% const r = it.r; const res = it.b.result; const st = it.R.territory.steps[it.b.step] %>
 <% const after = new Map(res.units.map((u) => [u.id, u])) %>
 <section class="battle">
   <p class="eyebrow"><%= it.R.territory.name %> · <%= st.name %><%= it.b.kind === 'guardian' ? ' · gardien' : '' %></p>
-  <h1><%= it.b.won ? 'Victoire' : 'Défaite' %></h1>
-  <p class="muted">Combat de <%= it.b.duration %> instants<%= res.reason === 'timeout' ? ', arrêté à la durée limite' : '' %>.</p>
+  <h1 data-after-replay><%= it.b.won ? 'Victoire' : 'Défaite' %></h1>
+  <p class="muted" data-after-replay>Combat de <%= it.b.duration %> instants<%= res.reason === 'timeout' ? ', arrêté à la durée limite' : '' %>.</p>
+
+  <%/* Rediffusion (packages/ui-combat) : remplace ce bloc quand JavaScript est actif. */%>
+  <div id="replay" class="card"><p class="muted">Rediffusion : activez JavaScript pour voir le combat se jouer.</p></div>
+  <script type="application/json" id="replay-data"><%~ it.replayJson %></script>
 
   <% if (waitS > 0) { %>
-    <p class="flash" role="status">Rediffusion en cours : encore <b><%= waitS %> s</b> avant de pouvoir continuer. La page se mettra à jour d’elle-même.</p>
+    <p class="flash" role="status" data-after-replay>Rediffusion en cours : encore <b><%= waitS %> s</b> avant de pouvoir continuer. La page se mettra à jour d’elle-même.</p>
   <% } else { %>
     <p><a class="btn primary" href="<%= it.next %>">Continuer</a></p>
   <% } %>
 
-  <div class="grid">
+  <div class="grid" data-after-replay>
     <% for (const side of [0, 1]) { %>
       <div class="card">
         <h2><%= side === 0 ? 'Votre escouade' : 'Adversaires' %></h2>
