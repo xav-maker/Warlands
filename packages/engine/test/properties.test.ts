@@ -146,5 +146,5 @@ describe('propriétés du moteur', () => {
       }),
       { numRuns: RUNS, seed: process.env.FC_SEED ? Number(process.env.FC_SEED) : 20261103 },
     );
-  });
+  }, 300_000); // 1 000 combats aléatoires : une quarantaine de secondes sur la CI
 });
