@@ -64,6 +64,21 @@
       </form>
     </div>
 
+    <div class="card" id="donnees">
+      <h2>Vos données</h2>
+      <p>Téléchargez tout ce que le jeu garde sur vous : compte, partie, messages, échanges, signalements et sanctions.</p>
+      <p><a class="btn" href="/compte/donnees.json" download>Télécharger mes données (JSON)</a></p>
+      <h3>Supprimer le compte</h3>
+      <p>Votre adresse, votre mot de passe, vos messages et votre partie sont effacés ; votre pseudo est remplacé. Les lignes comptables du jeu et les décisions de modération sont gardées, sans donnée personnelle.</p>
+      <p class="bad"><b>C’est définitif.</b></p>
+      <form method="post" action="/compte/supprimer" class="stack">
+        <input type="hidden" name="_csrf" value="<%= it.csrf %>">
+        <label>Mot de passe <input type="password" name="password" required maxlength="200" autocomplete="current-password"></label>
+        <label>Tapez <b><%= it.deleteWord %></b> pour confirmer <input type="text" name="confirm" required pattern="<%= it.deleteWord %>" autocomplete="off"></label>
+        <button type="submit" class="danger">Supprimer mon compte</button>
+      </form>
+    </div>
+
     <% if (it.testTools) { %>
       <div class="card">
         <h2>Outils de test</h2>

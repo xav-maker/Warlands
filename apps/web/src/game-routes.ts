@@ -58,6 +58,9 @@ import {
   withdrawListing,
   scaled,
   setDisabledSkills,
+  DELETE_WORD,
+  deleteAccount,
+  exportData,
   doorView,
   dungeonView,
   fightRoom,
@@ -561,6 +564,7 @@ export function registerGameRoutes(app: FastifyInstance, d: GameRouteDeps): void
       totp: await totpState(d.db, auth.account.id),
       testTools: d.testTools,
       word: RESET_WORD,
+      deleteWord: DELETE_WORD,
       done: (req.query as { ok?: string }).ok,
       error: errorOf(req.query),
     });
@@ -569,6 +573,31 @@ export function registerGameRoutes(app: FastifyInstance, d: GameRouteDeps): void
     act(req, reply, '/compte', async () => {
       await d.run(req, resetGame, { confirm: body(req).confirm });
       return '/ville';
+    }),
+  );
+  // Données personnelles (guide 14) : export JSON, suppression du compte.
+  app.get('/compte/donnees.json', async (req, reply) => {
+    const auth = d.requireAuth(req);
+    d.limit(`export:${auth.account.id}`, 3);
+    const data = await exportData(d.db, auth.account.id);
+    return reply
+      .header('cache-control', 'no-store')
+      .header('content-disposition', 'attachment; filename="les-cinq-regions-donnees.json"')
+      .type('application/json; charset=utf-8')
+      .send(JSON.stringify(data, null, 2));
+  });
+  app.post('/compte/supprimer', (req, reply) =>
+    act(req, reply, '/compte', async () => {
+      const b = body(req);
+      await d.run(req, deleteAccount, { password: b.password ?? '', confirm: b.confirm ?? '' });
+      return '/compte/supprime';
+    }),
+  );
+  app.get('/compte/supprime', (req, reply) =>
+    d.page(req, reply, 'message', {
+      title: 'Compte supprimé',
+      text: 'Votre compte est supprimé : votre adresse, vos messages et votre partie sont effacés. Merci d’avoir joué.',
+      link: { href: '/', label: 'Accueil' },
     }),
   );
   app.post('/compte/pseudo', (req, reply) =>
