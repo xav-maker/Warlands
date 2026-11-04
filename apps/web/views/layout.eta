@@ -12,18 +12,20 @@
   <script src="/static/htmx.min.js" defer></script>
   <% if (it.auth) { %><script src="/static/events.js" defer></script><% } %>
 </head>
+<% const here = (p) => (it.path === p || (p !== '/' && (it.path ?? '').startsWith(p + '/')) ? ' aria-current="page"' : '') %>
+<% const play = ['/jeu', '/ville', '/route', '/donjon', '/caserne', '/atelier', '/marchand', '/boutique', '/quetes', '/troupe', '/combat'].some((p) => it.path === p || (it.path ?? '').startsWith(p + '/')) %>
 <body hx-headers='<%= JSON.stringify({ "x-csrf-token": it.csrf }) %>'>
   <header class="top">
     <div class="wrap">
       <a class="brand" href="/">Les Cinq Régions</a>
       <nav>
         <% if (it.auth) { %>
-          <a href="/jeu">Jouer</a>
-          <a href="/sac">Sac</a>
-          <a href="/codex">Codex</a>
-          <a href="/chat">Discussion</a>
-          <% if (it.auth.account.role !== 'player') { %><a href="/moderation">Modération</a><% } %>
-          <a href="/compte">Compte</a>
+          <a href="/jeu"<%~ play ? ' aria-current="page"' : '' %>>Jouer</a>
+          <a href="/sac"<%~ here('/sac') %>>Sac</a>
+          <a href="/codex"<%~ here('/codex') %>>Codex</a>
+          <a href="/chat"<%~ here('/chat') %>>Discussion</a>
+          <% if (it.auth.account.role !== 'player') { %><a href="/moderation"<%~ here('/moderation') %>>Modération</a><% } %>
+          <a href="/compte"<%~ here('/compte') %>>Compte</a>
           <% if (it.v && it.v.unread) { %><a href="/notifications" class="badge" title="Notifications non lues">✉ <%= it.v.unread %></a><% } %>
           <% if (it.v) { %><span class="gold" title="Or"><%= it.v.gold %> or</span><% } %>
           <span class="who"><%= it.auth.player.pseudo %></span>

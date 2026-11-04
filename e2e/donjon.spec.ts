@@ -4,7 +4,10 @@
  * se dit prêt, le second lance le combat de la salle 1 chez les deux ; puis le renfort sort avec son coffre et
  * l'ouvreuse continue seule.
  */
+import { execSync } from 'node:child_process';
+import { join } from 'node:path';
 import { expect, test, type Browser, type Page } from '@playwright/test';
+import { DATABASE_URL } from './playwright.config.ts';
 
 const stamp = `${Date.now() % 1_000_000}`;
 
@@ -24,10 +27,13 @@ async function newPlayer(browser: Browser, tag: string): Promise<{ page: Page; p
   await page.getByLabel('Mot de passe').fill('motdepasse-long');
   await page.getByRole('button', { name: /connecter/i }).click();
   await expect(page.getByRole('heading', { name: 'Havre-Gris' })).toBeVisible();
-  // Escouade de niveau 30 (outil de test de la page Compte) et rediffusion à la vitesse maximale.
-  await page.goto('/compte');
-  await page.getByRole('button', { name: 'Donner une escouade de test' }).click();
-  await expect(page.getByText('Escouade de test engagée')).toBeVisible();
+  // Escouade de niveau 30 (tools/seed-dev, base locale seulement : le jeu ne donne aucune troupe) et rediffusion à la
+  // vitesse maximale.
+  execSync(`pnpm -s seed-dev squad ${email}`, {
+    env: { ...process.env, DATABASE_URL },
+    cwd: join(import.meta.dirname, '..'),
+    stdio: 'pipe',
+  });
   await page.evaluate(() => localStorage.setItem('cr.replay.speed', '100'));
   return { page, pseudo };
 }

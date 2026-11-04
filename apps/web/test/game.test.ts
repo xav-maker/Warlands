@@ -132,6 +132,13 @@ describe('parcours de jeu (J2)', () => {
   it('achète au marchand, puis déplace entre banque et sac', async () => {
     const before = await req('GET', '/marchand');
     expect(before.body).toContain('Bandage');
+    // Ce qui est à la portée du joueur ressort en vert ; le reste est grisé, bouton désactivé.
+    const offer = (html: string, name: string) => {
+      const i = html.indexOf(`<span class="title">${name}</span>`);
+      return html.slice(html.lastIndexOf('<li class="offer', i), html.indexOf('</li>', i));
+    };
+    expect(offer(before.body, 'Bandage')).toContain('offer ok');
+    expect(offer(before.body, 'Bandage')).toMatch(/class="buy">Acheter/);
     expect((await req('POST', '/marchand/acheter', { id: 'bandage' })).headers.location).toBe('/marchand');
     expect((await req('POST', '/marchand/acheter', { id: 'lame_1' })).headers.location).toBe('/marchand');
     expect((await req('POST', '/banque', { from: 'BANK', item: 'bandage', qty: '2' })).headers.location).toBe('/sac');
@@ -145,6 +152,9 @@ describe('parcours de jeu (J2)', () => {
     const page = await req('GET', '/caserne');
     expect(page.statusCode).toBe(200);
     expect(page.body).toContain('Acolyte');
+    // Recettes : chaque ingrédient en pastille, verte si assez, rouge sinon ; l'offre possible ressort en vert.
+    expect(page.body).toMatch(/class="chip (ok|ko)"/);
+    expect(page.body).toMatch(/<li class="offer (ok|ko)">/);
     expect((await req('POST', '/caserne/recruter', { type: 'acolyte' })).headers.location).toBe('/caserne');
     const pid = await playerId();
     // L'escouade de haut niveau est pleine : la recrue attend en caserne.
@@ -247,7 +257,7 @@ describe('parcours de jeu (J2)', () => {
     expect(page.statusCode).toBe(200);
     expect(page.body).toContain('Recommencer la partie');
     expect(page.body).not.toContain('Outils de test');
-    expect((await req('POST', '/compte/escouade-test', {})).statusCode).toBe(404);
+    expect((await req('POST', '/compte/escouade-test', {})).statusCode).toBe(404); // aucune troupe gratuite, même en test
     expect((await req('POST', '/compte/recommencer', { confirm: 'non' })).headers.location).toMatch(/^\/compte\?e=/);
     await endWatch();
     expect((await req('POST', '/compte/recommencer', { confirm: 'RECOMMENCER' })).headers.location).toBe('/ville');

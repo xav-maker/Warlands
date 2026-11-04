@@ -45,7 +45,6 @@ import {
   abandonQuest,
   SHOP,
   RESET_WORD,
-  giveTestSquad,
   resetGame,
   buyListing,
   listGoods,
@@ -96,7 +95,7 @@ export interface GameRouteDeps {
   requireAuth(req: FastifyRequest): AuthContext;
   /** Limitation de débit (lève RATE_LIMITED) : clé, nombre par minute. */
   limit(key: string, perMinute: number): void;
-  /** Outils de test (préproduction) : escouade de niveau 30 sur la page Compte. */
+  /** Outils de test (préproduction) : faire apparaître une porte de donjon. Aucune troupe gratuite. */
   testTools: boolean;
 }
 
@@ -565,7 +564,6 @@ export function registerGameRoutes(app: FastifyInstance, d: GameRouteDeps): void
       L,
       renameRequired: me.rename_required,
       totp: await totpState(d.db, auth.account.id),
-      testTools: d.testTools,
       word: RESET_WORD,
       deleteWord: DELETE_WORD,
       done: (req.query as { ok?: string }).ok,
@@ -632,13 +630,6 @@ export function registerGameRoutes(app: FastifyInstance, d: GameRouteDeps): void
       return '/compte?ok=2fa-off';
     }),
   );
-  app.post('/compte/escouade-test', (req, reply) => {
-    if (!d.testTools) return reply.status(404).send();
-    return act(req, reply, '/compte', async () => {
-      await d.run(req, giveTestSquad, {});
-      return '/compte?ok=escouade';
-    });
-  });
 
   // ---------- Marchand ----------
   app.get('/marchand', async (req, reply) => {

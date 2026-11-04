@@ -39,7 +39,7 @@ const Env = z.object({
     .enum(['true', 'false'])
     .default('false')
     .transform((v) => v === 'true'),
-  // Outils de test (escouade de niveau 30) : préproduction seulement, jamais en production.
+  // Outils de test (porte de donjon sur la page de route ; aucune troupe gratuite) : préproduction seulement.
   ENABLE_TEST_TOOLS: z
     .enum(['true', 'false'])
     .default('false')

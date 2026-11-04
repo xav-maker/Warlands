@@ -9,7 +9,7 @@
     <div class="card">
       <h2>Partir</h2>
       <% for (const d of it.v.departures) { const T = it.L.route(d.route) %>
-        <form method="post" action="/depart" class="row between">
+        <form method="post" action="/depart" class="row between departure">
           <input type="hidden" name="_csrf" value="<%= it.csrf %>">
           <input type="hidden" name="direction" value="<%= d.direction %>">
           <input type="hidden" name="route" value="<%= d.route %>">
@@ -28,14 +28,14 @@
 
     <div class="card">
       <h2>Services</h2>
-      <ul class="links">
-        <li><a href="/caserne">Caserne</a> <span class="muted">— recruter, engager, racheter des unités</span></li>
-        <li><a href="/atelier">Atelier</a> <span class="muted">— fabriquer l’équipement et les consommables de vos recettes</span></li>
-        <li><a href="/quetes">Quêtes</a> <span class="muted">— rapporter les trophées des monstres rares</span></li>
-        <li><a href="/boutique">Boutique</a> <span class="muted">— acheter et vendre entre joueurs, à <%= it.R.city.name %></span></li>
-        <li><a href="/marchand">Marchand</a> <span class="muted">— équipement et consommables du palier <%= it.R.tier %></span></li>
-        <li><a href="/sac">Sac et banque</a> <span class="muted">— sac <%= it.v.bag.used %> / <%= it.v.bag.cap %>, banque <%= it.v.bank.used %> / <%= it.v.bank.cap %></span></li>
-        <li><a href="/codex">Codex</a></li>
+      <ul class="tiles">
+        <li><a href="/caserne"><b>Caserne</b><span>recruter, engager, racheter des unités</span></a></li>
+        <li><a href="/atelier"><b>Atelier</b><span>fabriquer l’équipement et les consommables de vos recettes</span></a></li>
+        <li><a href="/quetes"><b>Quêtes</b><span>rapporter les trophées des monstres rares et des boss</span></a></li>
+        <li><a href="/boutique"><b>Boutique</b><span>acheter et vendre entre joueurs, à <%= it.R.city.name %></span></a></li>
+        <li><a href="/marchand"><b>Marchand</b><span>équipement et consommables du palier <%= it.R.tier %></span></a></li>
+        <li><a href="/sac"><b>Sac et banque</b><span>sac <%= it.v.bag.used %> / <%= it.v.bag.cap %>, banque <%= it.v.bank.used %> / <%= it.v.bank.cap %></span></a></li>
+        <li><a href="/codex"><b>Codex</b><span>troupes, monstres, objets, régions</span></a></li>
       </ul>
       <%~ include('./partials/dispo', { dungeonAvailable: it.v.dungeonAvailable, csrf: it.csrf }) %>
       <p class="muted">Disponible, vous pouvez être invité au hasard dans le donjon d’un joueur de la région.</p>

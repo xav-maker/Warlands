@@ -181,7 +181,13 @@ export async function buildApp(deps: AppDeps): Promise<FastifyInstance> {
   }
 
   function page(req: FastifyRequest, reply: FastifyReply, view: string, data: Record<string, unknown> = {}, status = 200) {
-    const html = eta.render(view, { ...data, auth: req.auth, csrf: csrfFor(req, reply), passwordMin: PASSWORD_MIN });
+    const html = eta.render(view, {
+      ...data,
+      auth: req.auth,
+      csrf: csrfFor(req, reply),
+      passwordMin: PASSWORD_MIN,
+      path: req.url.split('?')[0],
+    });
     return reply.status(status).type('text/html; charset=utf-8').header('cache-control', 'no-store').send(html);
   }
 

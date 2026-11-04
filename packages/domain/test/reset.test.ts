@@ -12,7 +12,6 @@ import {
   balance,
   ensureStarted,
   executeCommand,
-  giveTestSquad,
   listGoods,
   memoryMailer,
   noRateLimit,
@@ -92,12 +91,5 @@ describe('recommencer la partie', () => {
     expect((await alive(pid)).length).toBeGreaterThan(0);
     expect(await count('quest', pid)).toBeGreaterThan(0);
     expect(await count('player_recipe', pid)).toBeGreaterThan(0);
-
-    // Escouade de test : six troupes de niveau 30 engagées, les précédentes en caserne.
-    const kit = (await alive(pid)).length;
-    await run(pid, giveTestSquad);
-    const troops = await alive(pid);
-    expect(troops.filter((x) => x.container === 'SQUAD').map((x) => x.level)).toEqual([30, 30, 30, 30, 30, 30]);
-    expect(troops.filter((x) => x.container === 'BARRACKS')).toHaveLength(kit);
   });
 });

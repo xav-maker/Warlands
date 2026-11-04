@@ -41,7 +41,7 @@ services:
         sync: false
       - key: SESSION_COOKIE_SECURE
         value: 'true'
-      # Outils de test sur la page Compte (escouade de niveau 30) : préproduction seulement.
+      # Outils de test (porte de donjon sur la page de route ; aucune troupe gratuite) : préproduction seulement.
       - key: ENABLE_TEST_TOOLS
         value: 'true'
       # Fournisseur d'e-mail transactionnel (Brevo : smtp-relay.brevo.com, port 587, identifiant et clé SMTP).

@@ -155,31 +155,11 @@ export async function wipeGame(ctx: CommandContext): Promise<{ gold: number }> {
   return { gold };
 }
 
-/**
- * Outil de test (préproduction seulement, ENABLE_TEST_TOOLS) : escouade pleine de niveau 30, comme
- * tools/seed-dev ; les troupes engagées vont en caserne. Jamais exposé en production.
- */
-export const giveTestSquad = command({
-  name: 'dev.giveTestSquad',
-  input: z.object({}),
-  rate: { perMinute: 3 },
-  where: ['city'],
-  async run(ctx) {
-    await ctx.tx
-      .updateTable('troop')
-      .set({ container: 'BARRACKS', updated_at: ctx.now })
-      .where('player_id', '=', ctx.player.id)
-      .where('container', '=', 'SQUAD')
-      .execute();
-    await createTestSquad(ctx.tx, ctx.content, ctx.player.id, 30, 'outil de test');
-    return { level: 30 };
-  },
-});
-
 export const TEST_SQUAD = ['briseur', 'acolyte', 'chasseur', 'milicien', 'frondeurs', 'pyromancien'];
 
 /**
- * Escouade de test (8 unités, 10 de population) : chaque troupe au niveau donné, dans la forme évoluée de ce niveau,
+ * Escouade de test des tests automatiques et de tools/seed-dev (bases locales seulement) ; aucune commande du jeu ne la
+ * donne. 8 unités, 10 de population : chaque troupe au niveau donné, dans la forme évoluée de ce niveau,
  * équipée au plus haut palier que le niveau permet (exemplaires moyens) et à pleine vie. Les combats d'une route se
  * suivent sans soin et les monstres sont réglés pour des escouades de leur niveau : sans équipement, même le niveau 30
  * ne passe pas les cinq étapes de la première route.

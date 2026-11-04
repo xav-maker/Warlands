@@ -471,3 +471,341 @@ button.danger {
   letter-spacing: 0.05em;
   user-select: all;
 }
+
+/* ---------- Lisibilité (refonte visuelle) ---------- */
+:root {
+  --shadow: 0 1px 2px rgb(28 35 32 / 6%), 0 2px 8px rgb(28 35 32 / 6%);
+  --good-soft: color-mix(in srgb, var(--good) 11%, var(--surface));
+  --bad-soft: color-mix(in srgb, var(--bad) 9%, var(--surface));
+  --brass-soft: color-mix(in srgb, var(--brass) 14%, var(--surface));
+}
+body {
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--a-soft) 55%, var(--bg)) 0, var(--bg) 320px) no-repeat,
+    var(--bg);
+}
+header.top {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  box-shadow: var(--shadow);
+}
+.brand::before {
+  content: '◆ ';
+  color: var(--brass);
+}
+header nav a {
+  text-decoration: none;
+  padding: 4px 8px;
+  border-radius: var(--r);
+}
+header nav a:hover {
+  background: var(--sunk);
+}
+header nav a[aria-current='page'] {
+  background: var(--a-soft);
+  color: var(--ink);
+  font-weight: 700;
+}
+.gold,
+.coin {
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+header .gold {
+  padding: 2px 10px;
+  border-radius: 999px;
+  background: var(--brass-soft);
+  border: 1px solid color-mix(in srgb, var(--brass) 45%, transparent);
+}
+.gold::before,
+.coin::before {
+  content: '●';
+  color: var(--brass);
+  margin-right: 0.3em;
+  font-size: 0.8em;
+}
+h1 {
+  font-size: clamp(1.6rem, 1.2rem + 1.5vw, 2.1rem);
+}
+.card {
+  box-shadow: var(--shadow);
+}
+.card > h2:first-child {
+  padding-bottom: 8px;
+  margin-bottom: 12px;
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 8px;
+}
+button:disabled,
+button[disabled] {
+  opacity: 0.45;
+  cursor: not-allowed;
+  border-style: dashed;
+}
+button:not(:disabled):hover,
+.btn:hover {
+  border-color: var(--ink);
+}
+button.buy,
+.btn.buy {
+  background: var(--good);
+  border-color: var(--good);
+  color: #fff;
+  font-weight: 700;
+}
+:root[data-theme='dark'] button.buy {
+  color: #0e1a12;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) button.buy {
+    color: #0e1a12;
+  }
+}
+button.buy:disabled {
+  background: var(--surface);
+  color: var(--muted);
+  border-color: var(--line);
+}
+
+/* Offres (recettes, marchand, boutique, quêtes) : ce qui est faisable maintenant ressort en vert. */
+.offers {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 8px;
+}
+.offer {
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--line);
+  border-radius: var(--r);
+  padding: 10px 12px;
+  background: var(--surface);
+}
+.offer.ok {
+  border-color: color-mix(in srgb, var(--good) 45%, var(--line));
+  border-left-color: var(--good);
+  background: var(--good-soft);
+}
+.offer.ko {
+  opacity: 0.85;
+}
+.offer .title {
+  font-weight: 700;
+}
+.offer .meta {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+.offer .row {
+  justify-content: space-between;
+}
+.status {
+  font-size: 0.8rem;
+  font-weight: 700;
+  padding: 1px 8px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+.status.ok {
+  color: var(--good);
+  background: color-mix(in srgb, var(--good) 16%, transparent);
+}
+.status.ko {
+  color: var(--muted);
+  background: var(--sunk);
+}
+.count {
+  font: 600 0.85rem var(--f-body);
+  color: var(--good);
+}
+
+/* Coût : une pastille par ingrédient, verte si on en a assez, rouge sinon. */
+.cost {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 6px;
+  padding: 0;
+  list-style: none;
+}
+.chip {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 6px;
+  font-size: 0.85rem;
+  padding: 2px 9px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: var(--bg);
+}
+.chip .n {
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+.chip.ok {
+  border-color: color-mix(in srgb, var(--good) 55%, transparent);
+  background: color-mix(in srgb, var(--good) 12%, var(--surface));
+}
+.chip.ok .n {
+  color: var(--good);
+}
+.chip.ko {
+  border-color: color-mix(in srgb, var(--bad) 55%, transparent);
+  background: var(--bad-soft);
+}
+.chip.ko .n {
+  color: var(--bad);
+}
+.price {
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.price.ok {
+  color: var(--good);
+}
+.price.ko {
+  color: var(--bad);
+}
+
+/* Services de la ville : des tuiles. */
+.tiles {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 8px;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 11rem), 1fr));
+}
+.tiles a {
+  display: grid;
+  gap: 2px;
+  height: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+  background: var(--bg);
+  color: var(--ink);
+  text-decoration: none;
+}
+.tiles a:hover {
+  border-color: var(--a);
+  background: var(--a-soft);
+}
+.tiles b {
+  font-family: var(--f-display);
+  font-size: 1.05rem;
+}
+.tiles span {
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+.tiles .badge-ok {
+  color: var(--good);
+  font-weight: 700;
+}
+.departure {
+  padding: 8px 0;
+  border-bottom: 1px solid var(--line);
+}
+.departure:last-child {
+  border-bottom: 0;
+}
+input[type='number'],
+input[type='search'],
+select,
+textarea {
+  font: inherit;
+  color: var(--ink);
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+  padding: 6px 8px;
+}
+/* Alignements : le bouton reste sur la ligne du titre, pastilles et prix centrés. */
+.actions {
+  align-items: center;
+}
+.actions form.inline {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.offer > .row {
+  flex-wrap: nowrap;
+  align-items: center;
+}
+.offer > .row > :first-child {
+  flex: 1;
+  min-width: 0;
+}
+.offer > .row > :last-child {
+  flex: none;
+}
+@media (max-width: 30rem) {
+  .offer > .row {
+    flex-wrap: wrap;
+  }
+}
+.status {
+  align-self: center;
+  line-height: 1.6;
+}
+.unit .gauge {
+  width: 4.5rem;
+}
+.unit {
+  row-gap: 2px;
+}
+.items .qty {
+  width: 4rem;
+  padding: 4px 6px;
+}
+/* Sections repliables (quêtes par ville). */
+details.fold > summary {
+  cursor: pointer;
+  list-style: none;
+}
+details.fold > summary::-webkit-details-marker {
+  display: none;
+}
+details.fold > summary h2 {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 8px;
+  margin: 0;
+}
+details.fold > summary h2::before {
+  content: '▸';
+  color: var(--muted);
+  margin-right: 6px;
+}
+details.fold[open] > summary h2::before {
+  content: '▾';
+}
+details.fold[open] > summary {
+  padding-bottom: 8px;
+  margin-bottom: 12px;
+  border-bottom: 1px solid var(--line);
+}
+button:disabled,
+button[disabled] {
+  opacity: 0.6;
+}
+@media (max-width: 40rem) {
+  header.top {
+    position: static;
+  }
+}
+details.fold > summary h2 {
+  justify-content: flex-start;
+}
+details.fold > summary h2 .count {
+  margin-left: auto;
+}

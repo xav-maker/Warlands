@@ -2,7 +2,6 @@
 <section>
   <h1>Compte</h1>
   <p class="muted">Connecté en tant que <b><%= it.auth.player.pseudo %></b> (<%= it.auth.account.email %>).</p>
-  <% if (it.done === 'escouade') { %><p class="flash" role="status">Escouade de test engagée : six troupes de niveau 30. Vos troupes précédentes sont en caserne.</p><% } %>
   <% if (it.done === 'pseudo') { %><p class="flash" role="status">Nouveau pseudo enregistré.</p><% } %>
   <% if (it.done === '2fa') { %><p class="flash" role="status">Double authentification activée. Vos autres sessions ont été fermées.</p><% } %>
   <% if (it.done === '2fa-off') { %><p class="flash" role="status">Double authentification désactivée.</p><% } %>
@@ -79,16 +78,5 @@
       </form>
     </div>
 
-    <% if (it.testTools) { %>
-      <div class="card">
-        <h2>Outils de test</h2>
-        <p class="muted">Préproduction seulement. Engage une escouade pleine de niveau 30 (Briseur, Acolyte, Chasseur, Milicien, Frondeurs, Apprenti pyromancien), en ville ; vos troupes engagées passent en caserne.</p>
-        <form method="post" action="/compte/escouade-test">
-          <input type="hidden" name="_csrf" value="<%= it.csrf %>">
-          <button type="submit"<%= it.v.kind === 'city' ? '' : ' disabled' %>>Donner une escouade de test</button>
-        </form>
-        <% if (it.v.kind !== 'city') { %><p class="muted">Disponible en ville.</p><% } %>
-      </div>
-    <% } %>
   </div>
 </section>

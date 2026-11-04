@@ -1,0 +1,10 @@
+<%/* Coût d'une recette : une pastille par ingrédient (possédé / demandé), verte si assez, rouge sinon ; et l'or.
+  it.gold (or demandé), it.have (or du joueur), it.ingredients ([objet, quantité][]), it.owned (Map), it.L. */%>
+<ul class="cost">
+  <% if (it.gold) { const ok = it.have >= it.gold %>
+    <li class="chip <%= ok ? 'ok' : 'ko' %>" title="<%= ok ? 'Vous avez assez d’or' : 'Or insuffisant' %>"><span class="coin"><%= it.gold %> or</span></li>
+  <% } %>
+  <% for (const [i, q] of it.ingredients) { const n = it.owned.get(i) ?? 0; const ok = n >= q %>
+    <li class="chip <%= ok ? 'ok' : 'ko' %>" title="<%= ok ? 'Vous en avez assez' : 'Il en manque ' + (q - n) %>"><%= it.L.item(i) %> <span class="n"><%= n %>/<%= q %></span></li>
+  <% } %>
+</ul>

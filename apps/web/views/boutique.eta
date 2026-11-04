@@ -1,4 +1,4 @@
-<% layout('./layout', { title: 'Boutique' }) %>
+<% layout('./layout', { title: 'Boutique', v: it.v, error: it.error }) %>
 <% const f = it.filters; const FAM = { materiau: 'matériaux', composant: 'composants', consommable: 'consommables', trophee: 'trophées', equipement: 'équipement', troupe: 'troupes' } %>
 <% const SLOTS = { arme: 'arme', armure: 'armure', accessoire: 'accessoire' } %>
 <%~ include('./partials/verify-banner', { auth: it.auth }) %>
@@ -22,20 +22,20 @@
   </form>
 
   <div class="card">
-    <h2>Annonces <span class="muted">— par prix croissant</span></h2>
-    <ul class="items">
-      <% for (const l of it.found.rows) { const own = l.seller_id === it.auth.player.id %>
-        <li class="row between">
+    <h2>Annonces <span class="muted">par prix croissant · <span class="good">en vert</span> : à votre portée</span></h2>
+    <ul class="offers">
+      <% for (const l of it.found.rows) { const own = l.seller_id === it.auth.player.id; const ok = !own && it.v.gold >= l.price %>
+        <li class="offer row between <%= ok ? 'ok' : own ? '' : 'ko' %>">
           <span>
-            <b><%= l.name %></b><%= l.qty > 1 ? ' × ' + l.qty : '' %>
-            <span class="muted">— <%= FAM[l.family] ?? l.family %>, palier <%= l.tier %><%= l.level ? ', niveau ' + l.level : '' %><%= l.roll ? ', ' + it.L.quality(l.roll) : '' %><%= l.stats ? ' : ' + l.stats.map(it.L.statText).join(', ') : '' %> · par <%= l.seller %></span>
+            <span class="title"><%= l.name %></span><%= l.qty > 1 ? ' × ' + l.qty : '' %>
+            <span class="meta">— <%= FAM[l.family] ?? l.family %>, palier <%= l.tier %><%= l.level ? ', niveau ' + l.level : '' %><%= l.roll ? ', ' + it.L.quality(l.roll) : '' %><%= l.stats ? ' : ' + l.stats.map(it.L.statText).join(', ') : '' %> · par <%= l.seller %></span>
             <a href="/boutique/historique/<%= l.item %>" class="muted">historique</a>
             <% if (!own) { %><a href="/signaler?kind=listing&amp;ref=<%= l.id %>" class="muted">signaler</a><% } %>
           </span>
           <span class="actions">
-            <b><%= l.price %> or</b><%= l.qty > 1 ? ' (' + Math.round(l.price / l.qty) + ' l’unité)' : '' %>
+            <span class="price coin <%= own ? '' : ok ? 'ok' : 'ko' %>"><%= l.price %> or</span><span class="meta"><%= l.qty > 1 ? ' (' + Math.round(l.price / l.qty) + ' l’unité)' : '' %></span>
             <% if (!own) { %>
-              <form method="post" action="/boutique/<%= l.id %>/acheter" class="inline"><input type="hidden" name="_csrf" value="<%= it.csrf %>"><button type="submit" class="primary"<%= it.v.gold < l.price ? ' disabled' : '' %>>Acheter</button></form>
+              <form method="post" action="/boutique/<%= l.id %>/acheter" class="inline"><input type="hidden" name="_csrf" value="<%= it.csrf %>"><button type="submit" class="buy"<%= ok ? '' : ' disabled' %>>Acheter</button></form>
             <% } else { %><span class="muted">votre annonce</span><% } %>
           </span>
         </li>

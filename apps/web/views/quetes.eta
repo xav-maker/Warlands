@@ -1,31 +1,32 @@
-<% layout('./layout', { title: 'Quêtes' }) %>
+<% layout('./layout', { title: 'Quêtes', v: it.v, error: it.error }) %>
 <% const qv = it.qv; const regions = [...new Set(qv.quests.map((x) => x.region))] %>
 <% const order = it.here ? [it.here, ...regions.filter((r) => r !== it.here)] : regions %>
 <% const reward = (rw) => rw.kind === 'equip' ? it.L.item(rw.base) + ' (qualité ' + it.L.quality(rw.roll) + ')' : rw.kind === 'troop' ? it.L.troop(rw.type) + ' niveau ' + rw.level : rw.items.map(([i, k]) => it.L.item(i) + ' × ' + k).join(', ') %>
 <section>
   <h1>Quêtes</h1>
   <p class="muted">Chaque ville propose 5 quêtes : rapporter des trophées de monstres rares (ils apparaissent une fois 10 victoires remportées), ou, près d’une route à donjon, le trophée d’un de ses boss. Une quête se rend dans sa ville ; renoncer coûte 10 or × palier de la ville.</p>
-  <% for (const rid of order) { const R = it.L.region(rid); const list = qv.quests.filter((x) => x.region === rid) %>
-    <div class="card">
-      <h2><%= R.city.name %><%= rid === it.here ? ' (vous y êtes)' : '' %></h2>
-      <ul class="items">
+  <% for (const [n, rid] of order.entries()) { const R = it.L.region(rid); const list = qv.quests.filter((x) => x.region === rid); const ready = list.filter(({ q }) => q.needs.every(([t, k]) => (qv.owned.get(t) ?? 0) >= k)).length %>
+    <details class="card fold"<%~ n === 0 || ready ? ' open' : '' %>>
+      <summary><h2><%= R.city.name %><%= rid === it.here ? ' (vous y êtes)' : '' %> <span class="count"><%= ready ? ready + ' prête' + (ready > 1 ? 's' : '') + ' à rendre' : '' %></span></h2></summary>
+      <ul class="offers">
         <% for (const { id, q } of list) { const ok = q.needs.every(([t, k]) => (qv.owned.get(t) ?? 0) >= k) %>
-          <li>
+          <li class="offer <%= ok ? 'ok' : '' %>">
             <div class="row between">
-              <span><b><%= q.title %></b> <span class="muted">— <%= q.giver %></span></span>
+              <span><span class="title"><%= q.title %></span> <span class="meta">— <%= q.giver %></span><% if (ok) { %> <span class="status ok"><%= rid === it.here ? 'à rendre' : 'prête : à rendre à ' + R.city.name %></span><% } %></span>
               <% if (rid === it.here) { %>
                 <span class="actions">
-                  <form method="post" action="/quetes/<%= id %>/rendre" class="inline"><input type="hidden" name="_csrf" value="<%= it.csrf %>"><button type="submit" class="primary"<%= ok ? '' : ' disabled' %>>Rendre</button></form>
+                  <form method="post" action="/quetes/<%= id %>/rendre" class="inline"><input type="hidden" name="_csrf" value="<%= it.csrf %>"><button type="submit" class="buy"<%= ok ? '' : ' disabled' %>>Rendre</button></form>
                   <form method="post" action="/quetes/<%= id %>/renoncer" class="inline"><input type="hidden" name="_csrf" value="<%= it.csrf %>"><button type="submit">Renoncer (<%= 10 * R.tier %> or)</button></form>
                 </span>
               <% } %>
             </div>
             <p class="muted"><%= q.text %></p>
-            <p>Demande : <%= q.needs.map(([t, k]) => it.L.item(t) + ' ' + (qv.owned.get(t) ?? 0) + '/' + k).join(', ') %> · Récompense : <b><%= q.gold %> or</b> et <%= reward(q.reward) %></p>
+            <%~ include('./partials/cost', { gold: 0, have: 0, ingredients: q.needs, owned: qv.owned, L: it.L }) %>
+            <p class="meta">Récompense : <b class="coin"><%= q.gold %> or</b> et <b><%= reward(q.reward) %></b></p>
           </li>
         <% } %>
       </ul>
-    </div>
+    </details>
   <% } %>
   <p><a href="/jeu">Retour</a></p>
 </section>

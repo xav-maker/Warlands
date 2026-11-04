@@ -33,7 +33,7 @@ export default defineConfig({
       SMTP_PORT: '1025',
       MAIL_FROM: 'Les Cinq Régions <noreply@example.com>',
       LOG_LEVEL: 'warn',
-      // Outils de test : escouade de niveau 30 (page Compte), porte de donjon (page de route).
+      // Outil de test : porte de donjon (page de route).
       ENABLE_TEST_TOOLS: 'true',
     },
   },

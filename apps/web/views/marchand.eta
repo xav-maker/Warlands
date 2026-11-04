@@ -1,20 +1,26 @@
-<% layout('./layout', { title: 'Marchand' }) %>
+<% layout('./layout', { title: 'Marchand', v: it.v, error: it.error }) %>
+<% const offers = it.R.city.shop.map((id) => ({ id, price: it.L.buyPrice(id), ok: it.v.gold >= it.L.buyPrice(id) })) %>
 <section>
   <p class="eyebrow"><%= it.R.city.name %></p>
   <h1>Marchand</h1>
   <p class="muted">Ce que vous achetez arrive en banque. L’équipement du marchand est de qualité « médiocre ». Il rachète tout à 20 % de la valeur.</p>
   <div class="grid">
     <div class="card">
-      <h2>À vendre</h2>
-      <ul class="items">
-        <% for (const id of it.R.city.shop) { %>
-          <li class="row between">
-            <span><%= it.L.item(id) %> <span class="muted">— <%= it.L.buyPrice(id) %> or</span></span>
-            <form method="post" action="/marchand/acheter" class="inline">
-              <input type="hidden" name="_csrf" value="<%= it.csrf %>">
-              <input type="hidden" name="id" value="<%= id %>">
-              <button type="submit"<%= it.v.gold < it.L.buyPrice(id) ? ' disabled' : '' %>>Acheter</button>
-            </form>
+      <h2>À vendre <span class="count"><%= offers.filter((x) => x.ok).length %> à votre portée</span></h2>
+      <ul class="offers">
+        <% for (const { id, price, ok } of offers) { %>
+          <li class="offer <%= ok ? 'ok' : 'ko' %>">
+            <div class="row">
+              <span class="title"><%= it.L.item(id) %></span>
+              <span class="actions">
+                <span class="price coin <%= ok ? 'ok' : 'ko' %>"><%= price %> or</span>
+                <form method="post" action="/marchand/acheter" class="inline">
+                  <input type="hidden" name="_csrf" value="<%= it.csrf %>">
+                  <input type="hidden" name="id" value="<%= id %>">
+                  <button type="submit" class="buy"<%= ok ? '' : ' disabled' %>>Acheter</button>
+                </form>
+              </span>
+            </div>
           </li>
         <% } %>
       </ul>
