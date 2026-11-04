@@ -29,6 +29,7 @@
             <b><%= l.name %></b><%= l.qty > 1 ? ' × ' + l.qty : '' %>
             <span class="muted">— <%= FAM[l.family] ?? l.family %>, palier <%= l.tier %><%= l.level ? ', niveau ' + l.level : '' %><%= l.roll ? ', ' + it.L.quality(l.roll) : '' %><%= l.stats ? ' : ' + l.stats.map(it.L.statText).join(', ') : '' %> · par <%= l.seller %></span>
             <a href="/boutique/historique/<%= l.item %>" class="muted">historique</a>
+            <% if (!own) { %><a href="/signaler?kind=listing&amp;ref=<%= l.id %>" class="muted">signaler</a><% } %>
           </span>
           <span class="actions">
             <b><%= l.price %> or</b><%= l.qty > 1 ? ' (' + Math.round(l.price / l.qty) + ' l’unité)' : '' %>

@@ -14,6 +14,7 @@
     "@types/pg": "^8.23.1"
   },
   "scripts": {
-    "migrate": "tsx --env-file-if-exists=../../.env src/migrate.ts"
+    "migrate": "tsx --env-file-if-exists=../../.env src/migrate.ts",
+    "grant-role": "tsx --env-file-if-exists=../../.env src/grant-role.ts"
   }
 }

@@ -1,0 +1,50 @@
+<% layout('./layout', { title: it.title, v: it.v, error: it.error, script: '/static/social.js' }) %>
+<%~ include('./partials/social-tabs', { tab: 'messages' }) %>
+<section>
+  <h1>Messages privés</h1>
+  <div class="grid">
+    <div class="card">
+      <h2>Conversations</h2>
+      <form method="get" action="/messages" class="row">
+        <label class="grow">Écrire à <input type="text" name="avec" maxlength="40" placeholder="pseudo" autocomplete="off"></label>
+        <button type="submit">Ouvrir</button>
+      </form>
+      <ul class="items">
+        <% for (const c of it.list) { %>
+          <li class="row between">
+            <span><a href="/messages/<%= encodeURIComponent(c.pseudo) %>"><b><%= c.pseudo %></b></a><br><span class="muted"><%= c.fromMe ? 'vous : ' : '' %><%= c.text.length > 60 ? c.text.slice(0, 60) + '…' : c.text %></span></span>
+            <% if (c.unread) { %><span class="badge" title="Messages non lus"><%= c.unread %></span><% } %>
+          </li>
+        <% } %>
+        <% if (!it.list.length) { %><li class="muted">Aucune conversation.</li><% } %>
+      </ul>
+    </div>
+
+    <% if (it.with) { %>
+      <div class="card">
+        <h2><%= it.with.pseudo %></h2>
+        <p class="muted row">
+          <a href="/signaler?kind=player&amp;pseudo=<%= encodeURIComponent(it.with.pseudo) %>">Signaler ce joueur</a>
+          <% if (!it.blocked) { %>
+            <form method="post" action="/bloquer" class="inline">
+              <input type="hidden" name="_csrf" value="<%= it.csrf %>">
+              <input type="hidden" name="pseudo" value="<%= it.with.pseudo %>">
+              <input type="hidden" name="back" value="/messages">
+              <button type="submit" class="link">Bloquer</button>
+            </form>
+          <% } %>
+        </p>
+        <% if (it.blocked) { %>
+          <p class="flash">Vous avez bloqué ce joueur : sa conversation est masquée. <a href="/amis">Gérer les joueurs bloqués</a></p>
+        <% } else { %>
+          <ul id="thread" class="chat" data-with="<%= it.with.pseudo %>" aria-live="polite" aria-label="Conversation avec <%= it.with.pseudo %>"><%~ include('./partials/dm-log', { lines: it.lines, other: it.with }) %></ul>
+          <form id="dm-form" method="post" action="/messages/envoyer" hx-post="/messages/envoyer" hx-swap="none" class="row chat-form">
+            <input type="hidden" name="to" value="<%= it.with.pseudo %>">
+            <label class="grow">Message <input type="text" name="text" maxlength="300" required autocomplete="off" autofocus></label>
+            <button type="submit" class="primary">Envoyer</button>
+          </form>
+        <% } %>
+      </div>
+    <% } %>
+  </div>
+</section>

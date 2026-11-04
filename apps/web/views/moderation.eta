@@ -1,0 +1,26 @@
+<% layout('./layout', { title: 'Modération', v: it.v, error: it.error }) %>
+<section>
+  <p class="eyebrow">Modération · <%= it.role === 'admin' ? 'administrateur' : 'modérateur' %></p>
+  <h1>Signalements</h1>
+  <nav class="tabs" aria-label="Modération">
+    <a href="/moderation"<%~ !it.closed ? ' aria-current="page"' : '' %>>À traiter</a>
+    <a href="/moderation?etat=traites"<%~ it.closed ? ' aria-current="page"' : '' %>>Traités</a>
+    <a href="/moderation/journal">Journal d’administration</a>
+  </nav>
+  <div class="card">
+    <ul class="items">
+      <% for (const r of it.list) { %>
+        <li class="row between">
+          <span>
+            <a href="/moderation/signalement/<%= r.id %>"><b>#<%= r.id %> · <%= r.target %></b></a>
+            <span class="muted">— <%= it.REASON[r.reason] %>, <%= r.kind === 'chat' ? 'message du chat' : r.kind === 'dm' ? 'message privé' : r.kind === 'listing' ? 'annonce' : 'profil' %>, par <%= r.author %>, <%= r.createdAt.toLocaleString('fr-FR', { timeZone: 'Europe/Paris' }) %></span>
+            <% if (r.content) { %><br><span class="quote-inline">« <%= r.content.length > 120 ? r.content.slice(0, 120) + '…' : r.content %> »</span><% } %>
+            <% if (r.status === 'closed') { %><br><span class="muted">Décision (<%= r.handledBy ?? 'système' %>) : <%= r.decision %></span><% } %>
+          </span>
+          <% if (r.status === 'open' && r.openOnTarget > 1) { %><span class="badge" title="Signalements ouverts sur ce joueur"><%= r.openOnTarget %></span><% } %>
+        </li>
+      <% } %>
+      <% if (!it.list.length) { %><li class="muted"><%= it.closed ? 'Aucun signalement traité.' : 'Rien à traiter.' %></li><% } %>
+    </ul>
+  </div>
+</section>

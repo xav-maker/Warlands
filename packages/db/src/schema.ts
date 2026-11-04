@@ -289,6 +289,85 @@ export interface TroopOwnershipTable {
   to_at: Date | null;
 }
 
+export interface ChatMessageTable {
+  id: Generated<number>;
+  region: string;
+  author_id: number;
+  body: string;
+  filtered: ColumnType<number, number | undefined, number>;
+  deleted_at: ColumnType<Date | null, Date | null | undefined, Date | null>;
+  deleted_by: ColumnType<number | null, number | null | undefined, number | null>;
+  created_at: CreatedAt;
+}
+
+export interface DirectMessageTable {
+  id: Generated<number>;
+  sender_id: number;
+  recipient_id: number;
+  body: string;
+  read_at: ColumnType<Date | null, Date | null | undefined, Date | null>;
+  created_at: CreatedAt;
+}
+
+export type FriendshipStatus = 'pending_a' | 'pending_b' | 'accepted';
+
+/** Un couple par ligne, `a_id < b_id` ; `pending_a` = demande envoyée par a, en attente de b. */
+export interface FriendshipTable {
+  a_id: number;
+  b_id: number;
+  status: ColumnType<FriendshipStatus, FriendshipStatus, FriendshipStatus>;
+  created_at: CreatedAt;
+}
+
+export interface BlockTable {
+  blocker_id: number;
+  blocked_id: number;
+  created_at: CreatedAt;
+}
+
+export type ReportKind = 'chat' | 'dm' | 'player' | 'listing';
+export type ReportReason = 'insulte' | 'spam' | 'triche' | 'illicite' | 'autre';
+
+export interface ReportTable {
+  id: Generated<number>;
+  author_id: number;
+  target_id: number;
+  kind: ReportKind;
+  ref_id: number | null;
+  content: string;
+  reason: ReportReason;
+  comment: string;
+  status: ColumnType<'open' | 'closed', 'open' | 'closed' | undefined, 'open' | 'closed'>;
+  handled_by: ColumnType<number | null, number | null | undefined, number | null>;
+  decision: ColumnType<string | null, string | null | undefined, string | null>;
+  handled_at: ColumnType<Date | null, Date | null | undefined, Date | null>;
+  created_at: CreatedAt;
+}
+
+export type SanctionKind = 'mute' | 'shop_ban' | 'suspend' | 'ban';
+
+export interface SanctionTable {
+  id: Generated<number>;
+  player_id: number;
+  kind: SanctionKind;
+  reason: string;
+  from_at: ColumnType<Date, Date | undefined, never>;
+  until_at: Date | null;
+  author_id: number | null;
+  report_id: number | null;
+  revoked_at: ColumnType<Date | null, Date | null | undefined, Date | null>;
+  revoked_by: ColumnType<number | null, number | null | undefined, number | null>;
+}
+
+export interface AdminActionTable {
+  id: Generated<number>;
+  actor_id: number | null;
+  action: string;
+  target_id: number | null;
+  data: ColumnType<unknown, string | undefined, string>;
+  created_at: CreatedAt;
+}
+
 export interface IdempotencyKeyTable {
   player_id: number;
   key: string;
@@ -322,6 +401,13 @@ export interface Database {
   shop_sale: ShopSaleTable;
   notification: NotificationTable;
   troop_ownership: TroopOwnershipTable;
+  chat_message: ChatMessageTable;
+  direct_message: DirectMessageTable;
+  friendship: FriendshipTable;
+  block: BlockTable;
+  report: ReportTable;
+  sanction: SanctionTable;
+  admin_action: AdminActionTable;
 }
 
 export type Account = Selectable<AccountTable>;

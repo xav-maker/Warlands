@@ -1,0 +1,12 @@
+<% layout('./layout', { title: 'Amis', v: it.v, error: it.error, script: '/static/social.js' }) %>
+<%~ include('./partials/social-tabs', { tab: 'amis' }) %>
+<section>
+  <h1>Amis</h1>
+  <p class="muted">Vos amis voient quand vous êtes en ligne (vu depuis moins de 2 minutes) et dans quelle région vous êtes ; ils pourront aussi vous inviter en donjon. Bloquer un joueur retire l’amitié et lui ferme vos messages.</p>
+  <form method="post" action="/amis/demander" class="card row">
+    <input type="hidden" name="_csrf" value="<%= it.csrf %>">
+    <label class="grow">Demander en ami <input type="text" name="pseudo" maxlength="40" placeholder="pseudo" required autocomplete="off"></label>
+    <button type="submit">Envoyer la demande</button>
+  </form>
+  <div id="friends-lists"><%~ include('./partials/friends-lists', { f: it.f, csrf: it.csrf, regionName: it.regionName }) %></div>
+</section>

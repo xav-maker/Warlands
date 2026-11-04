@@ -65,6 +65,22 @@ export const ERROR_CODES = [
   'LISTING_GONE',
   'LISTING_ELSEWHERE',
   'OWN_LISTING',
+  // Social et modération (J6)
+  'MUTED',
+  'SHOP_BANNED',
+  'SOCIAL_REFUSED',
+  'SELF_TARGET',
+  'ALREADY_FRIENDS',
+  'FRIEND_LIMIT',
+  'NO_SUCH_REQUEST',
+  'MESSAGE_NOT_FOUND',
+  'REPORT_DUPLICATE',
+  'REPORT_LIMIT',
+  'REPORT_NOT_FOUND',
+  'NOT_MODERATOR',
+  'NOT_ADMIN',
+  'SANCTION_FORBIDDEN',
+  'SANCTION_NOT_FOUND',
 ] as const;
 
 export type ErrorCode = (typeof ERROR_CODES)[number];

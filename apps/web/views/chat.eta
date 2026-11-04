@@ -1,0 +1,14 @@
+<% layout('./layout', { title: 'Discussion', v: it.v, error: it.error, script: '/static/social.js' }) %>
+<%~ include('./partials/social-tabs', { tab: 'chat' }) %>
+<section>
+  <p class="eyebrow">Discussion</p>
+  <h1><%= it.regionName %></h1>
+  <p class="muted"><%= it.online %> joueur<%= it.online > 1 ? 's' : '' %> en ligne dans la région. 300 caractères au plus, un message par seconde ; les messages sont gardés 7 jours. Un joueur gênant se bloque (ses messages disparaissent pour vous) ou se signale à la modération.</p>
+  <ul id="chat-log" class="chat card" aria-live="polite" aria-label="Fil de la région"><%~ include('./partials/chat-log', { log: it.log, csrf: it.csrf }) %></ul>
+  <form id="chat-form" method="post" action="/chat" hx-post="/chat" hx-swap="none" class="row chat-form">
+    <label class="grow">Message
+      <input type="text" name="text" maxlength="300" required autocomplete="off" autofocus>
+    </label>
+    <button type="submit" class="primary">Envoyer</button>
+  </form>
+</section>

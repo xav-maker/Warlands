@@ -1,0 +1,41 @@
+<% const f = it.f; const csrf = it.csrf %>
+<% const post = (action, label, cls) => '<form method="post" action="' + action + '" class="inline"><input type="hidden" name="_csrf" value="' + csrf + '"><button type="submit"' + (cls ? ' class="' + cls + '"' : '') + '>' + label + '</button></form>' %>
+<% if (f.incoming.length) { %>
+  <div class="card">
+    <h2>Demandes reçues</h2>
+    <ul class="items">
+      <% for (const r of f.incoming) { %>
+        <li class="row between"><b><%= r.pseudo %></b><span class="actions"><%~ post('/amis/' + r.id + '/accepter', 'Accepter', 'primary') %> <%~ post('/amis/' + r.id + '/retirer', 'Refuser') %></span></li>
+      <% } %>
+    </ul>
+  </div>
+<% } %>
+<div class="card">
+  <h2>Amis <span class="muted">(<%= f.friends.length %>)</span></h2>
+  <ul class="items">
+    <% for (const a of f.friends) { %>
+      <li class="row between">
+        <span><span class="<%= a.online ? 'good' : 'muted' %>" title="<%= a.online ? 'En ligne' : 'Hors ligne' %>"><%= a.online ? '●' : '○' %></span> <b><%= a.pseudo %></b>
+          <span class="muted">— <%= a.online ? 'en ligne, ' + it.regionName(a.region) : 'hors ligne' %></span></span>
+        <span class="actions"><a href="/messages/<%= encodeURIComponent(a.pseudo) %>">Écrire</a> <%~ post('/amis/' + a.id + '/retirer', 'Retirer') %></span>
+      </li>
+    <% } %>
+    <% if (!f.friends.length) { %><li class="muted">Pas encore d’ami.</li><% } %>
+  </ul>
+</div>
+<% if (f.outgoing.length) { %>
+  <div class="card">
+    <h2>Demandes envoyées</h2>
+    <ul class="items">
+      <% for (const r of f.outgoing) { %><li class="row between"><b><%= r.pseudo %></b><span class="actions"><%~ post('/amis/' + r.id + '/retirer', 'Annuler') %></span></li><% } %>
+    </ul>
+  </div>
+<% } %>
+<% if (f.blocked.length) { %>
+  <div class="card">
+    <h2>Joueurs bloqués</h2>
+    <ul class="items">
+      <% for (const r of f.blocked) { %><li class="row between"><b><%= r.pseudo %></b><span class="actions"><%~ post('/debloquer/' + r.id, 'Débloquer') %></span></li><% } %>
+    </ul>
+  </div>
+<% } %>

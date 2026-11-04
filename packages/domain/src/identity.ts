@@ -4,6 +4,7 @@ import { z } from 'zod';
 import { GameError } from '@cr/shared';
 import type { Account, Db, Player, Session } from '@cr/db';
 import type { Mailer } from './mailer.ts';
+import { liftExpiredSuspensions } from './social/sanctions.ts';
 
 /** Région de départ : Havre-Gris (README 8.1), identifiant du contenu. */
 export const START_REGION = 'ronces';
@@ -206,6 +207,8 @@ export async function login(db: Db, raw: unknown, meta: { ip?: string | undefine
   dummyHash ??= hash('mot de passe factice', ARGON);
   const ok = await verify(acc?.password_hash ?? (await dummyHash), parsed.data.password);
   if (!acc || !ok) throw new GameError('BAD_CREDENTIALS');
+  // Une suspension arrivée à son terme se lève à la connexion, sans attendre la tâche du worker.
+  if (acc.status === 'suspended' && (await liftExpiredSuspensions(db, acc.id)) === 1) acc.status = 'active';
   if (acc.status !== 'active') throw new GameError('ACCOUNT_SUSPENDED');
   return createSession(db, acc.id, meta);
 }

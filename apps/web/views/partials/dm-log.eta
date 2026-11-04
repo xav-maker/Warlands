@@ -1,0 +1,8 @@
+<% for (const m of it.lines) { %>
+<li class="chat-line<%= m.mine ? ' mine' : '' %>" id="d<%= m.id %>">
+  <time class="muted" datetime="<%= m.at.toISOString() %>"><%= m.at.toLocaleString('fr-FR', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit', timeZone: 'Europe/Paris' }) %></time>
+  <b><%= m.mine ? 'Vous' : it.other.pseudo %></b> <span class="chat-text"><%= m.text %></span>
+  <% if (!m.mine) { %><span class="chat-tools muted"><a href="/signaler?kind=dm&amp;ref=<%= m.id %>">signaler</a></span><% } %>
+</li>
+<% } %>
+<% if (!it.lines.length) { %><li class="muted">Aucun message pour l’instant.</li><% } %>

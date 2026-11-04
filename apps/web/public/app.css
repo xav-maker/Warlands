@@ -394,3 +394,70 @@ button.danger {
   border-color: var(--bad);
   color: var(--bad);
 }
+
+/* Bulles de notification en temps réel (J6) */
+#toasts {
+  position: fixed;
+  right: 1rem;
+  bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  max-width: min(22rem, calc(100vw - 2rem));
+  z-index: 50;
+}
+.toast {
+  margin: 0;
+  padding: 0.6rem 0.9rem;
+  border: 1px solid var(--a);
+  border-radius: 6px;
+  background: var(--surface);
+  color: var(--ink);
+  text-decoration: none;
+  box-shadow: 0 4px 14px rgb(0 0 0 / 25%);
+}
+
+/* Discussion (J6) */
+.chat {
+  list-style: none;
+  margin: 0.75rem 0;
+  padding: 0.5rem 0.75rem;
+  max-height: 22rem;
+  overflow-y: auto;
+}
+.chat-line {
+  padding: 0.2rem 0;
+  overflow-wrap: anywhere;
+}
+.chat-line.mine b {
+  color: var(--a);
+}
+.chat-tools {
+  margin-left: 0.5rem;
+  font-size: 0.85em;
+}
+.chat-tools form {
+  display: inline;
+}
+.chat-form {
+  align-items: flex-end;
+}
+.grow {
+  flex: 1;
+}
+.grow input {
+  width: 100%;
+}
+.quote {
+  margin: 0.5rem 0;
+  padding: 0.5rem 0.75rem;
+  border-left: 3px solid var(--line);
+  background: var(--sunk);
+  overflow-wrap: anywhere;
+}
+.quote-inline {
+  font-style: italic;
+}
+.good {
+  color: var(--good);
+}

@@ -1,7 +1,7 @@
 import { PgBoss } from 'pg-boss';
 import pino from 'pino';
 import { createDb } from '@cr/db';
-import { expireListings, purgeExpiredSessions } from '@cr/domain';
+import { expireListings, liftExpiredSuspensions, purgeExpiredSessions, purgeSocial } from '@cr/domain';
 
 const log = pino({ level: process.env.LOG_LEVEL ?? 'info', base: { role: 'worker' } });
 const url = process.env.DATABASE_URL;
@@ -17,6 +17,10 @@ const JOBS: Record<string, { cron: string; run: () => Promise<unknown> }> = {
   'purge-sessions': { cron: '17 * * * *', run: () => purgeExpiredSessions(db) },
   // Annonces de boutique arrivées à 7 jours : le bien retourne au vendeur (guide 11.1).
   'expire-listings': { cron: '*/5 * * * *', run: () => expireListings(db) },
+  // Rétention du social (README 25) : chat de région 7 jours, messages privés 90 jours.
+  'purge-social': { cron: '37 * * * *', run: () => purgeSocial(db) },
+  // Suspensions arrivées à leur terme : le compte redevient actif (aussi levées à la connexion).
+  'lift-suspensions': { cron: '* * * * *', run: () => liftExpiredSuspensions(db) },
 };
 
 for (const [name, job] of Object.entries(JOBS)) {

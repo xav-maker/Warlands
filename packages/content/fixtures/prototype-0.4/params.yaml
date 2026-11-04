@@ -83,3 +83,7 @@ online:
   stack: { materiau: 50, composant: 20, consommable: 10, trophee: 20 }
   # Blocage de rediffusion : durée du combat lue à cette vitesse (README 10.2, point ouvert 2) [H].
   watch: { instantsPerSecond: 100 }
+  # Chat et messages privés (README 25 [H]).
+  chat:
+    maxLength: 300
+    bannedWords: [connard, connasse, salope, enculé, pute, fdp, ntm, nazi, pédé, batard]

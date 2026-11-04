@@ -10,6 +10,7 @@
   <% if (it.css) { %><link rel="stylesheet" href="<%= it.css %>"><% } %>
   <% if (it.script) { %><script src="<%= it.script %>" defer></script><% } %>
   <script src="/static/htmx.min.js" defer></script>
+  <% if (it.auth) { %><script src="/static/events.js" defer></script><% } %>
 </head>
 <body hx-headers='<%= JSON.stringify({ "x-csrf-token": it.csrf }) %>'>
   <header class="top">
@@ -20,6 +21,8 @@
           <a href="/jeu">Jouer</a>
           <a href="/sac">Sac</a>
           <a href="/codex">Codex</a>
+          <a href="/chat">Discussion</a>
+          <% if (it.auth.account.role !== 'player') { %><a href="/moderation">Modération</a><% } %>
           <a href="/compte">Compte</a>
           <% if (it.v && it.v.unread) { %><a href="/notifications" class="badge" title="Notifications non lues">✉ <%= it.v.unread %></a><% } %>
           <% if (it.v) { %><span class="gold" title="Or"><%= it.v.gold %> or</span><% } %>
@@ -39,5 +42,6 @@
     <div id="flash" aria-live="polite"><% if (it.error) { %><p class="flash bad" role="alert"><%= it.error %></p><% } %></div>
     <%~ it.body %>
   </main>
+  <div id="toasts" aria-live="polite" aria-atomic="false"></div>
 </body>
 </html>

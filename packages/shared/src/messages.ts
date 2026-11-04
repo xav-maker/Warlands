@@ -59,6 +59,21 @@ const FR: Record<ErrorCode, string> = {
   LISTING_GONE: 'Cette annonce n’est plus en vente.',
   LISTING_ELSEWHERE: 'Cette annonce est à la boutique de {ville}.',
   OWN_LISTING: 'Vous ne pouvez pas acheter votre propre annonce.',
+  MUTED: 'Vous êtes réduit au silence {fin}.',
+  SHOP_BANNED: 'Vous n’avez plus accès à la mise en vente {fin}.',
+  SOCIAL_REFUSED: 'Ce joueur n’accepte pas vos messages ni vos demandes.',
+  SELF_TARGET: 'Cette action ne peut pas viser votre propre personnage.',
+  ALREADY_FRIENDS: 'Vous êtes déjà amis.',
+  FRIEND_LIMIT: 'Liste d’amis pleine ({max} au plus).',
+  NO_SUCH_REQUEST: 'Aucune demande d’amitié de ce joueur.',
+  MESSAGE_NOT_FOUND: 'Message introuvable.',
+  REPORT_DUPLICATE: 'Vous avez déjà signalé ce contenu.',
+  REPORT_LIMIT: 'Trop de signalements aujourd’hui.',
+  REPORT_NOT_FOUND: 'Signalement introuvable.',
+  NOT_MODERATOR: 'Réservé à la modération.',
+  NOT_ADMIN: 'Réservé aux administrateurs.',
+  SANCTION_FORBIDDEN: 'Vous ne pouvez pas appliquer cette sanction à ce joueur.',
+  SANCTION_NOT_FOUND: 'Sanction introuvable.',
 };
 
 export function messageFr(code: ErrorCode, details?: Record<string, string | number>): string {

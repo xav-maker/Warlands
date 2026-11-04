@@ -1,0 +1,19 @@
+<% for (const m of it.log) { %>
+<li class="chat-line<%= m.mine ? ' mine' : '' %>" id="m<%= m.id %>">
+  <time class="muted" datetime="<%= m.at.toISOString() %>"><%= m.at.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit', timeZone: 'Europe/Paris' }) %></time>
+  <b><%= m.pseudo %></b> <span class="chat-text"><%= m.text %></span>
+  <% if (!m.mine) { %>
+    <span class="chat-tools muted">
+      <a href="/messages/<%= encodeURIComponent(m.pseudo) %>">écrire</a> ·
+      <a href="/signaler?kind=chat&amp;ref=<%= m.id %>">signaler</a> ·
+      <form method="post" action="/bloquer" class="inline">
+        <input type="hidden" name="_csrf" value="<%= it.csrf %>">
+        <input type="hidden" name="pseudo" value="<%= m.pseudo %>">
+        <input type="hidden" name="back" value="/chat">
+        <button type="submit" class="link">bloquer</button>
+      </form>
+    </span>
+  <% } %>
+</li>
+<% } %>
+<% if (!it.log.length) { %><li class="muted">Personne n’a encore parlé ici.</li><% } %>

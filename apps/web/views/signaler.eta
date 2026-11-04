@@ -1,0 +1,29 @@
+<% layout('./layout', { title: 'Signaler', v: it.v, error: it.error }) %>
+<section>
+  <h1>Signaler</h1>
+  <% if (it.done) { %>
+    <p class="flash" role="status">Merci : votre signalement a été transmis à la modération. Vous serez informé de la décision dans vos notifications.</p>
+    <p><a href="/chat">Retour à la discussion</a></p>
+  <% } else { %>
+    <p class="muted">Un signalement garde une copie du contenu visé et n’est lu que par la modération. Le joueur signalé n’en est pas informé.</p>
+    <form method="post" action="/signaler" class="card">
+      <input type="hidden" name="_csrf" value="<%= it.csrf %>">
+      <input type="hidden" name="kind" value="<%= it.kind %>">
+      <input type="hidden" name="ref" value="<%= it.ref %>">
+      <% if (it.kind === 'player' && !it.target) { %>
+        <label>Pseudo du joueur <input type="text" name="pseudo" maxlength="40" required autocomplete="off"></label>
+      <% } else { %>
+        <input type="hidden" name="pseudo" value="<%= it.kind === 'player' ? it.target : '' %>">
+        <p>Joueur : <b><%= it.target || 'introuvable' %></b></p>
+        <% if (it.content) { %><blockquote class="quote"><%= it.content %></blockquote><% } %>
+      <% } %>
+      <label>Motif
+        <select name="reason" required>
+          <% for (const [k, l] of it.reasons) { %><option value="<%= k %>"><%= l %></option><% } %>
+        </select>
+      </label>
+      <label>Précisions (facultatif) <textarea name="comment" maxlength="500" rows="3"></textarea></label>
+      <button type="submit" class="primary">Envoyer le signalement</button>
+    </form>
+  <% } %>
+</section>

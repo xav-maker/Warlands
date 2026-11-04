@@ -1,0 +1,86 @@
+<% layout('./layout', { title: it.title, v: it.v, error: it.error }) %>
+<% const f = it.file; const r = it.report; const here = r ? '/moderation/signalement/' + r.id : '/moderation/joueur/' + f.id %>
+<section>
+  <p class="eyebrow"><a href="/moderation">Modération</a> · dossier</p>
+  <h1><%= f.pseudo %></h1>
+  <p class="muted">
+    <%= f.role === 'player' ? 'joueur' : f.role %> · compte <%= f.status %> · inscrit le <%= f.createdAt.toLocaleDateString('fr-FR') %> ·
+    dernière activité <%= f.lastSeenAt ? f.lastSeenAt.toLocaleString('fr-FR', { timeZone: 'Europe/Paris' }) : 'inconnue' %> ·
+    <%= f.reportsAgainst %> signalement<%= f.reportsAgainst > 1 ? 's' : '' %> reçu<%= f.reportsAgainst > 1 ? 's' : '' %> ·
+    <%= f.filteredDay %> mot<%= f.filteredDay > 1 ? 's' : '' %> masqué<%= f.filteredDay > 1 ? 's' : '' %> en 24 h
+  </p>
+
+  <% if (r) { %>
+    <div class="card">
+      <h2>Signalement #<%= r.id %> <span class="muted">— <%= r.status === 'open' ? 'à traiter' : 'traité' %></span></h2>
+      <p>Par <b><%= r.author %></b> : <%= it.REASON[r.reason] %><%= r.comment ? ' — « ' + r.comment + ' »' : '' %></p>
+      <% if (r.content) { %><blockquote class="quote"><%= r.content %></blockquote><% } %>
+      <% if (r.status === 'closed') { %>
+        <p class="muted">Décision de <%= r.handledBy ?? 'système' %> : <%= r.decision %></p>
+      <% } else { %>
+        <form method="post" action="/moderation/cloturer" class="row">
+          <input type="hidden" name="_csrf" value="<%= it.csrf %>">
+          <input type="hidden" name="report" value="<%= r.id %>">
+          <input type="hidden" name="back" value="<%= here %>">
+          <label class="grow">Classer sans sanction (décision motivée, communiquée à l’auteur) <input type="text" name="decision" minlength="3" maxlength="500" required placeholder="Aucun manquement constaté."></label>
+          <button type="submit">Classer</button>
+        </form>
+      <% } %>
+    </div>
+  <% } %>
+
+  <div class="grid">
+    <div class="card">
+      <h2>Sanctions en vigueur</h2>
+      <ul class="items">
+        <% for (const s of f.active) { %>
+          <li class="row between">
+            <span><b><%= it.KIND[s.kind] %></b> <%= it.untilText(s.until_at) %> <span class="muted">— <%= s.reason %></span></span>
+            <form method="post" action="/moderation/lever" class="inline"><input type="hidden" name="_csrf" value="<%= it.csrf %>"><input type="hidden" name="sanction" value="<%= s.id %>"><input type="hidden" name="back" value="<%= here %>"><button type="submit">Lever</button></form>
+          </li>
+        <% } %>
+        <% if (!f.active.length) { %><li class="muted">Aucune.</li><% } %>
+      </ul>
+
+      <h2>Sanctionner</h2>
+      <form method="post" action="/moderation/sanction">
+        <input type="hidden" name="_csrf" value="<%= it.csrf %>">
+        <input type="hidden" name="player" value="<%= f.id %>">
+        <input type="hidden" name="back" value="<%= here %>">
+        <% if (r && r.status === 'open') { %><input type="hidden" name="report" value="<%= r.id %>"><% } %>
+        <label>Sanction
+          <select name="kind">
+            <option value="mute">Sourdine (chat et messages privés)</option>
+            <option value="shop_ban">Interdiction de boutique</option>
+            <option value="suspend">Suspension du compte</option>
+            <% if (it.role === 'admin') { %><option value="ban">Bannissement</option><% } %>
+          </select>
+        </label>
+        <label>Durée en heures <input type="number" name="hours" min="1" max="8760" placeholder="<%= it.role === 'admin' ? 'vide = sans fin' : '720 au plus (168 pour une suspension)' %>"<%~ it.role === 'admin' ? '' : ' required' %>></label>
+        <label>Motif (communiqué au joueur) <textarea name="reason" minlength="3" maxlength="500" rows="2" required></textarea></label>
+        <button type="submit" class="danger">Appliquer<%= r && r.status === 'open' ? ' et classer le signalement' : '' %></button>
+      </form>
+    </div>
+
+    <div class="card">
+      <h2>Derniers messages dans le chat</h2>
+      <ul class="items">
+        <% for (const m of f.recentChat) { %>
+          <li class="row between<%= m.deleted ? ' muted' : '' %>">
+            <span><span class="muted"><%= m.at.toLocaleString('fr-FR', { timeZone: 'Europe/Paris', day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' }) %> · <%= m.region %></span> <%= m.text %><%= m.deleted ? ' (supprimé)' : '' %></span>
+            <% if (!m.deleted) { %><form method="post" action="/moderation/supprimer-message" class="inline"><input type="hidden" name="_csrf" value="<%= it.csrf %>"><input type="hidden" name="message" value="<%= m.id %>"><input type="hidden" name="back" value="<%= here %>"><button type="submit">Supprimer</button></form><% } %>
+          </li>
+        <% } %>
+        <% if (!f.recentChat.length) { %><li class="muted">Aucun message conservé.</li><% } %>
+      </ul>
+
+      <h2>Historique des sanctions</h2>
+      <ul class="items">
+        <% for (const h of f.history) { %>
+          <li><b><%= it.KIND[h.kind] %></b> <span class="muted">le <%= h.from.toLocaleDateString('fr-FR') %> par <%= h.author ?? 'système' %> — <%= h.reason %><%= h.revoked ? ' (levée)' : '' %></span></li>
+        <% } %>
+        <% if (!f.history.length) { %><li class="muted">Aucune.</li><% } %>
+      </ul>
+    </div>
+  </div>
+</section>

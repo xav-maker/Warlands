@@ -12,6 +12,7 @@
     "db:up": "docker compose -f infra/docker/compose.yaml up -d",
     "db:down": "docker compose -f infra/docker/compose.yaml down",
     "migrate": "pnpm --filter @cr/db migrate",
+    "grant-role": "pnpm --filter @cr/db grant-role",
     "typecheck": "tsc -b && tsc -p tsconfig.test.json && tsc -p packages/ui-combat/tsconfig.json",
     "lint": "eslint .",
     "format": "prettier --write .",

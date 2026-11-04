@@ -10,7 +10,7 @@ import helmet from '@fastify/helmet';
 import fastifyStatic from '@fastify/static';
 import { Eta } from 'eta';
 import { isGameError, messageFr, GameError } from '@cr/shared';
-import { sql, type Db } from '@cr/db';
+import { sql, type Bus, type Db } from '@cr/db';
 import {
   executeCommand,
   getAuth,
@@ -30,7 +30,9 @@ import {
   type RateLimiter,
 } from '@cr/domain';
 import type { z } from 'zod';
+import { registerEvents } from './events.ts';
 import { registerGameRoutes } from './game-routes.ts';
+import { registerSocialRoutes } from './social-routes.ts';
 
 declare module 'fastify' {
   interface FastifyRequest {
@@ -48,6 +50,10 @@ export interface AppDeps {
   version?: string;
   rateLimiter?: RateLimiter;
   publish?: (events: DomainEvent[]) => void;
+  /** Bus temps réel (J6) : publication des événements et flux SSE `/events` ; sans lui, pas de temps réel. */
+  bus?: Bus;
+  /** Intervalle du battement de cœur SSE (25 s ; réduit dans les tests). */
+  heartbeatMs?: number;
   /** Contenu actif ; sans lui, les pages de jeu ne sont pas servies (tests du socle). */
   content?: GameContent;
   /** Outils de test sur la page Compte (ENABLE_TEST_TOOLS, préproduction). */
@@ -72,7 +78,7 @@ export async function buildApp(deps: AppDeps): Promise<FastifyInstance> {
     genReqId: () => randomBytes(8).toString('hex'),
   });
   const limiter = deps.rateLimiter ?? memoryRateLimiter();
-  const publish = deps.publish ?? (() => {});
+  const publish = deps.publish ?? (deps.bus ? (events: DomainEvent[]) => deps.bus!.publish(events) : () => {});
   const SID = deps.cookieSecure ? '__Host-sid' : 'sid';
   const PRE = deps.cookieSecure ? '__Host-csrf' : 'csrf';
   const cookieBase = { path: '/', httpOnly: true, secure: deps.cookieSecure, sameSite: 'lax' as const };
@@ -259,9 +265,20 @@ export async function buildApp(deps: AppDeps): Promise<FastifyInstance> {
     return reply.type('text/html; charset=utf-8').send(eta.render('partials/flash', { text: 'E-mail renvoyé.' }));
   });
 
+  // ---------- Temps réel ----------
+  if (deps.bus)
+    registerEvents(app, {
+      db: deps.db,
+      bus: deps.bus,
+      token: (req) => req.cookies[SID],
+      ...(deps.heartbeatMs ? { heartbeatMs: deps.heartbeatMs } : {}),
+    });
+
   // ---------- Jeu ----------
-  if (deps.content)
+  if (deps.content) {
     registerGameRoutes(app, { db: deps.db, content: deps.content, page, run, requireAuth, testTools: deps.testTools ?? false });
+    registerSocialRoutes(app, { db: deps.db, content: deps.content, page, run, requireAuth });
+  }
 
   app.post('/joueur/donjon-disponible', async (req, reply) => {
     const b = (req.body ?? {}) as Record<string, string>;

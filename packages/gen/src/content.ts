@@ -189,6 +189,7 @@ export interface OnlineRules {
   encounters: { popMult: number; slots: number };
   stack: Record<string, number>;
   watch: { instantsPerSecond: number };
+  chat: { maxLength: number; bannedWords: string[] };
 }
 
 const derived = new WeakMap<GenContent, Route[]>();

@@ -5,6 +5,7 @@ import { migrations } from './migrations/index.ts';
 import type { Database } from './schema.ts';
 
 export * from './schema.ts';
+export * from './bus.ts';
 export type { Transaction } from 'kysely';
 export { sql } from 'kysely';
 

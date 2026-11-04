@@ -21,6 +21,7 @@ import { sellPrice } from './city.ts';
 import { transferGold } from './gold.ts';
 import { addStack, capacity, contents, slotsUsed, takeStack } from './inventory.ts';
 import { loadTroops } from './troops.ts';
+import { assertNotShopBanned } from '../social/sanctions.ts';
 
 type Tx = Transaction<Database>;
 
@@ -107,6 +108,7 @@ export const listGoods = command({
     const c = ctx.content;
     const p = c.pack;
     const pid = ctx.player.id;
+    await assertNotShopBanned(ctx.tx, pid, ctx.now); // sanction `shop_ban` (modération, J6)
     const active = await ctx.tx
       .selectFrom('shop_listing')
       .select((eb) => eb.fn.countAll<number>().as('n'))

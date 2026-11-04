@@ -32,9 +32,14 @@ export default tseslint.config(
   },
   {
     // Code du navigateur (rediffusion des combats).
-    files: ['packages/ui-combat/src/**'],
+    files: ['packages/ui-combat/src/**', 'apps/web/public/**'],
     languageOptions: {
       globals: {
+        EventSource: 'readonly',
+        CustomEvent: 'readonly',
+        setInterval: 'readonly',
+        clearInterval: 'readonly',
+        clearTimeout: 'readonly',
         window: 'readonly',
         document: 'readonly',
         localStorage: 'readonly',

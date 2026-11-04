@@ -1,0 +1,13 @@
+<% layout('./layout', { title: it.title, v: it.v }) %>
+<section>
+  <p class="eyebrow"><a href="/moderation">Modération</a></p>
+  <h1>Journal d’administration</h1>
+  <div class="card">
+    <ul class="items">
+      <% for (const a of it.log) { %>
+        <li><span class="muted"><%= a.created_at.toLocaleString('fr-FR', { timeZone: 'Europe/Paris' }) %></span> <b><%= a.actor ?? 'système' %></b> · <%= a.action %><%= a.target ? ' → ' + a.target : '' %> <span class="muted"><%= JSON.stringify(a.data) %></span></li>
+      <% } %>
+      <% if (!it.log.length) { %><li class="muted">Rien pour l’instant.</li><% } %>
+    </ul>
+  </div>
+</section>

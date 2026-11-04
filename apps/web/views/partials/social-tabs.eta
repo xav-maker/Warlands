@@ -1,0 +1,5 @@
+<nav class="tabs" aria-label="Social">
+  <a href="/chat"<%~ it.tab === 'chat' ? ' aria-current="page"' : '' %>>Région</a>
+  <a href="/messages"<%~ it.tab === 'messages' ? ' aria-current="page"' : '' %>>Messages</a>
+  <a href="/amis"<%~ it.tab === 'amis' ? ' aria-current="page"' : '' %>>Amis</a>
+</nav>
