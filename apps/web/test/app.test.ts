@@ -222,3 +222,50 @@ describe('connexion bloquée après des échecs (guide 13.1)', () => {
     expect(r.body).toContain('Trop de tentatives de connexion : réessayez dans 15 minutes.');
   });
 });
+
+describe('adresse IP du client (guide 13.1)', () => {
+  it('prend l’adresse ajoutée par le proxy de confiance, pas celle qu’envoie le client', async () => {
+    const seen: string[] = [];
+    const m = await buildApp({ db: t.db, mailer, appUrl: APP, cookieSecure: false, logLevel: 'silent', rateLimiter: noRateLimit });
+    m.get('/__ip', (req) => (seen.push(req.ip), ''));
+    try {
+      // Le client se dit 1.2.3.4 ; le répartiteur ajoute la vraie adresse, 198.51.100.20.
+      await m.inject({ url: '/__ip', headers: { 'x-forwarded-for': '1.2.3.4, 198.51.100.20' }, remoteAddress: '10.0.0.1' });
+      expect(seen).toEqual(['198.51.100.20']);
+    } finally {
+      await m.close();
+    }
+  });
+
+  it('lit d’abord l’en-tête du proxy de bord (Cloudflare devant Render) pour les limites par IP', async () => {
+    const { memoryRateLimiter } = await import('@cr/domain');
+    const m = await buildApp({ db: t.db, mailer, appUrl: APP, cookieSecure: false, logLevel: 'silent', rateLimiter: memoryRateLimiter() });
+    try {
+      // Jeton CSRF de pré-session (formulaires anonymes).
+      const form = await m.inject('/inscription');
+      const token = /name="_csrf" value="([^"]+)"/.exec(form.body)![1]!;
+      const cookie = form.cookies.map((c) => `${c.name}=${c.value}`).join('; ');
+      const signup = (ip: string, spoof: string) =>
+        m.inject({
+          method: 'POST',
+          url: '/inscription',
+          headers: {
+            'cf-connecting-ip': ip,
+            'x-forwarded-for': spoof,
+            origin: APP,
+            cookie,
+            'content-type': 'application/x-www-form-urlencoded',
+          },
+          payload: new URLSearchParams({ _csrf: token }).toString(),
+        });
+      // Le même client qui change de X-Forwarded-For reste limité (5 inscriptions par minute et par IP)…
+      const codes = [];
+      for (let i = 0; i < 6; i++) codes.push((await signup('203.0.113.50', `10.0.0.${i}`)).statusCode);
+      expect(codes.at(-1)).toBe(429);
+      // … et un autre client ne l'est pas.
+      expect((await signup('203.0.113.51', '10.0.0.1')).statusCode).not.toBe(429);
+    } finally {
+      await m.close();
+    }
+  });
+});

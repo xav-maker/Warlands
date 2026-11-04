@@ -30,6 +30,10 @@ const Env = z.object({
     .enum(['true', 'false'])
     .default('true')
     .transform((v) => v === 'true'),
+  // Proxys de confiance devant l'application (Render : 1). L'IP du client sert aux limites et au garde-fou des connexions.
+  TRUST_PROXY_HOPS: z.coerce.number().int().min(0).max(5).default(1),
+  // En-tête du proxy de bord qui porte l'IP du client (Render, derrière Cloudflare : cf-connecting-ip). Vide : X-Forwarded-For.
+  CLIENT_IP_HEADER: z.string().default('cf-connecting-ip'),
   // Mode maintenance (guide 17.5) : une page d'attente pour toutes les routes du jeu, pour les opérations exceptionnelles.
   MAINTENANCE: z
     .enum(['true', 'false'])

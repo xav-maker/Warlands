@@ -66,6 +66,18 @@ export interface AppDeps {
   requireStaff2fa?: boolean;
   /** Mode maintenance (MAINTENANCE, guide 17.5) : une page d'attente pour toutes les routes, sauf /health et /static. */
   maintenance?: boolean;
+  /**
+   * Proxys de confiance devant l'application (TRUST_PROXY_HOPS ; 1 par défaut : le répartiteur de l'hébergeur). L'IP du
+   * client est la dernière adresse ajoutée à X-Forwarded-For par ces proxys : un client ne peut pas en choisir une autre
+   * pour contourner les limites par IP.
+   */
+  trustProxyHops?: number;
+  /**
+   * En-tête posé par le proxy de bord qui donne l'IP du client (CLIENT_IP_HEADER ; par défaut cf-connecting-ip : Render
+   * est derrière Cloudflare, qui écrit cet en-tête et ajoute à X-Forwarded-For au lieu de le remplacer). Chaîne vide :
+   * X-Forwarded-For seul, avec trustProxyHops.
+   */
+  clientIpHeader?: string;
 }
 
 const here = dirname(fileURLToPath(import.meta.url));
@@ -77,9 +89,11 @@ const HTMX = readFileSync(require.resolve('htmx.org/dist/htmx.min.js'));
 const MUTATING = new Set(['POST', 'PUT', 'PATCH', 'DELETE']);
 
 export async function buildApp(deps: AppDeps): Promise<FastifyInstance> {
+  // Les `hops` premiers pairs (le répartiteur) sont de confiance : l'IP du client est l'adresse qu'ils ont ajoutée.
+  const hops = deps.trustProxyHops ?? 1;
   const app = Fastify({
     logger: { level: deps.logLevel ?? 'info', redact: ['req.headers.cookie', 'req.headers["x-csrf-token"]', 'body.password'] },
-    trustProxy: true,
+    trustProxy: (_addr: string, hop: number) => hop < hops,
     bodyLimit: 64 * 1024,
     genReqId: () => randomBytes(8).toString('hex'),
   });
@@ -177,8 +191,16 @@ export async function buildApp(deps: AppDeps): Promise<FastifyInstance> {
     if (!limiter.hit(key, perMinute)) throw new GameError('RATE_LIMITED');
   }
 
+  /** IP du client (limites, garde-fou des connexions, sessions) : l'en-tête du proxy de bord, sinon X-Forwarded-For. */
+  const ipHeader = (deps.clientIpHeader ?? 'cf-connecting-ip').toLowerCase();
+  function clientIp(req: FastifyRequest): string {
+    const h = ipHeader ? req.headers[ipHeader] : undefined;
+    const v = (Array.isArray(h) ? h[0] : h)?.trim();
+    return v && v.length <= 45 && /^[0-9a-f.:]+$/i.test(v) ? v : req.ip;
+  }
+
   function ipLimit(req: FastifyRequest, name: string, perMinute: number) {
-    if (!limiter.hit(`${name}:${req.ip}`, perMinute)) throw new GameError('RATE_LIMITED');
+    if (!limiter.hit(`${name}:${clientIp(req)}`, perMinute)) throw new GameError('RATE_LIMITED');
   }
 
   async function run<S extends z.ZodType, R>(req: FastifyRequest, def: CommandDef<S, R>, input: unknown): Promise<R> {
@@ -269,7 +291,7 @@ export async function buildApp(deps: AppDeps): Promise<FastifyInstance> {
       const s = await login(
         deps.db,
         { email: b.email, password: b.password, code: b.code || undefined },
-        { ip: req.ip, userAgent: req.headers['user-agent'] },
+        { ip: clientIp(req), userAgent: req.headers['user-agent'] },
       );
       reply.setCookie(SID, s.token, { ...cookieBase, expires: s.expiresAt });
       reply.clearCookie(PRE, { path: '/' });

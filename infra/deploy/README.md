@@ -50,6 +50,8 @@ Le chat, les messages privés, les demandes d'amis et les boutiques exigent une 
 
 En développement : `pnpm verify-email <e-mail>`, `pnpm grant-role <e-mail> <rôle>` et `pnpm reset-2fa <e-mail>`.
 
+**IP des clients.** Render est derrière Cloudflare, qui ajoute à `X-Forwarded-For` au lieu de le remplacer : l'application lit l'IP du client dans `CF-Connecting-IP` (variable `CLIENT_IP_HEADER`, `cf-connecting-ip` par défaut), puis, à défaut, dans `X-Forwarded-For` avec `TRUST_PROXY_HOPS` sauts de confiance (1). Elle sert aux limites par IP et au garde-fou des connexions. À vérifier une fois : après une connexion en préproduction, `ip_prefix` de la session (table `session`) doit être le préfixe de votre adresse, pas celui d'un proxy.
+
 **Mode maintenance.** `MAINTENANCE=true` sur le service web fait répondre une page d’attente (503, `Retry-After`) à toutes les routes du jeu ; `/health` répond toujours (et indique `maintenance: true`). À utiliser pour une opération exceptionnelle (restauration, correction de l’économie), puis remettre à `false`.
 
 ## À vérifier sur Render avant la production

@@ -26,6 +26,8 @@ const app = await buildApp({
   requireVerifiedEmail: cfg.REQUIRE_VERIFIED_EMAIL,
   requireStaff2fa: cfg.REQUIRE_STAFF_2FA,
   maintenance: cfg.MAINTENANCE,
+  trustProxyHops: cfg.TRUST_PROXY_HOPS,
+  clientIpHeader: cfg.CLIENT_IP_HEADER,
 });
 
 // Arrêt propre (guide 17.5) : plus de nouvelles requêtes, fin des requêtes en cours, puis fermeture de la base.
