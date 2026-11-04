@@ -59,7 +59,7 @@ describe('salles', () => {
     const r1 = room(c, kobold, 1, false);
     expect(r1).toMatchObject({ level: 3, pop: 4, boss: null, gold: 13 });
     expect(r1.spec).toMatchObject({ level: [3, 3], pop: [4, 4], forced: [], slots: 8 });
-    expect(r1.options).toMatchObject({ territory: 0, guardianStep: false, guardianAdjust: 'guardian', mult: 1000 });
+    expect(r1.options).toMatchObject({ territory: 0, guardianStep: false, guardianAdjust: 'guardian', mult: 1030 }); // réglage du donjon (mult)
     expect(room(c, kobold, 3, false)).toMatchObject({ level: 4, pop: 6 });
     expect(room(c, kobold, 8, false)).toMatchObject({ level: 6, pop: 11, boss: 'chef_gratte_gratte' });
     expect(room(c, kobold, 20, false).pop).toBe(11);
@@ -84,9 +84,9 @@ describe('salles', () => {
   it('plafonne le niveau à 30 puis renforce les monstres de 6 % par niveau', () => {
     const top = dungeonById(c, 'abime_obsidienne'); // palier 5, niveau minimal 21
     expect(room(c, top, 13, false)).toMatchObject({ level: 29 });
-    expect(room(c, top, 15, false)).toMatchObject({ level: 30, options: { mult: 1000 } });
-    expect(room(c, top, 17, false)).toMatchObject({ level: 30, options: { mult: 1060 } });
-    expect(room(c, top, 21, false).options.mult).toBe(1180);
+    expect(room(c, top, 15, false)).toMatchObject({ level: 30, options: { mult: 470 } }); // réglage du donjon seul
+    expect(room(c, top, 17, false)).toMatchObject({ level: 30, options: { mult: 498 } }); // 470 × 1,06
+    expect(room(c, top, 21, false).options.mult).toBe(555); // 470 × 1,18
   });
 
   it('tire des groupes déterministes qui tiennent dans la population et les emplacements, boss compris', () => {

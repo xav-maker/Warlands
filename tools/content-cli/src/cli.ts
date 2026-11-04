@@ -4,7 +4,7 @@
  *   pnpm content validate [dossier]                  erreurs et avertissements ; code 1 s'il y a une erreur
  *   pnpm content compile  [dossier] [--out pack.json] pack JSON et son empreinte SHA-256
  *   pnpm content annexe   [dossier] [--out fichier]   annexe de contenu en Markdown
- *   pnpm content simulate [dossier] [--fights N] [--bare] [--out fichier]  équilibrage contre les escouades de
+ *   pnpm content simulate [dossier] [--fights N] [--runs N] [--bare] [--out fichier]  équilibrage contre les escouades de
  *                                                    référence, équipées au palier (--bare : sans équipement)
  *   pnpm content diff     <ancien> [nouveau] [--out fichier]       différence de deux packs (dossiers ou JSON)
  *
@@ -17,7 +17,7 @@ import type { Issue } from '@cr/content';
 import type { GenContent } from '@cr/gen';
 import { annexe } from './annexe.ts';
 import { diffPacks } from './diff.ts';
-import { loadSquads, report as simReport, simulate, SQUADS_FILE } from './simulate.ts';
+import { dungeonReport, loadSquads, report as simReport, simulate, simulateDungeons, SQUADS_FILE } from './simulate.ts';
 
 const [cmd, ...rest] = process.argv.slice(2);
 const flag = (name: string): string | undefined => {
@@ -59,7 +59,8 @@ switch (cmd) {
     const squads = loadSquads(SQUADS_FILE);
     const gear = !rest.includes('--bare');
     const rows = simulate(v.pack as unknown as GenContent, squads, { fights: Number(flag('fights') ?? 20), gear });
-    write(simReport(rows, squads, { gear }));
+    const dungeons = simulateDungeons(v.pack as unknown as GenContent, squads, Number(flag('runs') ?? 20));
+    write(simReport(rows, squads, { gear }) + (dungeons.length ? '\n' + dungeonReport(dungeons) : ''));
     break;
   }
   case 'diff':

@@ -10,6 +10,10 @@ import { battleUnits, genMonsters, routes, stepSpec } from '@cr/gen';
 import { beforeAll, describe, expect, it } from 'vitest';
 import { diffPacks } from '../src/diff.ts';
 import {
+  DUNGEON_TARGET,
+  DUNGEON_TOLERANCE,
+  dungeonReport,
+  simulateDungeons,
   loadSquads,
   report,
   ROUTE_TOLERANCE,
@@ -203,5 +207,20 @@ describe('différence de packs', () => {
     expect(text).toContain('n : 1 → 5');
     expect(text).toContain('## regions : +0 −0 ~1');
     expect(text).toContain('params.p : 1 → 2');
+  });
+});
+
+describe('équilibrage des donjons (README 23)', () => {
+  it('chaque donjon : la première salle presque toujours gagnée, le premier boss battu une fois sur deux', () => {
+    const rows = simulateDungeons(pack, squads, 20);
+    expect(rows).toHaveLength(12);
+    for (const r of rows) {
+      expect(r.reach[1], `${r.name} : salle 1`).toBeGreaterThanOrEqual(0.9);
+      expect(Math.abs(r.reach[4] - DUNGEON_TARGET), `${r.name} : premier boss ${r.reach[4]}`).toBeLessThanOrEqual(DUNGEON_TOLERANCE + 1e-9);
+      expect(r.reach[8]).toBeLessThanOrEqual(r.reach[4]);
+    }
+    const md = dungeonReport(rows);
+    expect(md).toContain('| Terriers du Roi Kobold | 1 | 5 |');
+    expect(md).not.toContain('hors cible');
   });
 });

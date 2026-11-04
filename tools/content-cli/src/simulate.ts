@@ -11,8 +11,8 @@ import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { simuler } from '@cr/engine';
 import { Rng, hash } from '@cr/rng';
-import { battleUnits, bestForm, bestGear, genMonsters, routes, stepSpec, unitStats } from '@cr/gen';
-import type { GenContent, PlayerTroop, PlayerUnit, Route } from '@cr/gen';
+import { battleUnits, bestForm, bestGear, dungeonRoute, genMonsters, room, routes, stepSpec, unitStats } from '@cr/gen';
+import type { Dungeon, GenContent, PlayerTroop, PlayerUnit, Route } from '@cr/gen';
 import YAML from 'yaml';
 
 export interface StepSquad {
@@ -161,6 +161,88 @@ export function simulateStep(c: GenContent, R: Route, si: number, squads: Record
     gold: st.gold,
     xp: Math.round(xp / fights),
   };
+}
+
+// ---------------------------------------------------------------------------------------------------------
+// Donjons (README 23) : profondeur atteinte, PV persistants de salle en salle, sans consommable ni soin.
+
+/** Niveau de l'escouade de référence dans un donjon : niveau minimal de la route + DUNGEON_OFFSET. */
+export const DUNGEON_OFFSET = 4;
+/** Cible [H] : le premier boss (salle 4) battu une fois sur deux, à DUNGEON_TOLERANCE près. */
+export const DUNGEON_TARGET = 0.5;
+export const DUNGEON_TOLERANCE = 0.2;
+
+export interface DungeonReport {
+  dungeon: string;
+  name: string;
+  tier: number;
+  level: number;
+  runs: number;
+  /** Part des parties qui ont gagné au moins 1, 4, 8, 12 salles. */
+  reach: Record<1 | 4 | 8 | 12, number>;
+  median: number;
+}
+
+/** `runs` parties en solo contre le donjon, salle après salle jusqu'à la défaite (16 salles au plus). */
+export function simulateDungeon(c: GenContent, d: Dungeon, squads: Record<string, Squad>, runs = 20): DungeonReport {
+  const o = c.online!;
+  const R = dungeonRoute(c, d);
+  const level = Math.min(30, R.minLevel + DUNGEON_OFFSET);
+  const regen = Number((c.eco as unknown as { manaRegenEnd: number }).manaRegenEnd);
+  const depths: number[] = [];
+  for (let k = 0; k < runs; k++) {
+    let squad = squadOf(c, squads[String(R.tier)]!, level, R.tier);
+    let n = 1;
+    for (; n <= 16 && squad.length; n++) {
+      const rm = room(c, d, n, false);
+      const units = battleUnits(c, squad, genMonsters(c, rm.spec, 1000 * k + n), rm.options);
+      const res = simuler({ engineVersion: o.engineVersion, params: c.params, skills: c.skills, units }, 7919 * k + n).result;
+      if (res.winner !== 0) break;
+      let i = 0;
+      for (const t of squad)
+        t.units = t.units.filter((u) => {
+          const ur = res.units[i++]!;
+          if (ur.dead) return false;
+          const mx = unitStats(c, t, u).manaMax;
+          u.hp = Math.max(1, ur.hp);
+          u.mana = Math.min(mx, ur.mana + Math.floor((mx * regen) / 100));
+          return true;
+        });
+      squad = squad.filter((t) => t.units.length);
+    }
+    depths.push(n - 1);
+  }
+  depths.sort((a, b) => a - b);
+  const at = (x: number): number => depths.filter((y) => y >= x).length / runs;
+  return {
+    dungeon: d.id,
+    name: d.name,
+    tier: R.tier,
+    level,
+    runs,
+    reach: { 1: at(1), 4: at(4), 8: at(8), 12: at(12) },
+    median: depths[Math.floor(runs / 2)]!,
+  };
+}
+
+export const simulateDungeons = (c: GenContent, squads: Record<string, Squad>, runs = 20): DungeonReport[] =>
+  (c.dungeons ?? []).map((d) => simulateDungeon(c, d, squads, runs));
+
+/** Section du rapport : profondeur atteinte dans chaque donjon. */
+export function dungeonReport(rows: DungeonReport[]): string {
+  const lines = [
+    '## Donjons',
+    '',
+    `Escouade de référence du palier au niveau minimal de la route + ${DUNGEON_OFFSET}, équipée, pleine au départ, sans consommable ; PV persistants. Cible : premier boss (salle 4) battu ${pct(DUNGEON_TARGET)} des fois, à ${Math.round(DUNGEON_TOLERANCE * 100)} points près.`,
+    '',
+    '| Donjon | Palier | Niveau | ≥ 1 salle | ≥ 4 (boss 1) | ≥ 8 (boss 2) | ≥ 12 | Médiane | Verdict |',
+    '|---|---|---|---|---|---|---|---|---|',
+  ];
+  for (const r of rows)
+    lines.push(
+      `| ${r.name} | ${r.tier} | ${r.level} | ${pct(r.reach[1])} | ${pct(r.reach[4])} | ${pct(r.reach[8])} | ${pct(r.reach[12])} | ${r.median} | ${Math.abs(r.reach[4] - DUNGEON_TARGET) <= DUNGEON_TOLERANCE ? 'dans la cible' : 'hors cible'} |`,
+    );
+  return lines.join('\n') + '\n';
 }
 
 export function simulate(c: GenContent, squads: Record<string, Squad>, opt: SimOptions | number = {}): StepReport[] {
