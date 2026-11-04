@@ -26,6 +26,12 @@ describe('contenu cible', () => {
     for (const R of raw.regions.slice(5)) expect(R.city.recruit).toHaveLength(8);
   });
 
+  it('chaque troupe recrutable évolue jusqu’à une forme du niveau 20 (README 24)', () => {
+    const recruitable = Object.entries(raw.troops).filter(([, t]) => t.region === undefined);
+    expect(recruitable).toHaveLength(130);
+    for (const [id, t] of recruitable) expect({ id, top: Math.max(...t.forms.map((f) => f.level)) }).toEqual({ id, top: 20 });
+  });
+
   it('120 monstres de bestiaire et 24 gardiens', () => {
     const bestiaries = Object.values(raw.origin).filter((f) => /^monsters\/r(\d+)-/.exec(f) && Number(/r(\d+)-/.exec(f)![1]) >= 6);
     expect(bestiaries).toHaveLength(120);

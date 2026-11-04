@@ -14,6 +14,8 @@ frondeurs:
   - { cond: selfEnergyBelow, v: 15, action: repos, target: self }
   - { cond: targetLacksState, s: marque, action: marque, target: strongestEnemy }
   - { cond: enemiesAtLeast, v: 3, action: volee, target: nearestEnemy }
+  - { cond: enemiesAtLeast, v: 3, action: rafale, target: nearestEnemy }
+  - { cond: selfEnergyAbove, v: 40, action: carreau_lourd, target: weakestEnemy }
   - { cond: always, action: tir_fronde, target: weakestEnemy }
   - { cond: noEnemyInRange, action: avancer, target: self }
 acolyte:
@@ -35,6 +37,8 @@ pyromancien:
   - { cond: enemiesAtLeast, v: 3, action: mur_flammes, target: nearestEnemy }
   - { cond: targetLacksState, s: brulure, action: boule_feu, target: nearestEnemy }
   - { cond: always, action: trait_flammes, target: weakestEnemy }
+  - { cond: enemiesAtLeast, v: 3, action: meteore, target: nearestEnemy }
+  - { cond: always, action: lance_feu, target: weakestEnemy }
   - { cond: always, action: emploi, target: nearestEnemy }
   - { cond: always, action: attendre, target: self }
 chasseur:
@@ -43,6 +47,7 @@ chasseur:
   - { cond: targetLacksState, s: marque, action: marque, target: strongestEnemy }
   - { cond: selfEnergyAbove, v: 80, action: grappin, target: strongestEnemy }
   - { cond: always, action: tir_precis, target: strongestEnemy }
+  - { cond: enemiesAtLeast, v: 3, action: rafale, target: nearestEnemy }
   - { cond: always, action: tir_arc, target: weakestEnemy }
   - { cond: noEnemyInRange, action: avancer, target: self }
 berserker:
@@ -52,6 +57,8 @@ berserker:
   - { cond: enemiesAtLeast, v: 2, action: tourbillon, target: self }
   - { cond: targetLacksState, s: saignement, action: lame_saignante, target: nearestEnemy }
   - { cond: selfEnergyAbove, v: 40, action: exploit, target: nearestEnemy }
+  - { cond: selfLacksState, s: provocation, action: cri_defi, target: self }
+  - { cond: enemiesAtLeast, v: 3, action: pietinement, target: self }
   - { cond: always, action: emploi, target: nearestEnemy }
   - { cond: noEnemyInRange, action: avancer, target: self }
 loups:
@@ -59,6 +66,7 @@ loups:
   - { cond: selfWillBelow, v: 60, action: hurlement, target: self }
   - { cond: always, action: charge, target: weakestEnemy }
   - { cond: always, action: execution, target: weakestEnemy }
+  - { cond: selfEnergyAbove, v: 40, action: bond, target: weakestEnemy }
   - { cond: always, action: morsure, target: weakestEnemy }
   - { cond: noEnemyInRange, action: avancer, target: self }
 adepte:
@@ -80,6 +88,8 @@ moine:
   - { cond: targetLacksState, s: confusion, action: paume_vide, target: nearestEnemy }
   - { cond: targetLacksState, s: confusion, action: confusion_moine, target: strongestEnemy }
   - { cond: selfEnergyAbove, v: 80, action: repousser, target: nearestEnemy }
+  - { cond: allyHpBelow, v: 70, action: clarte, target: mostWoundedAlly }
+  - { cond: targetLacksState, s: confusion, action: domination, target: strongestEnemy }
   - { cond: always, action: emploi, target: nearestEnemy }
   - { cond: noEnemyInRange, action: avancer, target: self }
 briseur:
@@ -90,29 +100,43 @@ briseur:
   - { cond: targetHasState, s: gele, action: fracas, target: nearestEnemy }
   - { cond: targetLacksState, s: brise, action: brise_armure, target: strongestEnemy }
   - { cond: selfEnergyAbove, v: 50, action: exploit, target: nearestEnemy }
+  - { cond: selfEnergyAbove, v: 40, action: frappe_brutale, target: nearestEnemy }
   - { cond: always, action: emploi, target: nearestEnemy }
   - { cond: noEnemyInRange, action: avancer, target: self }
 ecuyer:
   - { cond: selfEnergyBelow, v: 20, action: second_souffle, target: self }
+  - { cond: selfLacksState, s: provocation, action: cri_defi, target: self }
+  - { cond: selfLacksState, s: garde, action: rempart_vivant, target: self }
   - { cond: targetLacksState, s: ralenti, action: coup_jarret, target: nearestEnemy }
   - { cond: selfEnergyAbove, v: 60, action: coup_tonnerre, target: nearestEnemy }
   - { cond: selfEnergyAbove, v: 40, action: exploit, target: nearestEnemy }
+  - { cond: selfEnergyAbove, v: 40, action: coup_assommant, target: nearestEnemy }
+  - { cond: selfEnergyAbove, v: 40, action: enchainement, target: nearestEnemy }
+  - { cond: selfEnergyAbove, v: 40, action: estoc, target: nearestEnemy }
   - { cond: always, action: emploi, target: nearestEnemy }
   - { cond: noEnemyInRange, action: avancer, target: self }
   - { cond: always, action: attendre, target: self }
 herboriste:
   - { cond: selfWillBelow, v: 45, action: meditation, target: self }
   - { cond: allyHpBelow, v: 50, action: cercle_soins, target: self }
+  - { cond: allyHpBelow, v: 50, action: onde_soin, target: self }
   - { cond: allyHpBelow, v: 55, action: soin_mineur, target: mostWoundedAlly }
+  - { cond: allyHpBelow, v: 55, action: mains_lumiere, target: mostWoundedAlly }
   - { cond: targetLacksState, s: regeneration, action: seve, target: mostWoundedAlly }
   - { cond: targetLacksState, s: garde, action: peau_ecorce, target: mostWoundedAlly }
+  - { cond: targetLacksState, s: garde, action: armure_givre, target: mostWoundedAlly }
+  - { cond: selfLacksState, s: epines, action: carapace_epines, target: self }
+  - { cond: enemiesAtLeast, v: 3, action: peste, target: nearestEnemy }
   - { cond: always, action: emploi, target: nearestEnemy }
   - { cond: noEnemyInRange, action: avancer, target: self }
   - { cond: always, action: attendre, target: self }
 braconniers:
   - { cond: selfEnergyBelow, v: 15, action: repos, target: self }
   - { cond: targetLacksState, s: poison, action: tir_empoisonne, target: strongestEnemy }
+  - { cond: targetLacksState, s: ralenti, action: filet, target: strongestEnemy }
   - { cond: selfEnergyAbove, v: 60, action: tir_recul, target: nearestEnemy }
+  - { cond: enemiesAtLeast, v: 3, action: rafale, target: nearestEnemy }
+  - { cond: selfEnergyAbove, v: 40, action: laceration, target: nearestEnemy }
   - { cond: always, action: tir_arc, target: weakestEnemy }
   - { cond: always, action: attendre, target: self }
 harponneur:
@@ -120,6 +144,9 @@ harponneur:
   - { cond: always, action: assassinat, target: weakestEnemy }
   - { cond: selfEnergyAbove, v: 60, action: grappin, target: nearestEnemy }
   - { cond: targetLacksState, s: ralenti, action: coup_jarret, target: nearestEnemy }
+  - { cond: selfEnergyAbove, v: 40, action: harpon_tir, target: weakestEnemy }
+  - { cond: selfEnergyAbove, v: 40, action: estoc, target: nearestEnemy }
+  - { cond: selfEnergyAbove, v: 40, action: carreau_lourd, target: weakestEnemy }
   - { cond: always, action: emploi, target: nearestEnemy }
   - { cond: noEnemyInRange, action: avancer, target: self }
   - { cond: always, action: attendre, target: self }
@@ -128,7 +155,13 @@ sorciere_marais:
   - { cond: targetLacksState, s: poison, action: fleau, target: strongestEnemy }
   - { cond: targetLacksState, s: affaibli, action: affaiblissement, target: strongestEnemy }
   - { cond: targetLacksState, s: poison, action: nuage, target: strongestEnemy }
+  - { cond: targetLacksState, s: malediction, action: malefice, target: strongestEnemy }
+  - { cond: targetLacksState, s: silence, action: silence_tombe, target: strongestEnemy }
+  - { cond: enemiesAtLeast, v: 3, action: peste, target: nearestEnemy }
   - { cond: always, action: toucher_spectral, target: weakestEnemy }
+  - { cond: always, action: putrefaction, target: weakestEnemy }
+  - { cond: always, action: drain_ame, target: weakestEnemy }
+  - { cond: always, action: trait_ombre, target: weakestEnemy }
   - { cond: always, action: emploi, target: nearestEnemy }
   - { cond: noEnemyInRange, action: avancer, target: self }
   - { cond: always, action: attendre, target: self }
@@ -136,44 +169,68 @@ gardes_maree:
   - { cond: selfEnergyBelow, v: 15, action: repos, target: self }
   - { cond: selfLacksState, s: provocation, action: provocation, target: self }
   - { cond: selfLacksState, s: epines, action: carapace_epines, target: self }
+  - { cond: selfLacksState, s: provocation, action: cri_defi, target: self }
+  - { cond: selfLacksState, s: garde, action: rempart_vivant, target: self }
   - { cond: targetLacksState, s: etourdi, action: coup_bouclier, target: nearestEnemy }
+  - { cond: selfEnergyAbove, v: 40, action: coup_assommant, target: nearestEnemy }
   - { cond: always, action: emploi, target: nearestEnemy }
   - { cond: noEnemyInRange, action: avancer, target: self }
   - { cond: always, action: attendre, target: self }
 arbaletrier:
   - { cond: selfEnergyBelow, v: 15, action: repos, target: self }
+  - { cond: targetLacksState, s: ralenti, action: filet, target: strongestEnemy }
   - { cond: enemiesAtLeast, v: 3, action: tir_perforant, target: nearestEnemy }
+  - { cond: enemiesAtLeast, v: 3, action: rafale, target: nearestEnemy }
   - { cond: selfEnergyAbove, v: 40, action: tir_precis, target: weakestEnemy }
+  - { cond: selfEnergyAbove, v: 40, action: carreau_lourd, target: weakestEnemy }
+  - { cond: selfEnergyAbove, v: 40, action: estoc, target: nearestEnemy }
   - { cond: always, action: tir_arc, target: weakestEnemy }
   - { cond: always, action: attendre, target: self }
 chamane_crues:
   - { cond: selfWillBelow, v: 45, action: meditation, target: self }
+  - { cond: allyHpBelow, v: 50, action: onde_soin, target: self }
   - { cond: allyHpBelow, v: 55, action: soin_mineur, target: mostWoundedAlly }
+  - { cond: allyHpBelow, v: 55, action: mains_lumiere, target: mostWoundedAlly }
+  - { cond: targetLacksState, s: garde, action: armure_givre, target: mostWoundedAlly }
+  - { cond: targetLacksState, s: gele, action: prison_glace, target: strongestEnemy }
   - { cond: enemiesAtLeast, v: 3, action: tempete_givre, target: nearestEnemy }
+  - { cond: enemiesAtLeast, v: 3, action: blizzard, target: nearestEnemy }
   - { cond: always, action: eclat_glace, target: weakestEnemy }
+  - { cond: always, action: javelot_glace, target: weakestEnemy }
   - { cond: always, action: emploi, target: nearestEnemy }
   - { cond: noEnemyInRange, action: avancer, target: self }
   - { cond: always, action: attendre, target: self }
 mineurs:
   - { cond: selfEnergyBelow, v: 15, action: repos, target: self }
   - { cond: enemiesAtLeast, v: 3, action: frappe_sismique, target: nearestEnemy }
+  - { cond: enemiesAtLeast, v: 3, action: pietinement, target: self }
   - { cond: selfEnergyAbove, v: 40, action: coup_massue, target: nearestEnemy }
+  - { cond: selfEnergyAbove, v: 40, action: frappe_brutale, target: nearestEnemy }
+  - { cond: selfEnergyAbove, v: 40, action: enchainement, target: nearestEnemy }
   - { cond: always, action: emploi, target: nearestEnemy }
   - { cond: noEnemyInRange, action: avancer, target: self }
   - { cond: always, action: attendre, target: self }
 forgeron_runes:
   - { cond: selfEnergyBelow, v: 15, action: repos, target: self }
+  - { cond: targetLacksState, s: bouclier, action: egide, target: mostWoundedAlly }
   - { cond: selfLacksState, s: cri, action: chant_guerre, target: self }
   - { cond: selfLacksState, s: garde, action: benediction, target: self }
+  - { cond: always, action: lien_esprits, target: self }
   - { cond: selfEnergyAbove, v: 60, action: coup_tonnerre, target: nearestEnemy }
+  - { cond: selfEnergyAbove, v: 40, action: lame_ardente, target: nearestEnemy }
+  - { cond: selfEnergyAbove, v: 40, action: frappe_brutale, target: nearestEnemy }
+  - { cond: selfEnergyAbove, v: 40, action: coup_assommant, target: nearestEnemy }
   - { cond: always, action: emploi, target: nearestEnemy }
   - { cond: noEnemyInRange, action: avancer, target: self }
   - { cond: always, action: attendre, target: self }
 eclaireuse:
   - { cond: selfEnergyBelow, v: 15, action: repos, target: self }
   - { cond: selfLacksState, s: hate, action: hate, target: self }
+  - { cond: selfLacksState, s: garde, action: mirage, target: self }
   - { cond: always, action: assassinat, target: weakestEnemy }
   - { cond: selfEnergyAbove, v: 40, action: lame_ombre, target: nearestEnemy }
+  - { cond: selfEnergyAbove, v: 40, action: laceration, target: nearestEnemy }
+  - { cond: selfEnergyAbove, v: 40, action: estoc, target: nearestEnemy }
   - { cond: always, action: emploi, target: nearestEnemy }
   - { cond: noEnemyInRange, action: avancer, target: self }
   - { cond: always, action: attendre, target: self }
@@ -181,53 +238,81 @@ alchimiste:
   - { cond: selfWillBelow, v: 45, action: meditation, target: self }
   - { cond: targetLacksState, s: poison, action: tir_empoisonne, target: strongestEnemy }
   - { cond: enemiesAtLeast, v: 3, action: pluie_feu, target: nearestEnemy }
+  - { cond: enemiesAtLeast, v: 3, action: meteore, target: nearestEnemy }
+  - { cond: enemiesAtLeast, v: 3, action: peste, target: nearestEnemy }
   - { cond: selfEnergyAbove, v: 40, action: fleche_feu, target: weakestEnemy }
+  - { cond: always, action: jet_magma, target: weakestEnemy }
+  - { cond: always, action: putrefaction, target: weakestEnemy }
   - { cond: always, action: tir_fronde, target: weakestEnemy }
   - { cond: always, action: attendre, target: self }
 gardien_pierre:
   - { cond: selfEnergyBelow, v: 15, action: repos, target: self }
   - { cond: selfLacksState, s: provocation, action: provocation, target: self }
   - { cond: selfLacksState, s: epines, action: carapace_epines, target: self }
+  - { cond: selfLacksState, s: provocation, action: cri_defi, target: self }
+  - { cond: selfLacksState, s: garde, action: rempart_vivant, target: self }
   - { cond: enemiesAtLeast, v: 3, action: frappe_sismique, target: nearestEnemy }
   - { cond: always, action: emploi, target: nearestEnemy }
   - { cond: noEnemyInRange, action: avancer, target: self }
   - { cond: always, action: attendre, target: self }
 mage_cristal:
   - { cond: selfWillBelow, v: 45, action: meditation, target: self }
+  - { cond: targetLacksState, s: garde, action: armure_givre, target: mostWoundedAlly }
+  - { cond: targetLacksState, s: bouclier, action: egide, target: mostWoundedAlly }
   - { cond: targetLacksState, s: silence, action: mot_silence, target: strongestEnemy }
+  - { cond: targetLacksState, s: gele, action: prison_glace, target: strongestEnemy }
   - { cond: enemiesAtLeast, v: 3, action: tempete_givre, target: nearestEnemy }
+  - { cond: enemiesAtLeast, v: 3, action: blizzard, target: nearestEnemy }
   - { cond: always, action: eclat_glace, target: weakestEnemy }
+  - { cond: always, action: javelot_glace, target: weakestEnemy }
   - { cond: always, action: emploi, target: nearestEnemy }
   - { cond: noEnemyInRange, action: avancer, target: self }
   - { cond: always, action: attendre, target: self }
 lanciers_cendres:
   - { cond: selfEnergyBelow, v: 15, action: repos, target: self }
+  - { cond: selfLacksState, s: garde, action: rempart_vivant, target: self }
   - { cond: targetLacksState, s: ralenti, action: coup_jarret, target: nearestEnemy }
   - { cond: enemiesAtLeast, v: 3, action: frappe_sismique, target: nearestEnemy }
+  - { cond: enemiesAtLeast, v: 3, action: taillade, target: nearestEnemy }
   - { cond: selfEnergyAbove, v: 40, action: charge, target: weakestEnemy }
+  - { cond: selfEnergyAbove, v: 40, action: lame_ardente, target: nearestEnemy }
+  - { cond: selfEnergyAbove, v: 40, action: estoc, target: nearestEnemy }
+  - { cond: selfEnergyAbove, v: 40, action: bond, target: weakestEnemy }
   - { cond: always, action: emploi, target: nearestEnemy }
   - { cond: noEnemyInRange, action: avancer, target: self }
   - { cond: always, action: attendre, target: self }
 nomade:
   - { cond: selfEnergyBelow, v: 15, action: repos, target: self }
+  - { cond: targetLacksState, s: ralenti, action: filet, target: strongestEnemy }
   - { cond: selfEnergyAbove, v: 60, action: tir_recul, target: nearestEnemy }
+  - { cond: enemiesAtLeast, v: 3, action: rafale, target: nearestEnemy }
   - { cond: selfEnergyAbove, v: 40, action: fleche_feu, target: weakestEnemy }
   - { cond: selfEnergyAbove, v: 40, action: tir_precis, target: weakestEnemy }
+  - { cond: selfEnergyAbove, v: 40, action: carreau_lourd, target: weakestEnemy }
   - { cond: always, action: tir_arc, target: weakestEnemy }
   - { cond: always, action: attendre, target: self }
 derviche:
   - { cond: selfEnergyBelow, v: 20, action: second_souffle, target: self }
+  - { cond: always, action: lien_esprits, target: self }
   - { cond: selfLacksState, s: hate, action: hate, target: self }
+  - { cond: selfLacksState, s: garde, action: mirage, target: self }
   - { cond: enemiesAtLeast, v: 3, action: tourbillon, target: self }
+  - { cond: enemiesAtLeast, v: 3, action: taillade, target: nearestEnemy }
   - { cond: selfEnergyAbove, v: 40, action: lame_ombre, target: nearestEnemy }
+  - { cond: selfEnergyAbove, v: 40, action: enchainement, target: nearestEnemy }
   - { cond: always, action: emploi, target: nearestEnemy }
   - { cond: noEnemyInRange, action: avancer, target: self }
   - { cond: always, action: attendre, target: self }
 pretresse_soleil:
   - { cond: selfWillBelow, v: 45, action: meditation, target: self }
+  - { cond: allyHpBelow, v: 50, action: onde_soin, target: self }
   - { cond: allyHpBelow, v: 55, action: soin_majeur, target: mostWoundedAlly }
+  - { cond: allyHpBelow, v: 55, action: mains_lumiere, target: mostWoundedAlly }
   - { cond: selfLacksState, s: garde, action: benediction, target: self }
+  - { cond: enemiesAtLeast, v: 3, action: consecration, target: nearestEnemy }
   - { cond: always, action: javelot_lumiere, target: weakestEnemy }
+  - { cond: always, action: rayon_sacre, target: weakestEnemy }
+  - { cond: always, action: jugement, target: weakestEnemy }
   - { cond: always, action: emploi, target: nearestEnemy }
   - { cond: noEnemyInRange, action: avancer, target: self }
   - { cond: always, action: attendre, target: self }
@@ -235,14 +320,21 @@ scorpions:
   - { cond: selfEnergyBelow, v: 15, action: repos, target: self }
   - { cond: selfLacksState, s: epines, action: carapace_epines, target: self }
   - { cond: targetLacksState, s: poison, action: morsure_venin, target: strongestEnemy }
+  - { cond: enemiesAtLeast, v: 3, action: pietinement, target: self }
+  - { cond: selfEnergyAbove, v: 40, action: laceration, target: nearestEnemy }
   - { cond: always, action: morsure, target: nearestEnemy }
   - { cond: noEnemyInRange, action: avancer, target: self }
   - { cond: always, action: attendre, target: self }
 mage_cendre:
   - { cond: selfWillBelow, v: 45, action: meditation, target: self }
+  - { cond: selfLacksState, s: bouclier, action: bouclier_flammes, target: self }
   - { cond: enemiesAtLeast, v: 3, action: pluie_feu, target: nearestEnemy }
   - { cond: enemiesAtLeast, v: 3, action: eruption, target: nearestEnemy }
+  - { cond: enemiesAtLeast, v: 3, action: meteore, target: nearestEnemy }
+  - { cond: enemiesAtLeast, v: 3, action: nova_flammes, target: self }
   - { cond: always, action: trait_flammes, target: weakestEnemy }
+  - { cond: always, action: jet_magma, target: weakestEnemy }
+  - { cond: always, action: lance_feu, target: weakestEnemy }
   - { cond: always, action: emploi, target: nearestEnemy }
   - { cond: noEnemyInRange, action: avancer, target: self }
   - { cond: always, action: attendre, target: self }
@@ -251,30 +343,47 @@ garde_oasis:
   - { cond: allyHpBelow, v: 50, action: mur_boucliers, target: self }
   - { cond: selfLacksState, s: provocation, action: provocation, target: self }
   - { cond: selfLacksState, s: epines, action: carapace_epines, target: self }
+  - { cond: selfLacksState, s: provocation, action: cri_defi, target: self }
+  - { cond: selfLacksState, s: garde, action: rempart_vivant, target: self }
   - { cond: selfEnergyAbove, v: 60, action: coup_tonnerre, target: nearestEnemy }
+  - { cond: selfEnergyAbove, v: 40, action: coup_assommant, target: nearestEnemy }
   - { cond: always, action: emploi, target: nearestEnemy }
   - { cond: noEnemyInRange, action: avancer, target: self }
   - { cond: always, action: attendre, target: self }
 barde:
+  - { cond: selfEnergyBelow, v: 20, action: concentration, target: self }
   - { cond: selfWillBelow, v: 45, action: meditation, target: self }
+  - { cond: allyHpBelow, v: 70, action: clarte, target: mostWoundedAlly }
   - { cond: selfLacksState, s: cri, action: chant_guerre, target: self }
   - { cond: selfLacksState, s: hate, action: vent_rapide, target: self }
+  - { cond: always, action: lien_esprits, target: self }
+  - { cond: targetLacksState, s: confusion, action: domination, target: strongestEnemy }
   - { cond: selfEnergyAbove, v: 60, action: cri_effroi, target: nearestEnemy }
+  - { cond: enemiesAtLeast, v: 3, action: hurlement_mental, target: self }
+  - { cond: always, action: vision_terreur, target: weakestEnemy }
   - { cond: always, action: emploi, target: nearestEnemy }
   - { cond: noEnemyInRange, action: avancer, target: self }
   - { cond: always, action: attendre, target: self }
 paladin:
   - { cond: allyHpBelow, v: 55, action: soin_mineur, target: mostWoundedAlly }
+  - { cond: targetLacksState, s: bouclier, action: egide, target: mostWoundedAlly }
   - { cond: selfLacksState, s: garde, action: benediction, target: self }
   - { cond: selfLacksState, s: provocation, action: provocation, target: self }
+  - { cond: selfLacksState, s: garde, action: rempart_vivant, target: self }
   - { cond: selfEnergyAbove, v: 60, action: coup_tonnerre, target: nearestEnemy }
+  - { cond: enemiesAtLeast, v: 3, action: consecration, target: nearestEnemy }
   - { cond: always, action: javelot_lumiere, target: weakestEnemy }
+  - { cond: selfEnergyAbove, v: 40, action: chatiment, target: nearestEnemy }
+  - { cond: always, action: jugement, target: weakestEnemy }
   - { cond: always, action: emploi, target: nearestEnemy }
   - { cond: noEnemyInRange, action: avancer, target: self }
   - { cond: always, action: attendre, target: self }
 archonte_aube:
   - { cond: selfWillBelow, v: 45, action: meditation, target: self }
   - { cond: allyHpBelow, v: 50, action: cercle_soins, target: self }
+  - { cond: allyHpBelow, v: 50, action: onde_soin, target: self }
+  - { cond: targetLacksState, s: bouclier, action: egide, target: mostWoundedAlly }
+  - { cond: always, action: purification_masse, target: self }
   - { cond: targetLacksState, s: silence, action: mot_silence, target: strongestEnemy }
   - { cond: enemiesAtLeast, v: 3, action: nova_sacree, target: nearestEnemy }
   - { cond: always, action: javelot_lumiere, target: weakestEnemy }
@@ -286,6 +395,9 @@ lames_jumelles:
   - { cond: always, action: assassinat, target: weakestEnemy }
   - { cond: targetLacksState, s: ralenti, action: coup_jarret, target: nearestEnemy }
   - { cond: selfEnergyAbove, v: 40, action: lame_ombre, target: nearestEnemy }
+  - { cond: selfEnergyAbove, v: 40, action: enchainement, target: nearestEnemy }
+  - { cond: selfEnergyAbove, v: 40, action: estoc, target: nearestEnemy }
+  - { cond: always, action: marque_mort, target: weakestEnemy }
   - { cond: always, action: emploi, target: nearestEnemy }
   - { cond: noEnemyInRange, action: avancer, target: self }
   - { cond: always, action: attendre, target: self }
@@ -293,22 +405,33 @@ tireur_astral:
   - { cond: selfEnergyBelow, v: 15, action: repos, target: self }
   - { cond: targetLacksState, s: marque, action: marque, target: strongestEnemy }
   - { cond: enemiesAtLeast, v: 3, action: tir_perforant, target: nearestEnemy }
+  - { cond: enemiesAtLeast, v: 3, action: rafale, target: nearestEnemy }
   - { cond: selfEnergyAbove, v: 40, action: tir_precis, target: weakestEnemy }
+  - { cond: selfEnergyAbove, v: 40, action: carreau_lourd, target: weakestEnemy }
+  - { cond: selfEnergyAbove, v: 40, action: estoc, target: nearestEnemy }
   - { cond: always, action: tir_arc, target: weakestEnemy }
   - { cond: always, action: attendre, target: self }
 oracle:
   - { cond: selfWillBelow, v: 45, action: meditation, target: self }
   - { cond: targetLacksState, s: affaibli, action: affaiblissement, target: strongestEnemy }
   - { cond: targetLacksState, s: silence, action: mot_silence, target: strongestEnemy }
+  - { cond: targetLacksState, s: confusion, action: domination, target: strongestEnemy }
+  - { cond: always, action: sommeil, target: strongestEnemy }
   - { cond: enemiesAtLeast, v: 3, action: terreur_masse, target: nearestEnemy }
+  - { cond: enemiesAtLeast, v: 3, action: hurlement_mental, target: self }
+  - { cond: always, action: vision_terreur, target: weakestEnemy }
   - { cond: always, action: emploi, target: nearestEnemy }
   - { cond: noEnemyInRange, action: avancer, target: self }
   - { cond: always, action: attendre, target: self }
 chevalier_griffon:
   - { cond: selfEnergyBelow, v: 15, action: repos, target: self }
+  - { cond: selfLacksState, s: provocation, action: cri_defi, target: self }
   - { cond: enemiesAtLeast, v: 3, action: frappe_sismique, target: nearestEnemy }
+  - { cond: enemiesAtLeast, v: 3, action: pietinement, target: self }
+  - { cond: enemiesAtLeast, v: 3, action: taillade, target: nearestEnemy }
   - { cond: selfEnergyAbove, v: 40, action: charge, target: weakestEnemy }
   - { cond: selfEnergyAbove, v: 40, action: coup_massue, target: nearestEnemy }
+  - { cond: selfEnergyAbove, v: 40, action: bond, target: weakestEnemy }
   - { cond: always, action: emploi, target: nearestEnemy }
   - { cond: noEnemyInRange, action: avancer, target: self }
   - { cond: always, action: attendre, target: self }
@@ -316,14 +439,19 @@ invocatrice:
   - { cond: selfWillBelow, v: 45, action: meditation, target: self }
   - { cond: enemiesAtLeast, v: 3, action: tempete_givre, target: nearestEnemy }
   - { cond: enemiesAtLeast, v: 3, action: eruption, target: nearestEnemy }
+  - { cond: enemiesAtLeast, v: 3, action: blizzard, target: nearestEnemy }
+  - { cond: enemiesAtLeast, v: 3, action: meteore, target: nearestEnemy }
   - { cond: always, action: eclat_glace, target: weakestEnemy }
+  - { cond: always, action: lance_feu, target: weakestEnemy }
   - { cond: always, action: emploi, target: nearestEnemy }
   - { cond: noEnemyInRange, action: avancer, target: self }
   - { cond: always, action: attendre, target: self }
 gardiens_celestes:
   - { cond: selfEnergyBelow, v: 15, action: repos, target: self }
+  - { cond: targetLacksState, s: bouclier, action: egide, target: mostWoundedAlly }
   - { cond: selfLacksState, s: provocation, action: provocation, target: self }
   - { cond: selfLacksState, s: epines, action: carapace_epines, target: self }
+  - { cond: selfLacksState, s: garde, action: rempart_vivant, target: self }
   - { cond: always, action: emploi, target: nearestEnemy }
   - { cond: noEnemyInRange, action: avancer, target: self }
   - { cond: always, action: attendre, target: self }

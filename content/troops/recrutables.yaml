@@ -64,6 +64,14 @@ frondeurs:
       speed: 16
       res: {}
       skills: [[volee, 10], [tir_precis, 16]]
+    - id: frondeurs_frondeurs_elite
+      level: 20
+      parent: tirailleur
+      hpMult: 1500
+      bonus: { will: 25, energy: 10, for: 8 }
+      speed: 16
+      res: {}
+      skills: [[rafale, 20], [carreau_lourd, 25]]
   slots:
     arme: [fronde]
     armure: [legere]
@@ -140,6 +148,14 @@ pyromancien:
       speed: 21
       res: { feu: 70, glace: -25 }
       skills: [[embrasement, 20], [coeur_ardent, 25]]
+    - id: pyromancien_mage_bataille
+      level: 20
+      parent: pyromancien
+      hpMult: 1265
+      bonus: { will: 10, energy: 10, mana: 20, ele: 11, for: 3 }
+      speed: 21
+      res: { feu: 50, glace: -25 }
+      skills: [[lance_feu, 20], [meteore, 25]]
   slots:
     arme: [baton]
     armure: [robe]
@@ -166,6 +182,14 @@ chasseur:
       speed: 16
       res: { glace: 40 }
       skills: [[grappin, 10], [pieges_glace, 16], [tir_precis, 22]]
+    - id: chasseur_maitre_chasseur
+      level: 20
+      parent: traqueur
+      hpMult: 1323
+      bonus: { will: 10, energy: 15, for: 12, ele: 3 }
+      speed: 15
+      res: { glace: 40 }
+      skills: [[rafale, 20], [predateur, 24]]
   slots:
     arme: [arc]
     armure: [legere]
@@ -192,6 +216,14 @@ berserker:
       speed: 19
       res: { psychique: -10, maladie: 20 }
       skills: [[execution, 15], [tourbillon, 20]]
+    - id: berserker_seigneur_guerre
+      level: 20
+      parent: massacreur
+      hpMult: 1500
+      bonus: { will: 25, energy: 20, for: 13 }
+      speed: 19
+      res: { psychique: -10, maladie: 20 }
+      skills: [[pietinement, 20], [cri_defi, 24]]
   slots:
     arme: [deux_mains]
     armure: [legere, moyenne]
@@ -218,6 +250,14 @@ loups:
       speed: 13
       res: { glace: 35, feu: -20 }
       skills: [[instinct_meute, 12], [execution, 18]]
+    - id: loups_meute_crepuscule
+      level: 20
+      parent: alpha
+      hpMult: 1380
+      bonus: { will: 15, energy: 10, for: 12, esp: 3 }
+      speed: 12
+      res: { glace: 35, feu: -20 }
+      skills: [[bond, 20], [predateur, 24]]
   slots:
     accessoire: [collier]
 adepte:
@@ -293,6 +333,14 @@ moine:
       speed: 14
       res: { psychique: 60, maladie: 25 }
       skills: [[esprit_inebranlable, 20], [paume_vide, 24]]
+    - id: moine_moine_esprit
+      level: 20
+      parent: moine
+      hpMult: 1380
+      bonus: { will: 40, energy: 15, esp: 9 }
+      speed: 15
+      res: { psychique: 45, maladie: 15 }
+      skills: [[clarte, 20], [domination, 24]]
   slots:
     arme: [gantelets]
     armure: [robe, legere]
@@ -319,6 +367,14 @@ briseur:
       speed: 27
       res: { contondant: 40, tranchant: 35, feu: -10 }
       skills: [[repousser_renforce, 15], [provocation, 18], [seisme, 24]]
+    - id: briseur_briseur_murailles
+      level: 20
+      parent: colosse
+      hpMult: 1688
+      bonus: { will: 35, energy: 20, for: 6 }
+      speed: 28
+      res: { contondant: 50, tranchant: 45, feu: -10 }
+      skills: [[frappe_brutale, 20], [peau_dure, 22]]
   slots:
     arme: [deux_mains]
     armure: [moyenne, lourde]
@@ -337,6 +393,30 @@ ecuyer:
       speed: 19
       res: { tranchant: 10 }
       skills: [[emploi, 1], [coup_jarret, 3], [second_souffle, 6], [exploit, 8], [coup_tonnerre, 12]]
+    - id: ecuyer_chevalier
+      level: 10
+      parent: ecuyer
+      hpMult: 1150
+      bonus: { will: 10, energy: 10, for: 3 }
+      speed: 18
+      res: { tranchant: 10 }
+      skills: [[cri_defi, 10], [coup_assommant, 14]]
+    - id: ecuyer_chevalier_banneret
+      level: 20
+      parent: ecuyer_chevalier
+      hpMult: 1553
+      bonus: { will: 30, energy: 10, for: 3 }
+      speed: 19
+      res: { tranchant: 20, contondant: 10 }
+      skills: [[rempart_vivant, 20], [aura_protection, 25]]
+    - id: ecuyer_chevalier_errant
+      level: 20
+      parent: ecuyer_chevalier
+      hpMult: 1323
+      bonus: { will: 10, energy: 10, for: 11, esp: 3 }
+      speed: 17
+      res: { tranchant: 10 }
+      skills: [[enchainement, 20], [estoc, 24]]
   slots: &a1
     arme: [une_main]
     armure: [legere, moyenne, lourde]
@@ -355,6 +435,30 @@ herboriste:
       speed: 22
       res: { maladie: 25 }
       skills: [[emploi, 1], [seve, 1], [meditation, 1], [peau_ecorce, 4], [soin_mineur, 8], [cercle_soins, 15]]
+    - id: herboriste_druidesse
+      level: 10
+      parent: herboriste
+      hpMult: 1150
+      bonus: { will: 10, energy: 10, mana: 10, foi: 3 }
+      speed: 21
+      res: { maladie: 25 }
+      skills: [[mains_lumiere, 10], [armure_givre, 14]]
+    - id: herboriste_gardienne_bois
+      level: 20
+      parent: herboriste_druidesse
+      hpMult: 1380
+      bonus: { will: 30, energy: 10, mana: 40, foi: 9 }
+      speed: 21
+      res: { maladie: 25 }
+      skills: [[onde_soin, 20], [ferveur, 24]]
+    - id: herboriste_druidesse_ronces
+      level: 20
+      parent: herboriste_druidesse
+      hpMult: 1438
+      bonus: { will: 25, energy: 10, mana: 10, foi: 8 }
+      speed: 21
+      res: { maladie: 25 }
+      skills: [[peste, 20], [carapace_epines, 24]]
   slots:
     arme: [une_main, baton]
     armure: [robe, legere]
@@ -373,6 +477,22 @@ braconniers:
       speed: 18
       res: { glace: 10 }
       skills: [[tir_arc, 1], [repos, 1], [tir_empoisonne, 3], [tir_recul, 8]]
+    - id: braconniers_pisteurs
+      level: 10
+      parent: braconniers
+      hpMult: 1150
+      bonus: { will: 10, energy: 10, for: 3 }
+      speed: 17
+      res: { glace: 10 }
+      skills: [[filet, 10], [laceration, 14]]
+    - id: braconniers_rodeurs
+      level: 20
+      parent: braconniers_pisteurs
+      hpMult: 1323
+      bonus: { will: 10, energy: 10, for: 11, esp: 3 }
+      speed: 16
+      res: { glace: 10 }
+      skills: [[rafale, 20], [predateur, 25]]
   slots: &a2
     arme: [arc]
     armure: [legere]
@@ -391,6 +511,22 @@ harponneur:
       speed: 20
       res: { glace: 15 }
       skills: [[emploi, 1], [repos, 1], [grappin, 3], [coup_jarret, 6], [assassinat, 14]]
+    - id: harponneur_baleinier
+      level: 10
+      parent: harponneur
+      hpMult: 1150
+      bonus: { will: 10, energy: 10, for: 3 }
+      speed: 19
+      res: { glace: 15 }
+      skills: [[harpon_tir, 10], [estoc, 14]]
+    - id: harponneur_chasseur_leviathans
+      level: 20
+      parent: harponneur_baleinier
+      hpMult: 1323
+      bonus: { will: 10, energy: 10, for: 11, esp: 3 }
+      speed: 18
+      res: { glace: 15 }
+      skills: [[carreau_lourd, 20], [predateur, 24]]
   slots:
     arme: [deux_mains]
     armure: [legere]
@@ -409,6 +545,30 @@ sorciere_marais:
       speed: 23
       res: { maladie: 40, feu: -20 }
       skills: [[emploi, 1], [fleau, 1], [meditation, 1], [affaiblissement, 4], [toucher_spectral, 8], [nuage, 14]]
+    - id: sorciere_marais_sorciere_fanges
+      level: 10
+      parent: sorciere_marais
+      hpMult: 1150
+      bonus: { will: 10, energy: 10, mana: 10, omb: 3 }
+      speed: 22
+      res: { maladie: 40, feu: -20 }
+      skills: [[putrefaction, 10], [malefice, 14]]
+    - id: sorciere_marais_mere_marais
+      level: 20
+      parent: sorciere_marais_sorciere_fanges
+      hpMult: 1380
+      bonus: { will: 30, energy: 10, mana: 40, omb: 3, esp: 6 }
+      speed: 22
+      res: { maladie: 40, feu: -20 }
+      skills: [[peste, 20], [silence_tombe, 25]]
+    - id: sorciere_marais_sorciere_vampire
+      level: 20
+      parent: sorciere_marais_sorciere_fanges
+      hpMult: 1323
+      bonus: { will: 10, energy: 10, mana: 10, omb: 11, for: 3 }
+      speed: 21
+      res: { maladie: 40, feu: -20 }
+      skills: [[drain_ame, 20], [trait_ombre, 22]]
   slots: &a3
     arme: [baton]
     armure: [robe]
@@ -427,6 +587,22 @@ gardes_maree:
       speed: 20
       res: { tranchant: 15, contondant: 10 }
       skills: [[emploi, 1], [repos, 1], [provocation, 3], [carapace_epines, 6], [coup_bouclier, 10]]
+    - id: gardes_maree_gardes_digues
+      level: 10
+      parent: gardes_maree
+      hpMult: 1150
+      bonus: { will: 10, energy: 10, for: 3 }
+      speed: 19
+      res: { tranchant: 15, contondant: 10 }
+      skills: [[cri_defi, 10], [coup_assommant, 14]]
+    - id: gardes_maree_briselames
+      level: 20
+      parent: gardes_maree_gardes_digues
+      hpMult: 1553
+      bonus: { will: 30, energy: 10, for: 3 }
+      speed: 20
+      res: { tranchant: 25, contondant: 20 }
+      skills: [[rempart_vivant, 20], [peau_dure, 22]]
   slots: *a1
 arbaletrier:
   units: 1
@@ -442,6 +618,22 @@ arbaletrier:
       speed: 19
       res: {}
       skills: [[tir_arc, 1], [repos, 1], [tir_perforant, 5], [tir_precis, 10]]
+    - id: arbaletrier_arbaletrier_lourd
+      level: 10
+      parent: arbaletrier
+      hpMult: 1150
+      bonus: { will: 10, energy: 10, for: 3 }
+      speed: 18
+      res: {}
+      skills: [[carreau_lourd, 10], [filet, 14]]
+    - id: arbaletrier_arbaletrier_siege
+      level: 20
+      parent: arbaletrier_arbaletrier_lourd
+      hpMult: 1438
+      bonus: { will: 25, energy: 10, for: 8 }
+      speed: 18
+      res: {}
+      skills: [[rafale, 20], [estoc, 24]]
   slots: *a2
 chamane_crues:
   units: 1
@@ -457,6 +649,30 @@ chamane_crues:
       speed: 22
       res: { glace: 30, feu: -15 }
       skills: [[emploi, 1], [eclat_glace, 1], [meditation, 1], [soin_mineur, 3], [tempete_givre, 10]]
+    - id: chamane_crues_chamane_marees
+      level: 10
+      parent: chamane_crues
+      hpMult: 1150
+      bonus: { will: 10, energy: 10, mana: 10, ele: 3 }
+      speed: 21
+      res: { glace: 30, feu: -15 }
+      skills: [[javelot_glace, 10], [mains_lumiere, 14]]
+    - id: chamane_crues_voix_eaux
+      level: 20
+      parent: chamane_crues_chamane_marees
+      hpMult: 1380
+      bonus: { will: 30, energy: 10, mana: 40, ele: 3, esp: 6 }
+      speed: 21
+      res: { glace: 30, feu: -15 }
+      skills: [[onde_soin, 20], [armure_givre, 22]]
+    - id: chamane_crues_chamane_glaces
+      level: 20
+      parent: chamane_crues_chamane_marees
+      hpMult: 1323
+      bonus: { will: 10, energy: 10, mana: 10, ele: 11, for: 3 }
+      speed: 20
+      res: { glace: 30, feu: -15 }
+      skills: [[blizzard, 20], [prison_glace, 25]]
   slots: *a3
 mineurs:
   units: 3
@@ -472,6 +688,22 @@ mineurs:
       speed: 21
       res: { contondant: 15 }
       skills: [[emploi, 1], [repos, 1], [coup_massue, 4], [frappe_sismique, 8]]
+    - id: mineurs_sapeurs
+      level: 10
+      parent: mineurs
+      hpMult: 1150
+      bonus: { will: 10, energy: 10, for: 3 }
+      speed: 20
+      res: { contondant: 15 }
+      skills: [[frappe_brutale, 10], [pietinement, 14]]
+    - id: mineurs_brise_roches
+      level: 20
+      parent: mineurs_sapeurs
+      hpMult: 1438
+      bonus: { will: 25, energy: 10, for: 8 }
+      speed: 20
+      res: { contondant: 15 }
+      skills: [[enchainement, 20], [peau_dure, 22]]
   slots: *a1
 forgeron_runes:
   units: 1
@@ -487,6 +719,30 @@ forgeron_runes:
       speed: 22
       res: { feu: 30, contondant: 10 }
       skills: [[emploi, 1], [chant_guerre, 1], [coup_tonnerre, 4], [repos, 4], [benediction, 10]]
+    - id: forgeron_runes_maitre_runes
+      level: 10
+      parent: forgeron_runes
+      hpMult: 1150
+      bonus: { will: 10, energy: 10, mana: 10, for: 3 }
+      speed: 21
+      res: { feu: 30, contondant: 10 }
+      skills: [[lame_ardente, 10], [aura_protection, 14]]
+    - id: forgeron_runes_pretre_forge
+      level: 20
+      parent: forgeron_runes_maitre_runes
+      hpMult: 1380
+      bonus: { will: 30, energy: 10, mana: 40, for: 3, esp: 6 }
+      speed: 21
+      res: { feu: 30, contondant: 10 }
+      skills: [[egide, 20], [lien_esprits, 24]]
+    - id: forgeron_runes_marteau_runique
+      level: 20
+      parent: forgeron_runes_maitre_runes
+      hpMult: 1323
+      bonus: { will: 10, energy: 10, mana: 10, for: 11, esp: 3 }
+      speed: 20
+      res: { feu: 30, contondant: 10 }
+      skills: [[frappe_brutale, 20], [coup_assommant, 22]]
   slots: *a1
 eclaireuse:
   units: 1
@@ -502,6 +758,22 @@ eclaireuse:
       speed: 15
       res: { tenebres: 15 }
       skills: [[emploi, 1], [repos, 1], [assassinat, 4], [lame_ombre, 8], [hate, 12]]
+    - id: eclaireuse_ombre_galeries
+      level: 10
+      parent: eclaireuse
+      hpMult: 1150
+      bonus: { will: 10, energy: 10, for: 3 }
+      speed: 14
+      res: { tenebres: 15 }
+      skills: [[laceration, 10], [mirage, 14]]
+    - id: eclaireuse_assassin_profondeurs
+      level: 20
+      parent: eclaireuse_ombre_galeries
+      hpMult: 1323
+      bonus: { will: 10, energy: 10, for: 11, esp: 3 }
+      speed: 13
+      res: { tenebres: 15 }
+      skills: [[estoc, 20], [predateur, 22]]
   slots:
     arme: [une_main]
     armure: [legere]
@@ -520,6 +792,22 @@ alchimiste:
       speed: 20
       res: { feu: 20, maladie: 20 }
       skills: [[tir_fronde, 1], [meditation, 1], [tir_empoisonne, 3], [fleche_feu, 6], [pluie_feu, 12]]
+    - id: alchimiste_grenadier
+      level: 10
+      parent: alchimiste
+      hpMult: 1150
+      bonus: { will: 10, energy: 10, mana: 10, for: 3 }
+      speed: 19
+      res: { feu: 20, maladie: 20 }
+      skills: [[jet_magma, 10], [putrefaction, 14]]
+    - id: alchimiste_maitre_alchimiste
+      level: 20
+      parent: alchimiste_grenadier
+      hpMult: 1438
+      bonus: { will: 25, energy: 10, mana: 10, for: 8 }
+      speed: 19
+      res: { feu: 20, maladie: 20 }
+      skills: [[meteore, 20], [peste, 24]]
   slots:
     arme: [fronde]
     armure: [robe, legere]
@@ -538,6 +826,22 @@ gardien_pierre:
       speed: 28
       res: { contondant: 30, tranchant: 30, glace: -10 }
       skills: [[emploi, 1], [repos, 1], [provocation, 3], [carapace_epines, 6], [frappe_sismique, 12], [riposte, 16]]
+    - id: gardien_pierre_gardien_granit
+      level: 10
+      parent: gardien_pierre
+      hpMult: 1150
+      bonus: { will: 10, energy: 10, for: 3 }
+      speed: 27
+      res: { contondant: 30, tranchant: 30, glace: -10 }
+      skills: [[cri_defi, 10], [peau_dure, 14]]
+    - id: gardien_pierre_montagne_vivante
+      level: 20
+      parent: gardien_pierre_gardien_granit
+      hpMult: 1553
+      bonus: { will: 30, energy: 10, for: 3 }
+      speed: 28
+      res: { contondant: 40, tranchant: 40, glace: -10 }
+      skills: [[rempart_vivant, 20], [aura_protection, 25]]
   slots:
     arme: [deux_mains]
     armure: [lourde]
@@ -556,6 +860,30 @@ mage_cristal:
       speed: 23
       res: { glace: 35, contondant: -15 }
       skills: [[emploi, 1], [eclat_glace, 1], [meditation, 1], [mot_silence, 5], [tempete_givre, 10]]
+    - id: mage_cristal_cristallomancien
+      level: 10
+      parent: mage_cristal
+      hpMult: 1150
+      bonus: { will: 10, energy: 10, mana: 10, ele: 3 }
+      speed: 22
+      res: { glace: 35, contondant: -15 }
+      skills: [[prison_glace, 10], [javelot_glace, 14]]
+    - id: mage_cristal_mage_prisme
+      level: 20
+      parent: mage_cristal_cristallomancien
+      hpMult: 1323
+      bonus: { will: 10, energy: 10, mana: 10, ele: 11, for: 3 }
+      speed: 21
+      res: { glace: 35, contondant: -15 }
+      skills: [[blizzard, 20], [maitrise_elem, 24]]
+    - id: mage_cristal_gardien_cristal
+      level: 20
+      parent: mage_cristal_cristallomancien
+      hpMult: 1380
+      bonus: { will: 30, energy: 10, mana: 40, ele: 3, esp: 6 }
+      speed: 22
+      res: { glace: 35, contondant: -15 }
+      skills: [[armure_givre, 20], [egide, 24]]
   slots: *a3
 lanciers_cendres:
   units: 2
@@ -571,6 +899,30 @@ lanciers_cendres:
       speed: 20
       res: { feu: 25 }
       skills: [[emploi, 1], [repos, 1], [coup_jarret, 3], [charge, 6], [frappe_sismique, 12]]
+    - id: lanciers_cendres_lanciers_braise
+      level: 10
+      parent: lanciers_cendres
+      hpMult: 1150
+      bonus: { will: 10, energy: 10, for: 3 }
+      speed: 19
+      res: { feu: 25 }
+      skills: [[lame_ardente, 10], [estoc, 14]]
+    - id: lanciers_cendres_phalange_cendre
+      level: 20
+      parent: lanciers_cendres_lanciers_braise
+      hpMult: 1553
+      bonus: { will: 30, energy: 10, for: 3 }
+      speed: 20
+      res: { feu: 25, contondant: 10, tranchant: 10 }
+      skills: [[rempart_vivant, 20], [peau_dure, 22]]
+    - id: lanciers_cendres_lanciers_dragons
+      level: 20
+      parent: lanciers_cendres_lanciers_braise
+      hpMult: 1323
+      bonus: { will: 10, energy: 10, for: 11, esp: 3 }
+      speed: 18
+      res: { feu: 25 }
+      skills: [[bond, 20], [taillade, 24]]
   slots:
     arme: [deux_mains]
     armure: [legere, moyenne]
@@ -589,6 +941,22 @@ nomade:
       speed: 17
       res: { feu: 20 }
       skills: [[tir_arc, 1], [repos, 1], [fleche_feu, 3], [tir_recul, 6], [tir_precis, 12]]
+    - id: nomade_cavalier_dunes
+      level: 10
+      parent: nomade
+      hpMult: 1150
+      bonus: { will: 10, energy: 10, for: 3 }
+      speed: 16
+      res: { feu: 20 }
+      skills: [[rafale, 10], [filet, 14]]
+    - id: nomade_archer_simoun
+      level: 20
+      parent: nomade_cavalier_dunes
+      hpMult: 1323
+      bonus: { will: 10, energy: 10, for: 11, esp: 3 }
+      speed: 15
+      res: { feu: 20 }
+      skills: [[carreau_lourd, 20], [predateur, 24]]
   slots: *a2
 derviche:
   units: 1
@@ -604,6 +972,22 @@ derviche:
       speed: 15
       res: { psychique: 20 }
       skills: [[emploi, 1], [hate, 1], [second_souffle, 3], [tourbillon, 6], [lame_ombre, 10]]
+    - id: derviche_derviche_tourneur
+      level: 10
+      parent: derviche
+      hpMult: 1150
+      bonus: { will: 10, energy: 10, for: 3 }
+      speed: 14
+      res: { psychique: 20 }
+      skills: [[enchainement, 10], [mirage, 14]]
+    - id: derviche_derviche_tempetes
+      level: 20
+      parent: derviche_derviche_tourneur
+      hpMult: 1438
+      bonus: { will: 25, energy: 10, for: 8 }
+      speed: 14
+      res: { psychique: 20 }
+      skills: [[taillade, 20], [lien_esprits, 24]]
   slots:
     arme: [gantelets]
     armure: [legere, robe]
@@ -622,6 +1006,30 @@ pretresse_soleil:
       speed: 21
       res: { sacre: 40, feu: 20, tenebres: -20 }
       skills: [[emploi, 1], [javelot_lumiere, 1], [meditation, 1], [soin_majeur, 4], [benediction, 10]]
+    - id: pretresse_soleil_grande_pretresse
+      level: 10
+      parent: pretresse_soleil
+      hpMult: 1150
+      bonus: { will: 10, energy: 10, mana: 10, foi: 3 }
+      speed: 20
+      res: { sacre: 40, feu: 20, tenebres: -20 }
+      skills: [[mains_lumiere, 10], [rayon_sacre, 14]]
+    - id: pretresse_soleil_main_soleil
+      level: 20
+      parent: pretresse_soleil_grande_pretresse
+      hpMult: 1380
+      bonus: { will: 30, energy: 10, mana: 40, foi: 9 }
+      speed: 20
+      res: { sacre: 40, feu: 20, tenebres: -20 }
+      skills: [[onde_soin, 20], [ferveur, 22]]
+    - id: pretresse_soleil_flamme_soleil
+      level: 20
+      parent: pretresse_soleil_grande_pretresse
+      hpMult: 1323
+      bonus: { will: 10, energy: 10, mana: 10, foi: 11, for: 3 }
+      speed: 19
+      res: { sacre: 40, feu: 20, tenebres: -20 }
+      skills: [[jugement, 20], [consecration, 24]]
   slots: *a3
 scorpions:
   units: 2
@@ -637,6 +1045,22 @@ scorpions:
       speed: 16
       res: { feu: 20, maladie: 30 }
       skills: [[morsure, 1], [repos, 1], [morsure_venin, 3], [carapace_epines, 6]]
+    - id: scorpions_scorpions_guerre
+      level: 10
+      parent: scorpions
+      hpMult: 1150
+      bonus: { will: 10, energy: 10, for: 3 }
+      speed: 15
+      res: { feu: 20, maladie: 30 }
+      skills: [[laceration, 10], [peau_dure, 14]]
+    - id: scorpions_scorpions_empereurs
+      level: 20
+      parent: scorpions_scorpions_guerre
+      hpMult: 1438
+      bonus: { will: 25, energy: 10, for: 8 }
+      speed: 15
+      res: { feu: 20, maladie: 30 }
+      skills: [[pietinement, 20], [predateur, 24]]
   slots:
     accessoire: [collier]
 mage_cendre:
@@ -653,6 +1077,30 @@ mage_cendre:
       speed: 23
       res: { feu: 50, glace: -25 }
       skills: [[emploi, 1], [trait_flammes, 1], [meditation, 1], [pluie_feu, 6], [eruption, 15]]
+    - id: mage_cendre_mage_lave
+      level: 10
+      parent: mage_cendre
+      hpMult: 1150
+      bonus: { will: 10, energy: 10, mana: 10, ele: 3 }
+      speed: 22
+      res: { feu: 50, glace: -25 }
+      skills: [[jet_magma, 10], [lance_feu, 14]]
+    - id: mage_cendre_seigneur_cendres
+      level: 20
+      parent: mage_cendre_mage_lave
+      hpMult: 1323
+      bonus: { will: 10, energy: 10, mana: 10, ele: 11, for: 3 }
+      speed: 21
+      res: { feu: 50, glace: -25 }
+      skills: [[meteore, 20], [maitrise_elem, 24]]
+    - id: mage_cendre_gardien_braises
+      level: 20
+      parent: mage_cendre_mage_lave
+      hpMult: 1380
+      bonus: { will: 30, energy: 10, mana: 40, ele: 3, esp: 6 }
+      speed: 22
+      res: { feu: 50, glace: -25 }
+      skills: [[bouclier_flammes, 20], [nova_flammes, 22]]
   slots: *a3
 garde_oasis:
   units: 1
@@ -668,6 +1116,22 @@ garde_oasis:
       speed: 20
       res: { tranchant: 20, feu: 20 }
       skills: [[emploi, 1], [provocation, 1], [repos, 1], [mur_boucliers, 5], [carapace_epines, 8], [coup_tonnerre, 12]]
+    - id: garde_oasis_gardien_oasis
+      level: 10
+      parent: garde_oasis
+      hpMult: 1150
+      bonus: { will: 10, energy: 10, for: 3 }
+      speed: 19
+      res: { tranchant: 20, feu: 20 }
+      skills: [[cri_defi, 10], [coup_assommant, 14]]
+    - id: garde_oasis_rempart_desert
+      level: 20
+      parent: garde_oasis_gardien_oasis
+      hpMult: 1553
+      bonus: { will: 30, energy: 10, for: 3 }
+      speed: 20
+      res: { tranchant: 30, feu: 20, contondant: 10 }
+      skills: [[rempart_vivant, 20], [aura_protection, 24]]
   slots: *a1
 barde:
   units: 1
@@ -683,6 +1147,30 @@ barde:
       speed: 18
       res: { psychique: 30 }
       skills: [[emploi, 1], [chant_guerre, 1], [meditation, 1], [cri_effroi, 4], [vent_rapide, 10]]
+    - id: barde_conteur
+      level: 10
+      parent: barde
+      hpMult: 1150
+      bonus: { will: 10, energy: 10, mana: 10, esp: 3 }
+      speed: 17
+      res: { psychique: 30 }
+      skills: [[lien_esprits, 10], [vision_terreur, 14]]
+    - id: barde_maitre_chanteur
+      level: 20
+      parent: barde_conteur
+      hpMult: 1380
+      bonus: { will: 30, energy: 10, mana: 40, esp: 9 }
+      speed: 17
+      res: { psychique: 30 }
+      skills: [[clarte, 20], [concentration, 22]]
+    - id: barde_barde_cauchemars
+      level: 20
+      parent: barde_conteur
+      hpMult: 1323
+      bonus: { will: 10, energy: 10, mana: 10, esp: 11, for: 3 }
+      speed: 16
+      res: { psychique: 30 }
+      skills: [[hurlement_mental, 20], [domination, 24]]
   slots:
     arme: [une_main]
     armure: [legere, robe]
@@ -701,6 +1189,30 @@ paladin:
       speed: 21
       res: { sacre: 40, tenebres: 20, tranchant: 15 }
       skills: [[emploi, 1], [provocation, 1], [javelot_lumiere, 3], [benediction, 8], [coup_tonnerre, 12], [soin_mineur, 16]]
+    - id: paladin_paladin_lumiere
+      level: 10
+      parent: paladin
+      hpMult: 1150
+      bonus: { will: 10, energy: 10, mana: 10, for: 3 }
+      speed: 20
+      res: { sacre: 40, tenebres: 20, tranchant: 15 }
+      skills: [[chatiment, 22], [egide, 24]]
+    - id: paladin_champion_aube
+      level: 20
+      parent: paladin_paladin_lumiere
+      hpMult: 1553
+      bonus: { will: 30, energy: 10, mana: 10, for: 3 }
+      speed: 21
+      res: { sacre: 40, tenebres: 20, tranchant: 25, contondant: 10 }
+      skills: [[rempart_vivant, 25], [aura_protection, 27]]
+    - id: paladin_croise
+      level: 20
+      parent: paladin_paladin_lumiere
+      hpMult: 1323
+      bonus: { will: 10, energy: 10, mana: 10, for: 11, esp: 3 }
+      speed: 19
+      res: { sacre: 40, tenebres: 20, tranchant: 15 }
+      skills: [[jugement, 25], [consecration, 27]]
   slots: *a1
 archonte_aube:
   units: 1
@@ -716,6 +1228,22 @@ archonte_aube:
       speed: 21
       res: { sacre: 50, psychique: 30 }
       skills: [[emploi, 1], [nova_sacree, 1], [meditation, 1], [cercle_soins, 5], [mot_silence, 10], [javelot_lumiere, 14]]
+    - id: archonte_aube_archonte_majeur
+      level: 10
+      parent: archonte_aube
+      hpMult: 1150
+      bonus: { will: 10, energy: 10, mana: 10, foi: 3 }
+      speed: 20
+      res: { sacre: 50, psychique: 30 }
+      skills: [[onde_soin, 22], [egide, 24]]
+    - id: archonte_aube_seraphin
+      level: 20
+      parent: archonte_aube_archonte_majeur
+      hpMult: 1380
+      bonus: { will: 30, energy: 10, mana: 40, foi: 9 }
+      speed: 20
+      res: { sacre: 50, psychique: 30 }
+      skills: [[purification_masse, 25], [ferveur, 27]]
   slots: *a3
 lames_jumelles:
   units: 2
@@ -731,6 +1259,22 @@ lames_jumelles:
       speed: 14
       res: { tenebres: 15 }
       skills: [[emploi, 1], [repos, 1], [coup_jarret, 1], [assassinat, 3], [lame_ombre, 6]]
+    - id: lames_jumelles_lames_crepuscule
+      level: 10
+      parent: lames_jumelles
+      hpMult: 1150
+      bonus: { will: 10, energy: 10, for: 3 }
+      speed: 13
+      res: { tenebres: 15 }
+      skills: [[enchainement, 22], [predateur, 24]]
+    - id: lames_jumelles_lames_eclipse
+      level: 20
+      parent: lames_jumelles_lames_crepuscule
+      hpMult: 1323
+      bonus: { will: 10, energy: 10, for: 11, esp: 3 }
+      speed: 12
+      res: { tenebres: 15 }
+      skills: [[estoc, 25], [marque_mort, 27]]
   slots:
     arme: [une_main]
     armure: [legere]
@@ -749,6 +1293,22 @@ tireur_astral:
       speed: 17
       res: { glace: 20, sacre: 20 }
       skills: [[tir_arc, 1], [repos, 1], [marque, 1], [tir_perforant, 3], [tir_precis, 6]]
+    - id: tireur_astral_tireur_celeste
+      level: 10
+      parent: tireur_astral
+      hpMult: 1150
+      bonus: { will: 10, energy: 10, for: 3 }
+      speed: 16
+      res: { glace: 20, sacre: 20 }
+      skills: [[rafale, 22], [carreau_lourd, 24]]
+    - id: tireur_astral_il_etoiles
+      level: 20
+      parent: tireur_astral_tireur_celeste
+      hpMult: 1323
+      bonus: { will: 10, energy: 10, for: 11, esp: 3 }
+      speed: 15
+      res: { glace: 20, sacre: 20 }
+      skills: [[estoc, 25], [predateur, 27]]
   slots: *a2
 oracle:
   units: 1
@@ -764,6 +1324,22 @@ oracle:
       speed: 22
       res: { psychique: 40 }
       skills: [[emploi, 1], [affaiblissement, 1], [meditation, 1], [mot_silence, 3], [terreur_masse, 10]]
+    - id: oracle_haute_oracle
+      level: 10
+      parent: oracle
+      hpMult: 1150
+      bonus: { will: 10, energy: 10, mana: 10, esp: 3 }
+      speed: 21
+      res: { psychique: 40 }
+      skills: [[vision_terreur, 22], [domination, 24]]
+    - id: oracle_voix_destin
+      level: 20
+      parent: oracle_haute_oracle
+      hpMult: 1438
+      bonus: { will: 25, energy: 10, mana: 10, esp: 8 }
+      speed: 21
+      res: { psychique: 40 }
+      skills: [[sommeil, 25], [hurlement_mental, 27]]
   slots: *a3
 chevalier_griffon:
   units: 1
@@ -779,6 +1355,22 @@ chevalier_griffon:
       speed: 18
       res: { tranchant: 20, contondant: 15 }
       skills: [[emploi, 1], [repos, 1], [charge, 1], [coup_massue, 4], [frappe_sismique, 10]]
+    - id: chevalier_griffon_chevalier_ciel
+      level: 10
+      parent: chevalier_griffon
+      hpMult: 1150
+      bonus: { will: 10, energy: 10, for: 3 }
+      speed: 17
+      res: { tranchant: 20, contondant: 15 }
+      skills: [[bond, 22], [pietinement, 24]]
+    - id: chevalier_griffon_seigneur_griffon
+      level: 20
+      parent: chevalier_griffon_chevalier_ciel
+      hpMult: 1438
+      bonus: { will: 25, energy: 10, for: 8 }
+      speed: 17
+      res: { tranchant: 20, contondant: 15 }
+      skills: [[taillade, 25], [cri_defi, 27]]
   slots:
     arme: [deux_mains]
     armure: [moyenne, lourde]
@@ -797,6 +1389,22 @@ invocatrice:
       speed: 23
       res: { glace: 30, feu: 30 }
       skills: [[emploi, 1], [eclat_glace, 1], [meditation, 1], [tempete_givre, 4], [eruption, 12]]
+    - id: invocatrice_tempetueuse
+      level: 10
+      parent: invocatrice
+      hpMult: 1150
+      bonus: { will: 10, energy: 10, mana: 10, ele: 3 }
+      speed: 22
+      res: { glace: 30, feu: 30 }
+      skills: [[blizzard, 22], [lance_feu, 24]]
+    - id: invocatrice_maitresse_tempetes
+      level: 20
+      parent: invocatrice_tempetueuse
+      hpMult: 1323
+      bonus: { will: 10, energy: 10, mana: 10, ele: 11, for: 3 }
+      speed: 21
+      res: { glace: 30, feu: 30 }
+      skills: [[meteore, 25], [maitrise_elem, 27]]
   slots: *a3
 gardiens_celestes:
   units: 3
@@ -812,4 +1420,20 @@ gardiens_celestes:
       speed: 20
       res: { sacre: 30, tranchant: 15 }
       skills: [[emploi, 1], [repos, 1], [provocation, 3], [carapace_epines, 6]]
+    - id: gardiens_celestes_gardiens_seraphiques
+      level: 10
+      parent: gardiens_celestes
+      hpMult: 1150
+      bonus: { will: 10, energy: 10, for: 3 }
+      speed: 19
+      res: { sacre: 30, tranchant: 15 }
+      skills: [[rempart_vivant, 22], [peau_dure, 24]]
+    - id: gardiens_celestes_legion_celeste
+      level: 20
+      parent: gardiens_celestes_gardiens_seraphiques
+      hpMult: 1553
+      bonus: { will: 30, energy: 10, for: 3 }
+      speed: 20
+      res: { sacre: 30, tranchant: 25, contondant: 10 }
+      skills: [[aura_protection, 25], [egide, 27]]
   slots: *a1
