@@ -1,0 +1,139 @@
+# Bestiaire de Bois d'Ambre (contenu-cible-unites.md 7) : 4 légers puis 4 lourds.
+
+sylphes:
+  units: 3
+  pop: 2
+  tags: [fee]
+  weapon: bec
+  defaultDist: 2
+  base: { hp: 51, will: 95, energy: 90, mana: 30, for: 3, ele: 0, esp: 6, foi: 0, omb: 0 }
+  growth: { hp: 2.72, will: 3, energy: 2, mana: 1.5, for: 0.47, ele: 0, esp: 1.4, foi: 0, omb: 0 }
+  forms:
+    - id: sylphes
+      level: 1
+      speed: 18
+      res: { psychique: 20 }
+      skills: [[emploi, 1], [mirage, 1]]
+  drops: [cire_guepe]
+  boss: false
+  region: 10
+guepes:
+  units: 3
+  pop: 2
+  tags: [bete]
+  weapon: dard
+  defaultDist: 1
+  base: { hp: 45, will: 50, energy: 100, mana: 0, for: 5, ele: 0, esp: 0, foi: 0, omb: 0 }
+  growth: { hp: 2.55, will: 1, energy: 2, mana: 0, for: 1.12, ele: 0, esp: 0, foi: 0, omb: 0 }
+  forms:
+    - id: guepes
+      level: 1
+      speed: 15
+      res: { maladie: 30 }
+      skills: [[morsure_venin, 1]]
+  drops: [cire_guepe, ambre_brut]
+  boss: false
+  region: 10
+cerf_ambre:
+  units: 1
+  pop: 2
+  tags: [bete]
+  weapon: crocs
+  defaultDist: 1
+  base: { hp: 117, will: 50, energy: 100, mana: 0, for: 6, ele: 0, esp: 0, foi: 0, omb: 0 }
+  growth: { hp: 6.67, will: 1, energy: 2, mana: 0, for: 1.44, ele: 0, esp: 0, foi: 0, omb: 0 }
+  forms:
+    - id: cerf_ambre
+      level: 1
+      speed: 15
+      res: {}
+      skills: [[morsure, 1], [charge, 1], [repos, 8]]
+  drops: [bois_cerf]
+  boss: false
+  region: 10
+archers_sylvains:
+  units: 2
+  pop: 2
+  tags: [plante]
+  weapon: arc_m
+  defaultDist: 3
+  base: { hp: 70, will: 55, energy: 95, mana: 0, for: 5, ele: 0, esp: 1, foi: 0, omb: 0 }
+  growth: { hp: 4, will: 1, energy: 2, mana: 0, for: 1.3, ele: 0, esp: 0.3, foi: 0, omb: 0 }
+  forms:
+    - id: archers_sylvains
+      level: 1
+      speed: 18
+      res: { maladie: 20 }
+      skills: [[tir_arc, 1], [tir_empoisonne, 1], [repos, 8]]
+  drops: [ecorce_rousse]
+  boss: false
+  region: 10
+ours_chene:
+  units: 1
+  pop: 3
+  tags: [plante, bete]
+  weapon: branches
+  defaultDist: 1
+  base: { hp: 266, will: 50, energy: 110, mana: 0, for: 11, ele: 0, esp: 0, foi: 0, omb: 0 }
+  growth: { hp: 17.1, will: 1, energy: 2, mana: 0, for: 2.8, ele: 0, esp: 0, foi: 0, omb: 0 }
+  forms:
+    - id: ours_chene
+      level: 1
+      speed: 25
+      res: { tranchant: 20, feu: -30 }
+      skills: [[morsure, 1], [pietinement, 1], [carapace_epines, 8]]
+  drops: [ecorce_rousse, c_ur_dryade]
+  boss: false
+  region: 10
+dryade_corrompue:
+  units: 1
+  pop: 2
+  tags: [plante]
+  weapon: baton_m
+  defaultDist: 3
+  base: { hp: 102, will: 80, energy: 80, mana: 45, for: 2, ele: 0, esp: 2, foi: 7, omb: 0 }
+  growth: { hp: 5.8, will: 2, energy: 1, mana: 2.5, for: 0.6, ele: 0, esp: 0.6, foi: 1.8, omb: 0 }
+  forms:
+    - id: dryade_corrompue
+      level: 1
+      speed: 22
+      res: { maladie: 40, feu: -30 }
+      skills: [[emploi, 1], [seve, 1], [peste, 8], [meditation, 10]]
+  drops: [c_ur_dryade, ambre_brut]
+  boss: false
+  region: 10
+druide_noir:
+  units: 1
+  pop: 2
+  tags: [humain]
+  weapon: baton_m
+  defaultDist: 3
+  base: { hp: 94, will: 65, energy: 70, mana: 45, for: 1, ele: 0, esp: 2, foi: 0, omb: 7 }
+  growth: { hp: 4.35, will: 2, energy: 1, mana: 2.5, for: 0.36, ele: 0, esp: 0.6, foi: 0, omb: 1.8 }
+  forms:
+    - id: druide_noir
+      level: 1
+      speed: 23
+      res: { maladie: 30 }
+      skills: [[emploi, 1], [putrefaction, 1], [malefice, 8], [jet_toile, 10]]
+  drops: [ambre_brut]
+  boss: false
+  region: 10
+treant:
+  units: 1
+  pop: 3
+  tags: [plante]
+  weapon: branches
+  defaultDist: 1
+  immune: [maladie]
+  base: { hp: 285, will: 99, energy: 100, mana: 0, for: 8, ele: 0, esp: 0, foi: 0, omb: 0 }
+  growth: { hp: 17.1, will: 0, energy: 2, mana: 0, for: 2.1, ele: 0, esp: 0, foi: 0, omb: 0 }
+  forms:
+    - id: treant
+      level: 1
+      speed: 26
+      res: { tranchant: 30, maladie: 40, feu: -40 }
+      skills: [[emploi, 1], [pietinement, 1], [riposte, 8]]
+  drops: [ecorce_rousse, bois_cerf]
+  boss: false
+  region: 10

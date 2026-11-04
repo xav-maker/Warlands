@@ -68,7 +68,8 @@ export function checkReferences(raw: RawContent): Issue[] {
     const degree = new Map<string, number>();
     for (const x of raw.routes) {
       const where = `world/routes.yaml › ${x.id}`;
-      if (ids.has(x.id) || regionIds.has(x.id)) err(where, `identifiant de route en double ${x.id}`);
+      // Une route peut garder l'identifiant de la région dont elle était le territoire (données déjà jouées).
+      if (ids.has(x.id)) err(where, `identifiant de route en double ${x.id}`);
       ids.add(x.id);
       for (const end of [x.from, x.to]) {
         if (!regionIds.has(end)) err(where, `région inconnue ${end}`);

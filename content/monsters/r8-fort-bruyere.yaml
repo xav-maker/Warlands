@@ -1,0 +1,139 @@
+# Bestiaire de Landes de Bruyère (contenu-cible-unites.md 7) : 4 légers puis 4 lourds.
+
+bandits:
+  units: 2
+  pop: 2
+  tags: [humain]
+  weapon: coutelas
+  defaultDist: 1
+  base: { hp: 80, will: 55, energy: 100, mana: 0, for: 6, ele: 0, esp: 1, foi: 0, omb: 1 }
+  growth: { hp: 4, will: 1, energy: 2, mana: 0, for: 1.5, ele: 0, esp: 0.3, foi: 0, omb: 0.3 }
+  forms:
+    - id: bandits
+      level: 1
+      speed: 16
+      res: {}
+      skills: [[emploi, 1], [laceration, 1], [repos, 3]]
+  drops: [cuir_bandit]
+  boss: false
+  region: 7
+deserteurs:
+  units: 2
+  pop: 2
+  tags: [humain]
+  weapon: arbalete
+  defaultDist: 3
+  base: { hp: 70, will: 55, energy: 95, mana: 0, for: 5, ele: 0, esp: 1, foi: 0, omb: 0 }
+  growth: { hp: 4, will: 1, energy: 2, mana: 0, for: 1.3, ele: 0, esp: 0.3, foi: 0, omb: 0 }
+  forms:
+    - id: deserteurs
+      level: 1
+      speed: 18
+      res: {}
+      skills: [[tir_arc, 1], [carreau_lourd, 1], [repos, 3]]
+  drops: [cuir_bandit, plume_corneille]
+  boss: false
+  region: 7
+chiens_bruyere:
+  units: 2
+  pop: 2
+  tags: [bete]
+  weapon: crocs
+  defaultDist: 1
+  base: { hp: 70, will: 50, energy: 100, mana: 0, for: 5, ele: 0, esp: 0, foi: 0, omb: 0 }
+  growth: { hp: 4, will: 1, energy: 2, mana: 0, for: 1.2, ele: 0, esp: 0, foi: 0, omb: 0 }
+  forms:
+    - id: chiens_bruyere
+      level: 1
+      speed: 15
+      res: {}
+      skills: [[morsure, 1], [hurlement, 1], [repos, 3]]
+  drops: [bruyere_seche]
+  boss: false
+  region: 7
+corneilles:
+  units: 3
+  pop: 2
+  tags: [bete]
+  weapon: bec
+  defaultDist: 1
+  base: { hp: 45, will: 50, energy: 100, mana: 0, for: 5, ele: 0, esp: 0, foi: 0, omb: 0 }
+  growth: { hp: 2.55, will: 1, energy: 2, mana: 0, for: 1.12, ele: 0, esp: 0, foi: 0, omb: 0 }
+  forms:
+    - id: corneilles
+      level: 1
+      speed: 13
+      res: { contondant: -20 }
+      skills: [[morsure, 1], [cri_effroi, 1]]
+  drops: [plume_corneille]
+  boss: false
+  region: 7
+esprit_menhir:
+  units: 1
+  pop: 2
+  tags: [construct, esprit]
+  weapon: poing_pierre
+  defaultDist: 1
+  immune: [psychique]
+  base: { hp: 218, will: 99, energy: 100, mana: 0, for: 7, ele: 0, esp: 0, foi: 0, omb: 0 }
+  growth: { hp: 13.05, will: 0, energy: 2, mana: 0, for: 1.8, ele: 0, esp: 0, foi: 0, omb: 0 }
+  forms:
+    - id: esprit_menhir
+      level: 1
+      speed: 26
+      res: { tranchant: 30, contondant: 20 }
+      skills: [[emploi, 1], [coup_assommant, 1], [peau_dure, 3]]
+  drops: [eclat_menhir, rune_menhir]
+  boss: false
+  region: 7
+chef_bande:
+  units: 1
+  pop: 2
+  tags: [humain]
+  weapon: epee
+  defaultDist: 1
+  base: { hp: 160, will: 65, energy: 100, mana: 0, for: 6, ele: 0, esp: 1, foi: 1, omb: 0 }
+  growth: { hp: 10.15, will: 1, energy: 2, mana: 0, for: 1.2, ele: 0, esp: 0.36, foi: 0.36, omb: 0 }
+  forms:
+    - id: chef_bande
+      level: 1
+      speed: 20
+      res: { tranchant: 15 }
+      skills: [[emploi, 1], [cri_defi, 1], [enchainement, 3], [repos, 5]]
+  drops: [cuir_bandit, rune_menhir]
+  boss: false
+  region: 7
+rebouteuse:
+  units: 1
+  pop: 2
+  tags: [humain]
+  weapon: baton_os
+  defaultDist: 3
+  base: { hp: 94, will: 65, energy: 70, mana: 45, for: 1, ele: 0, esp: 2, foi: 0, omb: 7 }
+  growth: { hp: 4.35, will: 2, energy: 1, mana: 2.5, for: 0.36, ele: 0, esp: 0.6, foi: 0, omb: 1.8 }
+  forms:
+    - id: rebouteuse
+      level: 1
+      speed: 23
+      res: { tenebres: 30 }
+      skills: [[emploi, 1], [toucher_tombe, 1], [malefice, 3], [soin_mineur, 5]]
+  drops: [bruyere_seche, eclat_menhir]
+  boss: false
+  region: 7
+belier:
+  units: 1
+  pop: 2
+  tags: [bete]
+  weapon: branches
+  defaultDist: 1
+  base: { hp: 122, will: 50, energy: 100, mana: 0, for: 6, ele: 0, esp: 0, foi: 0, omb: 0 }
+  growth: { hp: 6.96, will: 1, energy: 2, mana: 0, for: 1.44, ele: 0, esp: 0, foi: 0, omb: 0 }
+  forms:
+    - id: belier
+      level: 1
+      speed: 15
+      res: { contondant: 20 }
+      skills: [[morsure, 1], [charge, 1], [pietinement, 3]]
+  drops: [bruyere_seche]
+  boss: false
+  region: 7

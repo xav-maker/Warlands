@@ -810,3 +810,59 @@ silence_tombe:
   ai: debuff
   fx:
     - { k: state, s: silence, dur: 60, area: rank }
+
+# Passifs nouveaux (contenu-cible-unites.md 3.6), lus par le moteur v1.
+peau_dure:
+  kind: passive
+  target: self
+  range: 1
+  energy: 0
+  mana: 0
+  durBase: unit
+  durMult: 1000
+  p: { res: 100 }
+maitrise_elem:
+  kind: passive
+  target: self
+  range: 1
+  energy: 0
+  mana: 0
+  durBase: unit
+  durMult: 1000
+  p: { pow: 150 }
+ferveur:
+  kind: passive
+  target: self
+  range: 1
+  energy: 0
+  mana: 0
+  durBase: unit
+  durMult: 1000
+  p: { heal: 150 }
+sang_froid:
+  kind: passive
+  target: self
+  range: 1
+  energy: 0
+  mana: 0
+  durBase: unit
+  durMult: 1000
+  p: { floor: 300 }
+predateur:
+  kind: passive
+  target: self
+  range: 1
+  energy: 0
+  mana: 0
+  durBase: unit
+  durMult: 1000
+  p: { bonus: 200, threshold: 500 }
+aura_protection:
+  kind: passive
+  target: self
+  range: 1
+  energy: 0
+  mana: 0
+  durBase: unit
+  durMult: 1000
+  p: { res: 80 }

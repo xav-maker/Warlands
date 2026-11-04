@@ -1,0 +1,139 @@
+# Bestiaire de Rives du Saule (contenu-cible-unites.md 7) : 4 légers puis 4 lourds.
+
+grenouilles:
+  units: 2
+  pop: 2
+  tags: [bete]
+  weapon: crocs
+  defaultDist: 1
+  base: { hp: 70, will: 50, energy: 100, mana: 0, for: 5, ele: 0, esp: 0, foi: 0, omb: 0 }
+  growth: { hp: 4, will: 1, energy: 2, mana: 0, for: 1.2, ele: 0, esp: 0, foi: 0, omb: 0 }
+  forms:
+    - id: grenouilles
+      level: 1
+      speed: 15
+      res: { maladie: 20 }
+      skills: [[morsure, 1], [jet_toile, 1], [repos, 3]]
+  drops: [ecaille_brochet]
+  boss: false
+  region: 6
+rats_eau:
+  units: 3
+  pop: 2
+  tags: [bete]
+  weapon: crocs
+  defaultDist: 1
+  base: { hp: 48, will: 50, energy: 100, mana: 0, for: 5, ele: 0, esp: 0, foi: 0, omb: 0 }
+  growth: { hp: 2.72, will: 1, energy: 2, mana: 0, for: 1.12, ele: 0, esp: 0, foi: 0, omb: 0 }
+  forms:
+    - id: rats_eau
+      level: 1
+      speed: 15
+      res: { maladie: 30 }
+      skills: [[morsure, 1], [repos, 1]]
+  drops: [roseau_tresse]
+  boss: false
+  region: 6
+farfadets:
+  units: 2
+  pop: 2
+  tags: [fee]
+  weapon: dague
+  defaultDist: 2
+  base: { hp: 75, will: 95, energy: 90, mana: 30, for: 3, ele: 0, esp: 6, foi: 0, omb: 0 }
+  growth: { hp: 4, will: 3, energy: 2, mana: 1.5, for: 0.5, ele: 0, esp: 1.5, foi: 0, omb: 0 }
+  forms:
+    - id: farfadets
+      level: 1
+      speed: 18
+      res: { psychique: 30 }
+      skills: [[emploi, 1], [confusion, 1], [mirage, 3]]
+  drops: [galet_chantant]
+  boss: false
+  region: 6
+lavandiere:
+  units: 1
+  pop: 2
+  tags: [esprit]
+  weapon: mains_spectrales
+  defaultDist: 3
+  base: { hp: 109, will: 95, energy: 90, mana: 30, for: 4, ele: 0, esp: 7, foi: 0, omb: 0 }
+  growth: { hp: 5.8, will: 3, energy: 2, mana: 1.5, for: 0.6, ele: 0, esp: 1.8, foi: 0, omb: 0 }
+  forms:
+    - id: lavandiere
+      level: 1
+      speed: 18
+      res: { tranchant: 30, sacre: -30 }
+      skills: [[emploi, 1], [murmure, 1], [vision_terreur, 3]]
+  drops: [roseau_tresse, galet_chantant]
+  boss: false
+  region: 6
+ondine:
+  units: 1
+  pop: 2
+  tags: [esprit]
+  weapon: baton_m
+  defaultDist: 3
+  immune: [glace]
+  base: { hp: 131, will: 99, energy: 80, mana: 40, for: 4, ele: 6, esp: 0, foi: 0, omb: 0 }
+  growth: { hp: 7.25, will: 0, energy: 1, mana: 2, for: 0.6, ele: 1.56, esp: 0, foi: 0, omb: 0 }
+  forms:
+    - id: ondine
+      level: 1
+      speed: 21
+      res: { glace: 50, feu: -30 }
+      skills: [[emploi, 1], [javelot_glace, 1], [armure_givre, 3], [meditation, 5]]
+  drops: [perle_ondine, galet_chantant]
+  boss: false
+  region: 6
+brochet:
+  units: 1
+  pop: 2
+  tags: [bete]
+  weapon: machoires
+  defaultDist: 1
+  base: { hp: 122, will: 50, energy: 100, mana: 0, for: 6, ele: 0, esp: 0, foi: 0, omb: 0 }
+  growth: { hp: 6.96, will: 1, energy: 2, mana: 0, for: 1.44, ele: 0, esp: 0, foi: 0, omb: 0 }
+  forms:
+    - id: brochet
+      level: 1
+      speed: 15
+      res: { glace: 20 }
+      skills: [[morsure, 1], [bond, 1], [laceration, 3]]
+  drops: [ecaille_brochet]
+  boss: false
+  region: 6
+nymphe:
+  units: 1
+  pop: 2
+  tags: [fee]
+  weapon: baton
+  defaultDist: 3
+  base: { hp: 102, will: 80, energy: 80, mana: 45, for: 2, ele: 0, esp: 2, foi: 7, omb: 0 }
+  growth: { hp: 5.8, will: 2, energy: 1, mana: 2.5, for: 0.6, ele: 0, esp: 0.6, foi: 1.8, omb: 0 }
+  forms:
+    - id: nymphe
+      level: 1
+      speed: 22
+      res: { maladie: 30, feu: -30 }
+      skills: [[emploi, 1], [soin_mineur, 1], [seve, 3], [meditation, 5]]
+  drops: [ecorce_saule]
+  boss: false
+  region: 6
+troll_pont:
+  units: 1
+  pop: 3
+  tags: [geant]
+  weapon: gourdin
+  defaultDist: 1
+  base: { hp: 266, will: 50, energy: 110, mana: 0, for: 11, ele: 0, esp: 0, foi: 0, omb: 0 }
+  growth: { hp: 17.1, will: 1, energy: 2, mana: 0, for: 2.8, ele: 0, esp: 0, foi: 0, omb: 0 }
+  forms:
+    - id: troll_pont
+      level: 1
+      speed: 25
+      res: { contondant: 20, feu: -20 }
+      skills: [[emploi, 1], [frappe_brutale, 1], [riposte, 3], [repos, 5]]
+  drops: [ecorce_saule, ecaille_brochet]
+  boss: false
+  region: 6

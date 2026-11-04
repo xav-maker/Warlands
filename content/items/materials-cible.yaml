@@ -1,0 +1,302 @@
+# Matériaux des régions nouvelles (contenu-cible-monde.md 4).
+
+laine_grasse:
+  kind: materiau
+  tier: 1
+  value: 4
+  tags: [fil, bete]
+ble_noir:
+  kind: materiau
+  tier: 1
+  value: 5
+  tags: [herbe]
+soie_bourdon:
+  kind: materiau
+  tier: 1
+  value: 5
+  tags: [fil, essence]
+defense_sanglier:
+  kind: materiau
+  tier: 1
+  value: 6
+  tags: [os, bete]
+ecorce_saule:
+  kind: materiau
+  tier: 1
+  value: 4
+  tags: [bois, herbe]
+ecaille_brochet:
+  kind: materiau
+  tier: 1
+  value: 5
+  tags: [cuir, bete]
+galet_chantant:
+  kind: materiau
+  tier: 1
+  value: 5
+  tags: [pierre, essence]
+roseau_tresse:
+  kind: materiau
+  tier: 1
+  value: 6
+  tags: [fil, herbe]
+bruyere_seche:
+  kind: materiau
+  tier: 1
+  value: 4
+  tags: [herbe, bois]
+cuir_bandit:
+  kind: materiau
+  tier: 1
+  value: 5
+  tags: [cuir]
+eclat_menhir:
+  kind: materiau
+  tier: 1
+  value: 5
+  tags: [pierre, essence]
+plume_corneille:
+  kind: materiau
+  tier: 1
+  value: 6
+  tags: [plume]
+fourrure_loup_garou:
+  kind: materiau
+  tier: 2
+  value: 10
+  tags: [cuir, bete]
+brume_condensee:
+  kind: materiau
+  tier: 2
+  value: 12
+  tags: [essence]
+bois_pin_noir:
+  kind: materiau
+  tier: 2
+  value: 13
+  tags: [bois]
+croc_lunaire:
+  kind: materiau
+  tier: 2
+  value: 15
+  tags: [os, bete]
+os_poli:
+  kind: materiau
+  tier: 2
+  value: 10
+  tags: [os]
+linceul:
+  kind: materiau
+  tier: 2
+  value: 12
+  tags: [fil]
+cendre_funeraire:
+  kind: materiau
+  tier: 2
+  value: 13
+  tags: [essence, pierre]
+clou_cercueil:
+  kind: materiau
+  tier: 2
+  value: 15
+  tags: [metal]
+ambre_brut:
+  kind: materiau
+  tier: 2
+  value: 10
+  tags: [pierre, essence]
+ecorce_rousse:
+  kind: materiau
+  tier: 2
+  value: 12
+  tags: [bois]
+bois_cerf:
+  kind: materiau
+  tier: 2
+  value: 13
+  tags: [os, bete]
+cire_guepe:
+  kind: materiau
+  tier: 2
+  value: 15
+  tags: [essence, herbe]
+fourrure_yeti:
+  kind: materiau
+  tier: 3
+  value: 24
+  tags: [cuir, bete]
+cristal_givre:
+  kind: materiau
+  tier: 3
+  value: 26
+  tags: [pierre, essence]
+fer_gele:
+  kind: materiau
+  tier: 3
+  value: 28
+  tags: [metal]
+corne_belier_blanc:
+  kind: materiau
+  tier: 3
+  value: 30
+  tags: [os]
+soie_noire:
+  kind: materiau
+  tier: 3
+  value: 24
+  tags: [fil]
+spores_luisantes:
+  kind: materiau
+  tier: 3
+  value: 26
+  tags: [herbe, essence]
+bois_nuit:
+  kind: materiau
+  tier: 3
+  value: 28
+  tags: [bois]
+chitine_araignee:
+  kind: materiau
+  tier: 3
+  value: 30
+  tags: [cuir, os]
+basalte:
+  kind: materiau
+  tier: 3
+  value: 24
+  tags: [pierre]
+soufre_ardent:
+  kind: materiau
+  tier: 3
+  value: 26
+  tags: [essence, pierre]
+ecaille_salamandre:
+  kind: materiau
+  tier: 3
+  value: 28
+  tags: [cuir, bete]
+fer_lave:
+  kind: materiau
+  tier: 3
+  value: 30
+  tags: [metal]
+corail_rouge:
+  kind: materiau
+  tier: 4
+  value: 45
+  tags: [pierre]
+toile_voile:
+  kind: materiau
+  tier: 4
+  value: 48
+  tags: [fil]
+ecaille_naga:
+  kind: materiau
+  tier: 4
+  value: 52
+  tags: [cuir]
+poudre_noire:
+  kind: materiau
+  tier: 4
+  value: 55
+  tags: [essence]
+liane_fer:
+  kind: materiau
+  tier: 4
+  value: 45
+  tags: [fil, bois]
+venin_emeraude:
+  kind: materiau
+  tier: 4
+  value: 48
+  tags: [essence, bete]
+bois_teck:
+  kind: materiau
+  tier: 4
+  value: 52
+  tags: [bois]
+jade_brut:
+  kind: materiau
+  tier: 4
+  value: 55
+  tags: [pierre]
+cuir_centaure:
+  kind: materiau
+  tier: 4
+  value: 45
+  tags: [cuir]
+herbe_a_vent:
+  kind: materiau
+  tier: 4
+  value: 48
+  tags: [herbe, plume]
+fer_orc:
+  kind: materiau
+  tier: 4
+  value: 52
+  tags: [metal]
+corne_hyene:
+  kind: materiau
+  tier: 4
+  value: 55
+  tags: [os, bete]
+nacre_abyssale:
+  kind: materiau
+  tier: 5
+  value: 85
+  tags: [pierre, essence]
+encre_pieuvre:
+  kind: materiau
+  tier: 5
+  value: 88
+  tags: [essence]
+algue_ys:
+  kind: materiau
+  tier: 5
+  value: 92
+  tags: [herbe, fil]
+dent_leviathan:
+  kind: materiau
+  tier: 5
+  value: 95
+  tags: [os, bete]
+obsidienne:
+  kind: materiau
+  tier: 5
+  value: 85
+  tags: [pierre, metal]
+sang_demon:
+  kind: materiau
+  tier: 5
+  value: 88
+  tags: [essence]
+cuir_infernal:
+  kind: materiau
+  tier: 5
+  value: 92
+  tags: [cuir]
+chaine_ame:
+  kind: materiau
+  tier: 5
+  value: 95
+  tags: [metal, fil]
+petale_lune:
+  kind: materiau
+  tier: 5
+  value: 85
+  tags: [herbe, essence]
+soie_reve:
+  kind: materiau
+  tier: 5
+  value: 88
+  tags: [fil]
+bois_argent:
+  kind: materiau
+  tier: 5
+  value: 92
+  tags: [bois]
+corne_licorne:
+  kind: materiau
+  tier: 5
+  value: 95
+  tags: [os]

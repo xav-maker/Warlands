@@ -1,0 +1,482 @@
+# Trophées des rares des routes nouvelles.
+
+trophee_grand_groin:
+  kind: trophee
+  tier: 1
+  value: 20
+  tags: []
+trophee_lievre_roi:
+  kind: trophee
+  tier: 1
+  value: 20
+  tags: []
+trophee_bourdon_reine:
+  kind: trophee
+  tier: 1
+  value: 20
+  tags: []
+trophee_jacques_fourche:
+  kind: trophee
+  tier: 1
+  value: 20
+  tags: []
+trophee_gros_ventre:
+  kind: trophee
+  tier: 1
+  value: 20
+  tags: []
+trophee_mere_rat:
+  kind: trophee
+  tier: 1
+  value: 20
+  tags: []
+trophee_brume_fille:
+  kind: trophee
+  tier: 1
+  value: 20
+  tags: []
+trophee_croc_vase:
+  kind: trophee
+  tier: 1
+  value: 20
+  tags: []
+trophee_vieux_sanglier_gris:
+  kind: trophee
+  tier: 1
+  value: 20
+  tags: []
+trophee_corneille_mere:
+  kind: trophee
+  tier: 1
+  value: 20
+  tags: []
+trophee_belier_tonnerre:
+  kind: trophee
+  tier: 1
+  value: 20
+  tags: []
+trophee_pierre_qui_marche:
+  kind: trophee
+  tier: 1
+  value: 20
+  tags: []
+trophee_grenouille_taureau_or:
+  kind: trophee
+  tier: 1
+  value: 20
+  tags: []
+trophee_malfaisant:
+  kind: trophee
+  tier: 1
+  value: 20
+  tags: []
+trophee_grand_chien_noir:
+  kind: trophee
+  tier: 1
+  value: 20
+  tags: []
+trophee_rebouteuse_ma_gorre:
+  kind: trophee
+  tier: 1
+  value: 20
+  tags: []
+trophee_brigand_rouge_gorge:
+  kind: trophee
+  tier: 1
+  value: 20
+  tags: []
+trophee_ours_balafre:
+  kind: trophee
+  tier: 1
+  value: 20
+  tags: []
+trophee_goule_gibet:
+  kind: trophee
+  tier: 1
+  value: 20
+  tags: []
+trophee_chien_os:
+  kind: trophee
+  tier: 1
+  value: 20
+  tags: []
+trophee_ondine_pale:
+  kind: trophee
+  tier: 1
+  value: 20
+  tags: []
+trophee_farfadet_nuit_noire:
+  kind: trophee
+  tier: 1
+  value: 20
+  tags: []
+trophee_chauve_souris_albinos:
+  kind: trophee
+  tier: 1
+  value: 20
+  tags: []
+trophee_corbeau_trois_yeux:
+  kind: trophee
+  tier: 1
+  value: 20
+  tags: []
+trophee_chef_coupe_bourse:
+  kind: trophee
+  tier: 1
+  value: 20
+  tags: []
+trophee_cerf_bois_or:
+  kind: trophee
+  tier: 1
+  value: 20
+  tags: []
+trophee_guepe_reine:
+  kind: trophee
+  tier: 1
+  value: 20
+  tags: []
+trophee_belier_noir:
+  kind: trophee
+  tier: 1
+  value: 20
+  tags: []
+trophee_sangsue_mere:
+  kind: trophee
+  tier: 2
+  value: 80
+  tags: []
+trophee_chasseur_ombre_grise:
+  kind: trophee
+  tier: 2
+  value: 80
+  tags: []
+trophee_crapaud_bubon:
+  kind: trophee
+  tier: 2
+  value: 80
+  tags: []
+trophee_ours_brumes_blanc:
+  kind: trophee
+  tier: 2
+  value: 80
+  tags: []
+trophee_loup_garou_gris_croc:
+  kind: trophee
+  tier: 2
+  value: 80
+  tags: []
+trophee_harpie_sans_plumes:
+  kind: trophee
+  tier: 2
+  value: 80
+  tags: []
+trophee_pendu_qui_marche:
+  kind: trophee
+  tier: 2
+  value: 80
+  tags: []
+trophee_loup_blanc_il_givre:
+  kind: trophee
+  tier: 2
+  value: 80
+  tags: []
+trophee_goule_ventre_creux:
+  kind: trophee
+  tier: 2
+  value: 80
+  tags: []
+trophee_banshee_hurlante:
+  kind: trophee
+  tier: 2
+  value: 80
+  tags: []
+trophee_araignee_mangeuse_lune:
+  kind: trophee
+  tier: 2
+  value: 80
+  tags: []
+trophee_fossoyeur_batisseur:
+  kind: trophee
+  tier: 2
+  value: 80
+  tags: []
+trophee_squelette_couronne:
+  kind: trophee
+  tier: 2
+  value: 80
+  tags: []
+trophee_spectre_veuve:
+  kind: trophee
+  tier: 2
+  value: 80
+  tags: []
+trophee_ours_chene_pourri:
+  kind: trophee
+  tier: 2
+  value: 80
+  tags: []
+trophee_dryade_larmes_noires:
+  kind: trophee
+  tier: 2
+  value: 80
+  tags: []
+trophee_cerf_braise:
+  kind: trophee
+  tier: 2
+  value: 80
+  tags: []
+trophee_druide_cendre_noire:
+  kind: trophee
+  tier: 2
+  value: 80
+  tags: []
+trophee_diablotin_rire_rouge:
+  kind: trophee
+  tier: 2
+  value: 80
+  tags: []
+trophee_ver_ardent:
+  kind: trophee
+  tier: 2
+  value: 80
+  tags: []
+trophee_kobold_fond_mine:
+  kind: trophee
+  tier: 3
+  value: 180
+  tags: []
+trophee_yeti_barbe_glace:
+  kind: trophee
+  tier: 3
+  value: 180
+  tags: []
+trophee_nain_givre_thorgil:
+  kind: trophee
+  tier: 3
+  value: 180
+  tags: []
+trophee_chamane_souffle_blanc:
+  kind: trophee
+  tier: 3
+  value: 180
+  tags: []
+trophee_loup_blanc_croc_bleu:
+  kind: trophee
+  tier: 3
+  value: 180
+  tags: []
+trophee_wendigo_sans_faim:
+  kind: trophee
+  tier: 3
+  value: 180
+  tags: []
+trophee_elementaire_eclat_noir:
+  kind: trophee
+  tier: 3
+  value: 180
+  tags: []
+trophee_geant_ymir_jeune:
+  kind: trophee
+  tier: 3
+  value: 180
+  tags: []
+trophee_champignon_roi:
+  kind: trophee
+  tier: 3
+  value: 180
+  tags: []
+trophee_tisseuse_il_vert:
+  kind: trophee
+  tier: 3
+  value: 180
+  tags: []
+trophee_salamandre_lave_ancienne:
+  kind: trophee
+  tier: 3
+  value: 180
+  tags: []
+trophee_golem_basalte_fele:
+  kind: trophee
+  tier: 3
+  value: 180
+  tags: []
+trophee_lame_nuit_elfe_noire:
+  kind: trophee
+  tier: 3
+  value: 180
+  tags: []
+trophee_araignee_veuve_pale:
+  kind: trophee
+  tier: 3
+  value: 180
+  tags: []
+trophee_ombre_sans_nom:
+  kind: trophee
+  tier: 3
+  value: 180
+  tags: []
+trophee_mangeur_lanternes_gras:
+  kind: trophee
+  tier: 3
+  value: 180
+  tags: []
+trophee_chien_infernal_trois_gueules:
+  kind: trophee
+  tier: 3
+  value: 180
+  tags: []
+trophee_pyromancienne_vashti:
+  kind: trophee
+  tier: 3
+  value: 180
+  tags: []
+trophee_forgeron_main_lave:
+  kind: trophee
+  tier: 3
+  value: 180
+  tags: []
+trophee_elementaire_feu_ancien:
+  kind: trophee
+  tier: 3
+  value: 180
+  tags: []
+trophee_scorpion_bouclier_or:
+  kind: trophee
+  tier: 4
+  value: 320
+  tags: []
+trophee_pirate_borgne_rouge:
+  kind: trophee
+  tier: 4
+  value: 320
+  tags: []
+trophee_crabe_ermite_geant:
+  kind: trophee
+  tier: 4
+  value: 320
+  tags: []
+trophee_naga_ecaille_nacre:
+  kind: trophee
+  tier: 4
+  value: 320
+  tags: []
+trophee_sirene_corsaire_melusine:
+  kind: trophee
+  tier: 4
+  value: 320
+  tags: []
+trophee_requin_garou_machoire_pale:
+  kind: trophee
+  tier: 4
+  value: 320
+  tags: []
+trophee_homme_poisson_pretre:
+  kind: trophee
+  tier: 4
+  value: 320
+  tags: []
+trophee_meduse_couronnee:
+  kind: trophee
+  tier: 4
+  value: 320
+  tags: []
+trophee_homme_fauve_croc_lune:
+  kind: trophee
+  tier: 4
+  value: 320
+  tags: []
+trophee_hyene_rieuse:
+  kind: trophee
+  tier: 4
+  value: 320
+  tags: []
+trophee_gorille_poing_fer:
+  kind: trophee
+  tier: 4
+  value: 320
+  tags: []
+trophee_centaure_fleche_noire:
+  kind: trophee
+  tier: 4
+  value: 320
+  tags: []
+trophee_serpent_roi_ecaille_emeraude:
+  kind: trophee
+  tier: 4
+  value: 320
+  tags: []
+trophee_idole_rieuse:
+  kind: trophee
+  tier: 4
+  value: 320
+  tags: []
+trophee_plante_carnivore_gueule_rouge:
+  kind: trophee
+  tier: 4
+  value: 320
+  tags: []
+trophee_chamane_crapaud_bouffi:
+  kind: trophee
+  tier: 4
+  value: 320
+  tags: []
+trophee_orc_brise_crane:
+  kind: trophee
+  tier: 4
+  value: 320
+  tags: []
+trophee_harpie_il_orage:
+  kind: trophee
+  tier: 4
+  value: 320
+  tags: []
+trophee_geant_steppes_borr:
+  kind: trophee
+  tier: 4
+  value: 320
+  tags: []
+trophee_esprit_vent_hurleur:
+  kind: trophee
+  tier: 4
+  value: 320
+  tags: []
+trophee_homme_poisson_roi_fosses:
+  kind: trophee
+  tier: 5
+  value: 500
+  tags: []
+trophee_oracle_noye_ilsa:
+  kind: trophee
+  tier: 5
+  value: 500
+  tags: []
+trophee_succube_velours:
+  kind: trophee
+  tier: 5
+  value: 500
+  tags: []
+trophee_chevalier_infernal_mordred:
+  kind: trophee
+  tier: 5
+  value: 500
+  tags: []
+trophee_demon_cornu:
+  kind: trophee
+  tier: 5
+  value: 500
+  tags: []
+trophee_molosse_infernal_cerberin:
+  kind: trophee
+  tier: 5
+  value: 500
+  tags: []
+trophee_cauchemar_sans_visage:
+  kind: trophee
+  tier: 5
+  value: 500
+  tags: []
+trophee_licorne_noire_crin_suie:
+  kind: trophee
+  tier: 5
+  value: 500
+  tags: []

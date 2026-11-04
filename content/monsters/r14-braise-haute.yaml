@@ -1,0 +1,142 @@
+# Bestiaire de Hautes-Fumeroles (contenu-cible-unites.md 7) : 4 légers puis 4 lourds.
+
+diablotins:
+  units: 3
+  pop: 2
+  tags: [demon]
+  weapon: souffle
+  defaultDist: 2
+  immune: [feu]
+  base: { hp: 44, will: 60, energy: 70, mana: 50, for: 1, ele: 6, esp: 2, foi: 0, omb: 0 }
+  growth: { hp: 2.04, will: 1, energy: 1, mana: 3, for: 0.28, ele: 1.4, esp: 0.47, foi: 0, omb: 0 }
+  forms:
+    - id: diablotins
+      level: 1
+      speed: 23
+      res: { feu: 50, sacre: -30 }
+      skills: [[emploi, 1], [trait_flammes, 1]]
+  drops: [soufre_ardent]
+  boss: false
+  region: 13
+vers_magma:
+  units: 2
+  pop: 2
+  tags: [bete]
+  weapon: machoires
+  defaultDist: 1
+  base: { hp: 70, will: 50, energy: 100, mana: 0, for: 5, ele: 0, esp: 0, foi: 0, omb: 0 }
+  growth: { hp: 4, will: 1, energy: 2, mana: 0, for: 1.2, ele: 0, esp: 0, foi: 0, omb: 0 }
+  forms:
+    - id: vers_magma
+      level: 1
+      speed: 15
+      res: { feu: 60, glace: -30 }
+      skills: [[morsure, 1], [lame_ardente, 1]]
+  drops: [basalte, ecaille_salamandre]
+  boss: false
+  region: 13
+salamandre_lave:
+  units: 1
+  pop: 2
+  tags: [reptile]
+  weapon: souffle
+  defaultDist: 1
+  immune: [feu]
+  base: { hp: 102, will: 50, energy: 100, mana: 0, for: 6, ele: 3, esp: 0, foi: 0, omb: 0 }
+  growth: { hp: 5.8, will: 1, energy: 2, mana: 0, for: 1.44, ele: 0, esp: 0, foi: 0, omb: 0 }
+  forms:
+    - id: salamandre_lave
+      level: 1
+      speed: 15
+      res: { feu: 60, glace: -30 }
+      skills: [[morsure, 1], [souffle_feu, 1], [repos, 13]]
+  drops: [ecaille_salamandre]
+  boss: false
+  region: 13
+pyromancienne:
+  units: 1
+  pop: 2
+  tags: [humain]
+  weapon: baton_m
+  defaultDist: 3
+  base: { hp: 94, will: 60, energy: 70, mana: 50, for: 1, ele: 7, esp: 2, foi: 0, omb: 0 }
+  growth: { hp: 4.35, will: 1, energy: 1, mana: 3, for: 0.36, ele: 1.8, esp: 0.6, foi: 0, omb: 0 }
+  forms:
+    - id: pyromancienne
+      level: 1
+      speed: 23
+      res: { feu: 40 }
+      skills: [[emploi, 1], [lance_feu, 1], [nova_flammes, 13], [meditation, 15]]
+  drops: [soufre_ardent]
+  boss: false
+  region: 13
+elem_feu:
+  units: 1
+  pop: 2
+  tags: [elementaire]
+  weapon: souffle
+  defaultDist: 2
+  immune: [feu]
+  base: { hp: 131, will: 99, energy: 80, mana: 40, for: 4, ele: 6, esp: 0, foi: 0, omb: 0 }
+  growth: { hp: 7.25, will: 0, energy: 1, mana: 2, for: 0.6, ele: 1.56, esp: 0, foi: 0, omb: 0 }
+  forms:
+    - id: elem_feu
+      level: 1
+      speed: 21
+      res: { feu: 75, glace: -40 }
+      skills: [[emploi, 1], [lance_feu, 1], [bouclier_flammes, 13], [jet_magma, 15]]
+  drops: [braise_eternelle]
+  boss: false
+  region: 13
+golem_basalte:
+  units: 1
+  pop: 3
+  tags: [construct]
+  weapon: poing_pierre
+  defaultDist: 1
+  base: { hp: 285, will: 99, energy: 100, mana: 0, for: 8, ele: 0, esp: 0, foi: 0, omb: 0 }
+  growth: { hp: 17.1, will: 0, energy: 2, mana: 0, for: 2.1, ele: 0, esp: 0, foi: 0, omb: 0 }
+  forms:
+    - id: golem_basalte
+      level: 1
+      speed: 26
+      res: { tranchant: 30, contondant: 30, feu: 50 }
+      skills: [[emploi, 1], [pietinement, 1], [peau_dure, 13]]
+  drops: [basalte, fer_lave]
+  boss: false
+  region: 13
+chiens_infernaux:
+  units: 2
+  pop: 2
+  tags: [demon, bete]
+  weapon: crocs
+  defaultDist: 1
+  immune: [feu]
+  base: { hp: 70, will: 50, energy: 100, mana: 0, for: 5, ele: 0, esp: 0, foi: 0, omb: 0 }
+  growth: { hp: 4, will: 1, energy: 2, mana: 0, for: 1.2, ele: 0, esp: 0, foi: 0, omb: 0 }
+  forms:
+    - id: chiens_infernaux
+      level: 1
+      speed: 15
+      res: { feu: 50, sacre: -30 }
+      skills: [[morsure, 1], [souffle_feu, 1], [bond, 13]]
+  drops: [ecaille_salamandre, soufre_ardent]
+  boss: false
+  region: 13
+forgeron_demon:
+  units: 1
+  pop: 3
+  tags: [demon]
+  weapon: masse_lourde
+  defaultDist: 1
+  base: { hp: 266, will: 50, energy: 110, mana: 0, for: 11, ele: 0, esp: 0, foi: 0, omb: 0 }
+  growth: { hp: 17.1, will: 1, energy: 2, mana: 0, for: 2.8, ele: 0, esp: 0, foi: 0, omb: 0 }
+  forms:
+    - id: forgeron_demon
+      level: 1
+      speed: 25
+      res: { feu: 50, sacre: -30 }
+      skills: [[emploi, 1], [lame_ardente, 1], [frappe_brutale, 13], [rage, 15]]
+  drops: [fer_lave, braise_eternelle]
+  boss: false
+  region: 13

@@ -1,0 +1,139 @@
+# Bestiaire de Steppes de Khar (contenu-cible-unites.md 7) : 4 légers puis 4 lourds.
+
+hyenes_m:
+  units: 3
+  pop: 2
+  tags: [bete]
+  weapon: crocs
+  defaultDist: 1
+  base: { hp: 51, will: 50, energy: 100, mana: 0, for: 5, ele: 0, esp: 0, foi: 0, omb: 0 }
+  growth: { hp: 2.89, will: 1, energy: 2, mana: 0, for: 1.12, ele: 0, esp: 0, foi: 0, omb: 0 }
+  forms:
+    - id: hyenes_m
+      level: 1
+      speed: 15
+      res: { maladie: 20 }
+      skills: [[morsure, 1], [laceration, 1]]
+  drops: [corne_hyene]
+  boss: false
+  region: 16
+orcs_pillards:
+  units: 2
+  pop: 2
+  tags: [orc]
+  weapon: lame_rouillee
+  defaultDist: 1
+  base: { hp: 112, will: 50, energy: 110, mana: 0, for: 8, ele: 0, esp: 0, foi: 0, omb: 0 }
+  growth: { hp: 7.2, will: 1, energy: 2, mana: 0, for: 2, ele: 0, esp: 0, foi: 0, omb: 0 }
+  forms:
+    - id: orcs_pillards
+      level: 1
+      speed: 25
+      res: {}
+      skills: [[emploi, 1], [frappe_brutale, 1], [rage, 18]]
+  drops: [fer_orc]
+  boss: false
+  region: 16
+centaures:
+  units: 1
+  pop: 2
+  tags: [centaure]
+  weapon: arc_m
+  defaultDist: 3
+  base: { hp: 122, will: 55, energy: 95, mana: 0, for: 6, ele: 0, esp: 1, foi: 0, omb: 0 }
+  growth: { hp: 6.96, will: 1, energy: 2, mana: 0, for: 1.56, ele: 0, esp: 0.36, foi: 0, omb: 0 }
+  forms:
+    - id: centaures
+      level: 1
+      speed: 18
+      res: {}
+      skills: [[tir_arc, 1], [rafale, 1], [repos, 18]]
+  drops: [cuir_centaure]
+  boss: false
+  region: 16
+harpies_tempete:
+  units: 3
+  pop: 2
+  tags: [bete]
+  weapon: griffes_m
+  defaultDist: 1
+  base: { hp: 48, will: 50, energy: 100, mana: 0, for: 5, ele: 0, esp: 0, foi: 0, omb: 0 }
+  growth: { hp: 2.72, will: 1, energy: 2, mana: 0, for: 1.12, ele: 0, esp: 0, foi: 0, omb: 0 }
+  forms:
+    - id: harpies_tempete
+      level: 1
+      speed: 13
+      res: { glace: 30 }
+      skills: [[morsure, 1], [cri_effroi, 1], [mirage, 18]]
+  drops: [herbe_a_vent]
+  boss: false
+  region: 16
+chef_orc:
+  units: 1
+  pop: 3
+  tags: [orc]
+  weapon: epee
+  defaultDist: 1
+  base: { hp: 209, will: 65, energy: 100, mana: 0, for: 11, ele: 0, esp: 1, foi: 1, omb: 0 }
+  growth: { hp: 13.3, will: 1, energy: 2, mana: 0, for: 1.4, ele: 0, esp: 0.42, foi: 0.42, omb: 0 }
+  forms:
+    - id: chef_orc
+      level: 1
+      speed: 20
+      res: { tranchant: 20 }
+      skills: [[emploi, 1], [cri_guerre, 1], [enchainement, 18], [rempart_vivant, 20]]
+  drops: [fer_orc, totem_vent]
+  boss: false
+  region: 16
+chamane_orc:
+  units: 1
+  pop: 2
+  tags: [orc]
+  weapon: baton_m
+  defaultDist: 3
+  base: { hp: 102, will: 80, energy: 80, mana: 45, for: 2, ele: 0, esp: 2, foi: 7, omb: 0 }
+  growth: { hp: 5.8, will: 2, energy: 1, mana: 2.5, for: 0.6, ele: 0, esp: 0.6, foi: 1.8, omb: 0 }
+  forms:
+    - id: chamane_orc
+      level: 1
+      speed: 22
+      res: { psychique: 20 }
+      skills: [[emploi, 1], [mains_lumiere, 1], [chant_guerre, 18], [onde_mentale, 20]]
+  drops: [totem_vent]
+  boss: false
+  region: 16
+geant_steppes:
+  units: 1
+  pop: 3
+  tags: [geant]
+  weapon: poing_pierre
+  defaultDist: 1
+  base: { hp: 314, will: 99, energy: 100, mana: 0, for: 8, ele: 0, esp: 0, foi: 0, omb: 0 }
+  growth: { hp: 18.81, will: 0, energy: 2, mana: 0, for: 2.1, ele: 0, esp: 0, foi: 0, omb: 0 }
+  forms:
+    - id: geant_steppes
+      level: 1
+      speed: 26
+      res: { contondant: 30 }
+      skills: [[emploi, 1], [pietinement, 1], [frappe_brutale, 18]]
+  drops: [cuir_centaure, corne_hyene]
+  boss: false
+  region: 16
+esprit_vent:
+  units: 1
+  pop: 2
+  tags: [elementaire]
+  weapon: mains_spectrales
+  defaultDist: 2
+  immune: [psychique]
+  base: { hp: 131, will: 99, energy: 80, mana: 40, for: 4, ele: 6, esp: 0, foi: 0, omb: 0 }
+  growth: { hp: 7.25, will: 0, energy: 1, mana: 2, for: 0.6, ele: 1.56, esp: 0, foi: 0, omb: 0 }
+  forms:
+    - id: esprit_vent
+      level: 1
+      speed: 21
+      res: { glace: 50, tranchant: 20 }
+      skills: [[emploi, 1], [blizzard, 1], [mirage, 18], [hurlement_mental, 20]]
+  drops: [herbe_a_vent]
+  boss: false
+  region: 16

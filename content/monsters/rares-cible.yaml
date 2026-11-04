@@ -1,0 +1,2043 @@
+# Rares des routes nouvelles (README 9.1, contenu-cible-monde.md 2).
+
+rare_grand_groin:
+  units: 1
+  pop: 2
+  tags: [bete]
+  weapon: crocs
+  defaultDist: 1
+  base: { hp: 194, will: 65, energy: 100, mana: 0, for: 8, ele: 0, esp: 0, foi: 0, omb: 0 }
+  growth: { hp: 11.04, will: 1, energy: 2, mana: 0, for: 1.2, ele: 0, esp: 0, foi: 0, omb: 0 }
+  forms:
+    - id: sanglier
+      level: 1
+      speed: 15
+      res: {}
+      skills: [[morsure, 1], [charge, 1], [repos, 3]]
+  drops: [trophee_grand_groin]
+  boss: false
+  region: 5
+  rare:
+    step: pres_brande_1
+    trophy: trophee_grand_groin
+    base: sanglier
+rare_lievre_roi:
+  units: 1
+  pop: 2
+  tags: [bete]
+  weapon: crocs
+  defaultDist: 1
+  base: { hp: 346, will: 65, energy: 100, mana: 0, for: 8, ele: 0, esp: 0, foi: 0, omb: 0 }
+  growth: { hp: 19.58, will: 1, energy: 2, mana: 0, for: 1.12, ele: 0, esp: 0, foi: 0, omb: 0 }
+  forms:
+    - id: lievres
+      level: 1
+      speed: 15
+      res: {}
+      skills: [[morsure, 1], [repos, 1]]
+  drops: [trophee_lievre_roi]
+  boss: false
+  region: 5
+  rare:
+    step: pres_brande_2
+    trophy: trophee_lievre_roi
+    base: lievres
+rare_bourdon_reine:
+  units: 1
+  pop: 2
+  tags: [bete]
+  weapon: dard
+  defaultDist: 1
+  base: { hp: 432, will: 65, energy: 100, mana: 0, for: 8, ele: 0, esp: 0, foi: 0, omb: 0 }
+  growth: { hp: 24.48, will: 1, energy: 2, mana: 0, for: 1.12, ele: 0, esp: 0, foi: 0, omb: 0 }
+  forms:
+    - id: bourdons
+      level: 1
+      speed: 12
+      res: { maladie: 20 }
+      skills: [[morsure_venin, 1], [repos, 1]]
+  drops: [trophee_bourdon_reine]
+  boss: false
+  region: 5
+  rare:
+    step: pres_brande_3
+    trophy: trophee_bourdon_reine
+    base: bourdons
+rare_jacques_fourche:
+  units: 1
+  pop: 2
+  tags: [construct]
+  weapon: branches
+  defaultDist: 1
+  immune: [psychique]
+  base: { hp: 523, will: 129, energy: 100, mana: 0, for: 10, ele: 0, esp: 0, foi: 0, omb: 0 }
+  growth: { hp: 31.32, will: 0, energy: 2, mana: 0, for: 1.8, ele: 0, esp: 0, foi: 0, omb: 0 }
+  forms:
+    - id: epouvantail
+      level: 1
+      speed: 26
+      res: { feu: -40 }
+      skills: [[emploi, 1], [cri_effroi, 1], [repos, 3]]
+  drops: [trophee_jacques_fourche]
+  boss: false
+  region: 5
+  rare:
+    step: pres_brande_4
+    trophy: trophee_jacques_fourche
+    base: epouvantail
+rare_gros_ventre:
+  units: 1
+  pop: 2
+  tags: [bete]
+  weapon: crocs
+  defaultDist: 1
+  base: { hp: 336, will: 65, energy: 100, mana: 0, for: 8, ele: 0, esp: 0, foi: 0, omb: 0 }
+  growth: { hp: 19.2, will: 1, energy: 2, mana: 0, for: 1.2, ele: 0, esp: 0, foi: 0, omb: 0 }
+  forms:
+    - id: grenouilles
+      level: 1
+      speed: 15
+      res: { maladie: 20 }
+      skills: [[morsure, 1], [jet_toile, 1], [repos, 3]]
+  drops: [trophee_gros_ventre]
+  boss: false
+  region: 6
+  rare:
+    step: gue_lavandieres_1
+    trophy: trophee_gros_ventre
+    base: grenouilles
+rare_mere_rat:
+  units: 1
+  pop: 2
+  tags: [bete]
+  weapon: crocs
+  defaultDist: 1
+  base: { hp: 346, will: 65, energy: 100, mana: 0, for: 8, ele: 0, esp: 0, foi: 0, omb: 0 }
+  growth: { hp: 19.58, will: 1, energy: 2, mana: 0, for: 1.12, ele: 0, esp: 0, foi: 0, omb: 0 }
+  forms:
+    - id: rats_eau
+      level: 1
+      speed: 15
+      res: { maladie: 30 }
+      skills: [[morsure, 1], [repos, 1]]
+  drops: [trophee_mere_rat]
+  boss: false
+  region: 6
+  rare:
+    step: gue_lavandieres_2
+    trophy: trophee_mere_rat
+    base: rats_eau
+rare_brume_fille:
+  units: 1
+  pop: 2
+  tags: [esprit]
+  weapon: mains_spectrales
+  defaultDist: 3
+  base: { hp: 262, will: 124, energy: 90, mana: 30, for: 4, ele: 0, esp: 10, foi: 0, omb: 0 }
+  growth: { hp: 13.92, will: 3, energy: 2, mana: 1.5, for: 0.6, ele: 0, esp: 1.8, foi: 0, omb: 0 }
+  forms:
+    - id: lavandiere
+      level: 1
+      speed: 18
+      res: { tranchant: 30, sacre: -30 }
+      skills: [[emploi, 1], [murmure, 1], [vision_terreur, 3]]
+  drops: [trophee_brume_fille]
+  boss: false
+  region: 6
+  rare:
+    step: gue_lavandieres_3
+    trophy: trophee_brume_fille
+    base: lavandiere
+rare_croc_vase:
+  units: 1
+  pop: 2
+  tags: [bete]
+  weapon: machoires
+  defaultDist: 1
+  base: { hp: 293, will: 65, energy: 100, mana: 0, for: 9, ele: 0, esp: 0, foi: 0, omb: 0 }
+  growth: { hp: 16.7, will: 1, energy: 2, mana: 0, for: 1.44, ele: 0, esp: 0, foi: 0, omb: 0 }
+  forms:
+    - id: brochet
+      level: 1
+      speed: 15
+      res: { glace: 20 }
+      skills: [[morsure, 1], [bond, 1], [laceration, 3]]
+  drops: [trophee_croc_vase]
+  boss: false
+  region: 6
+  rare:
+    step: gue_lavandieres_4
+    trophy: trophee_croc_vase
+    base: brochet
+rare_vieux_sanglier_gris:
+  units: 1
+  pop: 2
+  tags: [bete]
+  weapon: crocs
+  defaultDist: 1
+  base: { hp: 194, will: 65, energy: 100, mana: 0, for: 8, ele: 0, esp: 0, foi: 0, omb: 0 }
+  growth: { hp: 11.04, will: 1, energy: 2, mana: 0, for: 1.2, ele: 0, esp: 0, foi: 0, omb: 0 }
+  forms:
+    - id: sanglier
+      level: 1
+      speed: 15
+      res: {}
+      skills: [[morsure, 1], [charge, 1], [repos, 3]]
+  drops: [trophee_vieux_sanglier_gris]
+  boss: false
+  region: 5
+  rare:
+    step: collines_menhirs_1
+    trophy: trophee_vieux_sanglier_gris
+    base: sanglier
+rare_corneille_mere:
+  units: 1
+  pop: 2
+  tags: [bete]
+  weapon: bec
+  defaultDist: 1
+  base: { hp: 324, will: 65, energy: 100, mana: 0, for: 8, ele: 0, esp: 0, foi: 0, omb: 0 }
+  growth: { hp: 18.36, will: 1, energy: 2, mana: 0, for: 1.12, ele: 0, esp: 0, foi: 0, omb: 0 }
+  forms:
+    - id: corneilles
+      level: 1
+      speed: 13
+      res: { contondant: -20 }
+      skills: [[morsure, 1], [cri_effroi, 1]]
+  drops: [trophee_corneille_mere]
+  boss: false
+  region: 7
+  rare:
+    step: collines_menhirs_2
+    trophy: trophee_corneille_mere
+    base: corneilles
+rare_belier_tonnerre:
+  units: 1
+  pop: 2
+  tags: [bete]
+  weapon: branches
+  defaultDist: 1
+  base: { hp: 293, will: 65, energy: 100, mana: 0, for: 9, ele: 0, esp: 0, foi: 0, omb: 0 }
+  growth: { hp: 16.7, will: 1, energy: 2, mana: 0, for: 1.44, ele: 0, esp: 0, foi: 0, omb: 0 }
+  forms:
+    - id: belier
+      level: 1
+      speed: 15
+      res: { contondant: 20 }
+      skills: [[morsure, 1], [charge, 1], [pietinement, 3]]
+  drops: [trophee_belier_tonnerre]
+  boss: false
+  region: 7
+  rare:
+    step: collines_menhirs_3
+    trophy: trophee_belier_tonnerre
+    base: belier
+rare_pierre_qui_marche:
+  units: 1
+  pop: 2
+  tags: [construct, esprit]
+  weapon: poing_pierre
+  defaultDist: 1
+  immune: [psychique]
+  base: { hp: 523, will: 129, energy: 100, mana: 0, for: 10, ele: 0, esp: 0, foi: 0, omb: 0 }
+  growth: { hp: 31.32, will: 0, energy: 2, mana: 0, for: 1.8, ele: 0, esp: 0, foi: 0, omb: 0 }
+  forms:
+    - id: esprit_menhir
+      level: 1
+      speed: 26
+      res: { tranchant: 30, contondant: 20 }
+      skills: [[emploi, 1], [coup_assommant, 1], [peau_dure, 3]]
+  drops: [trophee_pierre_qui_marche]
+  boss: false
+  region: 7
+  rare:
+    step: collines_menhirs_4
+    trophy: trophee_pierre_qui_marche
+    base: esprit_menhir
+rare_grenouille_taureau_or:
+  units: 1
+  pop: 2
+  tags: [bete]
+  weapon: crocs
+  defaultDist: 1
+  base: { hp: 336, will: 65, energy: 100, mana: 0, for: 8, ele: 0, esp: 0, foi: 0, omb: 0 }
+  growth: { hp: 19.2, will: 1, energy: 2, mana: 0, for: 1.2, ele: 0, esp: 0, foi: 0, omb: 0 }
+  forms:
+    - id: grenouilles
+      level: 1
+      speed: 15
+      res: { maladie: 20 }
+      skills: [[morsure, 1], [jet_toile, 1], [repos, 3]]
+  drops: [trophee_grenouille_taureau_or]
+  boss: false
+  region: 6
+  rare:
+    step: tourbieres_bruyere_1
+    trophy: trophee_grenouille_taureau_or
+    base: grenouilles
+rare_malfaisant:
+  units: 1
+  pop: 2
+  tags: [fee]
+  weapon: dague
+  defaultDist: 2
+  base: { hp: 360, will: 124, energy: 90, mana: 30, for: 3, ele: 0, esp: 9, foi: 0, omb: 0 }
+  growth: { hp: 19.2, will: 3, energy: 2, mana: 1.5, for: 0.5, ele: 0, esp: 1.5, foi: 0, omb: 0 }
+  forms:
+    - id: farfadets
+      level: 1
+      speed: 18
+      res: { psychique: 30 }
+      skills: [[emploi, 1], [confusion, 1], [mirage, 3]]
+  drops: [trophee_malfaisant]
+  boss: false
+  region: 6
+  rare:
+    step: tourbieres_bruyere_2
+    trophy: trophee_malfaisant
+    base: farfadets
+rare_grand_chien_noir:
+  units: 1
+  pop: 2
+  tags: [bete]
+  weapon: crocs
+  defaultDist: 1
+  base: { hp: 336, will: 65, energy: 100, mana: 0, for: 8, ele: 0, esp: 0, foi: 0, omb: 0 }
+  growth: { hp: 19.2, will: 1, energy: 2, mana: 0, for: 1.2, ele: 0, esp: 0, foi: 0, omb: 0 }
+  forms:
+    - id: chiens_bruyere
+      level: 1
+      speed: 15
+      res: {}
+      skills: [[morsure, 1], [hurlement, 1], [repos, 3]]
+  drops: [trophee_grand_chien_noir]
+  boss: false
+  region: 7
+  rare:
+    step: tourbieres_bruyere_3
+    trophy: trophee_grand_chien_noir
+    base: chiens_bruyere
+rare_rebouteuse_ma_gorre:
+  units: 1
+  pop: 2
+  tags: [humain]
+  weapon: baton_os
+  defaultDist: 3
+  base: { hp: 226, will: 85, energy: 70, mana: 45, for: 1, ele: 0, esp: 2, foi: 0, omb: 10 }
+  growth: { hp: 10.44, will: 2, energy: 1, mana: 2.5, for: 0.36, ele: 0, esp: 0.6, foi: 0, omb: 1.8 }
+  forms:
+    - id: rebouteuse
+      level: 1
+      speed: 23
+      res: { tenebres: 30 }
+      skills: [[emploi, 1], [toucher_tombe, 1], [malefice, 3], [soin_mineur, 5]]
+  drops: [trophee_rebouteuse_ma_gorre]
+  boss: false
+  region: 7
+  rare:
+    step: tourbieres_bruyere_4
+    trophy: trophee_rebouteuse_ma_gorre
+    base: rebouteuse
+rare_brigand_rouge_gorge:
+  units: 1
+  pop: 2
+  tags: [humain]
+  weapon: dague
+  defaultDist: 1
+  base: { hp: 384, will: 72, energy: 100, mana: 0, for: 9, ele: 0, esp: 1, foi: 0, omb: 1 }
+  growth: { hp: 19.2, will: 1, energy: 2, mana: 0, for: 1.5, ele: 0, esp: 0.3, foi: 0, omb: 0.3 }
+  forms:
+    - id: brigands_haies
+      level: 1
+      speed: 16
+      res: {}
+      skills: [[emploi, 1], [enchainement, 1], [laceration, 3], [repos, 5]]
+  drops: [trophee_brigand_rouge_gorge]
+  boss: false
+  region: 5
+  rare:
+    step: chemin_pendus_1
+    trophy: trophee_brigand_rouge_gorge
+    base: brigands_haies
+rare_ours_balafre:
+  units: 1
+  pop: 2
+  tags: [bete]
+  weapon: griffes
+  defaultDist: 1
+  base: { hp: 638, will: 65, energy: 110, mana: 0, for: 14, ele: 0, esp: 0, foi: 0, omb: 0 }
+  growth: { hp: 41.04, will: 1, energy: 2, mana: 0, for: 2.8, ele: 0, esp: 0, foi: 0, omb: 0 }
+  forms:
+    - id: ours_brun
+      level: 1
+      speed: 25
+      res: { glace: 20 }
+      skills: [[morsure, 1], [frappe_brutale, 1], [repos, 3]]
+  drops: [trophee_ours_balafre]
+  boss: false
+  region: 5
+  rare:
+    step: chemin_pendus_2
+    trophy: trophee_ours_balafre
+    base: ours_brun
+rare_goule_gibet:
+  units: 1
+  pop: 2
+  tags: [mort-vivant]
+  weapon: coutelas
+  defaultDist: 1
+  base: { hp: 336, will: 65, energy: 100, mana: 0, for: 8, ele: 0, esp: 0, foi: 0, omb: 0 }
+  growth: { hp: 19.2, will: 1, energy: 2, mana: 0, for: 1.2, ele: 0, esp: 0, foi: 0, omb: 0 }
+  forms:
+    - id: goules
+      level: 1
+      speed: 15
+      res: { maladie: 40, sacre: -30 }
+      skills: [[morsure, 1], [putrefaction, 1], [non_mort, 8]]
+  drops: [trophee_goule_gibet]
+  boss: false
+  region: 9
+  rare:
+    step: chemin_pendus_3
+    trophy: trophee_goule_gibet
+    base: goules
+rare_chien_os:
+  units: 1
+  pop: 2
+  tags: [mort-vivant]
+  weapon: crocs
+  defaultDist: 1
+  immune: [maladie]
+  base: { hp: 168, will: 65, energy: 100, mana: 0, for: 8, ele: 0, esp: 0, foi: 0, omb: 0 }
+  growth: { hp: 9.6, will: 1, energy: 2, mana: 0, for: 1.2, ele: 0, esp: 0, foi: 0, omb: 0 }
+  forms:
+    - id: chien_squelette
+      level: 1
+      speed: 15
+      res: { contondant: -30 }
+      skills: [[morsure, 1], [bond, 1], [non_mort, 8]]
+  drops: [trophee_chien_os]
+  boss: false
+  region: 9
+  rare:
+    step: chemin_pendus_4
+    trophy: trophee_chien_os
+    base: chien_squelette
+rare_ondine_pale:
+  units: 1
+  pop: 2
+  tags: [esprit]
+  weapon: baton_m
+  defaultDist: 3
+  immune: [glace]
+  base: { hp: 314, will: 129, energy: 80, mana: 40, for: 4, ele: 9, esp: 0, foi: 0, omb: 0 }
+  growth: { hp: 17.4, will: 0, energy: 1, mana: 2, for: 0.6, ele: 1.56, esp: 0, foi: 0, omb: 0 }
+  forms:
+    - id: ondine
+      level: 1
+      speed: 21
+      res: { glace: 50, feu: -30 }
+      skills: [[emploi, 1], [javelot_glace, 1], [armure_givre, 3], [meditation, 5]]
+  drops: [trophee_ondine_pale]
+  boss: false
+  region: 6
+  rare:
+    step: combe_brumes_1
+    trophy: trophee_ondine_pale
+    base: ondine
+rare_farfadet_nuit_noire:
+  units: 1
+  pop: 2
+  tags: [fee]
+  weapon: dague
+  defaultDist: 2
+  base: { hp: 360, will: 124, energy: 90, mana: 30, for: 3, ele: 0, esp: 9, foi: 0, omb: 0 }
+  growth: { hp: 19.2, will: 3, energy: 2, mana: 1.5, for: 0.5, ele: 0, esp: 1.5, foi: 0, omb: 0 }
+  forms:
+    - id: farfadets
+      level: 1
+      speed: 18
+      res: { psychique: 30 }
+      skills: [[emploi, 1], [confusion, 1], [mirage, 3]]
+  drops: [trophee_farfadet_nuit_noire]
+  boss: false
+  region: 6
+  rare:
+    step: combe_brumes_2
+    trophy: trophee_farfadet_nuit_noire
+    base: farfadets
+rare_chauve_souris_albinos:
+  units: 1
+  pop: 2
+  tags: [bete]
+  weapon: bec
+  defaultDist: 1
+  base: { hp: 346, will: 65, energy: 100, mana: 0, for: 8, ele: 0, esp: 0, foi: 0, omb: 0 }
+  growth: { hp: 19.58, will: 1, energy: 2, mana: 0, for: 1.12, ele: 0, esp: 0, foi: 0, omb: 0 }
+  forms:
+    - id: chauves_souris_g
+      level: 1
+      speed: 15
+      res: {}
+      skills: [[morsure, 1], [toucher_tombe, 1]]
+  drops: [trophee_chauve_souris_albinos]
+  boss: false
+  region: 8
+  rare:
+    step: combe_brumes_3
+    trophy: trophee_chauve_souris_albinos
+    base: chauves_souris_g
+rare_corbeau_trois_yeux:
+  units: 1
+  pop: 2
+  tags: [bete]
+  weapon: bec
+  defaultDist: 2
+  base: { hp: 180, will: 124, energy: 90, mana: 30, for: 3, ele: 0, esp: 9, foi: 0, omb: 0 }
+  growth: { hp: 9.6, will: 3, energy: 2, mana: 1.5, for: 0.5, ele: 0, esp: 1.5, foi: 0, omb: 0 }
+  forms:
+    - id: corbeau_augure
+      level: 1
+      speed: 18
+      res: { psychique: 30 }
+      skills: [[morsure, 1], [vision_terreur, 1], [marque_mort, 8]]
+  drops: [trophee_corbeau_trois_yeux]
+  boss: false
+  region: 8
+  rare:
+    step: combe_brumes_4
+    trophy: trophee_corbeau_trois_yeux
+    base: corbeau_augure
+rare_chef_coupe_bourse:
+  units: 1
+  pop: 2
+  tags: [humain]
+  weapon: coutelas
+  defaultDist: 1
+  base: { hp: 384, will: 72, energy: 100, mana: 0, for: 9, ele: 0, esp: 1, foi: 0, omb: 1 }
+  growth: { hp: 19.2, will: 1, energy: 2, mana: 0, for: 1.5, ele: 0, esp: 0.3, foi: 0, omb: 0.3 }
+  forms:
+    - id: bandits
+      level: 1
+      speed: 16
+      res: {}
+      skills: [[emploi, 1], [laceration, 1], [repos, 3]]
+  drops: [trophee_chef_coupe_bourse]
+  boss: false
+  region: 7
+  rare:
+    step: lisiere_ambre_1
+    trophy: trophee_chef_coupe_bourse
+    base: bandits
+rare_cerf_bois_or:
+  units: 1
+  pop: 2
+  tags: [bete]
+  weapon: crocs
+  defaultDist: 1
+  base: { hp: 281, will: 65, energy: 100, mana: 0, for: 9, ele: 0, esp: 0, foi: 0, omb: 0 }
+  growth: { hp: 16.01, will: 1, energy: 2, mana: 0, for: 1.44, ele: 0, esp: 0, foi: 0, omb: 0 }
+  forms:
+    - id: cerf_ambre
+      level: 1
+      speed: 15
+      res: {}
+      skills: [[morsure, 1], [charge, 1], [repos, 8]]
+  drops: [trophee_cerf_bois_or]
+  boss: false
+  region: 10
+  rare:
+    step: lisiere_ambre_2
+    trophy: trophee_cerf_bois_or
+    base: cerf_ambre
+rare_guepe_reine:
+  units: 1
+  pop: 2
+  tags: [bete]
+  weapon: dard
+  defaultDist: 1
+  base: { hp: 324, will: 65, energy: 100, mana: 0, for: 8, ele: 0, esp: 0, foi: 0, omb: 0 }
+  growth: { hp: 18.36, will: 1, energy: 2, mana: 0, for: 1.12, ele: 0, esp: 0, foi: 0, omb: 0 }
+  forms:
+    - id: guepes
+      level: 1
+      speed: 15
+      res: { maladie: 30 }
+      skills: [[morsure_venin, 1]]
+  drops: [trophee_guepe_reine]
+  boss: false
+  region: 10
+  rare:
+    step: lisiere_ambre_3
+    trophy: trophee_guepe_reine
+    base: guepes
+rare_belier_noir:
+  units: 1
+  pop: 2
+  tags: [bete]
+  weapon: branches
+  defaultDist: 1
+  base: { hp: 293, will: 65, energy: 100, mana: 0, for: 9, ele: 0, esp: 0, foi: 0, omb: 0 }
+  growth: { hp: 16.7, will: 1, energy: 2, mana: 0, for: 1.44, ele: 0, esp: 0, foi: 0, omb: 0 }
+  forms:
+    - id: belier
+      level: 1
+      speed: 15
+      res: { contondant: 20 }
+      skills: [[morsure, 1], [charge, 1], [pietinement, 3]]
+  drops: [trophee_belier_noir]
+  boss: false
+  region: 7
+  rare:
+    step: lisiere_ambre_4
+    trophy: trophee_belier_noir
+    base: belier
+rare_sangsue_mere:
+  units: 1
+  pop: 2
+  tags: [bete]
+  weapon: dard
+  defaultDist: 1
+  base: { hp: 288, will: 52, energy: 70, mana: 30, for: 5, ele: 0, esp: 0, foi: 0, omb: 1 }
+  growth: { hp: 21.6, will: 1, energy: 1, mana: 0, for: 1, ele: 0.2, esp: 0.2, foi: 0.2, omb: 0.5 }
+  forms:
+    - id: sangsues
+      level: 1
+      speed: 17
+      res: { maladie: 30, feu: -30 }
+      skills: [[morsure, 1], [toucher_spectral, 1]]
+  drops: [trophee_sangsue_mere]
+  boss: false
+  region: 1
+  rare:
+    step: falaises_heron_1
+    trophy: trophee_sangsue_mere
+    base: sangsues
+rare_chasseur_ombre_grise:
+  units: 1
+  pop: 2
+  tags: [humain]
+  weapon: arbalete
+  defaultDist: 3
+  base: { hp: 336, will: 72, energy: 95, mana: 0, for: 8, ele: 0, esp: 1, foi: 0, omb: 0 }
+  growth: { hp: 19.2, will: 1, energy: 2, mana: 0, for: 1.3, ele: 0, esp: 0.3, foi: 0, omb: 0 }
+  forms:
+    - id: chasseurs_primes
+      level: 1
+      speed: 18
+      res: {}
+      skills: [[tir_arc, 1], [filet, 1], [repos, 8]]
+  drops: [trophee_chasseur_ombre_grise]
+  boss: false
+  region: 8
+  rare:
+    step: falaises_heron_2
+    trophy: trophee_chasseur_ombre_grise
+    base: chasseurs_primes
+rare_crapaud_bubon:
+  units: 1
+  pop: 2
+  tags: [bete]
+  weapon: dard
+  defaultDist: 1
+  base: { hp: 264, will: 65, energy: 90, mana: 0, for: 7, ele: 0, esp: 0, foi: 0, omb: 0 }
+  growth: { hp: 12, will: 1, energy: 2, mana: 1, for: 1, ele: 0.2, esp: 0.2, foi: 0.2, omb: 0.2 }
+  forms:
+    - id: crapaud
+      level: 1
+      speed: 20
+      res: { maladie: 40 }
+      skills: [[morsure, 1], [repos, 1], [morsure_venin, 1], [jet_toile, 1]]
+  drops: [trophee_crapaud_bubon]
+  boss: false
+  region: 1
+  rare:
+    step: falaises_heron_3
+    trophy: trophee_crapaud_bubon
+    base: crapaud
+rare_ours_brumes_blanc:
+  units: 1
+  pop: 2
+  tags: [bete]
+  weapon: griffes_m
+  defaultDist: 1
+  base: { hp: 638, will: 65, energy: 110, mana: 0, for: 14, ele: 0, esp: 0, foi: 0, omb: 0 }
+  growth: { hp: 41.04, will: 1, energy: 2, mana: 0, for: 2.8, ele: 0, esp: 0, foi: 0, omb: 0 }
+  forms:
+    - id: ours_brumes
+      level: 1
+      speed: 25
+      res: { glace: 20 }
+      skills: [[morsure, 1], [frappe_brutale, 1], [pietinement, 8]]
+  drops: [trophee_ours_brumes_blanc]
+  boss: false
+  region: 8
+  rare:
+    step: falaises_heron_4
+    trophy: trophee_ours_brumes_blanc
+    base: ours_brumes
+rare_loup_garou_gris_croc:
+  units: 1
+  pop: 2
+  tags: [bete, humain]
+  weapon: griffes_m
+  defaultDist: 1
+  base: { hp: 334, will: 72, energy: 100, mana: 0, for: 10, ele: 0, esp: 1, foi: 0, omb: 1 }
+  growth: { hp: 16.7, will: 1, energy: 2, mana: 0, for: 1.8, ele: 0, esp: 0.36, foi: 0, omb: 0.36 }
+  forms:
+    - id: loup_garou
+      level: 1
+      speed: 16
+      res: { tranchant: 30, sacre: -30 }
+      skills: [[morsure, 1], [bond, 1], [rage, 8], [laceration, 10]]
+  drops: [trophee_loup_garou_gris_croc]
+  boss: false
+  region: 8
+  rare:
+    step: sentier_cretes_1
+    trophy: trophee_loup_garou_gris_croc
+    base: loup_garou
+rare_harpie_sans_plumes:
+  units: 1
+  pop: 2
+  tags: [bete]
+  weapon: griffes_m
+  defaultDist: 1
+  base: { hp: 346, will: 65, energy: 100, mana: 0, for: 8, ele: 0, esp: 0, foi: 0, omb: 0 }
+  growth: { hp: 19.58, will: 1, energy: 2, mana: 0, for: 1.12, ele: 0, esp: 0, foi: 0, omb: 0 }
+  forms:
+    - id: harpies_neiges
+      level: 1
+      speed: 15
+      res: { glace: 30 }
+      skills: [[morsure, 1], [cri_effroi, 1]]
+  drops: [trophee_harpie_sans_plumes]
+  boss: false
+  region: 11
+  rare:
+    step: sentier_cretes_2
+    trophy: trophee_harpie_sans_plumes
+    base: harpies_neiges
+rare_pendu_qui_marche:
+  units: 1
+  pop: 2
+  tags: [mort-vivant]
+  weapon: lame_rouillee
+  defaultDist: 1
+  immune: [maladie]
+  base: { hp: 384, will: 72, energy: 100, mana: 0, for: 9, ele: 0, esp: 1, foi: 0, omb: 1 }
+  growth: { hp: 19.2, will: 1, energy: 2, mana: 0, for: 1.5, ele: 0, esp: 0.3, foi: 0, omb: 0.3 }
+  forms:
+    - id: pendus
+      level: 1
+      speed: 16
+      res: { maladie: 40, sacre: -40 }
+      skills: [[emploi, 1], [lame_saignante, 1], [non_mort, 8]]
+  drops: [trophee_pendu_qui_marche]
+  boss: false
+  region: 8
+  rare:
+    step: sentier_cretes_3
+    trophy: trophee_pendu_qui_marche
+    base: pendus
+rare_loup_blanc_il_givre:
+  units: 1
+  pop: 2
+  tags: [bete]
+  weapon: crocs_gris
+  defaultDist: 1
+  base: { hp: 336, will: 65, energy: 100, mana: 0, for: 8, ele: 0, esp: 0, foi: 0, omb: 0 }
+  growth: { hp: 19.2, will: 1, energy: 2, mana: 0, for: 1.2, ele: 0, esp: 0, foi: 0, omb: 0 }
+  forms:
+    - id: loups_blancs
+      level: 1
+      speed: 15
+      res: { glace: 40, feu: -20 }
+      skills: [[morsure, 1], [bond, 1], [hurlement, 13]]
+  drops: [trophee_loup_blanc_il_givre]
+  boss: false
+  region: 11
+  rare:
+    step: sentier_cretes_4
+    trophy: trophee_loup_blanc_il_givre
+    base: loups_blancs
+rare_goule_ventre_creux:
+  units: 1
+  pop: 2
+  tags: [mort-vivant]
+  weapon: coutelas
+  defaultDist: 1
+  base: { hp: 336, will: 65, energy: 100, mana: 0, for: 8, ele: 0, esp: 0, foi: 0, omb: 0 }
+  growth: { hp: 19.2, will: 1, energy: 2, mana: 0, for: 1.2, ele: 0, esp: 0, foi: 0, omb: 0 }
+  forms:
+    - id: goules
+      level: 1
+      speed: 15
+      res: { maladie: 40, sacre: -30 }
+      skills: [[morsure, 1], [putrefaction, 1], [non_mort, 8]]
+  drops: [trophee_goule_ventre_creux]
+  boss: false
+  region: 9
+  rare:
+    step: bois_lanternes_1
+    trophy: trophee_goule_ventre_creux
+    base: goules
+rare_banshee_hurlante:
+  units: 1
+  pop: 2
+  tags: [esprit]
+  weapon: mains_spectrales
+  defaultDist: 3
+  immune: [psychique]
+  base: { hp: 262, will: 124, energy: 90, mana: 30, for: 4, ele: 0, esp: 10, foi: 0, omb: 0 }
+  growth: { hp: 13.92, will: 3, energy: 2, mana: 1.5, for: 0.6, ele: 0, esp: 1.8, foi: 0, omb: 0 }
+  forms:
+    - id: banshee
+      level: 1
+      speed: 18
+      res: { tranchant: 40, sacre: -40 }
+      skills: [[emploi, 1], [hurlement_mental, 1], [vision_terreur, 8]]
+  drops: [trophee_banshee_hurlante]
+  boss: false
+  region: 9
+  rare:
+    step: bois_lanternes_2
+    trophy: trophee_banshee_hurlante
+    base: banshee
+rare_araignee_mangeuse_lune:
+  units: 1
+  pop: 2
+  tags: [bete]
+  weapon: chelicères
+  defaultDist: 1
+  base: { hp: 415, will: 65, energy: 100, mana: 0, for: 10, ele: 0, esp: 0, foi: 0, omb: 0 }
+  growth: { hp: 23.71, will: 1, energy: 2, mana: 0, for: 1.68, ele: 0, esp: 0, foi: 0, omb: 0 }
+  forms:
+    - id: araignee_geante
+      level: 1
+      speed: 15
+      res: { maladie: 50, feu: -30 }
+      skills: [[morsure_venin, 1], [jet_toile, 1], [peste, 13], [bond, 15]]
+  drops: [trophee_araignee_mangeuse_lune]
+  boss: false
+  region: 12
+  rare:
+    step: bois_lanternes_3
+    trophy: trophee_araignee_mangeuse_lune
+    base: araignee_geante
+rare_fossoyeur_batisseur:
+  units: 1
+  pop: 2
+  tags: [humain]
+  weapon: pioche
+  defaultDist: 1
+  base: { hp: 638, will: 65, energy: 110, mana: 0, for: 14, ele: 0, esp: 0, foi: 0, omb: 0 }
+  growth: { hp: 41.04, will: 1, energy: 2, mana: 0, for: 2.8, ele: 0, esp: 0, foi: 0, omb: 0 }
+  forms:
+    - id: fossoyeur
+      level: 1
+      speed: 25
+      res: { tenebres: 20 }
+      skills: [[emploi, 1], [frappe_brutale, 1], [pacte_sang, 8]]
+  drops: [trophee_fossoyeur_batisseur]
+  boss: false
+  region: 9
+  rare:
+    step: bois_lanternes_4
+    trophy: trophee_fossoyeur_batisseur
+    base: fossoyeur
+rare_squelette_couronne:
+  units: 1
+  pop: 2
+  tags: [mort-vivant]
+  weapon: lame_rouillee
+  defaultDist: 1
+  immune: [maladie]
+  base: { hp: 418, will: 72, energy: 100, mana: 0, for: 9, ele: 0, esp: 1, foi: 0, omb: 1 }
+  growth: { hp: 20.81, will: 1, energy: 2, mana: 0, for: 1.4, ele: 0, esp: 0.28, foi: 0, omb: 0.28 }
+  forms:
+    - id: squelettes
+      level: 1
+      speed: 16
+      res: { contondant: -30, sacre: -40 }
+      skills: [[emploi, 1], [lame_saignante, 1], [non_mort, 8]]
+  drops: [trophee_squelette_couronne]
+  boss: false
+  region: 9
+  rare:
+    step: vieux_cimetiere_chenes_1
+    trophy: trophee_squelette_couronne
+    base: squelettes
+rare_spectre_veuve:
+  units: 1
+  pop: 2
+  tags: [esprit]
+  weapon: mains_spectrales
+  defaultDist: 3
+  immune: [maladie]
+  base: { hp: 262, will: 124, energy: 90, mana: 30, for: 4, ele: 0, esp: 10, foi: 0, omb: 0 }
+  growth: { hp: 13.92, will: 3, energy: 2, mana: 1.5, for: 0.6, ele: 0, esp: 1.8, foi: 0, omb: 0 }
+  forms:
+    - id: spectre
+      level: 1
+      speed: 18
+      res: { tranchant: 40, sacre: -40 }
+      skills: [[emploi, 1], [murmure, 1], [toucher_tombe, 8]]
+  drops: [trophee_spectre_veuve]
+  boss: false
+  region: 9
+  rare:
+    step: vieux_cimetiere_chenes_2
+    trophy: trophee_spectre_veuve
+    base: spectre
+rare_ours_chene_pourri:
+  units: 1
+  pop: 2
+  tags: [plante, bete]
+  weapon: branches
+  defaultDist: 1
+  base: { hp: 638, will: 65, energy: 110, mana: 0, for: 14, ele: 0, esp: 0, foi: 0, omb: 0 }
+  growth: { hp: 41.04, will: 1, energy: 2, mana: 0, for: 2.8, ele: 0, esp: 0, foi: 0, omb: 0 }
+  forms:
+    - id: ours_chene
+      level: 1
+      speed: 25
+      res: { tranchant: 20, feu: -30 }
+      skills: [[morsure, 1], [pietinement, 1], [carapace_epines, 8]]
+  drops: [trophee_ours_chene_pourri]
+  boss: false
+  region: 10
+  rare:
+    step: vieux_cimetiere_chenes_3
+    trophy: trophee_ours_chene_pourri
+    base: ours_chene
+rare_dryade_larmes_noires:
+  units: 1
+  pop: 2
+  tags: [plante]
+  weapon: baton_m
+  defaultDist: 3
+  base: { hp: 245, will: 104, energy: 80, mana: 45, for: 2, ele: 0, esp: 2, foi: 10, omb: 0 }
+  growth: { hp: 13.92, will: 2, energy: 1, mana: 2.5, for: 0.6, ele: 0, esp: 0.6, foi: 1.8, omb: 0 }
+  forms:
+    - id: dryade_corrompue
+      level: 1
+      speed: 22
+      res: { maladie: 40, feu: -30 }
+      skills: [[emploi, 1], [seve, 1], [peste, 8], [meditation, 10]]
+  drops: [trophee_dryade_larmes_noires]
+  boss: false
+  region: 10
+  rare:
+    step: vieux_cimetiere_chenes_4
+    trophy: trophee_dryade_larmes_noires
+    base: dryade_corrompue
+rare_cerf_braise:
+  units: 1
+  pop: 2
+  tags: [bete]
+  weapon: crocs
+  defaultDist: 1
+  base: { hp: 281, will: 65, energy: 100, mana: 0, for: 9, ele: 0, esp: 0, foi: 0, omb: 0 }
+  growth: { hp: 16.01, will: 1, energy: 2, mana: 0, for: 1.44, ele: 0, esp: 0, foi: 0, omb: 0 }
+  forms:
+    - id: cerf_ambre
+      level: 1
+      speed: 15
+      res: {}
+      skills: [[morsure, 1], [charge, 1], [repos, 8]]
+  drops: [trophee_cerf_braise]
+  boss: false
+  region: 10
+  rare:
+    step: gorges_fumantes_1
+    trophy: trophee_cerf_braise
+    base: cerf_ambre
+rare_druide_cendre_noire:
+  units: 1
+  pop: 2
+  tags: [humain]
+  weapon: baton_m
+  defaultDist: 3
+  base: { hp: 226, will: 85, energy: 70, mana: 45, for: 1, ele: 0, esp: 2, foi: 0, omb: 10 }
+  growth: { hp: 10.44, will: 2, energy: 1, mana: 2.5, for: 0.36, ele: 0, esp: 0.6, foi: 0, omb: 1.8 }
+  forms:
+    - id: druide_noir
+      level: 1
+      speed: 23
+      res: { maladie: 30 }
+      skills: [[emploi, 1], [putrefaction, 1], [malefice, 8], [jet_toile, 10]]
+  drops: [trophee_druide_cendre_noire]
+  boss: false
+  region: 10
+  rare:
+    step: gorges_fumantes_2
+    trophy: trophee_druide_cendre_noire
+    base: druide_noir
+rare_diablotin_rire_rouge:
+  units: 1
+  pop: 2
+  tags: [demon]
+  weapon: souffle
+  defaultDist: 2
+  immune: [feu]
+  base: { hp: 317, will: 78, energy: 70, mana: 50, for: 1, ele: 9, esp: 2, foi: 0, omb: 0 }
+  growth: { hp: 14.69, will: 1, energy: 1, mana: 3, for: 0.28, ele: 1.4, esp: 0.47, foi: 0, omb: 0 }
+  forms:
+    - id: diablotins
+      level: 1
+      speed: 23
+      res: { feu: 50, sacre: -30 }
+      skills: [[emploi, 1], [trait_flammes, 1]]
+  drops: [trophee_diablotin_rire_rouge]
+  boss: false
+  region: 13
+  rare:
+    step: gorges_fumantes_3
+    trophy: trophee_diablotin_rire_rouge
+    base: diablotins
+rare_ver_ardent:
+  units: 1
+  pop: 2
+  tags: [bete]
+  weapon: machoires
+  defaultDist: 1
+  base: { hp: 336, will: 65, energy: 100, mana: 0, for: 8, ele: 0, esp: 0, foi: 0, omb: 0 }
+  growth: { hp: 19.2, will: 1, energy: 2, mana: 0, for: 1.2, ele: 0, esp: 0, foi: 0, omb: 0 }
+  forms:
+    - id: vers_magma
+      level: 1
+      speed: 15
+      res: { feu: 60, glace: -30 }
+      skills: [[morsure, 1], [lame_ardente, 1]]
+  drops: [trophee_ver_ardent]
+  boss: false
+  region: 13
+  rare:
+    step: gorges_fumantes_4
+    trophy: trophee_ver_ardent
+    base: vers_magma
+rare_kobold_fond_mine:
+  units: 1
+  pop: 2
+  tags: [kobold]
+  weapon: lame_rouillee
+  defaultDist: 1
+  base: { hp: 302, will: 52, energy: 80, mana: 0, for: 6, ele: 0, esp: 1, foi: 0, omb: 1 }
+  growth: { hp: 21.6, will: 1, energy: 1, mana: 0, for: 1, ele: 0.2, esp: 0.5, foi: 0.2, omb: 0.5 }
+  forms:
+    - id: kobolds
+      level: 1
+      speed: 16
+      res: { feu: 10 }
+      skills: [[emploi, 1], [repos, 1], [lame_saignante, 1]]
+  drops: [trophee_kobold_fond_mine]
+  boss: false
+  region: 2
+  rare:
+    step: col_vent_blanc_1
+    trophy: trophee_kobold_fond_mine
+    base: kobolds
+rare_yeti_barbe_glace:
+  units: 1
+  pop: 2
+  tags: [bete]
+  weapon: griffes_m
+  defaultDist: 1
+  immune: [glace]
+  base: { hp: 638, will: 65, energy: 110, mana: 0, for: 14, ele: 0, esp: 0, foi: 0, omb: 0 }
+  growth: { hp: 41.04, will: 1, energy: 2, mana: 0, for: 2.8, ele: 0, esp: 0, foi: 0, omb: 0 }
+  forms:
+    - id: yeti_m
+      level: 1
+      speed: 25
+      res: { glace: 60, feu: -30 }
+      skills: [[morsure, 1], [frappe_brutale, 1], [pietinement, 13]]
+  drops: [trophee_yeti_barbe_glace]
+  boss: false
+  region: 11
+  rare:
+    step: col_vent_blanc_2
+    trophy: trophee_yeti_barbe_glace
+    base: yeti_m
+rare_nain_givre_thorgil:
+  units: 1
+  pop: 2
+  tags: [nain]
+  weapon: hache2m
+  defaultDist: 1
+  base: { hp: 528, will: 85, energy: 100, mana: 0, for: 8, ele: 0, esp: 1, foi: 1, omb: 0 }
+  growth: { hp: 33.6, will: 1, energy: 2, mana: 0, for: 1, ele: 0, esp: 0.3, foi: 0.3, omb: 0 }
+  forms:
+    - id: nains_givre_m
+      level: 1
+      speed: 20
+      res: { glace: 30 }
+      skills: [[emploi, 1], [cri_defi, 1], [frappe_brutale, 13]]
+  drops: [trophee_nain_givre_thorgil]
+  boss: false
+  region: 11
+  rare:
+    step: col_vent_blanc_3
+    trophy: trophee_nain_givre_thorgil
+    base: nains_givre_m
+rare_chamane_souffle_blanc:
+  units: 1
+  pop: 2
+  tags: [humain]
+  weapon: baton_m
+  defaultDist: 3
+  base: { hp: 226, will: 78, energy: 70, mana: 50, for: 1, ele: 10, esp: 2, foi: 0, omb: 0 }
+  growth: { hp: 10.44, will: 1, energy: 1, mana: 3, for: 0.36, ele: 1.8, esp: 0.6, foi: 0, omb: 0 }
+  forms:
+    - id: chamane_givre
+      level: 1
+      speed: 23
+      res: { glace: 40 }
+      skills: [[emploi, 1], [javelot_glace, 1], [prison_glace, 13], [meditation, 15]]
+  drops: [trophee_chamane_souffle_blanc]
+  boss: false
+  region: 11
+  rare:
+    step: col_vent_blanc_4
+    trophy: trophee_chamane_souffle_blanc
+    base: chamane_givre
+rare_loup_blanc_croc_bleu:
+  units: 1
+  pop: 2
+  tags: [bete]
+  weapon: crocs_gris
+  defaultDist: 1
+  base: { hp: 336, will: 65, energy: 100, mana: 0, for: 8, ele: 0, esp: 0, foi: 0, omb: 0 }
+  growth: { hp: 19.2, will: 1, energy: 2, mana: 0, for: 1.2, ele: 0, esp: 0, foi: 0, omb: 0 }
+  forms:
+    - id: loups_blancs
+      level: 1
+      speed: 15
+      res: { glace: 40, feu: -20 }
+      skills: [[morsure, 1], [bond, 1], [hurlement, 13]]
+  drops: [trophee_loup_blanc_croc_bleu]
+  boss: false
+  region: 11
+  rare:
+    step: glacier_fendu_1
+    trophy: trophee_loup_blanc_croc_bleu
+    base: loups_blancs
+rare_wendigo_sans_faim:
+  units: 1
+  pop: 2
+  tags: [esprit]
+  weapon: griffes_m
+  defaultDist: 1
+  base: { hp: 278, will: 72, energy: 100, mana: 0, for: 10, ele: 0, esp: 1, foi: 0, omb: 5 }
+  growth: { hp: 13.92, will: 1, energy: 2, mana: 0, for: 1.8, ele: 0, esp: 0.36, foi: 0, omb: 0.36 }
+  forms:
+    - id: wendigo
+      level: 1
+      speed: 16
+      res: { glace: 40, sacre: -30 }
+      skills: [[emploi, 1], [drain_ame, 1], [laceration, 13], [cri_effroi, 15]]
+  drops: [trophee_wendigo_sans_faim]
+  boss: false
+  region: 11
+  rare:
+    step: glacier_fendu_2
+    trophy: trophee_wendigo_sans_faim
+    base: wendigo
+rare_elementaire_eclat_noir:
+  units: 1
+  pop: 2
+  tags: [elementaire]
+  weapon: mains_spectrales
+  defaultDist: 2
+  immune: [glace]
+  base: { hp: 314, will: 129, energy: 80, mana: 40, for: 4, ele: 9, esp: 0, foi: 0, omb: 0 }
+  growth: { hp: 17.4, will: 0, energy: 1, mana: 2, for: 0.6, ele: 1.56, esp: 0, foi: 0, omb: 0 }
+  forms:
+    - id: elem_glace
+      level: 1
+      speed: 21
+      res: { glace: 75, feu: -40 }
+      skills: [[emploi, 1], [blizzard, 1], [armure_givre, 13]]
+  drops: [trophee_elementaire_eclat_noir]
+  boss: false
+  region: 11
+  rare:
+    step: glacier_fendu_3
+    trophy: trophee_elementaire_eclat_noir
+    base: elem_glace
+rare_geant_ymir_jeune:
+  units: 1
+  pop: 2
+  tags: [geant]
+  weapon: poing_pierre
+  defaultDist: 1
+  immune: [glace]
+  base: { hp: 754, will: 129, energy: 100, mana: 0, for: 11, ele: 0, esp: 0, foi: 0, omb: 0 }
+  growth: { hp: 45.14, will: 0, energy: 2, mana: 0, for: 2.1, ele: 0, esp: 0, foi: 0, omb: 0 }
+  forms:
+    - id: geant_givre
+      level: 1
+      speed: 26
+      res: { glace: 60, feu: -20 }
+      skills: [[emploi, 1], [pietinement, 1], [coup_assommant, 13], [souffle_glacial, 15]]
+  drops: [trophee_geant_ymir_jeune]
+  boss: false
+  region: 11
+  rare:
+    step: glacier_fendu_4
+    trophy: trophee_geant_ymir_jeune
+    base: geant_givre
+rare_champignon_roi:
+  units: 1
+  pop: 2
+  tags: [plante]
+  weapon: branches
+  defaultDist: 1
+  immune: [maladie]
+  base: { hp: 540, will: 85, energy: 100, mana: 0, for: 8, ele: 0, esp: 1, foi: 1, omb: 0 }
+  growth: { hp: 34.27, will: 1, energy: 2, mana: 0, for: 0.93, ele: 0, esp: 0.28, foi: 0.28, omb: 0 }
+  forms:
+    - id: spores
+      level: 1
+      speed: 20
+      res: { maladie: 60, feu: -30 }
+      skills: [[emploi, 1], [nuage, 1]]
+  drops: [trophee_champignon_roi]
+  boss: false
+  region: 12
+  rare:
+    step: grottes_luminescentes_1
+    trophy: trophee_champignon_roi
+    base: spores
+rare_tisseuse_il_vert:
+  units: 1
+  pop: 2
+  tags: [elfe]
+  weapon: baton_m
+  defaultDist: 3
+  base: { hp: 226, will: 85, energy: 70, mana: 45, for: 1, ele: 0, esp: 2, foi: 0, omb: 10 }
+  growth: { hp: 10.44, will: 2, energy: 1, mana: 2.5, for: 0.36, ele: 0, esp: 0.6, foi: 0, omb: 1.8 }
+  forms:
+    - id: tisseuse_nuit
+      level: 1
+      speed: 23
+      res: { tenebres: 40 }
+      skills: [[emploi, 1], [malefice, 1], [silence_tombe, 13], [nuee_ombres, 15]]
+  drops: [trophee_tisseuse_il_vert]
+  boss: false
+  region: 12
+  rare:
+    step: grottes_luminescentes_2
+    trophy: trophee_tisseuse_il_vert
+    base: tisseuse_nuit
+rare_salamandre_lave_ancienne:
+  units: 1
+  pop: 2
+  tags: [reptile]
+  weapon: souffle
+  defaultDist: 1
+  immune: [feu]
+  base: { hp: 245, will: 65, energy: 100, mana: 0, for: 9, ele: 3, esp: 0, foi: 0, omb: 0 }
+  growth: { hp: 13.92, will: 1, energy: 2, mana: 0, for: 1.44, ele: 0, esp: 0, foi: 0, omb: 0 }
+  forms:
+    - id: salamandre_lave
+      level: 1
+      speed: 15
+      res: { feu: 60, glace: -30 }
+      skills: [[morsure, 1], [souffle_feu, 1], [repos, 13]]
+  drops: [trophee_salamandre_lave_ancienne]
+  boss: false
+  region: 13
+  rare:
+    step: grottes_luminescentes_3
+    trophy: trophee_salamandre_lave_ancienne
+    base: salamandre_lave
+rare_golem_basalte_fele:
+  units: 1
+  pop: 2
+  tags: [construct]
+  weapon: poing_pierre
+  defaultDist: 1
+  base: { hp: 684, will: 129, energy: 100, mana: 0, for: 11, ele: 0, esp: 0, foi: 0, omb: 0 }
+  growth: { hp: 41.04, will: 0, energy: 2, mana: 0, for: 2.1, ele: 0, esp: 0, foi: 0, omb: 0 }
+  forms:
+    - id: golem_basalte
+      level: 1
+      speed: 26
+      res: { tranchant: 30, contondant: 30, feu: 50 }
+      skills: [[emploi, 1], [pietinement, 1], [peau_dure, 13]]
+  drops: [trophee_golem_basalte_fele]
+  boss: false
+  region: 13
+  rare:
+    step: grottes_luminescentes_4
+    trophy: trophee_golem_basalte_fele
+    base: golem_basalte
+rare_lame_nuit_elfe_noire:
+  units: 1
+  pop: 2
+  tags: [elfe]
+  weapon: dague
+  defaultDist: 1
+  base: { hp: 384, will: 72, energy: 100, mana: 0, for: 9, ele: 0, esp: 1, foi: 0, omb: 1 }
+  growth: { hp: 19.2, will: 1, energy: 2, mana: 0, for: 1.5, ele: 0, esp: 0.3, foi: 0, omb: 0.3 }
+  forms:
+    - id: elfes_noirs
+      level: 1
+      speed: 16
+      res: { tenebres: 30, sacre: -20 }
+      skills: [[emploi, 1], [laceration, 1], [lame_ombre, 13]]
+  drops: [trophee_lame_nuit_elfe_noire]
+  boss: false
+  region: 12
+  rare:
+    step: racines_profondes_1
+    trophy: trophee_lame_nuit_elfe_noire
+    base: elfes_noirs
+rare_araignee_veuve_pale:
+  units: 1
+  pop: 2
+  tags: [bete]
+  weapon: chelicères
+  defaultDist: 1
+  base: { hp: 415, will: 65, energy: 100, mana: 0, for: 10, ele: 0, esp: 0, foi: 0, omb: 0 }
+  growth: { hp: 23.71, will: 1, energy: 2, mana: 0, for: 1.68, ele: 0, esp: 0, foi: 0, omb: 0 }
+  forms:
+    - id: araignee_geante
+      level: 1
+      speed: 15
+      res: { maladie: 50, feu: -30 }
+      skills: [[morsure_venin, 1], [jet_toile, 1], [peste, 13], [bond, 15]]
+  drops: [trophee_araignee_veuve_pale]
+  boss: false
+  region: 12
+  rare:
+    step: racines_profondes_2
+    trophy: trophee_araignee_veuve_pale
+    base: araignee_geante
+rare_ombre_sans_nom:
+  units: 1
+  pop: 2
+  tags: [esprit]
+  weapon: mains_spectrales
+  defaultDist: 1
+  immune: [tenebres]
+  base: { hp: 314, will: 129, energy: 80, mana: 40, for: 4, ele: 9, esp: 0, foi: 0, omb: 0 }
+  growth: { hp: 17.4, will: 0, energy: 1, mana: 2, for: 0.6, ele: 1.56, esp: 0, foi: 0, omb: 0 }
+  forms:
+    - id: ombre_rampante
+      level: 1
+      speed: 21
+      res: { tranchant: 30, sacre: -50 }
+      skills: [[emploi, 1], [toucher_tombe, 1], [mirage, 13]]
+  drops: [trophee_ombre_sans_nom]
+  boss: false
+  region: 12
+  rare:
+    step: racines_profondes_3
+    trophy: trophee_ombre_sans_nom
+    base: ombre_rampante
+rare_mangeur_lanternes_gras:
+  units: 1
+  pop: 2
+  tags: [esprit]
+  weapon: mains_spectrales
+  defaultDist: 2
+  base: { hp: 262, will: 124, energy: 90, mana: 30, for: 4, ele: 0, esp: 10, foi: 0, omb: 0 }
+  growth: { hp: 13.92, will: 3, energy: 2, mana: 1.5, for: 0.6, ele: 0, esp: 1.8, foi: 0, omb: 0 }
+  forms:
+    - id: mangeur_lanternes
+      level: 1
+      speed: 18
+      res: { tenebres: 30, sacre: -40 }
+      skills: [[emploi, 1], [sommeil, 1], [drain_ame, 13]]
+  drops: [trophee_mangeur_lanternes_gras]
+  boss: false
+  region: 12
+  rare:
+    step: racines_profondes_4
+    trophy: trophee_mangeur_lanternes_gras
+    base: mangeur_lanternes
+rare_chien_infernal_trois_gueules:
+  units: 1
+  pop: 2
+  tags: [demon, bete]
+  weapon: crocs
+  defaultDist: 1
+  immune: [feu]
+  base: { hp: 336, will: 65, energy: 100, mana: 0, for: 8, ele: 0, esp: 0, foi: 0, omb: 0 }
+  growth: { hp: 19.2, will: 1, energy: 2, mana: 0, for: 1.2, ele: 0, esp: 0, foi: 0, omb: 0 }
+  forms:
+    - id: chiens_infernaux
+      level: 1
+      speed: 15
+      res: { feu: 50, sacre: -30 }
+      skills: [[morsure, 1], [souffle_feu, 1], [bond, 13]]
+  drops: [trophee_chien_infernal_trois_gueules]
+  boss: false
+  region: 13
+  rare:
+    step: plaines_basalte_1
+    trophy: trophee_chien_infernal_trois_gueules
+    base: chiens_infernaux
+rare_pyromancienne_vashti:
+  units: 1
+  pop: 2
+  tags: [humain]
+  weapon: baton_m
+  defaultDist: 3
+  base: { hp: 226, will: 78, energy: 70, mana: 50, for: 1, ele: 10, esp: 2, foi: 0, omb: 0 }
+  growth: { hp: 10.44, will: 1, energy: 1, mana: 3, for: 0.36, ele: 1.8, esp: 0.6, foi: 0, omb: 0 }
+  forms:
+    - id: pyromancienne
+      level: 1
+      speed: 23
+      res: { feu: 40 }
+      skills: [[emploi, 1], [lance_feu, 1], [nova_flammes, 13], [meditation, 15]]
+  drops: [trophee_pyromancienne_vashti]
+  boss: false
+  region: 13
+  rare:
+    step: plaines_basalte_2
+    trophy: trophee_pyromancienne_vashti
+    base: pyromancienne
+rare_forgeron_main_lave:
+  units: 1
+  pop: 2
+  tags: [demon]
+  weapon: masse_lourde
+  defaultDist: 1
+  base: { hp: 638, will: 65, energy: 110, mana: 0, for: 14, ele: 0, esp: 0, foi: 0, omb: 0 }
+  growth: { hp: 41.04, will: 1, energy: 2, mana: 0, for: 2.8, ele: 0, esp: 0, foi: 0, omb: 0 }
+  forms:
+    - id: forgeron_demon
+      level: 1
+      speed: 25
+      res: { feu: 50, sacre: -30 }
+      skills: [[emploi, 1], [lame_ardente, 1], [frappe_brutale, 13], [rage, 15]]
+  drops: [trophee_forgeron_main_lave]
+  boss: false
+  region: 13
+  rare:
+    step: plaines_basalte_3
+    trophy: trophee_forgeron_main_lave
+    base: forgeron_demon
+rare_elementaire_feu_ancien:
+  units: 1
+  pop: 2
+  tags: [elementaire]
+  weapon: souffle
+  defaultDist: 2
+  immune: [feu]
+  base: { hp: 314, will: 129, energy: 80, mana: 40, for: 4, ele: 9, esp: 0, foi: 0, omb: 0 }
+  growth: { hp: 17.4, will: 0, energy: 1, mana: 2, for: 0.6, ele: 1.56, esp: 0, foi: 0, omb: 0 }
+  forms:
+    - id: elem_feu
+      level: 1
+      speed: 21
+      res: { feu: 75, glace: -40 }
+      skills: [[emploi, 1], [lance_feu, 1], [bouclier_flammes, 13], [jet_magma, 15]]
+  drops: [trophee_elementaire_feu_ancien]
+  boss: false
+  region: 13
+  rare:
+    step: plaines_basalte_4
+    trophy: trophee_elementaire_feu_ancien
+    base: elem_feu
+rare_scorpion_bouclier_or:
+  units: 1
+  pop: 2
+  tags: [bete]
+  weapon: dard
+  defaultDist: 1
+  base: { hp: 408, will: 72, energy: 90, mana: 0, for: 8, ele: 1, esp: 1, foi: 1, omb: 1 }
+  growth: { hp: 24, will: 1, energy: 2, mana: 1, for: 1, ele: 0.2, esp: 0.2, foi: 0.2, omb: 0.2 }
+  forms:
+    - id: scorpions_geants
+      level: 1
+      speed: 16
+      res: { feu: 30, maladie: 30 }
+      skills: [[morsure, 1], [morsure_venin, 1], [repos, 1]]
+  drops: [trophee_scorpion_bouclier_or]
+  boss: false
+  region: 3
+  rare:
+    step: cote_epaves_1
+    trophy: trophee_scorpion_bouclier_or
+    base: scorpions_geants
+rare_pirate_borgne_rouge:
+  units: 1
+  pop: 2
+  tags: [humain]
+  weapon: epee
+  defaultDist: 1
+  base: { hp: 384, will: 72, energy: 100, mana: 0, for: 9, ele: 0, esp: 1, foi: 0, omb: 1 }
+  growth: { hp: 19.2, will: 1, energy: 2, mana: 0, for: 1.5, ele: 0, esp: 0.3, foi: 0, omb: 0.3 }
+  forms:
+    - id: pirates
+      level: 1
+      speed: 16
+      res: {}
+      skills: [[emploi, 1], [enchainement, 1], [repos, 18]]
+  drops: [trophee_pirate_borgne_rouge]
+  boss: false
+  region: 14
+  rare:
+    step: cote_epaves_2
+    trophy: trophee_pirate_borgne_rouge
+    base: pirates
+rare_crabe_ermite_geant:
+  units: 1
+  pop: 2
+  tags: [bete]
+  weapon: griffes_m
+  defaultDist: 1
+  base: { hp: 528, will: 85, energy: 100, mana: 0, for: 8, ele: 0, esp: 1, foi: 1, omb: 0 }
+  growth: { hp: 33.6, will: 1, energy: 2, mana: 0, for: 1, ele: 0, esp: 0.3, foi: 0.3, omb: 0 }
+  forms:
+    - id: crabes_geants
+      level: 1
+      speed: 20
+      res: { tranchant: 30, contondant: 20 }
+      skills: [[morsure, 1], [provocation, 1], [carapace_epines, 18]]
+  drops: [trophee_crabe_ermite_geant]
+  boss: false
+  region: 14
+  rare:
+    step: cote_epaves_3
+    trophy: trophee_crabe_ermite_geant
+    base: crabes_geants
+rare_naga_ecaille_nacre:
+  units: 1
+  pop: 2
+  tags: [reptile]
+  weapon: harpon_m
+  defaultDist: 2
+  base: { hp: 226, will: 78, energy: 70, mana: 50, for: 1, ele: 10, esp: 2, foi: 0, omb: 0 }
+  growth: { hp: 10.44, will: 1, energy: 1, mana: 3, for: 0.36, ele: 1.8, esp: 0.6, foi: 0, omb: 0 }
+  forms:
+    - id: naga_m
+      level: 1
+      speed: 23
+      res: { glace: 40 }
+      skills: [[emploi, 1], [javelot_glace, 1], [toucher_tombe, 18], [blizzard, 20]]
+  drops: [trophee_naga_ecaille_nacre]
+  boss: false
+  region: 14
+  rare:
+    step: cote_epaves_4
+    trophy: trophee_naga_ecaille_nacre
+    base: naga_m
+rare_sirene_corsaire_melusine:
+  units: 1
+  pop: 2
+  tags: [esprit]
+  weapon: dague
+  defaultDist: 3
+  base: { hp: 262, will: 124, energy: 90, mana: 30, for: 4, ele: 0, esp: 10, foi: 0, omb: 0 }
+  growth: { hp: 13.92, will: 3, energy: 2, mana: 1.5, for: 0.6, ele: 0, esp: 1.8, foi: 0, omb: 0 }
+  forms:
+    - id: sirene_corsaire
+      level: 1
+      speed: 18
+      res: { psychique: 40 }
+      skills: [[emploi, 1], [domination, 1], [sommeil, 18]]
+  drops: [trophee_sirene_corsaire_melusine]
+  boss: false
+  region: 14
+  rare:
+    step: fosse_sirenes_1
+    trophy: trophee_sirene_corsaire_melusine
+    base: sirene_corsaire
+rare_requin_garou_machoire_pale:
+  units: 1
+  pop: 2
+  tags: [bete, poisson]
+  weapon: machoires
+  defaultDist: 1
+  base: { hp: 334, will: 72, energy: 100, mana: 0, for: 10, ele: 0, esp: 1, foi: 0, omb: 1 }
+  growth: { hp: 16.7, will: 1, energy: 2, mana: 0, for: 1.8, ele: 0, esp: 0.36, foi: 0, omb: 0.36 }
+  forms:
+    - id: requins_garous
+      level: 1
+      speed: 16
+      res: { glace: 30 }
+      skills: [[morsure, 1], [laceration, 1], [predateur, 18]]
+  drops: [trophee_requin_garou_machoire_pale]
+  boss: false
+  region: 14
+  rare:
+    step: fosse_sirenes_2
+    trophy: trophee_requin_garou_machoire_pale
+    base: requins_garous
+rare_homme_poisson_pretre:
+  units: 1
+  pop: 2
+  tags: [poisson]
+  weapon: harpon_m
+  defaultDist: 1
+  base: { hp: 384, will: 72, energy: 100, mana: 0, for: 9, ele: 0, esp: 1, foi: 0, omb: 1 }
+  growth: { hp: 19.2, will: 1, energy: 2, mana: 0, for: 1.5, ele: 0, esp: 0.3, foi: 0, omb: 0.3 }
+  forms:
+    - id: hommes_poissons_m
+      level: 1
+      speed: 16
+      res: { glace: 30 }
+      skills: [[emploi, 1], [harpon_tir, 1], [enchainement, 23]]
+  drops: [trophee_homme_poisson_pretre]
+  boss: false
+  region: 17
+  rare:
+    step: fosse_sirenes_3
+    trophy: trophee_homme_poisson_pretre
+    base: hommes_poissons_m
+rare_meduse_couronnee:
+  units: 1
+  pop: 2
+  tags: [bete]
+  weapon: dard
+  defaultDist: 2
+  immune: [psychique]
+  base: { hp: 317, will: 85, energy: 70, mana: 45, for: 1, ele: 0, esp: 2, foi: 0, omb: 9 }
+  growth: { hp: 14.69, will: 2, energy: 1, mana: 2.5, for: 0.28, ele: 0, esp: 0.47, foi: 0, omb: 1.4 }
+  forms:
+    - id: meduses_m
+      level: 1
+      speed: 23
+      res: { glace: 30, psychique: 30 }
+      skills: [[emploi, 1], [putrefaction, 1], [toucher_tombe, 23]]
+  drops: [trophee_meduse_couronnee]
+  boss: false
+  region: 17
+  rare:
+    step: fosse_sirenes_4
+    trophy: trophee_meduse_couronnee
+    base: meduses_m
+rare_homme_fauve_croc_lune:
+  units: 1
+  pop: 2
+  tags: [humain, bete]
+  weapon: griffes_m
+  defaultDist: 1
+  base: { hp: 384, will: 72, energy: 100, mana: 0, for: 9, ele: 0, esp: 1, foi: 0, omb: 1 }
+  growth: { hp: 19.2, will: 1, energy: 2, mana: 0, for: 1.5, ele: 0, esp: 0.3, foi: 0, omb: 0.3 }
+  forms:
+    - id: hommes_fauves
+      level: 1
+      speed: 16
+      res: {}
+      skills: [[morsure, 1], [bond, 1], [laceration, 18]]
+  drops: [trophee_homme_fauve_croc_lune]
+  boss: false
+  region: 15
+  rare:
+    step: savane_rouge_1
+    trophy: trophee_homme_fauve_croc_lune
+    base: hommes_fauves
+rare_hyene_rieuse:
+  units: 1
+  pop: 2
+  tags: [bete]
+  weapon: crocs
+  defaultDist: 1
+  base: { hp: 367, will: 65, energy: 100, mana: 0, for: 8, ele: 0, esp: 0, foi: 0, omb: 0 }
+  growth: { hp: 20.81, will: 1, energy: 2, mana: 0, for: 1.12, ele: 0, esp: 0, foi: 0, omb: 0 }
+  forms:
+    - id: hyenes_m
+      level: 1
+      speed: 15
+      res: { maladie: 20 }
+      skills: [[morsure, 1], [laceration, 1]]
+  drops: [trophee_hyene_rieuse]
+  boss: false
+  region: 16
+  rare:
+    step: savane_rouge_2
+    trophy: trophee_hyene_rieuse
+    base: hyenes_m
+rare_gorille_poing_fer:
+  units: 1
+  pop: 2
+  tags: [bete]
+  weapon: poing_pierre
+  defaultDist: 1
+  base: { hp: 638, will: 65, energy: 110, mana: 0, for: 14, ele: 0, esp: 0, foi: 0, omb: 0 }
+  growth: { hp: 41.04, will: 1, energy: 2, mana: 0, for: 2.8, ele: 0, esp: 0, foi: 0, omb: 0 }
+  forms:
+    - id: gorille_m
+      level: 1
+      speed: 25
+      res: { contondant: 20 }
+      skills: [[emploi, 1], [frappe_brutale, 1], [pietinement, 18], [rage, 20]]
+  drops: [trophee_gorille_poing_fer]
+  boss: false
+  region: 15
+  rare:
+    step: savane_rouge_3
+    trophy: trophee_gorille_poing_fer
+    base: gorille_m
+rare_centaure_fleche_noire:
+  units: 1
+  pop: 2
+  tags: [centaure]
+  weapon: arc_m
+  defaultDist: 3
+  base: { hp: 293, will: 72, energy: 95, mana: 0, for: 9, ele: 0, esp: 1, foi: 0, omb: 0 }
+  growth: { hp: 16.7, will: 1, energy: 2, mana: 0, for: 1.56, ele: 0, esp: 0.36, foi: 0, omb: 0 }
+  forms:
+    - id: centaures
+      level: 1
+      speed: 18
+      res: {}
+      skills: [[tir_arc, 1], [rafale, 1], [repos, 18]]
+  drops: [trophee_centaure_fleche_noire]
+  boss: false
+  region: 16
+  rare:
+    step: savane_rouge_4
+    trophy: trophee_centaure_fleche_noire
+    base: centaures
+rare_serpent_roi_ecaille_emeraude:
+  units: 1
+  pop: 2
+  tags: [reptile]
+  weapon: dard
+  defaultDist: 1
+  base: { hp: 415, will: 65, energy: 100, mana: 0, for: 10, ele: 0, esp: 0, foi: 0, omb: 0 }
+  growth: { hp: 23.71, will: 1, energy: 2, mana: 0, for: 1.68, ele: 0, esp: 0, foi: 0, omb: 0 }
+  forms:
+    - id: serpent_roi
+      level: 1
+      speed: 15
+      res: { maladie: 50 }
+      skills: [[morsure_venin, 1], [domination, 1], [bond, 18]]
+  drops: [trophee_serpent_roi_ecaille_emeraude]
+  boss: false
+  region: 15
+  rare:
+    step: temples_etouffes_1
+    trophy: trophee_serpent_roi_ecaille_emeraude
+    base: serpent_roi
+rare_idole_rieuse:
+  units: 1
+  pop: 2
+  tags: [construct]
+  weapon: poing_pierre
+  defaultDist: 1
+  immune: [psychique]
+  base: { hp: 523, will: 129, energy: 100, mana: 0, for: 10, ele: 0, esp: 0, foi: 0, omb: 0 }
+  growth: { hp: 31.32, will: 0, energy: 2, mana: 0, for: 1.8, ele: 0, esp: 0, foi: 0, omb: 0 }
+  forms:
+    - id: idole_jade
+      level: 1
+      speed: 26
+      res: { tranchant: 30, contondant: 30, sacre: 30 }
+      skills: [[emploi, 1], [coup_assommant, 1], [egide, 18]]
+  drops: [trophee_idole_rieuse]
+  boss: false
+  region: 15
+  rare:
+    step: temples_etouffes_2
+    trophy: trophee_idole_rieuse
+    base: idole_jade
+rare_plante_carnivore_gueule_rouge:
+  units: 1
+  pop: 2
+  tags: [plante]
+  weapon: machoires
+  defaultDist: 1
+  immune: [maladie]
+  base: { hp: 384, will: 85, energy: 100, mana: 0, for: 9, ele: 0, esp: 1, foi: 1, omb: 0 }
+  growth: { hp: 24.36, will: 1, energy: 2, mana: 0, for: 1.2, ele: 0, esp: 0.36, foi: 0.36, omb: 0 }
+  forms:
+    - id: plante_carnivore
+      level: 1
+      speed: 23
+      res: { maladie: 50, feu: -40 }
+      skills: [[morsure, 1], [jet_toile, 1], [carapace_epines, 18]]
+  drops: [trophee_plante_carnivore_gueule_rouge]
+  boss: false
+  region: 15
+  rare:
+    step: temples_etouffes_3
+    trophy: trophee_plante_carnivore_gueule_rouge
+    base: plante_carnivore
+rare_chamane_crapaud_bouffi:
+  units: 1
+  pop: 2
+  tags: [reptile]
+  weapon: baton_m
+  defaultDist: 3
+  base: { hp: 226, will: 85, energy: 70, mana: 45, for: 1, ele: 0, esp: 2, foi: 0, omb: 10 }
+  growth: { hp: 10.44, will: 2, energy: 1, mana: 2.5, for: 0.36, ele: 0, esp: 0.6, foi: 0, omb: 1.8 }
+  forms:
+    - id: chamane_crapaud_m
+      level: 1
+      speed: 23
+      res: { maladie: 50 }
+      skills: [[emploi, 1], [peste, 1], [malefice, 18], [soin_mineur, 20]]
+  drops: [trophee_chamane_crapaud_bouffi]
+  boss: false
+  region: 15
+  rare:
+    step: temples_etouffes_4
+    trophy: trophee_chamane_crapaud_bouffi
+    base: chamane_crapaud_m
+rare_orc_brise_crane:
+  units: 1
+  pop: 2
+  tags: [orc]
+  weapon: lame_rouillee
+  defaultDist: 1
+  base: { hp: 538, will: 65, energy: 110, mana: 0, for: 11, ele: 0, esp: 0, foi: 0, omb: 0 }
+  growth: { hp: 34.56, will: 1, energy: 2, mana: 0, for: 2, ele: 0, esp: 0, foi: 0, omb: 0 }
+  forms:
+    - id: orcs_pillards
+      level: 1
+      speed: 25
+      res: {}
+      skills: [[emploi, 1], [frappe_brutale, 1], [rage, 18]]
+  drops: [trophee_orc_brise_crane]
+  boss: false
+  region: 16
+  rare:
+    step: route_tempetes_1
+    trophy: trophee_orc_brise_crane
+    base: orcs_pillards
+rare_harpie_il_orage:
+  units: 1
+  pop: 2
+  tags: [bete]
+  weapon: griffes_m
+  defaultDist: 1
+  base: { hp: 346, will: 65, energy: 100, mana: 0, for: 8, ele: 0, esp: 0, foi: 0, omb: 0 }
+  growth: { hp: 19.58, will: 1, energy: 2, mana: 0, for: 1.12, ele: 0, esp: 0, foi: 0, omb: 0 }
+  forms:
+    - id: harpies_tempete
+      level: 1
+      speed: 13
+      res: { glace: 30 }
+      skills: [[morsure, 1], [cri_effroi, 1], [mirage, 18]]
+  drops: [trophee_harpie_il_orage]
+  boss: false
+  region: 16
+  rare:
+    step: route_tempetes_2
+    trophy: trophee_harpie_il_orage
+    base: harpies_tempete
+rare_geant_steppes_borr:
+  units: 1
+  pop: 2
+  tags: [geant]
+  weapon: poing_pierre
+  defaultDist: 1
+  base: { hp: 754, will: 129, energy: 100, mana: 0, for: 11, ele: 0, esp: 0, foi: 0, omb: 0 }
+  growth: { hp: 45.14, will: 0, energy: 2, mana: 0, for: 2.1, ele: 0, esp: 0, foi: 0, omb: 0 }
+  forms:
+    - id: geant_steppes
+      level: 1
+      speed: 26
+      res: { contondant: 30 }
+      skills: [[emploi, 1], [pietinement, 1], [frappe_brutale, 18]]
+  drops: [trophee_geant_steppes_borr]
+  boss: false
+  region: 16
+  rare:
+    step: route_tempetes_3
+    trophy: trophee_geant_steppes_borr
+    base: geant_steppes
+rare_esprit_vent_hurleur:
+  units: 1
+  pop: 2
+  tags: [elementaire]
+  weapon: mains_spectrales
+  defaultDist: 2
+  immune: [psychique]
+  base: { hp: 314, will: 129, energy: 80, mana: 40, for: 4, ele: 9, esp: 0, foi: 0, omb: 0 }
+  growth: { hp: 17.4, will: 0, energy: 1, mana: 2, for: 0.6, ele: 1.56, esp: 0, foi: 0, omb: 0 }
+  forms:
+    - id: esprit_vent
+      level: 1
+      speed: 21
+      res: { glace: 50, tranchant: 20 }
+      skills: [[emploi, 1], [blizzard, 1], [mirage, 18], [hurlement_mental, 20]]
+  drops: [trophee_esprit_vent_hurleur]
+  boss: false
+  region: 16
+  rare:
+    step: route_tempetes_4
+    trophy: trophee_esprit_vent_hurleur
+    base: esprit_vent
+rare_homme_poisson_roi_fosses:
+  units: 1
+  pop: 2
+  tags: [poisson]
+  weapon: harpon_m
+  defaultDist: 1
+  base: { hp: 384, will: 72, energy: 100, mana: 0, for: 9, ele: 0, esp: 1, foi: 0, omb: 1 }
+  growth: { hp: 19.2, will: 1, energy: 2, mana: 0, for: 1.5, ele: 0, esp: 0.3, foi: 0, omb: 0.3 }
+  forms:
+    - id: hommes_poissons_m
+      level: 1
+      speed: 16
+      res: { glace: 30 }
+      skills: [[emploi, 1], [harpon_tir, 1], [enchainement, 23]]
+  drops: [trophee_homme_poisson_roi_fosses]
+  boss: false
+  region: 17
+  rare:
+    step: faille_abyssale_1
+    trophy: trophee_homme_poisson_roi_fosses
+    base: hommes_poissons_m
+rare_oracle_noye_ilsa:
+  units: 1
+  pop: 2
+  tags: [mort-vivant]
+  weapon: baton_m
+  defaultDist: 3
+  base: { hp: 226, will: 85, energy: 70, mana: 45, for: 1, ele: 0, esp: 2, foi: 0, omb: 10 }
+  growth: { hp: 10.44, will: 2, energy: 1, mana: 2.5, for: 0.36, ele: 0, esp: 0.6, foi: 0, omb: 1.8 }
+  forms:
+    - id: oracle_noye
+      level: 1
+      speed: 23
+      res: { tenebres: 40, glace: 30 }
+      skills: [[emploi, 1], [drain_ame, 1], [nuee_ombres, 23], [silence_tombe, 25]]
+  drops: [trophee_oracle_noye_ilsa]
+  boss: false
+  region: 17
+  rare:
+    step: faille_abyssale_2
+    trophy: trophee_oracle_noye_ilsa
+    base: oracle_noye
+rare_succube_velours:
+  units: 1
+  pop: 2
+  tags: [demon]
+  weapon: dague
+  defaultDist: 2
+  base: { hp: 262, will: 124, energy: 90, mana: 30, for: 4, ele: 0, esp: 10, foi: 0, omb: 0 }
+  growth: { hp: 13.92, will: 3, energy: 2, mana: 1.5, for: 0.6, ele: 0, esp: 1.8, foi: 0, omb: 0 }
+  forms:
+    - id: succube_m
+      level: 1
+      speed: 18
+      res: { feu: 40, sacre: -30 }
+      skills: [[emploi, 1], [domination, 1], [drain_ame, 23]]
+  drops: [trophee_succube_velours]
+  boss: false
+  region: 18
+  rare:
+    step: faille_abyssale_3
+    trophy: trophee_succube_velours
+    base: succube_m
+rare_chevalier_infernal_mordred:
+  units: 1
+  pop: 2
+  tags: [demon]
+  weapon: epee
+  defaultDist: 1
+  immune: [feu]
+  base: { hp: 502, will: 85, energy: 100, mana: 0, for: 14, ele: 0, esp: 1, foi: 1, omb: 0 }
+  growth: { hp: 31.92, will: 1, energy: 2, mana: 0, for: 1.4, ele: 0, esp: 0.42, foi: 0.42, omb: 0 }
+  forms:
+    - id: chevalier_infernal
+      level: 1
+      speed: 20
+      res: { feu: 50, tranchant: 20, sacre: -30 }
+      skills: [[emploi, 1], [provocation, 1], [enchainement, 23], [rempart_vivant, 25]]
+  drops: [trophee_chevalier_infernal_mordred]
+  boss: false
+  region: 18
+  rare:
+    step: faille_abyssale_4
+    trophy: trophee_chevalier_infernal_mordred
+    base: chevalier_infernal
+rare_demon_cornu:
+  units: 1
+  pop: 2
+  tags: [demon]
+  weapon: griffes_m
+  defaultDist: 1
+  immune: [feu]
+  base: { hp: 389, will: 72, energy: 100, mana: 0, for: 9, ele: 0, esp: 1, foi: 0, omb: 1 }
+  growth: { hp: 19.58, will: 1, energy: 2, mana: 0, for: 1.4, ele: 0, esp: 0.28, foi: 0, omb: 0.28 }
+  forms:
+    - id: demons_mineurs
+      level: 1
+      speed: 16
+      res: { feu: 50, sacre: -40 }
+      skills: [[emploi, 1], [lame_ardente, 1], [laceration, 23]]
+  drops: [trophee_demon_cornu]
+  boss: false
+  region: 18
+  rare:
+    step: pont_ames_1
+    trophy: trophee_demon_cornu
+    base: demons_mineurs
+rare_molosse_infernal_cerberin:
+  units: 1
+  pop: 2
+  tags: [demon, bete]
+  weapon: crocs
+  defaultDist: 1
+  immune: [feu]
+  base: { hp: 281, will: 65, energy: 100, mana: 0, for: 9, ele: 0, esp: 0, foi: 0, omb: 0 }
+  growth: { hp: 16.01, will: 1, energy: 2, mana: 0, for: 1.44, ele: 0, esp: 0, foi: 0, omb: 0 }
+  forms:
+    - id: molosse_infernal
+      level: 1
+      speed: 15
+      res: { feu: 60, sacre: -30 }
+      skills: [[morsure, 1], [souffle_feu, 1], [bond, 23], [predateur, 25]]
+  drops: [trophee_molosse_infernal_cerberin]
+  boss: false
+  region: 18
+  rare:
+    step: pont_ames_2
+    trophy: trophee_molosse_infernal_cerberin
+    base: molosse_infernal
+rare_cauchemar_sans_visage:
+  units: 1
+  pop: 2
+  tags: [esprit]
+  weapon: mains_spectrales
+  defaultDist: 2
+  immune: [psychique]
+  base: { hp: 314, will: 129, energy: 80, mana: 40, for: 4, ele: 9, esp: 0, foi: 0, omb: 0 }
+  growth: { hp: 17.4, will: 0, energy: 1, mana: 2, for: 0.6, ele: 1.56, esp: 0, foi: 0, omb: 0 }
+  forms:
+    - id: cauchemar
+      level: 1
+      speed: 21
+      res: { tenebres: 40, sacre: -40 }
+      skills: [[emploi, 1], [vision_terreur, 1], [terreur_masse, 23], [drain_ame, 25]]
+  drops: [trophee_cauchemar_sans_visage]
+  boss: false
+  region: 19
+  rare:
+    step: pont_ames_3
+    trophy: trophee_cauchemar_sans_visage
+    base: cauchemar
+rare_licorne_noire_crin_suie:
+  units: 1
+  pop: 2
+  tags: [bete, fee]
+  weapon: crocs
+  defaultDist: 1
+  base: { hp: 293, will: 65, energy: 100, mana: 0, for: 9, ele: 0, esp: 0, foi: 0, omb: 3 }
+  growth: { hp: 16.7, will: 1, energy: 2, mana: 0, for: 1.44, ele: 0, esp: 0, foi: 0, omb: 0 }
+  forms:
+    - id: licorne_noire
+      level: 1
+      speed: 15
+      res: { tenebres: 40, sacre: -20 }
+      skills: [[morsure, 1], [charge, 1], [drain_ame, 23]]
+  drops: [trophee_licorne_noire_crin_suie]
+  boss: false
+  region: 19
+  rare:
+    step: pont_ames_4
+    trophy: trophee_licorne_noire_crin_suie
+    base: licorne_noire

@@ -1,0 +1,197 @@
+# Composants rares des régions et composants de gardien des routes nouvelles.
+
+miel_royal:
+  kind: composant
+  tier: 2
+  value: 25
+  tags: [essence, fil, bete]
+perle_ondine:
+  kind: composant
+  tier: 2
+  value: 25
+  tags: [essence, bois, herbe]
+rune_menhir:
+  kind: composant
+  tier: 2
+  value: 25
+  tags: [essence, herbe, bois]
+il_sorciere:
+  kind: composant
+  tier: 3
+  value: 35
+  tags: [essence, cuir, bete]
+crane_necromant:
+  kind: composant
+  tier: 3
+  value: 35
+  tags: [essence, os]
+c_ur_dryade:
+  kind: composant
+  tier: 3
+  value: 35
+  tags: [essence, pierre]
+larme_glacier:
+  kind: composant
+  tier: 4
+  value: 60
+  tags: [essence, cuir, bete]
+il_matriarche:
+  kind: composant
+  tier: 4
+  value: 60
+  tags: [essence, fil]
+braise_eternelle:
+  kind: composant
+  tier: 4
+  value: 60
+  tags: [essence, pierre]
+perle_kraken:
+  kind: composant
+  tier: 5
+  value: 100
+  tags: [essence, pierre]
+il_jade:
+  kind: composant
+  tier: 5
+  value: 100
+  tags: [essence, fil, bois]
+totem_vent:
+  kind: composant
+  tier: 5
+  value: 100
+  tags: [essence, cuir]
+perle_ys:
+  kind: composant
+  tier: 5
+  value: 110
+  tags: [essence, pierre]
+c_ur_demon:
+  kind: composant
+  tier: 5
+  value: 110
+  tags: [essence, pierre, metal]
+larme_songe:
+  kind: composant
+  tier: 5
+  value: 110
+  tags: [essence, herbe]
+corne_taureau:
+  kind: composant
+  tier: 3
+  value: 45
+  tags: [essence]
+voile_dame:
+  kind: composant
+  tier: 3
+  value: 45
+  tags: [essence]
+c_ur_menhir:
+  kind: composant
+  tier: 3
+  value: 45
+  tags: [essence]
+couronne_farfadet:
+  kind: composant
+  tier: 3
+  value: 45
+  tags: [essence]
+hache_bourreau:
+  kind: composant
+  tier: 3
+  value: 45
+  tags: [essence]
+miroir_ondine:
+  kind: composant
+  tier: 3
+  value: 45
+  tags: [essence]
+gland_chene_mere:
+  kind: composant
+  tier: 3
+  value: 45
+  tags: [essence]
+plume_heron_colossal:
+  kind: composant
+  tier: 4
+  value: 60
+  tags: [essence]
+croc_alpha:
+  kind: composant
+  tier: 4
+  value: 60
+  tags: [essence]
+phylactere_lanternes:
+  kind: composant
+  tier: 4
+  value: 60
+  tags: [essence]
+baton_druide_liche:
+  kind: composant
+  tier: 4
+  value: 60
+  tags: [essence]
+c_ur_magma:
+  kind: composant
+  tier: 4
+  value: 60
+  tags: [essence]
+ecaille_wyrm:
+  kind: composant
+  tier: 5
+  value: 90
+  tags: [essence]
+defense_mammouth:
+  kind: composant
+  tier: 5
+  value: 90
+  tags: [essence]
+spore_reine:
+  kind: composant
+  tier: 5
+  value: 90
+  tags: [essence]
+anneau_ver_racine:
+  kind: composant
+  tier: 5
+  value: 90
+  tags: [essence]
+couronne_braise:
+  kind: composant
+  tier: 5
+  value: 90
+  tags: [essence]
+tricorne_amiral:
+  kind: composant
+  tier: 5
+  value: 140
+  tags: [essence]
+il_kraken:
+  kind: composant
+  tier: 5
+  value: 140
+  tags: [essence]
+criniere_lion_roi:
+  kind: composant
+  tier: 5
+  value: 140
+  tags: [essence]
+plume_quetzal:
+  kind: composant
+  tier: 5
+  value: 140
+  tags: [essence]
+souffle_captif:
+  kind: composant
+  tier: 5
+  value: 140
+  tags: [essence]
+ecaille_obsidienne:
+  kind: composant
+  tier: 5
+  value: 180
+  tags: [essence]
+chaine_pont:
+  kind: composant
+  tier: 5
+  value: 180
+  tags: [essence]

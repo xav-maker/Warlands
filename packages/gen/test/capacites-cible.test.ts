@@ -15,7 +15,7 @@ const origin = loadContent(DIR).raw!.origin;
 const compiled = validateContent(DIR);
 const c = compiled.pack as unknown as GenContent;
 /** Les capacités de skills/cible.yaml. */
-const CIBLE = Object.keys(c.skills).filter((id) => origin[`skills.${id}`] === 'skills/cible.yaml');
+const CIBLE = Object.keys(c.skills).filter((id) => origin[`skills.${id}`] === 'skills/cible.yaml' && c.skills[id]!.kind === 'active');
 const POW = (o: Partial<Powers> = {}): Powers => ({ for: 0, ele: 0, esp: 0, foi: 0, omb: 0, ...o });
 const NO_RES = { contondant: 0, tranchant: 0, maladie: 0, psychique: 0, feu: 0, glace: 0, tenebres: 0, sacre: 0 };
 

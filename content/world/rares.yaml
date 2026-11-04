@@ -1,22 +1,286 @@
 # Monstres rares : un par étape hors gardien.
 
-- { id: rare_lisiere, region: 0, step: lisiere, base: loup_gris, trophy: fourrure_givre }
-- { id: rare_sentier, region: 0, step: sentier, base: gobelins, trophy: banniere_grishnak }
-- { id: rare_nids, region: 0, step: nids, base: araignee, trophy: oeuf_reine_soie }
-- { id: rare_camp, region: 0, step: camp, base: troll, trophy: oeil_machefer }
-- { id: rare_berges, region: 1, step: berges, base: crapaud, trophy: langue_vase }
-- { id: rare_roselieres, region: 1, step: roselieres, base: hommes_lezards, trophy: crane_ssark }
-- { id: rare_epaves, region: 1, step: epaves, base: pecheurs_maudits, trophy: lanterne_capitaine }
-- { id: rare_tertre, region: 1, step: tertre, base: crocodile, trophy: dent_mangeur }
-- { id: rare_entree, region: 2, step: entree, base: artificier, trophy: detonateur }
-- { id: rare_galeries, region: 2, step: galeries, base: ver_galeries, trophy: mandibule_ver }
-- { id: rare_filons, region: 2, step: filons, base: elementaire_cristal, trophy: coeur_prisme }
-- { id: rare_puits, region: 2, step: puits, base: basilic, trophy: oeil_or }
-- { id: rare_dunes, region: 3, step: dunes, base: ombre_mirage, trophy: voile_mirage }
-- { id: rare_caravane, region: 3, step: caravane, base: pillards_sable, trophy: sceau_main_rouge }
-- { id: rare_tombeaux, region: 3, step: tombeaux, base: pretre_scarabee, trophy: scarabee_or }
-- { id: rare_verrerie, region: 3, step: verrerie, base: ver_sables, trophy: perle_ver_roi }
-- { id: rare_marches, region: 4, step: marches, base: griffons, trophy: remige_argent }
-- { id: rare_parvis, region: 4, step: parvis, base: sentinelles, trophy: glyphe_vigilance }
-- { id: rare_observatoire, region: 4, step: observatoire, base: astromancien, trophy: astrolabe_brise }
-- { id: rare_jardins, region: 4, step: jardins, base: chimere, trophy: corne_chimere }
+- { id: rare_lisiere, route: ronces, step: lisiere, base: loup_gris, trophy: fourrure_givre }
+- { id: rare_sentier, route: ronces, step: sentier, base: gobelins, trophy: banniere_grishnak }
+- { id: rare_nids, route: ronces, step: nids, base: araignee, trophy: oeuf_reine_soie }
+- { id: rare_camp, route: ronces, step: camp, base: troll, trophy: oeil_machefer }
+- { id: rare_berges, route: marais, step: berges, base: crapaud, trophy: langue_vase }
+- { id: rare_roselieres, route: marais, step: roselieres, base: hommes_lezards, trophy: crane_ssark }
+- { id: rare_epaves, route: marais, step: epaves, base: pecheurs_maudits, trophy: lanterne_capitaine }
+- { id: rare_tertre, route: marais, step: tertre, base: crocodile, trophy: dent_mangeur }
+- { id: rare_entree, route: mines, step: entree, base: artificier, trophy: detonateur }
+- { id: rare_galeries, route: mines, step: galeries, base: ver_galeries, trophy: mandibule_ver }
+- { id: rare_filons, route: mines, step: filons, base: elementaire_cristal, trophy: coeur_prisme }
+- { id: rare_puits, route: mines, step: puits, base: basilic, trophy: oeil_or }
+- { id: rare_dunes, route: desert, step: dunes, base: ombre_mirage, trophy: voile_mirage }
+- { id: rare_caravane, route: desert, step: caravane, base: pillards_sable, trophy: sceau_main_rouge }
+- { id: rare_tombeaux, route: desert, step: tombeaux, base: pretre_scarabee, trophy: scarabee_or }
+- { id: rare_verrerie, route: desert, step: verrerie, base: ver_sables, trophy: perle_ver_roi }
+- { id: rare_marches, route: ciel, step: marches, base: griffons, trophy: remige_argent }
+- { id: rare_parvis, route: ciel, step: parvis, base: sentinelles, trophy: glyphe_vigilance }
+- { id: rare_observatoire, route: ciel, step: observatoire, base: astromancien, trophy: astrolabe_brise }
+- { id: rare_jardins, route: ciel, step: jardins, base: chimere, trophy: corne_chimere }
+- { id: rare_grand_groin, route: pres_brande, step: pres_brande_1, base: sanglier, trophy: trophee_grand_groin }
+- { id: rare_lievre_roi, route: pres_brande, step: pres_brande_2, base: lievres, trophy: trophee_lievre_roi }
+- { id: rare_bourdon_reine, route: pres_brande, step: pres_brande_3, base: bourdons, trophy: trophee_bourdon_reine }
+- { id: rare_jacques_fourche, route: pres_brande, step: pres_brande_4, base: epouvantail, trophy: trophee_jacques_fourche }
+- { id: rare_gros_ventre, route: gue_lavandieres, step: gue_lavandieres_1, base: grenouilles, trophy: trophee_gros_ventre }
+- { id: rare_mere_rat, route: gue_lavandieres, step: gue_lavandieres_2, base: rats_eau, trophy: trophee_mere_rat }
+- { id: rare_brume_fille, route: gue_lavandieres, step: gue_lavandieres_3, base: lavandiere, trophy: trophee_brume_fille }
+- { id: rare_croc_vase, route: gue_lavandieres, step: gue_lavandieres_4, base: brochet, trophy: trophee_croc_vase }
+- { id: rare_vieux_sanglier_gris, route: collines_menhirs, step: collines_menhirs_1, base: sanglier, trophy: trophee_vieux_sanglier_gris }
+- { id: rare_corneille_mere, route: collines_menhirs, step: collines_menhirs_2, base: corneilles, trophy: trophee_corneille_mere }
+- { id: rare_belier_tonnerre, route: collines_menhirs, step: collines_menhirs_3, base: belier, trophy: trophee_belier_tonnerre }
+- { id: rare_pierre_qui_marche, route: collines_menhirs, step: collines_menhirs_4, base: esprit_menhir, trophy: trophee_pierre_qui_marche }
+- {
+    id: rare_grenouille_taureau_or,
+    route: tourbieres_bruyere,
+    step: tourbieres_bruyere_1,
+    base: grenouilles,
+    trophy: trophee_grenouille_taureau_or,
+  }
+- { id: rare_malfaisant, route: tourbieres_bruyere, step: tourbieres_bruyere_2, base: farfadets, trophy: trophee_malfaisant }
+- {
+    id: rare_grand_chien_noir,
+    route: tourbieres_bruyere,
+    step: tourbieres_bruyere_3,
+    base: chiens_bruyere,
+    trophy: trophee_grand_chien_noir,
+  }
+- {
+    id: rare_rebouteuse_ma_gorre,
+    route: tourbieres_bruyere,
+    step: tourbieres_bruyere_4,
+    base: rebouteuse,
+    trophy: trophee_rebouteuse_ma_gorre,
+  }
+- { id: rare_brigand_rouge_gorge, route: chemin_pendus, step: chemin_pendus_1, base: brigands_haies, trophy: trophee_brigand_rouge_gorge }
+- { id: rare_ours_balafre, route: chemin_pendus, step: chemin_pendus_2, base: ours_brun, trophy: trophee_ours_balafre }
+- { id: rare_goule_gibet, route: chemin_pendus, step: chemin_pendus_3, base: goules, trophy: trophee_goule_gibet }
+- { id: rare_chien_os, route: chemin_pendus, step: chemin_pendus_4, base: chien_squelette, trophy: trophee_chien_os }
+- { id: rare_ondine_pale, route: combe_brumes, step: combe_brumes_1, base: ondine, trophy: trophee_ondine_pale }
+- { id: rare_farfadet_nuit_noire, route: combe_brumes, step: combe_brumes_2, base: farfadets, trophy: trophee_farfadet_nuit_noire }
+- {
+    id: rare_chauve_souris_albinos,
+    route: combe_brumes,
+    step: combe_brumes_3,
+    base: chauves_souris_g,
+    trophy: trophee_chauve_souris_albinos,
+  }
+- { id: rare_corbeau_trois_yeux, route: combe_brumes, step: combe_brumes_4, base: corbeau_augure, trophy: trophee_corbeau_trois_yeux }
+- { id: rare_chef_coupe_bourse, route: lisiere_ambre, step: lisiere_ambre_1, base: bandits, trophy: trophee_chef_coupe_bourse }
+- { id: rare_cerf_bois_or, route: lisiere_ambre, step: lisiere_ambre_2, base: cerf_ambre, trophy: trophee_cerf_bois_or }
+- { id: rare_guepe_reine, route: lisiere_ambre, step: lisiere_ambre_3, base: guepes, trophy: trophee_guepe_reine }
+- { id: rare_belier_noir, route: lisiere_ambre, step: lisiere_ambre_4, base: belier, trophy: trophee_belier_noir }
+- { id: rare_sangsue_mere, route: falaises_heron, step: falaises_heron_1, base: sangsues, trophy: trophee_sangsue_mere }
+- {
+    id: rare_chasseur_ombre_grise,
+    route: falaises_heron,
+    step: falaises_heron_2,
+    base: chasseurs_primes,
+    trophy: trophee_chasseur_ombre_grise,
+  }
+- { id: rare_crapaud_bubon, route: falaises_heron, step: falaises_heron_3, base: crapaud, trophy: trophee_crapaud_bubon }
+- { id: rare_ours_brumes_blanc, route: falaises_heron, step: falaises_heron_4, base: ours_brumes, trophy: trophee_ours_brumes_blanc }
+- { id: rare_loup_garou_gris_croc, route: sentier_cretes, step: sentier_cretes_1, base: loup_garou, trophy: trophee_loup_garou_gris_croc }
+- { id: rare_harpie_sans_plumes, route: sentier_cretes, step: sentier_cretes_2, base: harpies_neiges, trophy: trophee_harpie_sans_plumes }
+- { id: rare_pendu_qui_marche, route: sentier_cretes, step: sentier_cretes_3, base: pendus, trophy: trophee_pendu_qui_marche }
+- { id: rare_loup_blanc_il_givre, route: sentier_cretes, step: sentier_cretes_4, base: loups_blancs, trophy: trophee_loup_blanc_il_givre }
+- { id: rare_goule_ventre_creux, route: bois_lanternes, step: bois_lanternes_1, base: goules, trophy: trophee_goule_ventre_creux }
+- { id: rare_banshee_hurlante, route: bois_lanternes, step: bois_lanternes_2, base: banshee, trophy: trophee_banshee_hurlante }
+- {
+    id: rare_araignee_mangeuse_lune,
+    route: bois_lanternes,
+    step: bois_lanternes_3,
+    base: araignee_geante,
+    trophy: trophee_araignee_mangeuse_lune,
+  }
+- { id: rare_fossoyeur_batisseur, route: bois_lanternes, step: bois_lanternes_4, base: fossoyeur, trophy: trophee_fossoyeur_batisseur }
+- {
+    id: rare_squelette_couronne,
+    route: vieux_cimetiere_chenes,
+    step: vieux_cimetiere_chenes_1,
+    base: squelettes,
+    trophy: trophee_squelette_couronne,
+  }
+- { id: rare_spectre_veuve, route: vieux_cimetiere_chenes, step: vieux_cimetiere_chenes_2, base: spectre, trophy: trophee_spectre_veuve }
+- {
+    id: rare_ours_chene_pourri,
+    route: vieux_cimetiere_chenes,
+    step: vieux_cimetiere_chenes_3,
+    base: ours_chene,
+    trophy: trophee_ours_chene_pourri,
+  }
+- {
+    id: rare_dryade_larmes_noires,
+    route: vieux_cimetiere_chenes,
+    step: vieux_cimetiere_chenes_4,
+    base: dryade_corrompue,
+    trophy: trophee_dryade_larmes_noires,
+  }
+- { id: rare_cerf_braise, route: gorges_fumantes, step: gorges_fumantes_1, base: cerf_ambre, trophy: trophee_cerf_braise }
+- { id: rare_druide_cendre_noire, route: gorges_fumantes, step: gorges_fumantes_2, base: druide_noir, trophy: trophee_druide_cendre_noire }
+- { id: rare_diablotin_rire_rouge, route: gorges_fumantes, step: gorges_fumantes_3, base: diablotins, trophy: trophee_diablotin_rire_rouge }
+- { id: rare_ver_ardent, route: gorges_fumantes, step: gorges_fumantes_4, base: vers_magma, trophy: trophee_ver_ardent }
+- { id: rare_kobold_fond_mine, route: col_vent_blanc, step: col_vent_blanc_1, base: kobolds, trophy: trophee_kobold_fond_mine }
+- { id: rare_yeti_barbe_glace, route: col_vent_blanc, step: col_vent_blanc_2, base: yeti_m, trophy: trophee_yeti_barbe_glace }
+- { id: rare_nain_givre_thorgil, route: col_vent_blanc, step: col_vent_blanc_3, base: nains_givre_m, trophy: trophee_nain_givre_thorgil }
+- {
+    id: rare_chamane_souffle_blanc,
+    route: col_vent_blanc,
+    step: col_vent_blanc_4,
+    base: chamane_givre,
+    trophy: trophee_chamane_souffle_blanc,
+  }
+- { id: rare_loup_blanc_croc_bleu, route: glacier_fendu, step: glacier_fendu_1, base: loups_blancs, trophy: trophee_loup_blanc_croc_bleu }
+- { id: rare_wendigo_sans_faim, route: glacier_fendu, step: glacier_fendu_2, base: wendigo, trophy: trophee_wendigo_sans_faim }
+- { id: rare_elementaire_eclat_noir, route: glacier_fendu, step: glacier_fendu_3, base: elem_glace, trophy: trophee_elementaire_eclat_noir }
+- { id: rare_geant_ymir_jeune, route: glacier_fendu, step: glacier_fendu_4, base: geant_givre, trophy: trophee_geant_ymir_jeune }
+- { id: rare_champignon_roi, route: grottes_luminescentes, step: grottes_luminescentes_1, base: spores, trophy: trophee_champignon_roi }
+- {
+    id: rare_tisseuse_il_vert,
+    route: grottes_luminescentes,
+    step: grottes_luminescentes_2,
+    base: tisseuse_nuit,
+    trophy: trophee_tisseuse_il_vert,
+  }
+- {
+    id: rare_salamandre_lave_ancienne,
+    route: grottes_luminescentes,
+    step: grottes_luminescentes_3,
+    base: salamandre_lave,
+    trophy: trophee_salamandre_lave_ancienne,
+  }
+- {
+    id: rare_golem_basalte_fele,
+    route: grottes_luminescentes,
+    step: grottes_luminescentes_4,
+    base: golem_basalte,
+    trophy: trophee_golem_basalte_fele,
+  }
+- {
+    id: rare_lame_nuit_elfe_noire,
+    route: racines_profondes,
+    step: racines_profondes_1,
+    base: elfes_noirs,
+    trophy: trophee_lame_nuit_elfe_noire,
+  }
+- {
+    id: rare_araignee_veuve_pale,
+    route: racines_profondes,
+    step: racines_profondes_2,
+    base: araignee_geante,
+    trophy: trophee_araignee_veuve_pale,
+  }
+- { id: rare_ombre_sans_nom, route: racines_profondes, step: racines_profondes_3, base: ombre_rampante, trophy: trophee_ombre_sans_nom }
+- {
+    id: rare_mangeur_lanternes_gras,
+    route: racines_profondes,
+    step: racines_profondes_4,
+    base: mangeur_lanternes,
+    trophy: trophee_mangeur_lanternes_gras,
+  }
+- {
+    id: rare_chien_infernal_trois_gueules,
+    route: plaines_basalte,
+    step: plaines_basalte_1,
+    base: chiens_infernaux,
+    trophy: trophee_chien_infernal_trois_gueules,
+  }
+- {
+    id: rare_pyromancienne_vashti,
+    route: plaines_basalte,
+    step: plaines_basalte_2,
+    base: pyromancienne,
+    trophy: trophee_pyromancienne_vashti,
+  }
+- { id: rare_forgeron_main_lave, route: plaines_basalte, step: plaines_basalte_3, base: forgeron_demon, trophy: trophee_forgeron_main_lave }
+- {
+    id: rare_elementaire_feu_ancien,
+    route: plaines_basalte,
+    step: plaines_basalte_4,
+    base: elem_feu,
+    trophy: trophee_elementaire_feu_ancien,
+  }
+- { id: rare_scorpion_bouclier_or, route: cote_epaves, step: cote_epaves_1, base: scorpions_geants, trophy: trophee_scorpion_bouclier_or }
+- { id: rare_pirate_borgne_rouge, route: cote_epaves, step: cote_epaves_2, base: pirates, trophy: trophee_pirate_borgne_rouge }
+- { id: rare_crabe_ermite_geant, route: cote_epaves, step: cote_epaves_3, base: crabes_geants, trophy: trophee_crabe_ermite_geant }
+- { id: rare_naga_ecaille_nacre, route: cote_epaves, step: cote_epaves_4, base: naga_m, trophy: trophee_naga_ecaille_nacre }
+- {
+    id: rare_sirene_corsaire_melusine,
+    route: fosse_sirenes,
+    step: fosse_sirenes_1,
+    base: sirene_corsaire,
+    trophy: trophee_sirene_corsaire_melusine,
+  }
+- {
+    id: rare_requin_garou_machoire_pale,
+    route: fosse_sirenes,
+    step: fosse_sirenes_2,
+    base: requins_garous,
+    trophy: trophee_requin_garou_machoire_pale,
+  }
+- {
+    id: rare_homme_poisson_pretre,
+    route: fosse_sirenes,
+    step: fosse_sirenes_3,
+    base: hommes_poissons_m,
+    trophy: trophee_homme_poisson_pretre,
+  }
+- { id: rare_meduse_couronnee, route: fosse_sirenes, step: fosse_sirenes_4, base: meduses_m, trophy: trophee_meduse_couronnee }
+- { id: rare_homme_fauve_croc_lune, route: savane_rouge, step: savane_rouge_1, base: hommes_fauves, trophy: trophee_homme_fauve_croc_lune }
+- { id: rare_hyene_rieuse, route: savane_rouge, step: savane_rouge_2, base: hyenes_m, trophy: trophee_hyene_rieuse }
+- { id: rare_gorille_poing_fer, route: savane_rouge, step: savane_rouge_3, base: gorille_m, trophy: trophee_gorille_poing_fer }
+- { id: rare_centaure_fleche_noire, route: savane_rouge, step: savane_rouge_4, base: centaures, trophy: trophee_centaure_fleche_noire }
+- {
+    id: rare_serpent_roi_ecaille_emeraude,
+    route: temples_etouffes,
+    step: temples_etouffes_1,
+    base: serpent_roi,
+    trophy: trophee_serpent_roi_ecaille_emeraude,
+  }
+- { id: rare_idole_rieuse, route: temples_etouffes, step: temples_etouffes_2, base: idole_jade, trophy: trophee_idole_rieuse }
+- {
+    id: rare_plante_carnivore_gueule_rouge,
+    route: temples_etouffes,
+    step: temples_etouffes_3,
+    base: plante_carnivore,
+    trophy: trophee_plante_carnivore_gueule_rouge,
+  }
+- {
+    id: rare_chamane_crapaud_bouffi,
+    route: temples_etouffes,
+    step: temples_etouffes_4,
+    base: chamane_crapaud_m,
+    trophy: trophee_chamane_crapaud_bouffi,
+  }
+- { id: rare_orc_brise_crane, route: route_tempetes, step: route_tempetes_1, base: orcs_pillards, trophy: trophee_orc_brise_crane }
+- { id: rare_harpie_il_orage, route: route_tempetes, step: route_tempetes_2, base: harpies_tempete, trophy: trophee_harpie_il_orage }
+- { id: rare_geant_steppes_borr, route: route_tempetes, step: route_tempetes_3, base: geant_steppes, trophy: trophee_geant_steppes_borr }
+- { id: rare_esprit_vent_hurleur, route: route_tempetes, step: route_tempetes_4, base: esprit_vent, trophy: trophee_esprit_vent_hurleur }
+- {
+    id: rare_homme_poisson_roi_fosses,
+    route: faille_abyssale,
+    step: faille_abyssale_1,
+    base: hommes_poissons_m,
+    trophy: trophee_homme_poisson_roi_fosses,
+  }
+- { id: rare_oracle_noye_ilsa, route: faille_abyssale, step: faille_abyssale_2, base: oracle_noye, trophy: trophee_oracle_noye_ilsa }
+- { id: rare_succube_velours, route: faille_abyssale, step: faille_abyssale_3, base: succube_m, trophy: trophee_succube_velours }
+- {
+    id: rare_chevalier_infernal_mordred,
+    route: faille_abyssale,
+    step: faille_abyssale_4,
+    base: chevalier_infernal,
+    trophy: trophee_chevalier_infernal_mordred,
+  }
+- { id: rare_demon_cornu, route: pont_ames, step: pont_ames_1, base: demons_mineurs, trophy: trophee_demon_cornu }
+- {
+    id: rare_molosse_infernal_cerberin,
+    route: pont_ames,
+    step: pont_ames_2,
+    base: molosse_infernal,
+    trophy: trophee_molosse_infernal_cerberin,
+  }
+- { id: rare_cauchemar_sans_visage, route: pont_ames, step: pont_ames_3, base: cauchemar, trophy: trophee_cauchemar_sans_visage }
+- { id: rare_licorne_noire_crin_suie, route: pont_ames, step: pont_ames_4, base: licorne_noire, trophy: trophee_licorne_noire_crin_suie }

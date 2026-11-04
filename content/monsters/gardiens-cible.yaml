@@ -1,0 +1,428 @@
+# Gardiens des routes nouvelles (contenu-cible-unites.md 6).
+
+taureau_brande:
+  units: 1
+  pop: 4
+  tags: [bete]
+  weapon: machoires
+  defaultDist: 1
+  base: { hp: 450, will: 99, energy: 150, mana: 80, for: 10, ele: 6, esp: 6, foi: 6, omb: 6 }
+  growth: { hp: 14, will: 2, energy: 2, mana: 2, for: 2, ele: 1.5, esp: 1.5, foi: 1.5, omb: 1.5 }
+  forms:
+    - id: taureau_brande
+      level: 1
+      speed: 22
+      res: { contondant: 20 }
+      skills: [[morsure, 1], [charge, 1], [pietinement, 1], [frappe_brutale, 1], [cri_defi, 1], [repos, 1]]
+  drops: [corne_taureau]
+  boss: true
+  region: 5
+dame_gue:
+  units: 1
+  pop: 4
+  tags: [esprit]
+  weapon: mains_spectrales
+  defaultDist: 2
+  immune: [glace]
+  base: { hp: 450, will: 99, energy: 150, mana: 80, for: 10, ele: 6, esp: 6, foi: 6, omb: 6 }
+  growth: { hp: 14, will: 2, energy: 2, mana: 2, for: 2, ele: 1.5, esp: 1.5, foi: 1.5, omb: 1.5 }
+  forms:
+    - id: dame_gue
+      level: 1
+      speed: 22
+      res: { glace: 40, feu: -30 }
+      skills: [[emploi, 1], [javelot_glace, 1], [prison_glace, 1], [mains_lumiere, 1], [armure_givre, 1], [meditation, 1]]
+  drops: [voile_dame]
+  boss: true
+  region: 6
+menhir_eveille:
+  units: 1
+  pop: 4
+  tags: [construct]
+  weapon: poing_pierre
+  defaultDist: 1
+  immune: [psychique]
+  base: { hp: 450, will: 99, energy: 150, mana: 80, for: 10, ele: 6, esp: 6, foi: 6, omb: 6 }
+  growth: { hp: 14, will: 2, energy: 2, mana: 2, for: 2, ele: 1.5, esp: 1.5, foi: 1.5, omb: 1.5 }
+  forms:
+    - id: menhir_eveille
+      level: 1
+      speed: 22
+      res: { tranchant: 30, contondant: 20, psychique: 50 }
+      skills: [[emploi, 1], [pietinement, 1], [coup_assommant, 1], [peau_dure, 1], [provocation, 1]]
+  drops: [c_ur_menhir]
+  boss: true
+  region: 7
+roi_farfadets:
+  units: 1
+  pop: 4
+  tags: [fee]
+  weapon: mains_spectrales
+  defaultDist: 2
+  immune: [psychique]
+  base: { hp: 450, will: 99, energy: 150, mana: 80, for: 10, ele: 6, esp: 6, foi: 6, omb: 6 }
+  growth: { hp: 14, will: 2, energy: 2, mana: 2, for: 2, ele: 1.5, esp: 1.5, foi: 1.5, omb: 1.5 }
+  forms:
+    - id: roi_farfadets
+      level: 1
+      speed: 22
+      res: { psychique: 40 }
+      skills: [[emploi, 1], [domination, 1], [sommeil, 1], [mirage, 1], [vision_terreur, 1], [onde_mentale, 1]]
+  drops: [couronne_farfadet]
+  boss: true
+  region: 7
+bourreau_sans_tete:
+  units: 1
+  pop: 4
+  tags: [mort-vivant]
+  weapon: lame_rouillee
+  defaultDist: 1
+  immune: [maladie]
+  base: { hp: 450, will: 99, energy: 150, mana: 80, for: 10, ele: 6, esp: 6, foi: 6, omb: 6 }
+  growth: { hp: 14, will: 2, energy: 2, mana: 2, for: 2, ele: 1.5, esp: 1.5, foi: 1.5, omb: 1.5 }
+  forms:
+    - id: bourreau_sans_tete
+      level: 1
+      speed: 22
+      res: { maladie: 50, sacre: -40 }
+      skills: [[emploi, 1], [frappe_brutale, 1], [enchainement, 1], [cri_defi, 1], [non_mort, 1], [rage, 1]]
+  drops: [hache_bourreau]
+  boss: true
+  region: 9
+grande_ondine:
+  units: 1
+  pop: 4
+  tags: [esprit]
+  weapon: mains_spectrales
+  defaultDist: 2
+  immune: [glace]
+  base: { hp: 450, will: 99, energy: 150, mana: 80, for: 10, ele: 6, esp: 6, foi: 6, omb: 6 }
+  growth: { hp: 14, will: 2, energy: 2, mana: 2, for: 2, ele: 1.5, esp: 1.5, foi: 1.5, omb: 1.5 }
+  forms:
+    - id: grande_ondine
+      level: 1
+      speed: 22
+      res: { glace: 50, feu: -30 }
+      skills: [[emploi, 1], [blizzard, 1], [javelot_glace, 1], [onde_soin, 1], [armure_givre, 1], [meditation, 1]]
+  drops: [miroir_ondine]
+  boss: true
+  region: 8
+gardien_chene:
+  units: 1
+  pop: 4
+  tags: [plante]
+  weapon: branches
+  defaultDist: 1
+  immune: [maladie]
+  base: { hp: 450, will: 99, energy: 150, mana: 80, for: 10, ele: 6, esp: 6, foi: 6, omb: 6 }
+  growth: { hp: 14, will: 2, energy: 2, mana: 2, for: 2, ele: 1.5, esp: 1.5, foi: 1.5, omb: 1.5 }
+  forms:
+    - id: gardien_chene
+      level: 1
+      speed: 22
+      res: { tranchant: 25, maladie: 40, feu: -40 }
+      skills: [[emploi, 1], [pietinement, 1], [seve, 1], [carapace_epines, 1], [peste, 1], [riposte, 1]]
+  drops: [gland_chene_mere]
+  boss: true
+  region: 10
+heron_colossal:
+  units: 1
+  pop: 6
+  tags: [bete]
+  weapon: machoires
+  defaultDist: 1
+  base: { hp: 450, will: 99, energy: 150, mana: 80, for: 10, ele: 6, esp: 6, foi: 6, omb: 6 }
+  growth: { hp: 14, will: 2, energy: 2, mana: 2, for: 2, ele: 1.5, esp: 1.5, foi: 1.5, omb: 1.5 }
+  forms:
+    - id: heron_colossal
+      level: 1
+      speed: 22
+      res: { glace: 30 }
+      skills: [[morsure, 1], [bond, 1], [estoc, 1], [laceration, 1], [cri_effroi, 1], [repos, 1]]
+  drops: [plume_heron_colossal]
+  boss: true
+  region: 8
+loup_garou_alpha:
+  units: 1
+  pop: 6
+  tags: [bete, humain]
+  weapon: machoires
+  defaultDist: 1
+  base: { hp: 450, will: 99, energy: 150, mana: 80, for: 10, ele: 6, esp: 6, foi: 6, omb: 6 }
+  growth: { hp: 14, will: 2, energy: 2, mana: 2, for: 2, ele: 1.5, esp: 1.5, foi: 1.5, omb: 1.5 }
+  forms:
+    - id: loup_garou_alpha
+      level: 1
+      speed: 22
+      res: { tranchant: 30, sacre: -30 }
+      skills: [[morsure, 1], [bond, 1], [enchainement, 1], [rage, 1], [hurlement, 1], [predateur, 1]]
+  drops: [croc_alpha]
+  boss: true
+  region: 11
+seigneur_liche_lanternes:
+  units: 1
+  pop: 6
+  tags: [mort-vivant]
+  weapon: lame_rouillee
+  defaultDist: 2
+  immune: [maladie]
+  base: { hp: 450, will: 99, energy: 150, mana: 80, for: 10, ele: 6, esp: 6, foi: 6, omb: 6 }
+  growth: { hp: 14, will: 2, energy: 2, mana: 2, for: 2, ele: 1.5, esp: 1.5, foi: 1.5, omb: 1.5 }
+  forms:
+    - id: seigneur_liche_lanternes
+      level: 1
+      speed: 22
+      res: { tenebres: 60, maladie: 50, sacre: -40 }
+      skills: [[emploi, 1], [nuee_ombres, 1], [drain_ame, 1], [silence_tombe, 1], [malefice, 1], [non_mort, 1]]
+  drops: [phylactere_lanternes]
+  boss: true
+  region: 12
+druide_liche:
+  units: 1
+  pop: 6
+  tags: [mort-vivant, plante]
+  weapon: lame_rouillee
+  defaultDist: 2
+  immune: [maladie]
+  base: { hp: 450, will: 99, energy: 150, mana: 80, for: 10, ele: 6, esp: 6, foi: 6, omb: 6 }
+  growth: { hp: 14, will: 2, energy: 2, mana: 2, for: 2, ele: 1.5, esp: 1.5, foi: 1.5, omb: 1.5 }
+  forms:
+    - id: druide_liche
+      level: 1
+      speed: 22
+      res: { maladie: 50, tenebres: 40, feu: -30 }
+      skills: [[emploi, 1], [peste, 1], [drain_ame, 1], [seve, 1], [carapace_epines, 1], [non_mort, 1]]
+  drops: [baton_druide_liche]
+  boss: true
+  region: 10
+ours_magma:
+  units: 1
+  pop: 6
+  tags: [bete, elementaire]
+  weapon: souffle
+  defaultDist: 1
+  immune: [feu]
+  base: { hp: 450, will: 99, energy: 150, mana: 80, for: 10, ele: 6, esp: 6, foi: 6, omb: 6 }
+  growth: { hp: 14, will: 2, energy: 2, mana: 2, for: 2, ele: 1.5, esp: 1.5, foi: 1.5, omb: 1.5 }
+  forms:
+    - id: ours_magma
+      level: 1
+      speed: 22
+      res: { feu: 60, glace: -30 }
+      skills: [[morsure, 1], [frappe_brutale, 1], [nova_flammes, 1], [pietinement, 1], [rage, 1], [repos, 1]]
+  drops: [c_ur_magma]
+  boss: true
+  region: 13
+wyrm_neiges:
+  units: 1
+  pop: 8
+  tags: [dragon]
+  weapon: souffle
+  defaultDist: 1
+  immune: [glace]
+  base: { hp: 450, will: 99, energy: 150, mana: 80, for: 10, ele: 6, esp: 6, foi: 6, omb: 6 }
+  growth: { hp: 14, will: 2, energy: 2, mana: 2, for: 2, ele: 1.5, esp: 1.5, foi: 1.5, omb: 1.5 }
+  forms:
+    - id: wyrm_neiges
+      level: 1
+      speed: 22
+      res: { glace: 60, feu: -20 }
+      skills: [[morsure, 1], [souffle_glacial, 1], [prison_glace, 1], [bond, 1], [peau_dure, 1], [repos, 1]]
+  drops: [ecaille_wyrm]
+  boss: true
+  region: 11
+mammouth_guerre:
+  units: 1
+  pop: 8
+  tags: [bete]
+  weapon: machoires
+  defaultDist: 1
+  base: { hp: 450, will: 99, energy: 150, mana: 80, for: 10, ele: 6, esp: 6, foi: 6, omb: 6 }
+  growth: { hp: 14, will: 2, energy: 2, mana: 2, for: 2, ele: 1.5, esp: 1.5, foi: 1.5, omb: 1.5 }
+  forms:
+    - id: mammouth_guerre
+      level: 1
+      speed: 22
+      res: { glace: 50, contondant: 20 }
+      skills: [[morsure, 1], [pietinement, 1], [frappe_brutale, 1], [cri_defi, 1], [peau_dure, 1], [repos, 1]]
+  drops: [defense_mammouth]
+  boss: true
+  region: 14
+reine_spores:
+  units: 1
+  pop: 8
+  tags: [plante]
+  weapon: branches
+  defaultDist: 2
+  immune: [maladie]
+  base: { hp: 450, will: 99, energy: 150, mana: 80, for: 10, ele: 6, esp: 6, foi: 6, omb: 6 }
+  growth: { hp: 14, will: 2, energy: 2, mana: 2, for: 2, ele: 1.5, esp: 1.5, foi: 1.5, omb: 1.5 }
+  forms:
+    - id: reine_spores
+      level: 1
+      speed: 22
+      res: { maladie: 70, feu: -40 }
+      skills: [[emploi, 1], [peste, 1], [nuee_ombres, 1], [putrefaction, 1], [sommeil, 1], [carapace_epines, 1]]
+  drops: [spore_reine]
+  boss: true
+  region: 13
+ver_racine:
+  units: 1
+  pop: 8
+  tags: [bete, plante]
+  weapon: branches
+  defaultDist: 1
+  base: { hp: 450, will: 99, energy: 150, mana: 80, for: 10, ele: 6, esp: 6, foi: 6, omb: 6 }
+  growth: { hp: 14, will: 2, energy: 2, mana: 2, for: 2, ele: 1.5, esp: 1.5, foi: 1.5, omb: 1.5 }
+  forms:
+    - id: ver_racine
+      level: 1
+      speed: 22
+      res: { tranchant: 30, maladie: 40 }
+      skills: [[morsure, 1], [pietinement, 1], [jet_toile, 1], [peste, 1], [peau_dure, 1], [riposte, 1]]
+  drops: [anneau_ver_racine]
+  boss: true
+  region: 15
+seigneur_braises:
+  units: 1
+  pop: 8
+  tags: [elementaire, demon]
+  weapon: souffle
+  defaultDist: 2
+  immune: [feu]
+  base: { hp: 450, will: 99, energy: 150, mana: 80, for: 10, ele: 6, esp: 6, foi: 6, omb: 6 }
+  growth: { hp: 14, will: 2, energy: 2, mana: 2, for: 2, ele: 1.5, esp: 1.5, foi: 1.5, omb: 1.5 }
+  forms:
+    - id: seigneur_braises
+      level: 1
+      speed: 22
+      res: { feu: 70, sacre: -30 }
+      skills: [[emploi, 1], [meteore, 1], [nova_flammes, 1], [bouclier_flammes, 1], [lame_ardente, 1], [jet_magma, 1]]
+  drops: [couronne_braise]
+  boss: true
+  region: 16
+amiral_noye:
+  units: 1
+  pop: 10
+  tags: [mort-vivant]
+  weapon: lame_rouillee
+  defaultDist: 1
+  immune: [maladie]
+  base: { hp: 450, will: 99, energy: 150, mana: 80, for: 10, ele: 6, esp: 6, foi: 6, omb: 6 }
+  growth: { hp: 14, will: 2, energy: 2, mana: 2, for: 2, ele: 1.5, esp: 1.5, foi: 1.5, omb: 1.5 }
+  forms:
+    - id: amiral_noye
+      level: 1
+      speed: 22
+      res: { maladie: 50, glace: 30, sacre: -40 }
+      skills: [[emploi, 1], [enchainement, 1], [cri_defi, 1], [drain_ame, 1], [carreau_lourd, 1], [non_mort, 1]]
+  drops: [tricorne_amiral]
+  boss: true
+  region: 14
+kraken_ancien:
+  units: 1
+  pop: 10
+  tags: [bete]
+  weapon: machoires
+  defaultDist: 1
+  immune: [glace]
+  base: { hp: 450, will: 99, energy: 150, mana: 80, for: 10, ele: 6, esp: 6, foi: 6, omb: 6 }
+  growth: { hp: 14, will: 2, energy: 2, mana: 2, for: 2, ele: 1.5, esp: 1.5, foi: 1.5, omb: 1.5 }
+  forms:
+    - id: kraken_ancien
+      level: 1
+      speed: 22
+      res: { glace: 50, psychique: 30 }
+      skills: [[morsure, 1], [pietinement, 1], [harpon_tir, 1], [filet, 1], [hurlement_mental, 1], [peau_dure, 1]]
+  drops: [il_kraken]
+  boss: true
+  region: 17
+lion_roi_khar:
+  units: 1
+  pop: 10
+  tags: [bete]
+  weapon: machoires
+  defaultDist: 1
+  base: { hp: 450, will: 99, energy: 150, mana: 80, for: 10, ele: 6, esp: 6, foi: 6, omb: 6 }
+  growth: { hp: 14, will: 2, energy: 2, mana: 2, for: 2, ele: 1.5, esp: 1.5, foi: 1.5, omb: 1.5 }
+  forms:
+    - id: lion_roi_khar
+      level: 1
+      speed: 22
+      res: { tranchant: 20 }
+      skills: [[morsure, 1], [bond, 1], [predateur, 1], [hurlement, 1], [enchainement, 1], [rage, 1]]
+  drops: [criniere_lion_roi]
+  boss: true
+  region: 16
+quetzal_serpent:
+  units: 1
+  pop: 10
+  tags: [dragon]
+  weapon: souffle
+  defaultDist: 1
+  immune: [maladie]
+  base: { hp: 450, will: 99, energy: 150, mana: 80, for: 10, ele: 6, esp: 6, foi: 6, omb: 6 }
+  growth: { hp: 14, will: 2, energy: 2, mana: 2, for: 2, ele: 1.5, esp: 1.5, foi: 1.5, omb: 1.5 }
+  forms:
+    - id: quetzal_serpent
+      level: 1
+      speed: 22
+      res: { maladie: 50, psychique: 30 }
+      skills: [[morsure, 1], [peste, 1], [domination, 1], [souffle_feu, 1], [mirage, 1], [egide, 1]]
+  drops: [plume_quetzal]
+  boss: true
+  region: 18
+esprit_tempete:
+  units: 1
+  pop: 10
+  tags: [elementaire]
+  weapon: souffle
+  defaultDist: 2
+  immune: [psychique]
+  base: { hp: 450, will: 99, energy: 150, mana: 80, for: 10, ele: 6, esp: 6, foi: 6, omb: 6 }
+  growth: { hp: 14, will: 2, energy: 2, mana: 2, for: 2, ele: 1.5, esp: 1.5, foi: 1.5, omb: 1.5 }
+  forms:
+    - id: esprit_tempete
+      level: 1
+      speed: 22
+      res: { glace: 50, psychique: 40 }
+      skills: [[emploi, 1], [blizzard, 1], [hurlement_mental, 1], [onde_mentale, 1], [mirage, 1], [prison_glace, 1]]
+  drops: [souffle_captif]
+  boss: true
+  region: 19
+leviathan_obsidienne:
+  units: 1
+  pop: 8
+  tags: [dragon, demon]
+  weapon: souffle
+  defaultDist: 1
+  immune: [feu]
+  base: { hp: 450, will: 99, energy: 150, mana: 80, for: 10, ele: 6, esp: 6, foi: 6, omb: 6 }
+  growth: { hp: 14, will: 2, energy: 2, mana: 2, for: 2, ele: 1.5, esp: 1.5, foi: 1.5, omb: 1.5 }
+  forms:
+    - id: leviathan_obsidienne
+      level: 1
+      speed: 22
+      res: { feu: 50, glace: 50, sacre: -20 }
+      skills: [[morsure, 1], [souffle_glacial, 1], [meteore, 1], [pietinement, 1], [peau_dure, 1], [rage, 1]]
+  drops: [ecaille_obsidienne]
+  boss: true
+  region: 18
+gardien_pont:
+  units: 1
+  pop: 8
+  tags: [demon, construct]
+  weapon: poing_pierre
+  defaultDist: 1
+  immune: [tenebres]
+  base: { hp: 450, will: 99, energy: 150, mana: 80, for: 10, ele: 6, esp: 6, foi: 6, omb: 6 }
+  growth: { hp: 14, will: 2, energy: 2, mana: 2, for: 2, ele: 1.5, esp: 1.5, foi: 1.5, omb: 1.5 }
+  forms:
+    - id: gardien_pont
+      level: 1
+      speed: 22
+      res: { tenebres: 50, feu: 40, sacre: -30 }
+      skills: [[emploi, 1], [nuee_ombres, 1], [silence_tombe, 1], [rempart_vivant, 1], [frappe_brutale, 1], [aura_protection, 1]]
+  drops: [chaine_pont]
+  boss: true
+  region: 19

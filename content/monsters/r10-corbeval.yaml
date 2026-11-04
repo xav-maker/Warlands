@@ -1,0 +1,142 @@
+# Bestiaire de Val des Tombes (contenu-cible-unites.md 7) : 4 légers puis 4 lourds.
+
+squelettes:
+  units: 3
+  pop: 2
+  tags: [mort-vivant]
+  weapon: lame_rouillee
+  defaultDist: 1
+  immune: [maladie]
+  base: { hp: 58, will: 55, energy: 100, mana: 0, for: 6, ele: 0, esp: 1, foi: 0, omb: 1 }
+  growth: { hp: 2.89, will: 1, energy: 2, mana: 0, for: 1.4, ele: 0, esp: 0.28, foi: 0, omb: 0.28 }
+  forms:
+    - id: squelettes
+      level: 1
+      speed: 16
+      res: { contondant: -30, sacre: -40 }
+      skills: [[emploi, 1], [lame_saignante, 1], [non_mort, 8]]
+  drops: [os_poli]
+  boss: false
+  region: 9
+goules:
+  units: 2
+  pop: 2
+  tags: [mort-vivant]
+  weapon: coutelas
+  defaultDist: 1
+  base: { hp: 70, will: 50, energy: 100, mana: 0, for: 5, ele: 0, esp: 0, foi: 0, omb: 0 }
+  growth: { hp: 4, will: 1, energy: 2, mana: 0, for: 1.2, ele: 0, esp: 0, foi: 0, omb: 0 }
+  forms:
+    - id: goules
+      level: 1
+      speed: 15
+      res: { maladie: 40, sacre: -30 }
+      skills: [[morsure, 1], [putrefaction, 1], [non_mort, 8]]
+  drops: [os_poli, linceul]
+  boss: false
+  region: 9
+chien_squelette:
+  units: 1
+  pop: 1
+  tags: [mort-vivant]
+  weapon: crocs
+  defaultDist: 1
+  immune: [maladie]
+  base: { hp: 70, will: 50, energy: 100, mana: 0, for: 5, ele: 0, esp: 0, foi: 0, omb: 0 }
+  growth: { hp: 4, will: 1, energy: 2, mana: 0, for: 1.2, ele: 0, esp: 0, foi: 0, omb: 0 }
+  forms:
+    - id: chien_squelette
+      level: 1
+      speed: 15
+      res: { contondant: -30 }
+      skills: [[morsure, 1], [bond, 1], [non_mort, 8]]
+  drops: [os_poli]
+  boss: false
+  region: 9
+spectre:
+  units: 1
+  pop: 2
+  tags: [esprit]
+  weapon: mains_spectrales
+  defaultDist: 3
+  immune: [maladie]
+  base: { hp: 109, will: 95, energy: 90, mana: 30, for: 4, ele: 0, esp: 7, foi: 0, omb: 0 }
+  growth: { hp: 5.8, will: 3, energy: 2, mana: 1.5, for: 0.6, ele: 0, esp: 1.8, foi: 0, omb: 0 }
+  forms:
+    - id: spectre
+      level: 1
+      speed: 18
+      res: { tranchant: 40, sacre: -40 }
+      skills: [[emploi, 1], [murmure, 1], [toucher_tombe, 8]]
+  drops: [linceul, cendre_funeraire]
+  boss: false
+  region: 9
+necromant:
+  units: 1
+  pop: 2
+  tags: [humain]
+  weapon: baton_os
+  defaultDist: 3
+  base: { hp: 94, will: 65, energy: 70, mana: 45, for: 1, ele: 0, esp: 2, foi: 0, omb: 7 }
+  growth: { hp: 4.35, will: 2, energy: 1, mana: 2.5, for: 0.36, ele: 0, esp: 0.6, foi: 0, omb: 1.8 }
+  forms:
+    - id: necromant
+      level: 1
+      speed: 23
+      res: { tenebres: 40 }
+      skills: [[emploi, 1], [drain_ame, 1], [peste, 8], [malefice, 10]]
+  drops: [crane_necromant, cendre_funeraire]
+  boss: false
+  region: 9
+vampire:
+  units: 1
+  pop: 2
+  tags: [mort-vivant]
+  weapon: lame_rouillee
+  defaultDist: 1
+  base: { hp: 116, will: 55, energy: 100, mana: 0, for: 7, ele: 0, esp: 1, foi: 0, omb: 4 }
+  growth: { hp: 5.8, will: 1, energy: 2, mana: 0, for: 1.8, ele: 0, esp: 0.36, foi: 0, omb: 0.36 }
+  forms:
+    - id: vampire
+      level: 1
+      speed: 16
+      res: { tenebres: 40, sacre: -40 }
+      skills: [[emploi, 1], [lame_ombre, 1], [drain_ame, 8], [non_mort, 10]]
+  drops: [cendre_funeraire, clou_cercueil]
+  boss: false
+  region: 9
+fossoyeur:
+  units: 1
+  pop: 3
+  tags: [humain]
+  weapon: pioche
+  defaultDist: 1
+  base: { hp: 266, will: 50, energy: 110, mana: 0, for: 11, ele: 0, esp: 0, foi: 0, omb: 0 }
+  growth: { hp: 17.1, will: 1, energy: 2, mana: 0, for: 2.8, ele: 0, esp: 0, foi: 0, omb: 0 }
+  forms:
+    - id: fossoyeur
+      level: 1
+      speed: 25
+      res: { tenebres: 20 }
+      skills: [[emploi, 1], [frappe_brutale, 1], [pacte_sang, 8]]
+  drops: [clou_cercueil]
+  boss: false
+  region: 9
+banshee:
+  units: 1
+  pop: 2
+  tags: [esprit]
+  weapon: mains_spectrales
+  defaultDist: 3
+  immune: [psychique]
+  base: { hp: 109, will: 95, energy: 90, mana: 30, for: 4, ele: 0, esp: 7, foi: 0, omb: 0 }
+  growth: { hp: 5.8, will: 3, energy: 2, mana: 1.5, for: 0.6, ele: 0, esp: 1.8, foi: 0, omb: 0 }
+  forms:
+    - id: banshee
+      level: 1
+      speed: 18
+      res: { tranchant: 40, sacre: -40 }
+      skills: [[emploi, 1], [hurlement_mental, 1], [vision_terreur, 8]]
+  drops: [linceul, crane_necromant]
+  boss: false
+  region: 9

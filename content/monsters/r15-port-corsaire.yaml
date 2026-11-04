@@ -1,0 +1,140 @@
+# Bestiaire de Archipel des Naufrageurs (contenu-cible-unites.md 7) : 4 légers puis 4 lourds.
+
+pirates:
+  units: 2
+  pop: 2
+  tags: [humain]
+  weapon: epee
+  defaultDist: 1
+  base: { hp: 80, will: 55, energy: 100, mana: 0, for: 6, ele: 0, esp: 1, foi: 0, omb: 1 }
+  growth: { hp: 4, will: 1, energy: 2, mana: 0, for: 1.5, ele: 0, esp: 0.3, foi: 0, omb: 0.3 }
+  forms:
+    - id: pirates
+      level: 1
+      speed: 16
+      res: {}
+      skills: [[emploi, 1], [enchainement, 1], [repos, 18]]
+  drops: [toile_voile]
+  boss: false
+  region: 14
+canonniers:
+  units: 2
+  pop: 2
+  tags: [humain]
+  weapon: arbalete
+  defaultDist: 3
+  base: { hp: 70, will: 55, energy: 95, mana: 0, for: 5, ele: 0, esp: 1, foi: 0, omb: 0 }
+  growth: { hp: 4, will: 1, energy: 2, mana: 0, for: 1.3, ele: 0, esp: 0.3, foi: 0, omb: 0 }
+  forms:
+    - id: canonniers
+      level: 1
+      speed: 18
+      res: { feu: 20 }
+      skills: [[tir_arc, 1], [jet_magma, 1], [repos, 18]]
+  drops: [poudre_noire]
+  boss: false
+  region: 14
+crabes_geants:
+  units: 2
+  pop: 2
+  tags: [bete]
+  weapon: griffes_m
+  defaultDist: 1
+  base: { hp: 110, will: 65, energy: 100, mana: 0, for: 5, ele: 0, esp: 1, foi: 1, omb: 0 }
+  growth: { hp: 7, will: 1, energy: 2, mana: 0, for: 1, ele: 0, esp: 0.3, foi: 0.3, omb: 0 }
+  forms:
+    - id: crabes_geants
+      level: 1
+      speed: 20
+      res: { tranchant: 30, contondant: 20 }
+      skills: [[morsure, 1], [provocation, 1], [carapace_epines, 18]]
+  drops: [corail_rouge]
+  boss: false
+  region: 14
+noye_corsaire:
+  units: 2
+  pop: 2
+  tags: [mort-vivant]
+  weapon: lame_rouillee
+  defaultDist: 1
+  immune: [maladie]
+  base: { hp: 80, will: 55, energy: 100, mana: 0, for: 6, ele: 0, esp: 1, foi: 0, omb: 1 }
+  growth: { hp: 4, will: 1, energy: 2, mana: 0, for: 1.5, ele: 0, esp: 0.3, foi: 0, omb: 0.3 }
+  forms:
+    - id: noye_corsaire
+      level: 1
+      speed: 16
+      res: { maladie: 50, sacre: -40 }
+      skills: [[emploi, 1], [lame_saignante, 1], [non_mort, 18]]
+  drops: [toile_voile, corail_rouge]
+  boss: false
+  region: 14
+naga_m:
+  units: 1
+  pop: 2
+  tags: [reptile]
+  weapon: harpon_m
+  defaultDist: 2
+  base: { hp: 94, will: 60, energy: 70, mana: 50, for: 1, ele: 7, esp: 2, foi: 0, omb: 0 }
+  growth: { hp: 4.35, will: 1, energy: 1, mana: 3, for: 0.36, ele: 1.8, esp: 0.6, foi: 0, omb: 0 }
+  forms:
+    - id: naga_m
+      level: 1
+      speed: 23
+      res: { glace: 40 }
+      skills: [[emploi, 1], [javelot_glace, 1], [toucher_tombe, 18], [blizzard, 20]]
+  drops: [ecaille_naga, perle_kraken]
+  boss: false
+  region: 14
+sirene_corsaire:
+  units: 1
+  pop: 2
+  tags: [esprit]
+  weapon: dague
+  defaultDist: 3
+  base: { hp: 109, will: 95, energy: 90, mana: 30, for: 4, ele: 0, esp: 7, foi: 0, omb: 0 }
+  growth: { hp: 5.8, will: 3, energy: 2, mana: 1.5, for: 0.6, ele: 0, esp: 1.8, foi: 0, omb: 0 }
+  forms:
+    - id: sirene_corsaire
+      level: 1
+      speed: 18
+      res: { psychique: 40 }
+      skills: [[emploi, 1], [domination, 1], [sommeil, 18]]
+  drops: [corail_rouge]
+  boss: false
+  region: 14
+requins_garous:
+  units: 1
+  pop: 2
+  tags: [bete, poisson]
+  weapon: machoires
+  defaultDist: 1
+  base: { hp: 139, will: 55, energy: 100, mana: 0, for: 7, ele: 0, esp: 1, foi: 0, omb: 1 }
+  growth: { hp: 6.96, will: 1, energy: 2, mana: 0, for: 1.8, ele: 0, esp: 0.36, foi: 0, omb: 0.36 }
+  forms:
+    - id: requins_garous
+      level: 1
+      speed: 16
+      res: { glace: 30 }
+      skills: [[morsure, 1], [laceration, 1], [predateur, 18]]
+  drops: [ecaille_naga]
+  boss: false
+  region: 14
+kraken_juv:
+  units: 1
+  pop: 3
+  tags: [bete]
+  weapon: machoires
+  defaultDist: 1
+  immune: [glace]
+  base: { hp: 306, will: 50, energy: 110, mana: 0, for: 11, ele: 0, esp: 0, foi: 0, omb: 0 }
+  growth: { hp: 19.67, will: 1, energy: 2, mana: 0, for: 2.8, ele: 0, esp: 0, foi: 0, omb: 0 }
+  forms:
+    - id: kraken_juv
+      level: 1
+      speed: 25
+      res: { glace: 40 }
+      skills: [[morsure, 1], [harpon_tir, 1], [pietinement, 18]]
+  drops: [perle_kraken, poudre_noire]
+  boss: false
+  region: 14

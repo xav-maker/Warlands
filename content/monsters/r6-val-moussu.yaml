@@ -1,0 +1,139 @@
+# Bestiaire de Val-Moussu (contenu-cible-unites.md 7) : 4 légers puis 4 lourds.
+
+sanglier:
+  units: 1
+  pop: 1
+  tags: [bete]
+  weapon: crocs
+  defaultDist: 1
+  base: { hp: 81, will: 50, energy: 100, mana: 0, for: 5, ele: 0, esp: 0, foi: 0, omb: 0 }
+  growth: { hp: 4.6, will: 1, energy: 2, mana: 0, for: 1.2, ele: 0, esp: 0, foi: 0, omb: 0 }
+  forms:
+    - id: sanglier
+      level: 1
+      speed: 15
+      res: {}
+      skills: [[morsure, 1], [charge, 1], [repos, 3]]
+  drops: [defense_sanglier, laine_grasse]
+  boss: false
+  region: 5
+lievres:
+  units: 3
+  pop: 2
+  tags: [bete]
+  weapon: crocs
+  defaultDist: 1
+  base: { hp: 48, will: 50, energy: 100, mana: 0, for: 5, ele: 0, esp: 0, foi: 0, omb: 0 }
+  growth: { hp: 2.72, will: 1, energy: 2, mana: 0, for: 1.12, ele: 0, esp: 0, foi: 0, omb: 0 }
+  forms:
+    - id: lievres
+      level: 1
+      speed: 15
+      res: {}
+      skills: [[morsure, 1], [repos, 1]]
+  drops: [laine_grasse, ble_noir]
+  boss: false
+  region: 5
+bourdons:
+  units: 3
+  pop: 2
+  tags: [bete]
+  weapon: dard
+  defaultDist: 1
+  base: { hp: 60, will: 50, energy: 100, mana: 0, for: 5, ele: 0, esp: 0, foi: 0, omb: 0 }
+  growth: { hp: 3.4, will: 1, energy: 2, mana: 0, for: 1.12, ele: 0, esp: 0, foi: 0, omb: 0 }
+  forms:
+    - id: bourdons
+      level: 1
+      speed: 12
+      res: { maladie: 20 }
+      skills: [[morsure_venin, 1], [repos, 1]]
+  drops: [soie_bourdon]
+  boss: false
+  region: 5
+kobolds_pres:
+  units: 2
+  pop: 2
+  tags: [kobold]
+  weapon: crocs
+  defaultDist: 1
+  base: { hp: 80, will: 55, energy: 100, mana: 0, for: 6, ele: 0, esp: 1, foi: 0, omb: 1 }
+  growth: { hp: 4, will: 1, energy: 2, mana: 0, for: 1.5, ele: 0, esp: 0.3, foi: 0, omb: 0.3 }
+  forms:
+    - id: kobolds_pres
+      level: 1
+      speed: 16
+      res: {}
+      skills: [[emploi, 1], [laceration, 1], [repos, 3]]
+  drops: [ble_noir, defense_sanglier]
+  boss: false
+  region: 5
+epouvantail:
+  units: 1
+  pop: 2
+  tags: [construct]
+  weapon: branches
+  defaultDist: 1
+  immune: [psychique]
+  base: { hp: 218, will: 99, energy: 100, mana: 0, for: 7, ele: 0, esp: 0, foi: 0, omb: 0 }
+  growth: { hp: 13.05, will: 0, energy: 2, mana: 0, for: 1.8, ele: 0, esp: 0, foi: 0, omb: 0 }
+  forms:
+    - id: epouvantail
+      level: 1
+      speed: 26
+      res: { feu: -40 }
+      skills: [[emploi, 1], [cri_effroi, 1], [repos, 3]]
+  drops: [ble_noir, laine_grasse]
+  boss: false
+  region: 5
+ours_brun:
+  units: 1
+  pop: 3
+  tags: [bete]
+  weapon: griffes
+  defaultDist: 1
+  base: { hp: 266, will: 50, energy: 110, mana: 0, for: 11, ele: 0, esp: 0, foi: 0, omb: 0 }
+  growth: { hp: 17.1, will: 1, energy: 2, mana: 0, for: 2.8, ele: 0, esp: 0, foi: 0, omb: 0 }
+  forms:
+    - id: ours_brun
+      level: 1
+      speed: 25
+      res: { glace: 20 }
+      skills: [[morsure, 1], [frappe_brutale, 1], [repos, 3]]
+  drops: [defense_sanglier, miel_royal]
+  boss: false
+  region: 5
+brigands_haies:
+  units: 2
+  pop: 2
+  tags: [humain]
+  weapon: dague
+  defaultDist: 1
+  base: { hp: 80, will: 55, energy: 100, mana: 0, for: 6, ele: 0, esp: 1, foi: 0, omb: 1 }
+  growth: { hp: 4, will: 1, energy: 2, mana: 0, for: 1.5, ele: 0, esp: 0.3, foi: 0, omb: 0.3 }
+  forms:
+    - id: brigands_haies
+      level: 1
+      speed: 16
+      res: {}
+      skills: [[emploi, 1], [enchainement, 1], [laceration, 3], [repos, 5]]
+  drops: [cuir_bandit, soie_bourdon]
+  boss: false
+  region: 5
+sorciere_haies:
+  units: 1
+  pop: 2
+  tags: [humain]
+  weapon: baton
+  defaultDist: 3
+  base: { hp: 94, will: 65, energy: 70, mana: 45, for: 1, ele: 0, esp: 2, foi: 0, omb: 7 }
+  growth: { hp: 4.35, will: 2, energy: 1, mana: 2.5, for: 0.36, ele: 0, esp: 0.6, foi: 0, omb: 1.8 }
+  forms:
+    - id: sorciere_haies
+      level: 1
+      speed: 23
+      res: { maladie: 20 }
+      skills: [[emploi, 1], [putrefaction, 1], [malediction, 3], [meditation, 5]]
+  drops: [miel_royal, ble_noir]
+  boss: false
+  region: 5

@@ -1,0 +1,1588 @@
+# Routes (README 18) : 5 étapes entre deux régions, gardien au bout. R01 à R05 : les territoires du prototype.
+
+- id: ronces
+  from: ronces
+  to: marais
+  tier: 1
+  minLevel: 1
+  firstItem: coeur_ronce
+  guardianLoot: ecorce_vivante
+  steps:
+    - id: lisiere
+      pool: [loup_gris, gobelins, frondeurs_gob, corbeaux]
+      mats: [bois_tordu, pierre_lisse, champignon_pale]
+      tier: 1
+      gold: 8
+      level: [3, 4]
+      pop: [1, 2]
+      draws: [1, 2]
+    - id: sentier
+      pool: [gobelins, frondeurs_gob, loup_gris, corbeaux]
+      mats: [bois_tordu, resine, plume_corbeau]
+      tier: 1
+      gold: 12
+      level: [4, 5]
+      pop: [2, 3]
+      draws: [1, 2]
+    - id: nids
+      pool: [araignee, loup_gris, frondeurs_gob, loup_alpha]
+      mats: [resine, fil_araignee, champignon_pale]
+      tier: 1
+      gold: 16
+      level: [5, 6]
+      pop: [3, 5]
+      draws: [2, 2]
+    - id: camp
+      pool: [gobelins, frondeurs_gob, chaman, troll]
+      mats: [ferraille, fer_noir, plume_corbeau]
+      tier: 1
+      gold: 22
+      level: [6, 7]
+      pop: [5, 7]
+      draws: [2, 2]
+    - id: coeur
+      pool: [loup_gris, araignee, loup_alpha]
+      mats: [seve_ambree, os_ancien, resine]
+      tier: 1
+      gold: 40
+      level: [8, 9]
+      pop: [8, 9]
+      draws: [2, 3]
+      guardian: true
+      forced: [sylvain]
+- id: marais
+  from: marais
+  to: mines
+  tier: 2
+  minLevel: 6
+  firstItem: coeur_marais
+  guardianLoot: cape_noyes
+  steps:
+    - id: berges
+      pool: [moustiques, crapaud, sangsues, hommes_lezards]
+      mats: [algue_noire, tourbe, venin]
+      tier: 2
+      gold: 32
+      level: [8, 9]
+      pop: [2, 3]
+      draws: [1, 2]
+    - id: roselieres
+      pool: [hommes_lezards, feu_follet, crapaud, pecheurs_maudits]
+      mats: [ecaille_terne, plume_heron, algue_noire]
+      tier: 2
+      gold: 48
+      level: [9, 10]
+      pop: [3, 4]
+      draws: [1, 2]
+    - id: epaves
+      pool: [noyes, pecheurs_maudits, spectre_brumes, sangsues]
+      mats: [fer_noir, algue_noire, os_ancien]
+      tier: 2
+      gold: 64
+      level: [10, 11]
+      pop: [3, 5]
+      draws: [2, 2]
+    - id: tertre
+      pool: [sorciere_noyee, crocodile, troll_marais, noyes]
+      mats: [tourbe, seve_ambree, ecaille_terne]
+      tier: 2
+      gold: 88
+      level: [11, 12]
+      pop: [5, 7]
+      draws: [2, 2]
+    - id: gouffre
+      pool: [noyes, spectre_brumes, sangsues]
+      mats: [algue_noire, perle_noyee, plume_heron]
+      tier: 2
+      gold: 160
+      level: [13, 14]
+      pop: [6, 7]
+      draws: [2, 3]
+      guardian: true
+      forced: [mere_noyes]
+- id: mines
+  from: mines
+  to: desert
+  tier: 3
+  minLevel: 11
+  firstItem: gemme_profonde
+  guardianLoot: poings_forge
+  steps:
+    - id: entree
+      pool: [kobolds, chauves_souris, artificier, gelee]
+      mats: [charbon_dense, minerai_argent, soufre]
+      tier: 3
+      gold: 72
+      level: [13, 14]
+      pop: [2, 3]
+      draws: [1, 2]
+    - id: galeries
+      pool: [ver_galeries, kobolds, contremaitre, gelee]
+      mats: [soie_profonde, charbon_dense, cuir_basilic]
+      tier: 3
+      gold: 108
+      level: [14, 15]
+      pop: [3, 4]
+      draws: [1, 2]
+    - id: filons
+      pool: [elementaire_cristal, nains_renegats, mineurs_fantomes, artificier]
+      mats: [cristal_brut, minerai_argent, soufre]
+      tier: 3
+      gold: 144
+      level: [15, 16]
+      pop: [3, 5]
+      draws: [2, 2]
+    - id: puits
+      pool: [basilic, golem_pierre, nains_renegats, mineurs_fantomes]
+      mats: [cuir_basilic, cristal_brut, soie_profonde]
+      tier: 3
+      gold: 198
+      level: [16, 17]
+      pop: [5, 7]
+      draws: [2, 2]
+    - id: forge
+      pool: [golem_pierre, kobolds, artificier]
+      mats: [minerai_argent, cristal_brut, charbon_dense]
+      tier: 3
+      gold: 360
+      level: [18, 19]
+      pop: [8, 9]
+      draws: [2, 3]
+      guardian: true
+      forced: [coeur_forge]
+- id: desert
+  from: desert
+  to: ciel
+  tier: 4
+  minLevel: 16
+  firstItem: coeur_dragon
+  guardianLoot: ecailles_dragon
+  steps:
+    - id: dunes
+      pool: [vautours, scorpions_geants, archers_nomades, ombre_mirage]
+      mats: [sel_ardent, ecorce_cendre, chitine_doree]
+      tier: 4
+      gold: 128
+      level: [18, 19]
+      pop: [3, 4]
+      draws: [1, 2]
+    - id: caravane
+      pool: [pillards_sable, archers_nomades, scorpions_geants, salamandre]
+      mats: [ecorce_cendre, verre_cendre, sel_ardent]
+      tier: 4
+      gold: 192
+      level: [19, 20]
+      pop: [4, 5]
+      draws: [1, 2]
+    - id: tombeaux
+      pool: [momies, pretre_scarabee, ombre_mirage, djinn]
+      mats: [essence_mirage, os_dragonnet, chitine_doree]
+      tier: 4
+      gold: 256
+      level: [20, 21]
+      pop: [3, 5]
+      draws: [2, 2]
+    - id: verrerie
+      pool: [golem_verre, ver_sables, djinn, salamandre]
+      mats: [verre_cendre, os_dragonnet, essence_mirage]
+      tier: 4
+      gold: 352
+      level: [21, 22]
+      pop: [5, 7]
+      draws: [2, 2]
+    - id: antre
+      pool: [salamandre, scorpions_geants, djinn]
+      mats: [os_dragonnet, verre_cendre, sel_ardent]
+      tier: 4
+      gold: 640
+      level: [23, 24]
+      pop: [9, 10]
+      draws: [2, 3]
+      guardian: true
+      forced: [dragon_cendre]
+- id: ciel
+  from: ciel
+  to: ys_profonde
+  tier: 5
+  minLevel: 21
+  firstItem: couronne_aube
+  guardianLoot: diademe_aube
+  steps:
+    - id: marches
+      pool: [harpies, gargouilles, griffons, sentinelles]
+      mats: [plume_seraphique, pierre_lune, fil_lumiere]
+      tier: 5
+      gold: 200
+      level: [23, 24]
+      pop: [3, 4]
+      draws: [1, 2]
+    - id: parvis
+      pool: [sentinelles, archers_celestes, gargouilles, griffons]
+      mats: [pierre_lune, eclat_astral, fil_lumiere]
+      tier: 5
+      gold: 300
+      level: [24, 25]
+      pop: [4, 5]
+      draws: [1, 2]
+    - id: observatoire
+      pool: [astromancien, spectres_lumiere, anges_dechus, harpies]
+      mats: [poussiere_etoile, eclat_astral, larme_aube]
+      tier: 5
+      gold: 400
+      level: [25, 26]
+      pop: [3, 5]
+      draws: [2, 2]
+    - id: jardins
+      pool: [chimere, golem_astral, gardien_seuil, anges_dechus]
+      mats: [larme_aube, plume_seraphique, poussiere_etoile]
+      tier: 5
+      gold: 550
+      level: [26, 27]
+      pop: [5, 7]
+      draws: [2, 2]
+    - id: trone
+      pool: [anges_dechus, spectres_lumiere, archers_celestes]
+      mats: [eclat_astral, larme_aube, plume_seraphique]
+      tier: 5
+      gold: 1000
+      level: [28, 29]
+      pop: [7, 7]
+      draws: [2, 3]
+      guardian: true
+      forced: [archonte_dechu]
+- id: pres_brande
+  from: ronces
+  to: val_moussu
+  tier: 1
+  minLevel: 1
+  firstItem: corne_taureau
+  guardianLoot: ecorce_vivante
+  steps:
+    - id: pres_brande_1
+      pool: [loup_gris, gobelins, frondeurs_gob, corbeaux, sanglier, lievres, bourdons, kobolds_pres]
+      mats: [bois_tordu, laine_grasse, pierre_lisse]
+      tier: 1
+      gold: 8
+      level: [3, 4]
+      pop: [1, 2]
+      draws: [1, 2]
+    - id: pres_brande_2
+      pool: [loup_gris, gobelins, frondeurs_gob, corbeaux, sanglier, lievres, bourdons, kobolds_pres]
+      mats: [ble_noir, champignon_pale, soie_bourdon]
+      tier: 1
+      gold: 12
+      level: [4, 5]
+      pop: [2, 3]
+      draws: [1, 2]
+    - id: pres_brande_3
+      pool:
+        [araignee, loup_gris, frondeurs_gob, loup_alpha, gobelins, chaman, troll, epouvantail, ours_brun, brigands_haies, sorciere_haies]
+      mats: [resine, defense_sanglier, plume_corbeau]
+      tier: 1
+      gold: 16
+      level: [5, 6]
+      pop: [3, 5]
+      draws: [2, 2]
+    - id: pres_brande_4
+      pool:
+        [araignee, loup_gris, frondeurs_gob, loup_alpha, gobelins, chaman, troll, epouvantail, ours_brun, brigands_haies, sorciere_haies]
+      mats: [fil_araignee, ferraille, bois_tordu]
+      tier: 1
+      gold: 22
+      level: [6, 7]
+      pop: [5, 7]
+      draws: [2, 2]
+    - id: pres_brande_5
+      pool:
+        [araignee, loup_gris, frondeurs_gob, loup_alpha, gobelins, chaman, troll, epouvantail, ours_brun, brigands_haies, sorciere_haies]
+      mats: [laine_grasse, pierre_lisse, ble_noir]
+      tier: 1
+      gold: 40
+      level: [8, 9]
+      pop: [8, 9]
+      draws: [2, 3]
+      guardian: true
+      forced: [taureau_brande]
+- id: gue_lavandieres
+  from: ronces
+  to: saulnes
+  tier: 1
+  minLevel: 1
+  firstItem: voile_dame
+  guardianLoot: ecorce_vivante
+  steps:
+    - id: gue_lavandieres_1
+      pool: [loup_gris, gobelins, frondeurs_gob, corbeaux, grenouilles, rats_eau, farfadets, lavandiere]
+      mats: [bois_tordu, ecorce_saule, pierre_lisse]
+      tier: 1
+      gold: 8
+      level: [3, 4]
+      pop: [1, 2]
+      draws: [1, 2]
+    - id: gue_lavandieres_2
+      pool: [loup_gris, gobelins, frondeurs_gob, corbeaux, grenouilles, rats_eau, farfadets, lavandiere]
+      mats: [ecaille_brochet, champignon_pale, galet_chantant]
+      tier: 1
+      gold: 12
+      level: [4, 5]
+      pop: [2, 3]
+      draws: [1, 2]
+    - id: gue_lavandieres_3
+      pool: [araignee, loup_gris, frondeurs_gob, loup_alpha, gobelins, chaman, troll, ondine, brochet, nymphe, troll_pont]
+      mats: [resine, roseau_tresse, plume_corbeau]
+      tier: 1
+      gold: 16
+      level: [5, 6]
+      pop: [3, 5]
+      draws: [2, 2]
+    - id: gue_lavandieres_4
+      pool: [araignee, loup_gris, frondeurs_gob, loup_alpha, gobelins, chaman, troll, ondine, brochet, nymphe, troll_pont]
+      mats: [fil_araignee, ferraille, bois_tordu]
+      tier: 1
+      gold: 22
+      level: [6, 7]
+      pop: [5, 7]
+      draws: [2, 2]
+    - id: gue_lavandieres_5
+      pool: [araignee, loup_gris, frondeurs_gob, loup_alpha, gobelins, chaman, troll, ondine, brochet, nymphe, troll_pont]
+      mats: [ecorce_saule, pierre_lisse, ecaille_brochet]
+      tier: 1
+      gold: 40
+      level: [8, 9]
+      pop: [8, 9]
+      draws: [2, 3]
+      guardian: true
+      forced: [dame_gue]
+- id: collines_menhirs
+  from: val_moussu
+  to: fort_bruyere
+  tier: 1
+  minLevel: 1
+  firstItem: c_ur_menhir
+  guardianLoot: ecorce_vivante
+  steps:
+    - id: collines_menhirs_1
+      pool: [sanglier, lievres, bourdons, kobolds_pres, bandits, deserteurs, chiens_bruyere, corneilles]
+      mats: [laine_grasse, bruyere_seche, ble_noir]
+      tier: 1
+      gold: 8
+      level: [3, 4]
+      pop: [1, 2]
+      draws: [1, 2]
+    - id: collines_menhirs_2
+      pool: [sanglier, lievres, bourdons, kobolds_pres, bandits, deserteurs, chiens_bruyere, corneilles]
+      mats: [cuir_bandit, soie_bourdon, eclat_menhir]
+      tier: 1
+      gold: 12
+      level: [4, 5]
+      pop: [2, 3]
+      draws: [1, 2]
+    - id: collines_menhirs_3
+      pool: [epouvantail, ours_brun, brigands_haies, sorciere_haies, esprit_menhir, chef_bande, rebouteuse, belier]
+      mats: [defense_sanglier, plume_corneille, laine_grasse]
+      tier: 1
+      gold: 16
+      level: [5, 6]
+      pop: [3, 5]
+      draws: [2, 2]
+    - id: collines_menhirs_4
+      pool: [epouvantail, ours_brun, brigands_haies, sorciere_haies, esprit_menhir, chef_bande, rebouteuse, belier]
+      mats: [bruyere_seche, ble_noir, cuir_bandit]
+      tier: 1
+      gold: 22
+      level: [6, 7]
+      pop: [5, 7]
+      draws: [2, 2]
+    - id: collines_menhirs_5
+      pool: [epouvantail, ours_brun, brigands_haies, sorciere_haies, esprit_menhir, chef_bande, rebouteuse, belier]
+      mats: [soie_bourdon, eclat_menhir, defense_sanglier]
+      tier: 1
+      gold: 40
+      level: [8, 9]
+      pop: [8, 9]
+      draws: [2, 3]
+      guardian: true
+      forced: [menhir_eveille]
+- id: tourbieres_bruyere
+  from: saulnes
+  to: fort_bruyere
+  tier: 1
+  minLevel: 1
+  firstItem: couronne_farfadet
+  guardianLoot: ecorce_vivante
+  steps:
+    - id: tourbieres_bruyere_1
+      pool: [grenouilles, rats_eau, farfadets, lavandiere, bandits, deserteurs, chiens_bruyere, corneilles]
+      mats: [ecorce_saule, bruyere_seche, ecaille_brochet]
+      tier: 1
+      gold: 8
+      level: [3, 4]
+      pop: [1, 2]
+      draws: [1, 2]
+    - id: tourbieres_bruyere_2
+      pool: [grenouilles, rats_eau, farfadets, lavandiere, bandits, deserteurs, chiens_bruyere, corneilles]
+      mats: [cuir_bandit, galet_chantant, eclat_menhir]
+      tier: 1
+      gold: 12
+      level: [4, 5]
+      pop: [2, 3]
+      draws: [1, 2]
+    - id: tourbieres_bruyere_3
+      pool: [ondine, brochet, nymphe, troll_pont, esprit_menhir, chef_bande, rebouteuse, belier]
+      mats: [roseau_tresse, plume_corneille, ecorce_saule]
+      tier: 1
+      gold: 16
+      level: [5, 6]
+      pop: [3, 5]
+      draws: [2, 2]
+    - id: tourbieres_bruyere_4
+      pool: [ondine, brochet, nymphe, troll_pont, esprit_menhir, chef_bande, rebouteuse, belier]
+      mats: [bruyere_seche, ecaille_brochet, cuir_bandit]
+      tier: 1
+      gold: 22
+      level: [6, 7]
+      pop: [5, 7]
+      draws: [2, 2]
+    - id: tourbieres_bruyere_5
+      pool: [ondine, brochet, nymphe, troll_pont, esprit_menhir, chef_bande, rebouteuse, belier]
+      mats: [galet_chantant, eclat_menhir, roseau_tresse]
+      tier: 1
+      gold: 40
+      level: [8, 9]
+      pop: [8, 9]
+      draws: [2, 3]
+      guardian: true
+      forced: [roi_farfadets]
+- id: chemin_pendus
+  from: val_moussu
+  to: corbeval
+  tier: 1
+  minLevel: 1
+  firstItem: hache_bourreau
+  guardianLoot: ecorce_vivante
+  steps:
+    - id: chemin_pendus_1
+      pool: [sanglier, lievres, bourdons, kobolds_pres, squelettes, goules, chien_squelette, spectre]
+      mats: [laine_grasse, os_poli, ble_noir]
+      tier: 1
+      gold: 8
+      level: [3, 4]
+      pop: [1, 2]
+      draws: [1, 2]
+    - id: chemin_pendus_2
+      pool: [sanglier, lievres, bourdons, kobolds_pres, squelettes, goules, chien_squelette, spectre]
+      mats: [linceul, soie_bourdon, cendre_funeraire]
+      tier: 1
+      gold: 12
+      level: [4, 5]
+      pop: [2, 3]
+      draws: [1, 2]
+    - id: chemin_pendus_3
+      pool: [epouvantail, ours_brun, brigands_haies, sorciere_haies, necromant, vampire, fossoyeur, banshee]
+      mats: [defense_sanglier, clou_cercueil, laine_grasse]
+      tier: 1
+      gold: 16
+      level: [5, 6]
+      pop: [3, 5]
+      draws: [2, 2]
+    - id: chemin_pendus_4
+      pool: [epouvantail, ours_brun, brigands_haies, sorciere_haies, necromant, vampire, fossoyeur, banshee]
+      mats: [os_poli, ble_noir, linceul]
+      tier: 1
+      gold: 22
+      level: [6, 7]
+      pop: [5, 7]
+      draws: [2, 2]
+    - id: chemin_pendus_5
+      pool: [epouvantail, ours_brun, brigands_haies, sorciere_haies, necromant, vampire, fossoyeur, banshee]
+      mats: [soie_bourdon, cendre_funeraire, defense_sanglier]
+      tier: 1
+      gold: 40
+      level: [8, 9]
+      pop: [8, 9]
+      draws: [2, 3]
+      guardian: true
+      forced: [bourreau_sans_tete]
+- id: combe_brumes
+  from: saulnes
+  to: brumefosse
+  tier: 1
+  minLevel: 1
+  firstItem: miroir_ondine
+  guardianLoot: ecorce_vivante
+  steps:
+    - id: combe_brumes_1
+      pool: [grenouilles, rats_eau, farfadets, lavandiere, chauves_souris_g, chasseurs_primes, pendus, corbeau_augure]
+      mats: [ecorce_saule, fourrure_loup_garou, ecaille_brochet]
+      tier: 1
+      gold: 8
+      level: [3, 4]
+      pop: [1, 2]
+      draws: [1, 2]
+    - id: combe_brumes_2
+      pool: [grenouilles, rats_eau, farfadets, lavandiere, chauves_souris_g, chasseurs_primes, pendus, corbeau_augure]
+      mats: [brume_condensee, galet_chantant, bois_pin_noir]
+      tier: 1
+      gold: 12
+      level: [4, 5]
+      pop: [2, 3]
+      draws: [1, 2]
+    - id: combe_brumes_3
+      pool: [ondine, brochet, nymphe, troll_pont, loup_garou, sorciere_brumes_m, ours_brumes, brumeux]
+      mats: [roseau_tresse, croc_lunaire, ecorce_saule]
+      tier: 1
+      gold: 16
+      level: [5, 6]
+      pop: [3, 5]
+      draws: [2, 2]
+    - id: combe_brumes_4
+      pool: [ondine, brochet, nymphe, troll_pont, loup_garou, sorciere_brumes_m, ours_brumes, brumeux]
+      mats: [fourrure_loup_garou, ecaille_brochet, brume_condensee]
+      tier: 1
+      gold: 22
+      level: [6, 7]
+      pop: [5, 7]
+      draws: [2, 2]
+    - id: combe_brumes_5
+      pool: [ondine, brochet, nymphe, troll_pont, loup_garou, sorciere_brumes_m, ours_brumes, brumeux]
+      mats: [galet_chantant, bois_pin_noir, roseau_tresse]
+      tier: 1
+      gold: 40
+      level: [8, 9]
+      pop: [8, 9]
+      draws: [2, 3]
+      guardian: true
+      forced: [grande_ondine]
+- id: lisiere_ambre
+  from: fort_bruyere
+  to: ambrerive
+  tier: 1
+  minLevel: 1
+  firstItem: gland_chene_mere
+  guardianLoot: ecorce_vivante
+  steps:
+    - id: lisiere_ambre_1
+      pool: [bandits, deserteurs, chiens_bruyere, corneilles, sylphes, guepes, cerf_ambre, archers_sylvains]
+      mats: [bruyere_seche, ambre_brut, cuir_bandit]
+      tier: 1
+      gold: 8
+      level: [3, 4]
+      pop: [1, 2]
+      draws: [1, 2]
+    - id: lisiere_ambre_2
+      pool: [bandits, deserteurs, chiens_bruyere, corneilles, sylphes, guepes, cerf_ambre, archers_sylvains]
+      mats: [ecorce_rousse, eclat_menhir, bois_cerf]
+      tier: 1
+      gold: 12
+      level: [4, 5]
+      pop: [2, 3]
+      draws: [1, 2]
+    - id: lisiere_ambre_3
+      pool: [esprit_menhir, chef_bande, rebouteuse, belier, ours_chene, dryade_corrompue, druide_noir, treant]
+      mats: [plume_corneille, cire_guepe, bruyere_seche]
+      tier: 1
+      gold: 16
+      level: [5, 6]
+      pop: [3, 5]
+      draws: [2, 2]
+    - id: lisiere_ambre_4
+      pool: [esprit_menhir, chef_bande, rebouteuse, belier, ours_chene, dryade_corrompue, druide_noir, treant]
+      mats: [ambre_brut, cuir_bandit, ecorce_rousse]
+      tier: 1
+      gold: 22
+      level: [6, 7]
+      pop: [5, 7]
+      draws: [2, 2]
+    - id: lisiere_ambre_5
+      pool: [esprit_menhir, chef_bande, rebouteuse, belier, ours_chene, dryade_corrompue, druide_noir, treant]
+      mats: [eclat_menhir, bois_cerf, plume_corneille]
+      tier: 1
+      gold: 40
+      level: [8, 9]
+      pop: [8, 9]
+      draws: [2, 3]
+      guardian: true
+      forced: [gardien_chene]
+- id: falaises_heron
+  from: marais
+  to: brumefosse
+  tier: 2
+  minLevel: 6
+  firstItem: plume_heron_colossal
+  guardianLoot: cape_noyes
+  steps:
+    - id: falaises_heron_1
+      pool:
+        [
+          moustiques,
+          crapaud,
+          sangsues,
+          hommes_lezards,
+          feu_follet,
+          pecheurs_maudits,
+          chauves_souris_g,
+          chasseurs_primes,
+          pendus,
+          corbeau_augure,
+        ]
+      mats: [algue_noire, fourrure_loup_garou, tourbe]
+      tier: 2
+      gold: 32
+      level: [8, 9]
+      pop: [2, 3]
+      draws: [1, 2]
+    - id: falaises_heron_2
+      pool:
+        [
+          moustiques,
+          crapaud,
+          sangsues,
+          hommes_lezards,
+          feu_follet,
+          pecheurs_maudits,
+          chauves_souris_g,
+          chasseurs_primes,
+          pendus,
+          corbeau_augure,
+        ]
+      mats: [brume_condensee, venin, bois_pin_noir]
+      tier: 2
+      gold: 48
+      level: [9, 10]
+      pop: [3, 4]
+      draws: [1, 2]
+    - id: falaises_heron_3
+      pool:
+        [
+          noyes,
+          pecheurs_maudits,
+          spectre_brumes,
+          sangsues,
+          sorciere_noyee,
+          crocodile,
+          troll_marais,
+          loup_garou,
+          sorciere_brumes_m,
+          ours_brumes,
+          brumeux,
+        ]
+      mats: [ecaille_terne, croc_lunaire, plume_heron]
+      tier: 2
+      gold: 64
+      level: [10, 11]
+      pop: [3, 5]
+      draws: [2, 2]
+    - id: falaises_heron_4
+      pool:
+        [
+          noyes,
+          pecheurs_maudits,
+          spectre_brumes,
+          sangsues,
+          sorciere_noyee,
+          crocodile,
+          troll_marais,
+          loup_garou,
+          sorciere_brumes_m,
+          ours_brumes,
+          brumeux,
+        ]
+      mats: [fer_noir, os_ancien, seve_ambree]
+      tier: 2
+      gold: 88
+      level: [11, 12]
+      pop: [5, 7]
+      draws: [2, 2]
+    - id: falaises_heron_5
+      pool:
+        [
+          noyes,
+          pecheurs_maudits,
+          spectre_brumes,
+          sangsues,
+          sorciere_noyee,
+          crocodile,
+          troll_marais,
+          loup_garou,
+          sorciere_brumes_m,
+          ours_brumes,
+          brumeux,
+        ]
+      mats: [algue_noire, fourrure_loup_garou, tourbe]
+      tier: 2
+      gold: 160
+      level: [13, 14]
+      pop: [12, 13]
+      draws: [2, 3]
+      guardian: true
+      forced: [heron_colossal]
+- id: sentier_cretes
+  from: brumefosse
+  to: givrecime
+  tier: 2
+  minLevel: 6
+  firstItem: croc_alpha
+  guardianLoot: cape_noyes
+  steps:
+    - id: sentier_cretes_1
+      pool: [chauves_souris_g, chasseurs_primes, pendus, corbeau_augure, loups_blancs, harpies_neiges, nains_givre_m, chamane_givre]
+      mats: [fourrure_loup_garou, fourrure_yeti, brume_condensee]
+      tier: 2
+      gold: 32
+      level: [8, 9]
+      pop: [2, 3]
+      draws: [1, 2]
+    - id: sentier_cretes_2
+      pool: [chauves_souris_g, chasseurs_primes, pendus, corbeau_augure, loups_blancs, harpies_neiges, nains_givre_m, chamane_givre]
+      mats: [cristal_givre, bois_pin_noir, fer_gele]
+      tier: 2
+      gold: 48
+      level: [9, 10]
+      pop: [3, 4]
+      draws: [1, 2]
+    - id: sentier_cretes_3
+      pool: [loup_garou, sorciere_brumes_m, ours_brumes, brumeux, yeti_m, geant_givre, elem_glace, wendigo]
+      mats: [croc_lunaire, corne_belier_blanc, fourrure_loup_garou]
+      tier: 2
+      gold: 64
+      level: [10, 11]
+      pop: [3, 5]
+      draws: [2, 2]
+    - id: sentier_cretes_4
+      pool: [loup_garou, sorciere_brumes_m, ours_brumes, brumeux, yeti_m, geant_givre, elem_glace, wendigo]
+      mats: [fourrure_yeti, brume_condensee, cristal_givre]
+      tier: 2
+      gold: 88
+      level: [11, 12]
+      pop: [5, 7]
+      draws: [2, 2]
+    - id: sentier_cretes_5
+      pool: [loup_garou, sorciere_brumes_m, ours_brumes, brumeux, yeti_m, geant_givre, elem_glace, wendigo]
+      mats: [bois_pin_noir, fer_gele, croc_lunaire]
+      tier: 2
+      gold: 160
+      level: [13, 14]
+      pop: [12, 13]
+      draws: [2, 3]
+      guardian: true
+      forced: [loup_garou_alpha]
+- id: bois_lanternes
+  from: corbeval
+  to: lanterne_noire
+  tier: 2
+  minLevel: 6
+  firstItem: phylactere_lanternes
+  guardianLoot: cape_noyes
+  steps:
+    - id: bois_lanternes_1
+      pool: [squelettes, goules, chien_squelette, spectre, spores, elfes_noirs, chasseresse_noire, mangeur_lanternes]
+      mats: [os_poli, soie_noire, linceul]
+      tier: 2
+      gold: 32
+      level: [8, 9]
+      pop: [2, 3]
+      draws: [1, 2]
+    - id: bois_lanternes_2
+      pool: [squelettes, goules, chien_squelette, spectre, spores, elfes_noirs, chasseresse_noire, mangeur_lanternes]
+      mats: [spores_luisantes, cendre_funeraire, bois_nuit]
+      tier: 2
+      gold: 48
+      level: [9, 10]
+      pop: [3, 4]
+      draws: [1, 2]
+    - id: bois_lanternes_3
+      pool: [necromant, vampire, fossoyeur, banshee, araignee_geante, tisseuse_nuit, ombre_rampante, ours_chancre]
+      mats: [clou_cercueil, chitine_araignee, os_poli]
+      tier: 2
+      gold: 64
+      level: [10, 11]
+      pop: [3, 5]
+      draws: [2, 2]
+    - id: bois_lanternes_4
+      pool: [necromant, vampire, fossoyeur, banshee, araignee_geante, tisseuse_nuit, ombre_rampante, ours_chancre]
+      mats: [soie_noire, linceul, spores_luisantes]
+      tier: 2
+      gold: 88
+      level: [11, 12]
+      pop: [5, 7]
+      draws: [2, 2]
+    - id: bois_lanternes_5
+      pool: [necromant, vampire, fossoyeur, banshee, araignee_geante, tisseuse_nuit, ombre_rampante, ours_chancre]
+      mats: [cendre_funeraire, bois_nuit, clou_cercueil]
+      tier: 2
+      gold: 160
+      level: [13, 14]
+      pop: [12, 13]
+      draws: [2, 3]
+      guardian: true
+      forced: [seigneur_liche_lanternes]
+- id: vieux_cimetiere_chenes
+  from: corbeval
+  to: ambrerive
+  tier: 2
+  minLevel: 6
+  firstItem: baton_druide_liche
+  guardianLoot: cape_noyes
+  steps:
+    - id: vieux_cimetiere_chenes_1
+      pool: [squelettes, goules, chien_squelette, spectre, sylphes, guepes, cerf_ambre, archers_sylvains]
+      mats: [os_poli, ambre_brut, linceul]
+      tier: 2
+      gold: 32
+      level: [8, 9]
+      pop: [2, 3]
+      draws: [1, 2]
+    - id: vieux_cimetiere_chenes_2
+      pool: [squelettes, goules, chien_squelette, spectre, sylphes, guepes, cerf_ambre, archers_sylvains]
+      mats: [ecorce_rousse, cendre_funeraire, bois_cerf]
+      tier: 2
+      gold: 48
+      level: [9, 10]
+      pop: [3, 4]
+      draws: [1, 2]
+    - id: vieux_cimetiere_chenes_3
+      pool: [necromant, vampire, fossoyeur, banshee, ours_chene, dryade_corrompue, druide_noir, treant]
+      mats: [clou_cercueil, cire_guepe, os_poli]
+      tier: 2
+      gold: 64
+      level: [10, 11]
+      pop: [3, 5]
+      draws: [2, 2]
+    - id: vieux_cimetiere_chenes_4
+      pool: [necromant, vampire, fossoyeur, banshee, ours_chene, dryade_corrompue, druide_noir, treant]
+      mats: [ambre_brut, linceul, ecorce_rousse]
+      tier: 2
+      gold: 88
+      level: [11, 12]
+      pop: [5, 7]
+      draws: [2, 2]
+    - id: vieux_cimetiere_chenes_5
+      pool: [necromant, vampire, fossoyeur, banshee, ours_chene, dryade_corrompue, druide_noir, treant]
+      mats: [cendre_funeraire, bois_cerf, clou_cercueil]
+      tier: 2
+      gold: 160
+      level: [13, 14]
+      pop: [12, 13]
+      draws: [2, 3]
+      guardian: true
+      forced: [druide_liche]
+- id: gorges_fumantes
+  from: ambrerive
+  to: braise_haute
+  tier: 2
+  minLevel: 6
+  firstItem: c_ur_magma
+  guardianLoot: cape_noyes
+  steps:
+    - id: gorges_fumantes_1
+      pool: [sylphes, guepes, cerf_ambre, archers_sylvains, diablotins, vers_magma, salamandre_lave, pyromancienne]
+      mats: [ambre_brut, basalte, ecorce_rousse]
+      tier: 2
+      gold: 32
+      level: [8, 9]
+      pop: [2, 3]
+      draws: [1, 2]
+    - id: gorges_fumantes_2
+      pool: [sylphes, guepes, cerf_ambre, archers_sylvains, diablotins, vers_magma, salamandre_lave, pyromancienne]
+      mats: [soufre_ardent, bois_cerf, ecaille_salamandre]
+      tier: 2
+      gold: 48
+      level: [9, 10]
+      pop: [3, 4]
+      draws: [1, 2]
+    - id: gorges_fumantes_3
+      pool: [ours_chene, dryade_corrompue, druide_noir, treant, elem_feu, golem_basalte, chiens_infernaux, forgeron_demon]
+      mats: [cire_guepe, fer_lave, ambre_brut]
+      tier: 2
+      gold: 64
+      level: [10, 11]
+      pop: [3, 5]
+      draws: [2, 2]
+    - id: gorges_fumantes_4
+      pool: [ours_chene, dryade_corrompue, druide_noir, treant, elem_feu, golem_basalte, chiens_infernaux, forgeron_demon]
+      mats: [basalte, ecorce_rousse, soufre_ardent]
+      tier: 2
+      gold: 88
+      level: [11, 12]
+      pop: [5, 7]
+      draws: [2, 2]
+    - id: gorges_fumantes_5
+      pool: [ours_chene, dryade_corrompue, druide_noir, treant, elem_feu, golem_basalte, chiens_infernaux, forgeron_demon]
+      mats: [bois_cerf, ecaille_salamandre, cire_guepe]
+      tier: 2
+      gold: 160
+      level: [13, 14]
+      pop: [12, 13]
+      draws: [2, 3]
+      guardian: true
+      forced: [ours_magma]
+- id: col_vent_blanc
+  from: mines
+  to: givrecime
+  tier: 3
+  minLevel: 11
+  firstItem: ecaille_wyrm
+  guardianLoot: poings_forge
+  steps:
+    - id: col_vent_blanc_1
+      pool:
+        [kobolds, chauves_souris, artificier, gelee, ver_galeries, contremaitre, loups_blancs, harpies_neiges, nains_givre_m, chamane_givre]
+      mats: [charbon_dense, fourrure_yeti, minerai_argent]
+      tier: 3
+      gold: 72
+      level: [13, 14]
+      pop: [2, 3]
+      draws: [1, 2]
+    - id: col_vent_blanc_2
+      pool:
+        [kobolds, chauves_souris, artificier, gelee, ver_galeries, contremaitre, loups_blancs, harpies_neiges, nains_givre_m, chamane_givre]
+      mats: [cristal_givre, soufre, fer_gele]
+      tier: 3
+      gold: 108
+      level: [14, 15]
+      pop: [3, 4]
+      draws: [1, 2]
+    - id: col_vent_blanc_3
+      pool:
+        [elementaire_cristal, nains_renegats, mineurs_fantomes, artificier, basilic, golem_pierre, yeti_m, geant_givre, elem_glace, wendigo]
+      mats: [soie_profonde, corne_belier_blanc, cuir_basilic]
+      tier: 3
+      gold: 144
+      level: [15, 16]
+      pop: [3, 5]
+      draws: [2, 2]
+    - id: col_vent_blanc_4
+      pool:
+        [elementaire_cristal, nains_renegats, mineurs_fantomes, artificier, basilic, golem_pierre, yeti_m, geant_givre, elem_glace, wendigo]
+      mats: [cristal_brut, charbon_dense, fourrure_yeti]
+      tier: 3
+      gold: 198
+      level: [16, 17]
+      pop: [5, 7]
+      draws: [2, 2]
+    - id: col_vent_blanc_5
+      pool:
+        [elementaire_cristal, nains_renegats, mineurs_fantomes, artificier, basilic, golem_pierre, yeti_m, geant_givre, elem_glace, wendigo]
+      mats: [minerai_argent, cristal_givre, soufre]
+      tier: 3
+      gold: 360
+      level: [18, 19]
+      pop: [16, 17]
+      draws: [2, 3]
+      guardian: true
+      forced: [wyrm_neiges]
+- id: glacier_fendu
+  from: givrecime
+  to: port_corsaire
+  tier: 3
+  minLevel: 11
+  firstItem: defense_mammouth
+  guardianLoot: poings_forge
+  steps:
+    - id: glacier_fendu_1
+      pool: [loups_blancs, harpies_neiges, nains_givre_m, chamane_givre, pirates, canonniers, crabes_geants, noye_corsaire]
+      mats: [fourrure_yeti, corail_rouge, cristal_givre]
+      tier: 3
+      gold: 72
+      level: [13, 14]
+      pop: [2, 3]
+      draws: [1, 2]
+    - id: glacier_fendu_2
+      pool: [loups_blancs, harpies_neiges, nains_givre_m, chamane_givre, pirates, canonniers, crabes_geants, noye_corsaire]
+      mats: [toile_voile, fer_gele, ecaille_naga]
+      tier: 3
+      gold: 108
+      level: [14, 15]
+      pop: [3, 4]
+      draws: [1, 2]
+    - id: glacier_fendu_3
+      pool: [yeti_m, geant_givre, elem_glace, wendigo, naga_m, sirene_corsaire, requins_garous, kraken_juv]
+      mats: [corne_belier_blanc, poudre_noire, fourrure_yeti]
+      tier: 3
+      gold: 144
+      level: [15, 16]
+      pop: [3, 5]
+      draws: [2, 2]
+    - id: glacier_fendu_4
+      pool: [yeti_m, geant_givre, elem_glace, wendigo, naga_m, sirene_corsaire, requins_garous, kraken_juv]
+      mats: [corail_rouge, cristal_givre, toile_voile]
+      tier: 3
+      gold: 198
+      level: [16, 17]
+      pop: [5, 7]
+      draws: [2, 2]
+    - id: glacier_fendu_5
+      pool: [yeti_m, geant_givre, elem_glace, wendigo, naga_m, sirene_corsaire, requins_garous, kraken_juv]
+      mats: [fer_gele, ecaille_naga, corne_belier_blanc]
+      tier: 3
+      gold: 360
+      level: [18, 19]
+      pop: [16, 17]
+      draws: [2, 3]
+      guardian: true
+      forced: [mammouth_guerre]
+- id: grottes_luminescentes
+  from: lanterne_noire
+  to: braise_haute
+  tier: 3
+  minLevel: 11
+  firstItem: spore_reine
+  guardianLoot: poings_forge
+  steps:
+    - id: grottes_luminescentes_1
+      pool: [spores, elfes_noirs, chasseresse_noire, mangeur_lanternes, diablotins, vers_magma, salamandre_lave, pyromancienne]
+      mats: [soie_noire, basalte, spores_luisantes]
+      tier: 3
+      gold: 72
+      level: [13, 14]
+      pop: [2, 3]
+      draws: [1, 2]
+    - id: grottes_luminescentes_2
+      pool: [spores, elfes_noirs, chasseresse_noire, mangeur_lanternes, diablotins, vers_magma, salamandre_lave, pyromancienne]
+      mats: [soufre_ardent, bois_nuit, ecaille_salamandre]
+      tier: 3
+      gold: 108
+      level: [14, 15]
+      pop: [3, 4]
+      draws: [1, 2]
+    - id: grottes_luminescentes_3
+      pool: [araignee_geante, tisseuse_nuit, ombre_rampante, ours_chancre, elem_feu, golem_basalte, chiens_infernaux, forgeron_demon]
+      mats: [chitine_araignee, fer_lave, soie_noire]
+      tier: 3
+      gold: 144
+      level: [15, 16]
+      pop: [3, 5]
+      draws: [2, 2]
+    - id: grottes_luminescentes_4
+      pool: [araignee_geante, tisseuse_nuit, ombre_rampante, ours_chancre, elem_feu, golem_basalte, chiens_infernaux, forgeron_demon]
+      mats: [basalte, spores_luisantes, soufre_ardent]
+      tier: 3
+      gold: 198
+      level: [16, 17]
+      pop: [5, 7]
+      draws: [2, 2]
+    - id: grottes_luminescentes_5
+      pool: [araignee_geante, tisseuse_nuit, ombre_rampante, ours_chancre, elem_feu, golem_basalte, chiens_infernaux, forgeron_demon]
+      mats: [bois_nuit, ecaille_salamandre, chitine_araignee]
+      tier: 3
+      gold: 360
+      level: [18, 19]
+      pop: [16, 17]
+      draws: [2, 3]
+      guardian: true
+      forced: [reine_spores]
+- id: racines_profondes
+  from: lanterne_noire
+  to: verdeloin
+  tier: 3
+  minLevel: 11
+  firstItem: anneau_ver_racine
+  guardianLoot: poings_forge
+  steps:
+    - id: racines_profondes_1
+      pool: [spores, elfes_noirs, chasseresse_noire, mangeur_lanternes, moustiques_geants, sarbacaniers, hommes_fauves, plante_carnivore]
+      mats: [soie_noire, liane_fer, spores_luisantes]
+      tier: 3
+      gold: 72
+      level: [13, 14]
+      pop: [2, 3]
+      draws: [1, 2]
+    - id: racines_profondes_2
+      pool: [spores, elfes_noirs, chasseresse_noire, mangeur_lanternes, moustiques_geants, sarbacaniers, hommes_fauves, plante_carnivore]
+      mats: [venin_emeraude, bois_nuit, bois_teck]
+      tier: 3
+      gold: 108
+      level: [14, 15]
+      pop: [3, 4]
+      draws: [1, 2]
+    - id: racines_profondes_3
+      pool: [araignee_geante, tisseuse_nuit, ombre_rampante, ours_chancre, serpent_roi, chamane_crapaud_m, gorille_m, idole_jade]
+      mats: [chitine_araignee, jade_brut, soie_noire]
+      tier: 3
+      gold: 144
+      level: [15, 16]
+      pop: [3, 5]
+      draws: [2, 2]
+    - id: racines_profondes_4
+      pool: [araignee_geante, tisseuse_nuit, ombre_rampante, ours_chancre, serpent_roi, chamane_crapaud_m, gorille_m, idole_jade]
+      mats: [liane_fer, spores_luisantes, venin_emeraude]
+      tier: 3
+      gold: 198
+      level: [16, 17]
+      pop: [5, 7]
+      draws: [2, 2]
+    - id: racines_profondes_5
+      pool: [araignee_geante, tisseuse_nuit, ombre_rampante, ours_chancre, serpent_roi, chamane_crapaud_m, gorille_m, idole_jade]
+      mats: [bois_nuit, bois_teck, chitine_araignee]
+      tier: 3
+      gold: 360
+      level: [18, 19]
+      pop: [16, 17]
+      draws: [2, 3]
+      guardian: true
+      forced: [ver_racine]
+- id: plaines_basalte
+  from: braise_haute
+  to: kharak
+  tier: 3
+  minLevel: 11
+  firstItem: couronne_braise
+  guardianLoot: poings_forge
+  steps:
+    - id: plaines_basalte_1
+      pool: [diablotins, vers_magma, salamandre_lave, pyromancienne, hyenes_m, orcs_pillards, centaures, harpies_tempete]
+      mats: [basalte, cuir_centaure, soufre_ardent]
+      tier: 3
+      gold: 72
+      level: [13, 14]
+      pop: [2, 3]
+      draws: [1, 2]
+    - id: plaines_basalte_2
+      pool: [diablotins, vers_magma, salamandre_lave, pyromancienne, hyenes_m, orcs_pillards, centaures, harpies_tempete]
+      mats: [herbe_a_vent, ecaille_salamandre, fer_orc]
+      tier: 3
+      gold: 108
+      level: [14, 15]
+      pop: [3, 4]
+      draws: [1, 2]
+    - id: plaines_basalte_3
+      pool: [elem_feu, golem_basalte, chiens_infernaux, forgeron_demon, chef_orc, chamane_orc, geant_steppes, esprit_vent]
+      mats: [fer_lave, corne_hyene, basalte]
+      tier: 3
+      gold: 144
+      level: [15, 16]
+      pop: [3, 5]
+      draws: [2, 2]
+    - id: plaines_basalte_4
+      pool: [elem_feu, golem_basalte, chiens_infernaux, forgeron_demon, chef_orc, chamane_orc, geant_steppes, esprit_vent]
+      mats: [cuir_centaure, soufre_ardent, herbe_a_vent]
+      tier: 3
+      gold: 198
+      level: [16, 17]
+      pop: [5, 7]
+      draws: [2, 2]
+    - id: plaines_basalte_5
+      pool: [elem_feu, golem_basalte, chiens_infernaux, forgeron_demon, chef_orc, chamane_orc, geant_steppes, esprit_vent]
+      mats: [ecaille_salamandre, fer_orc, fer_lave]
+      tier: 3
+      gold: 360
+      level: [18, 19]
+      pop: [16, 17]
+      draws: [2, 3]
+      guardian: true
+      forced: [seigneur_braises]
+- id: cote_epaves
+  from: desert
+  to: port_corsaire
+  tier: 4
+  minLevel: 16
+  firstItem: tricorne_amiral
+  guardianLoot: ecailles_dragon
+  steps:
+    - id: cote_epaves_1
+      pool:
+        [
+          vautours,
+          scorpions_geants,
+          archers_nomades,
+          ombre_mirage,
+          pillards_sable,
+          salamandre,
+          pirates,
+          canonniers,
+          crabes_geants,
+          noye_corsaire,
+        ]
+      mats: [sel_ardent, corail_rouge, ecorce_cendre]
+      tier: 4
+      gold: 128
+      level: [18, 19]
+      pop: [3, 4]
+      draws: [1, 2]
+    - id: cote_epaves_2
+      pool:
+        [
+          vautours,
+          scorpions_geants,
+          archers_nomades,
+          ombre_mirage,
+          pillards_sable,
+          salamandre,
+          pirates,
+          canonniers,
+          crabes_geants,
+          noye_corsaire,
+        ]
+      mats: [toile_voile, chitine_doree, ecaille_naga]
+      tier: 4
+      gold: 192
+      level: [19, 20]
+      pop: [4, 5]
+      draws: [1, 2]
+    - id: cote_epaves_3
+      pool:
+        [
+          momies,
+          pretre_scarabee,
+          ombre_mirage,
+          djinn,
+          golem_verre,
+          ver_sables,
+          salamandre,
+          naga_m,
+          sirene_corsaire,
+          requins_garous,
+          kraken_juv,
+        ]
+      mats: [verre_cendre, poudre_noire, essence_mirage]
+      tier: 4
+      gold: 256
+      level: [20, 21]
+      pop: [3, 5]
+      draws: [2, 2]
+    - id: cote_epaves_4
+      pool:
+        [
+          momies,
+          pretre_scarabee,
+          ombre_mirage,
+          djinn,
+          golem_verre,
+          ver_sables,
+          salamandre,
+          naga_m,
+          sirene_corsaire,
+          requins_garous,
+          kraken_juv,
+        ]
+      mats: [os_dragonnet, sel_ardent, corail_rouge]
+      tier: 4
+      gold: 352
+      level: [21, 22]
+      pop: [5, 7]
+      draws: [2, 2]
+    - id: cote_epaves_5
+      pool:
+        [
+          momies,
+          pretre_scarabee,
+          ombre_mirage,
+          djinn,
+          golem_verre,
+          ver_sables,
+          salamandre,
+          naga_m,
+          sirene_corsaire,
+          requins_garous,
+          kraken_juv,
+        ]
+      mats: [ecorce_cendre, toile_voile, chitine_doree]
+      tier: 4
+      gold: 640
+      level: [23, 24]
+      pop: [20, 21]
+      draws: [2, 3]
+      guardian: true
+      forced: [amiral_noye]
+- id: fosse_sirenes
+  from: port_corsaire
+  to: ys_profonde
+  tier: 4
+  minLevel: 16
+  firstItem: il_kraken
+  guardianLoot: ecailles_dragon
+  steps:
+    - id: fosse_sirenes_1
+      pool: [pirates, canonniers, crabes_geants, noye_corsaire, hommes_poissons_m, meduses_m, anguilles, garde_engloutie]
+      mats: [corail_rouge, nacre_abyssale, toile_voile]
+      tier: 4
+      gold: 128
+      level: [18, 19]
+      pop: [3, 4]
+      draws: [1, 2]
+    - id: fosse_sirenes_2
+      pool: [pirates, canonniers, crabes_geants, noye_corsaire, hommes_poissons_m, meduses_m, anguilles, garde_engloutie]
+      mats: [encre_pieuvre, ecaille_naga, algue_ys]
+      tier: 4
+      gold: 192
+      level: [19, 20]
+      pop: [4, 5]
+      draws: [1, 2]
+    - id: fosse_sirenes_3
+      pool: [naga_m, sirene_corsaire, requins_garous, kraken_juv, sirenes_abyssales, oracle_noye, leviathan_juv, horreur]
+      mats: [poudre_noire, dent_leviathan, corail_rouge]
+      tier: 4
+      gold: 256
+      level: [20, 21]
+      pop: [3, 5]
+      draws: [2, 2]
+    - id: fosse_sirenes_4
+      pool: [naga_m, sirene_corsaire, requins_garous, kraken_juv, sirenes_abyssales, oracle_noye, leviathan_juv, horreur]
+      mats: [nacre_abyssale, toile_voile, encre_pieuvre]
+      tier: 4
+      gold: 352
+      level: [21, 22]
+      pop: [5, 7]
+      draws: [2, 2]
+    - id: fosse_sirenes_5
+      pool: [naga_m, sirene_corsaire, requins_garous, kraken_juv, sirenes_abyssales, oracle_noye, leviathan_juv, horreur]
+      mats: [ecaille_naga, algue_ys, poudre_noire]
+      tier: 4
+      gold: 640
+      level: [23, 24]
+      pop: [20, 21]
+      draws: [2, 3]
+      guardian: true
+      forced: [kraken_ancien]
+- id: savane_rouge
+  from: verdeloin
+  to: kharak
+  tier: 4
+  minLevel: 16
+  firstItem: criniere_lion_roi
+  guardianLoot: ecailles_dragon
+  steps:
+    - id: savane_rouge_1
+      pool: [moustiques_geants, sarbacaniers, hommes_fauves, plante_carnivore, hyenes_m, orcs_pillards, centaures, harpies_tempete]
+      mats: [liane_fer, cuir_centaure, venin_emeraude]
+      tier: 4
+      gold: 128
+      level: [18, 19]
+      pop: [3, 4]
+      draws: [1, 2]
+    - id: savane_rouge_2
+      pool: [moustiques_geants, sarbacaniers, hommes_fauves, plante_carnivore, hyenes_m, orcs_pillards, centaures, harpies_tempete]
+      mats: [herbe_a_vent, bois_teck, fer_orc]
+      tier: 4
+      gold: 192
+      level: [19, 20]
+      pop: [4, 5]
+      draws: [1, 2]
+    - id: savane_rouge_3
+      pool: [serpent_roi, chamane_crapaud_m, gorille_m, idole_jade, chef_orc, chamane_orc, geant_steppes, esprit_vent]
+      mats: [jade_brut, corne_hyene, liane_fer]
+      tier: 4
+      gold: 256
+      level: [20, 21]
+      pop: [3, 5]
+      draws: [2, 2]
+    - id: savane_rouge_4
+      pool: [serpent_roi, chamane_crapaud_m, gorille_m, idole_jade, chef_orc, chamane_orc, geant_steppes, esprit_vent]
+      mats: [cuir_centaure, venin_emeraude, herbe_a_vent]
+      tier: 4
+      gold: 352
+      level: [21, 22]
+      pop: [5, 7]
+      draws: [2, 2]
+    - id: savane_rouge_5
+      pool: [serpent_roi, chamane_crapaud_m, gorille_m, idole_jade, chef_orc, chamane_orc, geant_steppes, esprit_vent]
+      mats: [bois_teck, fer_orc, jade_brut]
+      tier: 4
+      gold: 640
+      level: [23, 24]
+      pop: [20, 21]
+      draws: [2, 3]
+      guardian: true
+      forced: [lion_roi_khar]
+- id: temples_etouffes
+  from: verdeloin
+  to: citadelle_obsidienne
+  tier: 4
+  minLevel: 16
+  firstItem: plume_quetzal
+  guardianLoot: ecailles_dragon
+  steps:
+    - id: temples_etouffes_1
+      pool:
+        [moustiques_geants, sarbacaniers, hommes_fauves, plante_carnivore, demons_mineurs, archers_obsidienne, molosse_infernal, succube_m]
+      mats: [liane_fer, obsidienne, venin_emeraude]
+      tier: 4
+      gold: 128
+      level: [18, 19]
+      pop: [3, 4]
+      draws: [1, 2]
+    - id: temples_etouffes_2
+      pool:
+        [moustiques_geants, sarbacaniers, hommes_fauves, plante_carnivore, demons_mineurs, archers_obsidienne, molosse_infernal, succube_m]
+      mats: [sang_demon, bois_teck, cuir_infernal]
+      tier: 4
+      gold: 192
+      level: [19, 20]
+      pop: [4, 5]
+      draws: [1, 2]
+    - id: temples_etouffes_3
+      pool: [serpent_roi, chamane_crapaud_m, gorille_m, idole_jade, chevalier_infernal, sorcier_abyssal, inquisiteur_dechu, balrog]
+      mats: [jade_brut, chaine_ame, liane_fer]
+      tier: 4
+      gold: 256
+      level: [20, 21]
+      pop: [3, 5]
+      draws: [2, 2]
+    - id: temples_etouffes_4
+      pool: [serpent_roi, chamane_crapaud_m, gorille_m, idole_jade, chevalier_infernal, sorcier_abyssal, inquisiteur_dechu, balrog]
+      mats: [obsidienne, venin_emeraude, sang_demon]
+      tier: 4
+      gold: 352
+      level: [21, 22]
+      pop: [5, 7]
+      draws: [2, 2]
+    - id: temples_etouffes_5
+      pool: [serpent_roi, chamane_crapaud_m, gorille_m, idole_jade, chevalier_infernal, sorcier_abyssal, inquisiteur_dechu, balrog]
+      mats: [bois_teck, cuir_infernal, jade_brut]
+      tier: 4
+      gold: 640
+      level: [23, 24]
+      pop: [20, 21]
+      draws: [2, 3]
+      guardian: true
+      forced: [quetzal_serpent]
+- id: route_tempetes
+  from: kharak
+  to: lune_dormante
+  tier: 4
+  minLevel: 16
+  firstItem: souffle_captif
+  guardianLoot: ecailles_dragon
+  steps:
+    - id: route_tempetes_1
+      pool: [hyenes_m, orcs_pillards, centaures, harpies_tempete, fees_reve, archeres_rosee_m, chevaliers_lune_m, licorne_noire]
+      mats: [cuir_centaure, petale_lune, herbe_a_vent]
+      tier: 4
+      gold: 128
+      level: [18, 19]
+      pop: [3, 4]
+      draws: [1, 2]
+    - id: route_tempetes_2
+      pool: [hyenes_m, orcs_pillards, centaures, harpies_tempete, fees_reve, archeres_rosee_m, chevaliers_lune_m, licorne_noire]
+      mats: [soie_reve, fer_orc, bois_argent]
+      tier: 4
+      gold: 192
+      level: [19, 20]
+      pop: [4, 5]
+      draws: [1, 2]
+    - id: route_tempetes_3
+      pool: [chef_orc, chamane_orc, geant_steppes, esprit_vent, cauchemar, mangeur_reves, dormeur_m, sylve_songeuse]
+      mats: [corne_hyene, corne_licorne, cuir_centaure]
+      tier: 4
+      gold: 256
+      level: [20, 21]
+      pop: [3, 5]
+      draws: [2, 2]
+    - id: route_tempetes_4
+      pool: [chef_orc, chamane_orc, geant_steppes, esprit_vent, cauchemar, mangeur_reves, dormeur_m, sylve_songeuse]
+      mats: [petale_lune, herbe_a_vent, soie_reve]
+      tier: 4
+      gold: 352
+      level: [21, 22]
+      pop: [5, 7]
+      draws: [2, 2]
+    - id: route_tempetes_5
+      pool: [chef_orc, chamane_orc, geant_steppes, esprit_vent, cauchemar, mangeur_reves, dormeur_m, sylve_songeuse]
+      mats: [fer_orc, bois_argent, corne_hyene]
+      tier: 4
+      gold: 640
+      level: [23, 24]
+      pop: [20, 21]
+      draws: [2, 3]
+      guardian: true
+      forced: [esprit_tempete]
+- id: faille_abyssale
+  from: ys_profonde
+  to: citadelle_obsidienne
+  tier: 5
+  minLevel: 21
+  firstItem: ecaille_obsidienne
+  guardianLoot: diademe_aube
+  steps:
+    - id: faille_abyssale_1
+      pool: [hommes_poissons_m, meduses_m, anguilles, garde_engloutie, demons_mineurs, archers_obsidienne, molosse_infernal, succube_m]
+      mats: [nacre_abyssale, obsidienne, encre_pieuvre]
+      tier: 5
+      gold: 200
+      level: [23, 24]
+      pop: [3, 4]
+      draws: [1, 2]
+    - id: faille_abyssale_2
+      pool: [hommes_poissons_m, meduses_m, anguilles, garde_engloutie, demons_mineurs, archers_obsidienne, molosse_infernal, succube_m]
+      mats: [sang_demon, algue_ys, cuir_infernal]
+      tier: 5
+      gold: 300
+      level: [24, 25]
+      pop: [4, 5]
+      draws: [1, 2]
+    - id: faille_abyssale_3
+      pool: [sirenes_abyssales, oracle_noye, leviathan_juv, horreur, chevalier_infernal, sorcier_abyssal, inquisiteur_dechu, balrog]
+      mats: [dent_leviathan, chaine_ame, nacre_abyssale]
+      tier: 5
+      gold: 400
+      level: [25, 26]
+      pop: [3, 5]
+      draws: [2, 2]
+    - id: faille_abyssale_4
+      pool: [sirenes_abyssales, oracle_noye, leviathan_juv, horreur, chevalier_infernal, sorcier_abyssal, inquisiteur_dechu, balrog]
+      mats: [obsidienne, encre_pieuvre, sang_demon]
+      tier: 5
+      gold: 550
+      level: [26, 27]
+      pop: [5, 7]
+      draws: [2, 2]
+    - id: faille_abyssale_5
+      pool: [sirenes_abyssales, oracle_noye, leviathan_juv, horreur, chevalier_infernal, sorcier_abyssal, inquisiteur_dechu, balrog]
+      mats: [algue_ys, cuir_infernal, dent_leviathan]
+      tier: 5
+      gold: 1000
+      level: [28, 29]
+      pop: [16, 17]
+      draws: [2, 3]
+      guardian: true
+      forced: [leviathan_obsidienne]
+- id: pont_ames
+  from: citadelle_obsidienne
+  to: lune_dormante
+  tier: 5
+  minLevel: 21
+  firstItem: chaine_pont
+  guardianLoot: diademe_aube
+  steps:
+    - id: pont_ames_1
+      pool: [demons_mineurs, archers_obsidienne, molosse_infernal, succube_m, fees_reve, archeres_rosee_m, chevaliers_lune_m, licorne_noire]
+      mats: [obsidienne, petale_lune, sang_demon]
+      tier: 5
+      gold: 200
+      level: [23, 24]
+      pop: [3, 4]
+      draws: [1, 2]
+    - id: pont_ames_2
+      pool: [demons_mineurs, archers_obsidienne, molosse_infernal, succube_m, fees_reve, archeres_rosee_m, chevaliers_lune_m, licorne_noire]
+      mats: [soie_reve, cuir_infernal, bois_argent]
+      tier: 5
+      gold: 300
+      level: [24, 25]
+      pop: [4, 5]
+      draws: [1, 2]
+    - id: pont_ames_3
+      pool: [chevalier_infernal, sorcier_abyssal, inquisiteur_dechu, balrog, cauchemar, mangeur_reves, dormeur_m, sylve_songeuse]
+      mats: [chaine_ame, corne_licorne, obsidienne]
+      tier: 5
+      gold: 400
+      level: [25, 26]
+      pop: [3, 5]
+      draws: [2, 2]
+    - id: pont_ames_4
+      pool: [chevalier_infernal, sorcier_abyssal, inquisiteur_dechu, balrog, cauchemar, mangeur_reves, dormeur_m, sylve_songeuse]
+      mats: [petale_lune, sang_demon, soie_reve]
+      tier: 5
+      gold: 550
+      level: [26, 27]
+      pop: [5, 7]
+      draws: [2, 2]
+    - id: pont_ames_5
+      pool: [chevalier_infernal, sorcier_abyssal, inquisiteur_dechu, balrog, cauchemar, mangeur_reves, dormeur_m, sylve_songeuse]
+      mats: [cuir_infernal, bois_argent, chaine_ame]
+      tier: 5
+      gold: 1000
+      level: [28, 29]
+      pop: [16, 17]
+      draws: [2, 3]
+      guardian: true
+      forced: [gardien_pont]

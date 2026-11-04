@@ -1,0 +1,142 @@
+# Bestiaire de Marches d'Obsidienne (contenu-cible-unites.md 7) : 4 légers puis 4 lourds.
+
+demons_mineurs:
+  units: 3
+  pop: 2
+  tags: [demon]
+  weapon: griffes_m
+  defaultDist: 1
+  immune: [feu]
+  base: { hp: 54, will: 55, energy: 100, mana: 0, for: 6, ele: 0, esp: 1, foi: 0, omb: 1 }
+  growth: { hp: 2.72, will: 1, energy: 2, mana: 0, for: 1.4, ele: 0, esp: 0.28, foi: 0, omb: 0.28 }
+  forms:
+    - id: demons_mineurs
+      level: 1
+      speed: 16
+      res: { feu: 50, sacre: -40 }
+      skills: [[emploi, 1], [lame_ardente, 1], [laceration, 23]]
+  drops: [sang_demon]
+  boss: false
+  region: 18
+archers_obsidienne:
+  units: 2
+  pop: 2
+  tags: [demon]
+  weapon: arc_m
+  defaultDist: 3
+  base: { hp: 70, will: 55, energy: 95, mana: 0, for: 5, ele: 0, esp: 1, foi: 0, omb: 0 }
+  growth: { hp: 4, will: 1, energy: 2, mana: 0, for: 1.3, ele: 0, esp: 0.3, foi: 0, omb: 0 }
+  forms:
+    - id: archers_obsidienne
+      level: 1
+      speed: 18
+      res: { feu: 30, sacre: -30 }
+      skills: [[tir_arc, 1], [rafale, 1], [marque_mort, 23]]
+  drops: [obsidienne]
+  boss: false
+  region: 18
+molosse_infernal:
+  units: 1
+  pop: 2
+  tags: [demon, bete]
+  weapon: crocs
+  defaultDist: 1
+  immune: [feu]
+  base: { hp: 117, will: 50, energy: 100, mana: 0, for: 6, ele: 0, esp: 0, foi: 0, omb: 0 }
+  growth: { hp: 6.67, will: 1, energy: 2, mana: 0, for: 1.44, ele: 0, esp: 0, foi: 0, omb: 0 }
+  forms:
+    - id: molosse_infernal
+      level: 1
+      speed: 15
+      res: { feu: 60, sacre: -30 }
+      skills: [[morsure, 1], [souffle_feu, 1], [bond, 23], [predateur, 25]]
+  drops: [cuir_infernal]
+  boss: false
+  region: 18
+succube_m:
+  units: 1
+  pop: 2
+  tags: [demon]
+  weapon: dague
+  defaultDist: 2
+  base: { hp: 109, will: 95, energy: 90, mana: 30, for: 4, ele: 0, esp: 7, foi: 0, omb: 0 }
+  growth: { hp: 5.8, will: 3, energy: 2, mana: 1.5, for: 0.6, ele: 0, esp: 1.8, foi: 0, omb: 0 }
+  forms:
+    - id: succube_m
+      level: 1
+      speed: 18
+      res: { feu: 40, sacre: -30 }
+      skills: [[emploi, 1], [domination, 1], [drain_ame, 23]]
+  drops: [sang_demon, chaine_ame]
+  boss: false
+  region: 18
+chevalier_infernal:
+  units: 1
+  pop: 3
+  tags: [demon]
+  weapon: epee
+  defaultDist: 1
+  immune: [feu]
+  base: { hp: 209, will: 65, energy: 100, mana: 0, for: 11, ele: 0, esp: 1, foi: 1, omb: 0 }
+  growth: { hp: 13.3, will: 1, energy: 2, mana: 0, for: 1.4, ele: 0, esp: 0.42, foi: 0.42, omb: 0 }
+  forms:
+    - id: chevalier_infernal
+      level: 1
+      speed: 20
+      res: { feu: 50, tranchant: 20, sacre: -30 }
+      skills: [[emploi, 1], [provocation, 1], [enchainement, 23], [rempart_vivant, 25]]
+  drops: [obsidienne, c_ur_demon]
+  boss: false
+  region: 18
+sorcier_abyssal:
+  units: 1
+  pop: 2
+  tags: [demon]
+  weapon: baton_m
+  defaultDist: 3
+  base: { hp: 94, will: 65, energy: 70, mana: 45, for: 1, ele: 0, esp: 2, foi: 0, omb: 7 }
+  growth: { hp: 4.35, will: 2, energy: 1, mana: 2.5, for: 0.36, ele: 0, esp: 0.6, foi: 0, omb: 1.8 }
+  forms:
+    - id: sorcier_abyssal
+      level: 1
+      speed: 23
+      res: { tenebres: 50, sacre: -40 }
+      skills: [[emploi, 1], [nuee_ombres, 1], [malefice, 23], [pacte_sang, 25]]
+  drops: [chaine_ame, sang_demon]
+  boss: false
+  region: 18
+inquisiteur_dechu:
+  units: 1
+  pop: 2
+  tags: [humain]
+  weapon: sceptre
+  defaultDist: 3
+  base: { hp: 102, will: 80, energy: 80, mana: 45, for: 2, ele: 0, esp: 2, foi: 7, omb: 4 }
+  growth: { hp: 5.8, will: 2, energy: 1, mana: 2.5, for: 0.6, ele: 0, esp: 0.6, foi: 1.8, omb: 0 }
+  forms:
+    - id: inquisiteur_dechu
+      level: 1
+      speed: 22
+      res: { tenebres: 40, sacre: 20 }
+      skills: [[emploi, 1], [jugement, 1], [drain_ame, 23], [egide, 25]]
+  drops: [chaine_ame]
+  boss: false
+  region: 18
+balrog:
+  units: 1
+  pop: 3
+  tags: [demon]
+  weapon: masse_lourde
+  defaultDist: 1
+  immune: [feu]
+  base: { hp: 319, will: 50, energy: 110, mana: 0, for: 11, ele: 4, esp: 0, foi: 0, omb: 0 }
+  growth: { hp: 20.52, will: 1, energy: 2, mana: 0, for: 2.8, ele: 0, esp: 0, foi: 0, omb: 0 }
+  forms:
+    - id: balrog
+      level: 1
+      speed: 25
+      res: { feu: 70, sacre: -30 }
+      skills: [[emploi, 1], [meteore, 1], [frappe_brutale, 23], [nova_flammes, 25]]
+  drops: [c_ur_demon, obsidienne]
+  boss: false
+  region: 18

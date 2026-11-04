@@ -1,0 +1,140 @@
+# Bestiaire de Jungle de Verdeloin (contenu-cible-unites.md 7) : 4 légers puis 4 lourds.
+
+moustiques_geants:
+  units: 3
+  pop: 2
+  tags: [bete]
+  weapon: dard
+  defaultDist: 1
+  base: { hp: 42, will: 50, energy: 100, mana: 0, for: 5, ele: 0, esp: 0, foi: 0, omb: 0 }
+  growth: { hp: 2.38, will: 1, energy: 2, mana: 0, for: 1.12, ele: 0, esp: 0, foi: 0, omb: 0 }
+  forms:
+    - id: moustiques_geants
+      level: 1
+      speed: 15
+      res: { maladie: 40 }
+      skills: [[morsure_venin, 1], [toucher_spectral, 1]]
+  drops: [venin_emeraude]
+  boss: false
+  region: 15
+sarbacaniers:
+  units: 2
+  pop: 2
+  tags: [humain]
+  weapon: dard_s
+  defaultDist: 3
+  base: { hp: 70, will: 55, energy: 95, mana: 0, for: 5, ele: 0, esp: 1, foi: 0, omb: 0 }
+  growth: { hp: 4, will: 1, energy: 2, mana: 0, for: 1.3, ele: 0, esp: 0.3, foi: 0, omb: 0 }
+  forms:
+    - id: sarbacaniers
+      level: 1
+      speed: 18
+      res: { maladie: 30 }
+      skills: [[tir_fronde, 1], [tir_empoisonne, 1], [repos, 18]]
+  drops: [liane_fer]
+  boss: false
+  region: 15
+hommes_fauves:
+  units: 2
+  pop: 2
+  tags: [humain, bete]
+  weapon: griffes_m
+  defaultDist: 1
+  base: { hp: 80, will: 55, energy: 100, mana: 0, for: 6, ele: 0, esp: 1, foi: 0, omb: 1 }
+  growth: { hp: 4, will: 1, energy: 2, mana: 0, for: 1.5, ele: 0, esp: 0.3, foi: 0, omb: 0.3 }
+  forms:
+    - id: hommes_fauves
+      level: 1
+      speed: 16
+      res: {}
+      skills: [[morsure, 1], [bond, 1], [laceration, 18]]
+  drops: [bois_teck]
+  boss: false
+  region: 15
+plante_carnivore:
+  units: 1
+  pop: 2
+  tags: [plante]
+  weapon: machoires
+  defaultDist: 1
+  immune: [maladie]
+  base: { hp: 160, will: 65, energy: 100, mana: 0, for: 6, ele: 0, esp: 1, foi: 1, omb: 0 }
+  growth: { hp: 10.15, will: 1, energy: 2, mana: 0, for: 1.2, ele: 0, esp: 0.36, foi: 0.36, omb: 0 }
+  forms:
+    - id: plante_carnivore
+      level: 1
+      speed: 23
+      res: { maladie: 50, feu: -40 }
+      skills: [[morsure, 1], [jet_toile, 1], [carapace_epines, 18]]
+  drops: [liane_fer, venin_emeraude]
+  boss: false
+  region: 15
+serpent_roi:
+  units: 1
+  pop: 3
+  tags: [reptile]
+  weapon: dard
+  defaultDist: 1
+  base: { hp: 173, will: 50, energy: 100, mana: 0, for: 7, ele: 0, esp: 0, foi: 0, omb: 0 }
+  growth: { hp: 9.88, will: 1, energy: 2, mana: 0, for: 1.68, ele: 0, esp: 0, foi: 0, omb: 0 }
+  forms:
+    - id: serpent_roi
+      level: 1
+      speed: 15
+      res: { maladie: 50 }
+      skills: [[morsure_venin, 1], [domination, 1], [bond, 18]]
+  drops: [venin_emeraude, il_jade]
+  boss: false
+  region: 15
+chamane_crapaud_m:
+  units: 1
+  pop: 2
+  tags: [reptile]
+  weapon: baton_m
+  defaultDist: 3
+  base: { hp: 94, will: 65, energy: 70, mana: 45, for: 1, ele: 0, esp: 2, foi: 0, omb: 7 }
+  growth: { hp: 4.35, will: 2, energy: 1, mana: 2.5, for: 0.36, ele: 0, esp: 0.6, foi: 0, omb: 1.8 }
+  forms:
+    - id: chamane_crapaud_m
+      level: 1
+      speed: 23
+      res: { maladie: 50 }
+      skills: [[emploi, 1], [peste, 1], [malefice, 18], [soin_mineur, 20]]
+  drops: [venin_emeraude]
+  boss: false
+  region: 15
+gorille_m:
+  units: 1
+  pop: 3
+  tags: [bete]
+  weapon: poing_pierre
+  defaultDist: 1
+  base: { hp: 266, will: 50, energy: 110, mana: 0, for: 11, ele: 0, esp: 0, foi: 0, omb: 0 }
+  growth: { hp: 17.1, will: 1, energy: 2, mana: 0, for: 2.8, ele: 0, esp: 0, foi: 0, omb: 0 }
+  forms:
+    - id: gorille_m
+      level: 1
+      speed: 25
+      res: { contondant: 20 }
+      skills: [[emploi, 1], [frappe_brutale, 1], [pietinement, 18], [rage, 20]]
+  drops: [bois_teck]
+  boss: false
+  region: 15
+idole_jade:
+  units: 1
+  pop: 2
+  tags: [construct]
+  weapon: poing_pierre
+  defaultDist: 1
+  immune: [psychique]
+  base: { hp: 218, will: 99, energy: 100, mana: 0, for: 7, ele: 0, esp: 0, foi: 0, omb: 0 }
+  growth: { hp: 13.05, will: 0, energy: 2, mana: 0, for: 1.8, ele: 0, esp: 0, foi: 0, omb: 0 }
+  forms:
+    - id: idole_jade
+      level: 1
+      speed: 26
+      res: { tranchant: 30, contondant: 30, sacre: 30 }
+      skills: [[emploi, 1], [coup_assommant, 1], [egide, 18]]
+  drops: [jade_brut, il_jade]
+  boss: false
+  region: 15

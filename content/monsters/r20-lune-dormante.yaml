@@ -1,0 +1,140 @@
+# Bestiaire de Bois-Songe (contenu-cible-unites.md 7) : 4 légers puis 4 lourds.
+
+fees_reve:
+  units: 3
+  pop: 2
+  tags: [fee]
+  weapon: bec
+  defaultDist: 2
+  immune: [psychique]
+  base: { hp: 48, will: 95, energy: 90, mana: 30, for: 3, ele: 0, esp: 6, foi: 0, omb: 0 }
+  growth: { hp: 2.55, will: 3, energy: 2, mana: 1.5, for: 0.47, ele: 0, esp: 1.4, foi: 0, omb: 0 }
+  forms:
+    - id: fees_reve
+      level: 1
+      speed: 18
+      res: { psychique: 50 }
+      skills: [[emploi, 1], [sommeil, 1], [mirage, 23]]
+  drops: [petale_lune]
+  boss: false
+  region: 19
+archeres_rosee_m:
+  units: 2
+  pop: 2
+  tags: [fee]
+  weapon: arc_m
+  defaultDist: 3
+  base: { hp: 70, will: 55, energy: 95, mana: 0, for: 5, ele: 0, esp: 1, foi: 0, omb: 0 }
+  growth: { hp: 4, will: 1, energy: 2, mana: 0, for: 1.3, ele: 0, esp: 0.3, foi: 0, omb: 0 }
+  forms:
+    - id: archeres_rosee_m
+      level: 1
+      speed: 18
+      res: { psychique: 20 }
+      skills: [[tir_arc, 1], [rafale, 1], [fleche_givre, 23]]
+  drops: [bois_argent]
+  boss: false
+  region: 19
+chevaliers_lune_m:
+  units: 2
+  pop: 2
+  tags: [fee]
+  weapon: epee
+  defaultDist: 1
+  base: { hp: 110, will: 65, energy: 100, mana: 0, for: 5, ele: 0, esp: 1, foi: 1, omb: 0 }
+  growth: { hp: 7, will: 1, energy: 2, mana: 0, for: 1, ele: 0, esp: 0.3, foi: 0.3, omb: 0 }
+  forms:
+    - id: chevaliers_lune_m
+      level: 1
+      speed: 20
+      res: { psychique: 30 }
+      skills: [[emploi, 1], [cri_defi, 1], [chatiment, 23]]
+  drops: [soie_reve]
+  boss: false
+  region: 19
+licorne_noire:
+  units: 1
+  pop: 2
+  tags: [bete, fee]
+  weapon: crocs
+  defaultDist: 1
+  base: { hp: 122, will: 50, energy: 100, mana: 0, for: 6, ele: 0, esp: 0, foi: 0, omb: 3 }
+  growth: { hp: 6.96, will: 1, energy: 2, mana: 0, for: 1.44, ele: 0, esp: 0, foi: 0, omb: 0 }
+  forms:
+    - id: licorne_noire
+      level: 1
+      speed: 15
+      res: { tenebres: 40, sacre: -20 }
+      skills: [[morsure, 1], [charge, 1], [drain_ame, 23]]
+  drops: [corne_licorne]
+  boss: false
+  region: 19
+cauchemar:
+  units: 1
+  pop: 2
+  tags: [esprit]
+  weapon: mains_spectrales
+  defaultDist: 2
+  immune: [psychique]
+  base: { hp: 131, will: 99, energy: 80, mana: 40, for: 4, ele: 6, esp: 0, foi: 0, omb: 0 }
+  growth: { hp: 7.25, will: 0, energy: 1, mana: 2, for: 0.6, ele: 1.56, esp: 0, foi: 0, omb: 0 }
+  forms:
+    - id: cauchemar
+      level: 1
+      speed: 21
+      res: { tenebres: 40, sacre: -40 }
+      skills: [[emploi, 1], [vision_terreur, 1], [terreur_masse, 23], [drain_ame, 25]]
+  drops: [larme_songe, soie_reve]
+  boss: false
+  region: 19
+mangeur_reves:
+  units: 1
+  pop: 3
+  tags: [aberration]
+  weapon: machoires
+  defaultDist: 2
+  base: { hp: 171, will: 95, energy: 90, mana: 30, for: 4, ele: 0, esp: 8, foi: 0, omb: 0 }
+  growth: { hp: 9.12, will: 3, energy: 2, mana: 1.5, for: 0.7, ele: 0, esp: 2.1, foi: 0, omb: 0 }
+  forms:
+    - id: mangeur_reves
+      level: 1
+      speed: 18
+      res: { psychique: 60 }
+      skills: [[emploi, 1], [hurlement_mental, 1], [domination, 23], [sommeil, 25]]
+  drops: [larme_songe]
+  boss: false
+  region: 19
+dormeur_m:
+  units: 1
+  pop: 3
+  tags: [geant]
+  weapon: poing_pierre
+  defaultDist: 1
+  base: { hp: 285, will: 99, energy: 100, mana: 0, for: 8, ele: 0, esp: 0, foi: 0, omb: 0 }
+  growth: { hp: 17.1, will: 0, energy: 2, mana: 0, for: 2.1, ele: 0, esp: 0, foi: 0, omb: 0 }
+  forms:
+    - id: dormeur_m
+      level: 1
+      speed: 26
+      res: { psychique: 40, contondant: 20 }
+      skills: [[emploi, 1], [pietinement, 1], [sommeil, 23], [frappe_brutale, 25]]
+  drops: [bois_argent, petale_lune]
+  boss: false
+  region: 19
+sylve_songeuse:
+  units: 1
+  pop: 2
+  tags: [plante, fee]
+  weapon: baton_m
+  defaultDist: 3
+  base: { hp: 102, will: 80, energy: 80, mana: 45, for: 2, ele: 0, esp: 2, foi: 7, omb: 0 }
+  growth: { hp: 5.8, will: 2, energy: 1, mana: 2.5, for: 0.6, ele: 0, esp: 0.6, foi: 1.8, omb: 0 }
+  forms:
+    - id: sylve_songeuse
+      level: 1
+      speed: 22
+      res: { psychique: 30, maladie: 30 }
+      skills: [[emploi, 1], [onde_soin, 1], [egide, 23], [clarte, 25]]
+  drops: [petale_lune, larme_songe]
+  boss: false
+  region: 19

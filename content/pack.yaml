@@ -3,16 +3,45 @@
 id: cible-0.1
 engineVersion: v1
 files:
-  skills: [skills/base.yaml, skills/sorts.yaml, skills/cible.yaml]
+  skills:
+    - skills/base.yaml
+    - skills/sorts.yaml
+    - skills/cible.yaml
   troops:
-    [
-      troops/recrutables.yaml,
-      monsters/r1-ronces.yaml,
-      monsters/r2-marais.yaml,
-      monsters/r3-mines.yaml,
-      monsters/r4-desert.yaml,
-      monsters/r5-ciel.yaml,
-      monsters/rares.yaml,
-    ]
-  items: [items/materials.yaml, items/components.yaml, items/consumables.yaml, items/trophies.yaml]
-  equip: [items/bases/armes.yaml, items/bases/armures.yaml, items/bases/accessoires.yaml, items/bases/gardiens.yaml]
+    - troops/recrutables.yaml
+    - monsters/r1-ronces.yaml
+    - monsters/r2-marais.yaml
+    - monsters/r3-mines.yaml
+    - monsters/r4-desert.yaml
+    - monsters/r5-ciel.yaml
+    - monsters/rares.yaml
+    - monsters/r6-val-moussu.yaml
+    - monsters/r7-saulnes.yaml
+    - monsters/r8-fort-bruyere.yaml
+    - monsters/r9-brumefosse.yaml
+    - monsters/r10-corbeval.yaml
+    - monsters/r11-ambrerive.yaml
+    - monsters/r12-givrecime.yaml
+    - monsters/r13-lanterne-noire.yaml
+    - monsters/r14-braise-haute.yaml
+    - monsters/r15-port-corsaire.yaml
+    - monsters/r16-verdeloin.yaml
+    - monsters/r17-kharak.yaml
+    - monsters/r18-ys-profonde.yaml
+    - monsters/r19-citadelle-obsidienne.yaml
+    - monsters/r20-lune-dormante.yaml
+    - monsters/gardiens-cible.yaml
+    - monsters/rares-cible.yaml
+  items:
+    - items/materials.yaml
+    - items/components.yaml
+    - items/consumables.yaml
+    - items/trophies.yaml
+    - items/materials-cible.yaml
+    - items/components-cible.yaml
+    - items/trophies-cible.yaml
+  equip:
+    - items/bases/armes.yaml
+    - items/bases/armures.yaml
+    - items/bases/accessoires.yaml
+    - items/bases/gardiens.yaml

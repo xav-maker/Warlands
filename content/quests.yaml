@@ -1,16 +1,103 @@
-# Quêtes de ville : donneurs par région.
+# Quêtes de ville : donneurs par région (régions nouvelles : noms provisoires [H]).
 
 givers:
-  [
-    [
-      'Maître Aldric, forgeron',
-      'Dame Ysolde, capitaine de la garde',
-      'Frère Benoît, du temple',
-      'Mirela, marchande d’étoffes',
-      'le vieux Tomas, chasseur',
-    ],
-    [Capitaine Morvan, Nella la rebouteuse, 'Gaspard, armateur', 'Sœur Maëlle, du phare', 'le Borgne, contrebandier'],
-    ['Thrain, maître forgeron', 'Dagna, cheffe des mineurs', Brokk le runiste, 'Hilde, prospectrice', le thane Gorm],
-    ['Sayed, caravanier', 'Amira, prêtresse du soleil', le vizir Kassim, 'Nour, alchimiste', 'Rachid, maître d’armes'],
-    [Mère Séraphine, le chevalier Aurèle, 'Lysandre, astronome', 'Frère Clément, archiviste', 'Héliane, oracle'],
-  ]
+  - - Maître Aldric, forgeron
+    - Dame Ysolde, capitaine de la garde
+    - Frère Benoît, du temple
+    - Mirela, marchande d’étoffes
+    - le vieux Tomas, chasseur
+  - - Capitaine Morvan
+    - Nella la rebouteuse
+    - Gaspard, armateur
+    - Sœur Maëlle, du phare
+    - le Borgne, contrebandier
+  - - Thrain, maître forgeron
+    - Dagna, cheffe des mineurs
+    - Brokk le runiste
+    - Hilde, prospectrice
+    - le thane Gorm
+  - - Sayed, caravanier
+    - Amira, prêtresse du soleil
+    - le vizir Kassim
+    - Nour, alchimiste
+    - Rachid, maître d’armes
+  - - Mère Séraphine
+    - le chevalier Aurèle
+    - Lysandre, astronome
+    - Frère Clément, archiviste
+    - Héliane, oracle
+  - - Adèle, marchand
+    - Brieuc, chasseuse
+    - Cunégonde, herboriste
+    - Donatien, aubergiste
+    - Églantine, érudit
+  - - Aubin, aubergiste
+    - Bérangère, érudit
+    - Corentin, batelière
+    - Dorine, vieux soldat
+    - Eudes, cartographe
+  - - Florine, vieux soldat
+    - Gauvain, cartographe
+    - Hermine, tanneuse
+    - Isarn, forgeron
+    - Jehanne, capitaine de la garde
+  - - Klervi, forgeron
+    - Léonce, capitaine de la garde
+    - Mahaut, prêtresse du temple
+    - Noé, marchand
+    - Oriane, chasseuse
+  - - Perrin, marchand
+    - Quitterie, chasseuse
+    - Raoul, herboriste
+    - Solène, aubergiste
+    - Thibaud, érudit
+  - - Ursule, aubergiste
+    - Vivien, érudit
+    - Wilfried, batelière
+    - Yolaine, vieux soldat
+    - Zénon, cartographe
+  - - Adèle, vieux soldat
+    - Brieuc, cartographe
+    - Cunégonde, tanneuse
+    - Donatien, forgeron
+    - Églantine, capitaine de la garde
+  - - Aubin, forgeron
+    - Bérangère, capitaine de la garde
+    - Corentin, prêtresse du temple
+    - Dorine, marchand
+    - Eudes, chasseuse
+  - - Florine, marchand
+    - Gauvain, chasseuse
+    - Hermine, herboriste
+    - Isarn, aubergiste
+    - Jehanne, érudit
+  - - Klervi, aubergiste
+    - Léonce, érudit
+    - Mahaut, batelière
+    - Noé, vieux soldat
+    - Oriane, cartographe
+  - - Perrin, vieux soldat
+    - Quitterie, cartographe
+    - Raoul, tanneuse
+    - Solène, forgeron
+    - Thibaud, capitaine de la garde
+  - - Ursule, forgeron
+    - Vivien, capitaine de la garde
+    - Wilfried, prêtresse du temple
+    - Yolaine, marchand
+    - Zénon, chasseuse
+  - - Adèle, marchand
+    - Brieuc, chasseuse
+    - Cunégonde, herboriste
+    - Donatien, aubergiste
+    - Églantine, érudit
+  - - Aubin, aubergiste
+    - Bérangère, érudit
+    - Corentin, batelière
+    - Dorine, vieux soldat
+    - Eudes, cartographe
+  - - Florine, vieux soldat
+    - Gauvain, cartographe
+    - Hermine, tanneuse
+    - Isarn, forgeron
+    - Jehanne, capitaine de la garde
