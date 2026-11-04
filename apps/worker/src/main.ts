@@ -28,8 +28,9 @@ const active = loadActivePack(findContentDir([join(here, '..', 'content'), join(
 const content: GameContent = { pack: active.pack as unknown as GenContent, hash: active.hash };
 
 const db = createDb(url, { max: 4 });
-// Publication seulement (NOTIFY) : les exemplaires web relaient les événements à leurs flux SSE.
-const bus = createBus({ db, log: (m, err) => log.error({ err }, m) });
+// Publication vers les exemplaires web (NOTIFY), qui relaient à leurs flux SSE. La connexion d'écoute est nécessaire :
+// sans elle, le bus ne diffuse qu'au processus lui-même, et rien n'atteint les navigateurs.
+const bus = createBus({ db, connectionString: url, log: (m, err) => log.error({ err }, m) });
 const boss = new PgBoss({ connectionString: url, schema: 'pgboss' });
 boss.on('error', (err) => log.error({ err }, 'pg-boss'));
 await boss.start();

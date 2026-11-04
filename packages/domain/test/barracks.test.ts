@@ -91,7 +91,7 @@ describe('recrutement (README 8.4)', () => {
     const acolyte = (await troops(pid)).find((x) => x.type === 'acolyte')!;
     expect(acolyte.level).toBe(1);
     expect(acolyte.units[0]!.hp).toBe(statsOf(content, acolyte, acolyte.units[0]!).hpMax);
-    expect(await gold(pid)).toBe(200 - 40);
+    expect(await gold(pid)).toBe(1000 - 40);
     await expect(run(pid, recruit, { type: 'acolyte' })).rejects.toMatchObject({ code: 'NOT_ENOUGH_ITEMS' });
     await expect(run(pid, recruit, { type: 'berserker' })).rejects.toMatchObject({ code: 'NOT_RECRUITED_HERE' });
     const bank = await t.db.transaction().execute((x) => contents(x, pid, 'BANK'));

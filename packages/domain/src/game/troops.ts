@@ -184,7 +184,7 @@ export function squadUsage(c: GameContent, troops: LoadedTroop[]): { pop: number
 }
 
 /**
- * Kit de départ (README 8.1) : 200 or, Milicien et Chasseur niveau 1 engagés, en banque 3 bandages et les
+ * Kit de départ (README 8.1) : 1 000 or, Milicien et Chasseur niveau 1 engagés, en banque 3 bandages et les
  * ingrédients de sa propre recette d'Acolyte. Remis une fois, à la première commande de jeu.
  */
 export async function startPlayer(tx: Tx, c: GameContent, player: Player, now: Date): Promise<void> {

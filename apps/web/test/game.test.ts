@@ -71,7 +71,10 @@ describe('parcours de jeu (J2)', () => {
     expect(city.statusCode).toBe(200);
     expect(city.body).toContain('Havre-Gris');
     expect(city.body).toContain('Forêt des Ronces');
-    expect(city.body).toContain('200 or');
+    expect(city.body).toContain('1000 or');
+    // Fichiers statiques versionnés : un navigateur ne garde pas un ancien script après un déploiement.
+    expect(city.body).toContain('/static/app.css?v=dev');
+    expect(city.body).toContain('/static/events.js?v=dev');
     expect(city.body).toContain('Milicien');
   });
 
@@ -263,7 +266,7 @@ describe('parcours de jeu (J2)', () => {
     expect((await req('POST', '/compte/recommencer', { confirm: 'RECOMMENCER' })).headers.location).toBe('/ville');
     const city = await req('GET', '/ville');
     expect(city.body).toContain('Havre-Gris');
-    expect(city.body).toContain('200 or');
+    expect(city.body).toContain('1000 or');
   });
 
   it('sert le Codex, même sans être connecté', async () => {

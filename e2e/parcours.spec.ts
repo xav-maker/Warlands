@@ -26,7 +26,7 @@ test('Havre-Gris → Forêt des Ronces → gardien → Port-Salant', async ({ pa
   await page.getByLabel('Mot de passe').fill('motdepasse-long');
   await page.getByRole('button', { name: /connecter/i }).click();
   await expect(page.getByRole('heading', { name: 'Havre-Gris' })).toBeVisible();
-  await expect(page.getByText('200 or')).toBeVisible();
+  await expect(page.getByText('1000 or')).toBeVisible();
 
   // Escouade de test (tools/seed-dev) : deux recrues de niveau 1 ne passent pas le gardien.
   execSync(`pnpm -s seed-dev squad ${email}`, {

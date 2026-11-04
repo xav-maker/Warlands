@@ -63,7 +63,7 @@ describe('recommencer la partie', () => {
     expect(await count('player_recipe', pid)).toBeGreaterThan(0);
 
     await expect(run(pid, resetGame, { confirm: 'oui' })).rejects.toBeTruthy();
-    expect(await run(pid, resetGame, { confirm: RESET_WORD })).toEqual({ gold: 200 });
+    expect(await run(pid, resetGame, { confirm: RESET_WORD })).toEqual({ gold: 1000 });
 
     const p = await t.db.selectFrom('player').selectAll().where('id', '=', pid).executeTakeFirstOrThrow();
     expect(p.started_at).toBeNull();
@@ -87,7 +87,7 @@ describe('recommencer la partie', () => {
 
     // La commande suivante redonne le kit de départ, de nouvelles quêtes et recettes.
     await run(pid, ensureStarted);
-    expect(await t.db.transaction().execute((tx) => balance(tx, pid))).toBe(200);
+    expect(await t.db.transaction().execute((tx) => balance(tx, pid))).toBe(1000);
     expect((await alive(pid)).length).toBeGreaterThan(0);
     expect(await count('quest', pid)).toBeGreaterThan(0);
     expect(await count('player_recipe', pid)).toBeGreaterThan(0);

@@ -79,7 +79,7 @@ describe('données personnelles', () => {
     expect(data.account).toMatchObject({ email: a.email, twoFactor: false });
     expect(data.player).toMatchObject({ pseudo: 'Aurore' });
     expect(data.troops.length).toBeGreaterThan(0);
-    expect(data.gold.balance).toBe(200);
+    expect(data.gold.balance).toBe(1000);
     expect(data.gold.entries.length).toBeGreaterThan(0);
     expect(data.chat.map((m) => m.body)).toEqual(['bonjour la région']);
     expect(data.directMessages.map((m) => m.body)).toEqual(['message pour Basile']);

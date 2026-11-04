@@ -89,7 +89,7 @@ test('donjon à deux navigateurs : invitation au hasard, salle jouée ensemble, 
   await b.page.getByRole('button', { name: 'Quitter le donjon avec le coffre' }).click();
   await expect(b.page.getByRole('heading', { name: 'Havre-Gris' })).toBeVisible();
   await expect(a.page.getByRole('button', { name: 'Combattre la salle 2' })).toBeVisible();
-  // L'or de la salle 1 (10 × 1² × 1,25, arrondi) est versé à la sortie.
-  await expect(b.page.locator('.gold')).toHaveText('213 or');
+  // L'or de la salle 1 (10 × 1² × 1,25, arrondi) est versé à la sortie : 1 000 + 13.
+  await expect(b.page.locator('.gold')).toHaveText('1013 or');
   expect(errors).toEqual([]);
 });

@@ -120,7 +120,7 @@ describe('kit de départ (README 8.1)', () => {
       ['herboriste', 1, 'SQUAD'],
     ]);
     for (const x of troops) for (const u of x.units) expect(u.hp).toBe(statsOf(content, x, u).hpMax);
-    expect(await t.db.transaction().execute((tx) => balance(tx, pid))).toBe(200);
+    expect(await t.db.transaction().execute((tx) => balance(tx, pid))).toBe(1000);
   });
 });
 
@@ -281,7 +281,7 @@ describe('services de ville (README 7.2, 7.5, 8.3)', () => {
     await run(pid, searchOrStart);
     const gold = () => t.db.transaction().execute((tx) => balance(tx, pid));
     expect(await run(pid, merchantBuy, { id: 'bandage' })).toEqual({ price: Math.ceil(6 * 1.5) });
-    expect(await gold()).toBe(200 - 9);
+    expect(await gold()).toBe(1000 - 9);
     await expect(run(pid, merchantBuy, { id: 'lame_5' })).rejects.toMatchObject({ code: 'NOT_SOLD_HERE' });
     await run(pid, merchantBuy, { id: 'lame_1' });
     const bank = await t.db.transaction().execute((tx) => contents(tx, pid, 'BANK'));

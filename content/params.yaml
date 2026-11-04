@@ -22,7 +22,7 @@ engine:
   healCooldown: 60
   hotCooldown: 100
 eco:
-  startGold: 200
+  startGold: 1000 # or de départ [Xavier, 5 novembre 2026]
   # Deux milicien, deux chasseur et deux herboriste de niveau 1 (le prototype donnait un milicien et un chasseur : trop peu pour la première route).
   startTroops: [[milicien, 1], [milicien, 1], [chasseur, 1], [chasseur, 1], [herboriste, 1], [herboriste, 1]]
   startItems: { bandage: 3 }

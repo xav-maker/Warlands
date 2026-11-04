@@ -47,13 +47,13 @@ test('vente entre deux comptes à la boutique de Havre-Gris', async ({ browser }
   const offer = buyer.locator('li', { hasText: 'Bandage × 2' }).filter({ hasText: '30 or' });
   await expect(offer).toBeVisible();
   await offer.getByRole('button', { name: 'Acheter' }).click();
-  await expect(buyer.getByText('170 or')).toBeVisible(); // 200 − 30
+  await expect(buyer.getByText('970 or')).toBeVisible(); // 1000 − 30
   await buyer.goto('/sac');
   await expect(buyer.getByText('Bandage × 5')).toBeVisible(); // 3 du départ + 2
 
   // Le vendeur a son or (moins la taxe de 5 %) et une notification.
   await seller.goto('/ville');
-  await expect(seller.getByText('228 or')).toBeVisible(); // 200 + 30 − 2
+  await expect(seller.getByText('1028 or')).toBeVisible(); // 1000 + 30 − 2
   await seller.getByRole('link', { name: /✉ 1/ }).click();
   await expect(seller.getByText(/Vente à Havre-Gris : Bandage × 2 pour 30 or/)).toBeVisible();
   await seller.getByRole('button', { name: 'Tout marquer comme lu' }).click();

@@ -529,7 +529,7 @@ Utilisables partout entre deux combats, sur une unité précise ; en ville pris 
 
 ### 8.1 Départ d'une partie [H]
 
-- 200 or.
+- 1 000 or [Xavier, 5 novembre 2026 ; 200 auparavant].
 - Deux Miliciens, deux Chasseurs et deux Herboristes niveau 1, engagés (un Milicien et un Chasseur dans le prototype : trop peu pour la première route en ligne).
 - En banque : 3 bandages et les ingrédients de **sa propre** recette de recrutement de l'Acolyte (donc un premier recrutement possible, l'Acolyte coûtant 40 or).
 - 5 quêtes générées dans chacune des 5 villes.

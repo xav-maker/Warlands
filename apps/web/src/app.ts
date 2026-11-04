@@ -151,6 +151,7 @@ export async function buildApp(deps: AppDeps): Promise<FastifyInstance> {
             title: 'Maintenance',
             text: 'Le jeu est en maintenance pour quelques minutes. Votre partie est en sécurité : revenez bientôt.',
             auth: null,
+            asset,
             csrf: '',
           }),
         );
@@ -180,6 +181,10 @@ export async function buildApp(deps: AppDeps): Promise<FastifyInstance> {
     return t;
   }
 
+  /** Ajoute la version déployée à l'adresse d'un fichier statique (le cache d'un jour ne survit pas à un déploiement). */
+  const assetVersion = encodeURIComponent(deps.version ?? 'dev');
+  const asset = (path: string): string => `${path}?v=${assetVersion}`;
+
   function page(req: FastifyRequest, reply: FastifyReply, view: string, data: Record<string, unknown> = {}, status = 200) {
     const html = eta.render(view, {
       ...data,
@@ -187,6 +192,7 @@ export async function buildApp(deps: AppDeps): Promise<FastifyInstance> {
       csrf: csrfFor(req, reply),
       passwordMin: PASSWORD_MIN,
       path: req.url.split('?')[0],
+      asset,
     });
     return reply.status(status).type('text/html; charset=utf-8').header('cache-control', 'no-store').send(html);
   }
