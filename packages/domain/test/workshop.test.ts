@@ -104,7 +104,9 @@ describe('équipement (README 7.3, 7.4, 21)', () => {
     await giveIngredients(pid, 'lame_1');
     await run(pid, craft, { out: 'lame_1' });
     const [s1, s2] = (await bank(pid)).instances.filter((i) => i.base === 'lame_1');
-    const [milicien, chasseur] = await troops(pid);
+    const all = await troops(pid);
+    const milicien = all.find((x) => x.type === 'milicien');
+    const chasseur = all.find((x) => x.type === 'chasseur');
     await expect(run(pid, equip, { troop: chasseur!.id, unit: 1, instance: s1!.id })).rejects.toMatchObject({ code: 'CANNOT_WEAR' });
 
     await t.db.transaction().execute((x) => setUnit(x, milicien!.id, 1, { hp: 5, mana: 0 }));

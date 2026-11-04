@@ -114,6 +114,8 @@ describe('kit de départ (README 8.1)', () => {
     const troops = await t.db.transaction().execute((tx) => loadTroops(tx, pid));
     expect(troops.map((x) => [x.type, x.level, x.container])).toEqual([
       ['milicien', 1, 'SQUAD'],
+      ['milicien', 1, 'SQUAD'],
+      ['chasseur', 1, 'SQUAD'],
       ['chasseur', 1, 'SQUAD'],
     ]);
     for (const x of troops) for (const u of x.units) expect(u.hp).toBe(statsOf(content, x, u).hpMax);

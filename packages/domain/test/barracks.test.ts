@@ -102,7 +102,9 @@ describe('recrutement (README 8.4)', () => {
 describe('escouade (README 20)', () => {
   it('8 unités et 11 de population au plus ; au-delà, la recrue va en caserne', async () => {
     const pid = await newPlayer();
-    // Départ : Milicien et Chasseur (2 unités, 2 de population). Deux Frondeurs (3 unités chacun) : 8 unités.
+    // Départ : 2 Miliciens et 2 Chasseurs. On met les Chasseurs en caserne (2 unités, 2 de population restent),
+    // puis deux Frondeurs (3 unités chacun) : 8 unités.
+    for (const c of (await troops(pid)).filter((x) => x.type === 'chasseur')) await run(pid, withdraw, { troop: c.id });
     await t.db.transaction().execute(async (x) => {
       for (let i = 0; i < 2; i++)
         await createTroop(x, content, pid, { type: 'frondeurs', level: 1, container: 'BARRACKS', reason: 'test' });
