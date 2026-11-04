@@ -12,8 +12,8 @@ import { annexe } from '../src/annexe.ts';
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '../../..');
 
 describe('annexe de contenu', () => {
-  it('regénérée depuis content/, elle est identique à docs/annexe-contenu.md', () => {
-    const v = validateContent(join(ROOT, 'content'));
+  it('regénérée depuis le pack du prototype (fixtures), elle est identique à docs/annexe-contenu.md', () => {
+    const v = validateContent(join(ROOT, 'packages/content/fixtures/prototype-0.4'));
     expect(v.ok).toBe(true);
     const got = annexe(v.pack as never, { source: 'le code (`/mnt/project-files/prototype-ville/src/`)', date: '3 novembre 2026' });
     const want = readFileSync(join(ROOT, 'docs/annexe-contenu.md'), 'utf8');

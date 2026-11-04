@@ -117,28 +117,28 @@ robe_1:
   cat: robe
   value: 30
   tags: [fil, herbe, plume]
-  pool: [[mana, 3], [will, 2], [hp, 1], [res, 1]]
+  pool: [[mana, 3], [will, 2], [ele, 1], [omb, 1], [foi, 1], [hp, 1], [res, 1]]
 robe_2:
   tier: 2
   slot: armure
   cat: robe
   value: 70
   tags: [fil, herbe, plume]
-  pool: [[mana, 3], [will, 2], [hp, 1], [res, 1]]
+  pool: [[mana, 3], [will, 2], [ele, 1], [omb, 1], [foi, 1], [hp, 1], [res, 1]]
 robe_3:
   tier: 3
   slot: armure
   cat: robe
   value: 140
   tags: [fil, herbe, plume]
-  pool: [[mana, 3], [will, 2], [hp, 1], [res, 1]]
+  pool: [[mana, 3], [will, 2], [ele, 1], [omb, 1], [foi, 1], [hp, 1], [res, 1]]
 robe_4:
   tier: 4
   slot: armure
   cat: robe
   value: 260
   tags: [fil, herbe, plume]
-  pool: [[mana, 3], [will, 2], [hp, 1], [res, 1]]
+  pool: [[mana, 3], [will, 2], [ele, 1], [omb, 1], [foi, 1], [hp, 1], [res, 1]]
   workshop: true
 robe_5:
   tier: 5
@@ -146,5 +146,5 @@ robe_5:
   cat: robe
   value: 450
   tags: [fil, herbe, plume]
-  pool: [[mana, 3], [will, 2], [hp, 1], [res, 1]]
+  pool: [[mana, 3], [will, 2], [ele, 1], [omb, 1], [foi, 1], [hp, 1], [res, 1]]
   workshop: true

@@ -6,8 +6,8 @@ sentinelles:
   tags: [construct]
   weapon: lame_lumiere
   defaultDist: 1
-  base: { hp: 110, will: 99, energy: 100, mana: 0, atk: 5 }
-  growth: { hp: 5, will: 1, energy: 2, mana: 1, atk: 1 }
+  base: { hp: 110, will: 99, energy: 100, mana: 0, for: 5, ele: 1, esp: 2, foi: 2, omb: 1 }
+  growth: { hp: 5, will: 1, energy: 2, mana: 1, for: 1, ele: 0.2, esp: 0.5, foi: 0.5, omb: 0.2 }
   forms:
     - id: sentinelles
       level: 1
@@ -23,8 +23,8 @@ gargouilles:
   tags: [construct]
   weapon: poing_pierre
   defaultDist: 1
-  base: { hp: 110, will: 99, energy: 100, mana: 0, atk: 6 }
-  growth: { hp: 5, will: 1, energy: 2, mana: 1, atk: 1 }
+  base: { hp: 110, will: 99, energy: 100, mana: 0, for: 6, ele: 1, esp: 1, foi: 1, omb: 1 }
+  growth: { hp: 5, will: 1, energy: 2, mana: 1, for: 1, ele: 0.2, esp: 0.2, foi: 0.2, omb: 0.2 }
   forms:
     - id: gargouilles
       level: 1
@@ -40,8 +40,8 @@ anges_dechus:
   tags: [celeste]
   weapon: lame_lumiere
   defaultDist: 2
-  base: { hp: 100, will: 80, energy: 90, mana: 50, atk: 6 }
-  growth: { hp: 5, will: 1, energy: 2, mana: 1, atk: 1 }
+  base: { hp: 100, will: 80, energy: 90, mana: 50, for: 6, ele: 1, esp: 3, foi: 1, omb: 3 }
+  growth: { hp: 5, will: 1, energy: 2, mana: 1, for: 1, ele: 0.2, esp: 0.5, foi: 0.2, omb: 0.5 }
   forms:
     - id: anges_dechus
       level: 1
@@ -57,8 +57,8 @@ harpies:
   tags: [bete]
   weapon: griffes_m
   defaultDist: 1
-  base: { hp: 55, will: 50, energy: 90, mana: 0, atk: 4 }
-  growth: { hp: 3, will: 1, energy: 1, mana: 0, atk: 1 }
+  base: { hp: 55, will: 50, energy: 90, mana: 0, for: 4, ele: 0, esp: 2, foi: 0, omb: 0 }
+  growth: { hp: 3, will: 1, energy: 1, mana: 0, for: 1, ele: 0.2, esp: 0.5, foi: 0.2, omb: 0.2 }
   forms:
     - id: harpies
       level: 1
@@ -74,8 +74,8 @@ astromancien:
   tags: [humain]
   weapon: baton_m
   defaultDist: 3
-  base: { hp: 80, will: 90, energy: 70, mana: 70, atk: 3 }
-  growth: { hp: 3, will: 2, energy: 1, mana: 3, atk: 1 }
+  base: { hp: 80, will: 90, energy: 70, mana: 70, for: 1, ele: 3, esp: 1, foi: 0, omb: 0 }
+  growth: { hp: 3, will: 2, energy: 1, mana: 3, for: 0.5, ele: 1, esp: 0.5, foi: 0.2, omb: 0.2 }
   forms:
     - id: astromancien
       level: 1
@@ -91,8 +91,8 @@ golem_astral:
   tags: [construct]
   weapon: poing_pierre
   defaultDist: 1
-  base: { hp: 230, will: 99, energy: 120, mana: 0, atk: 7 }
-  growth: { hp: 8, will: 1, energy: 2, mana: 1, atk: 2 }
+  base: { hp: 230, will: 99, energy: 120, mana: 0, for: 7, ele: 1, esp: 1, foi: 1, omb: 1 }
+  growth: { hp: 8, will: 1, energy: 2, mana: 1, for: 2, ele: 0.4, esp: 0.4, foi: 0.4, omb: 0.4 }
   forms:
     - id: golem_astral
       level: 1
@@ -108,8 +108,8 @@ griffons:
   tags: [bete]
   weapon: griffes_m
   defaultDist: 1
-  base: { hp: 120, will: 60, energy: 110, mana: 0, atk: 6 }
-  growth: { hp: 5, will: 1, energy: 2, mana: 1, atk: 1 }
+  base: { hp: 120, will: 60, energy: 110, mana: 0, for: 6, ele: 1, esp: 1, foi: 1, omb: 1 }
+  growth: { hp: 5, will: 1, energy: 2, mana: 1, for: 1, ele: 0.2, esp: 0.2, foi: 0.2, omb: 0.2 }
   forms:
     - id: griffons
       level: 1
@@ -125,8 +125,8 @@ spectres_lumiere:
   tags: [esprit]
   weapon: lame_lumiere
   defaultDist: 3
-  base: { hp: 65, will: 90, energy: 70, mana: 50, atk: 4 }
-  growth: { hp: 3, will: 2, energy: 1, mana: 3, atk: 1 }
+  base: { hp: 65, will: 90, energy: 70, mana: 50, for: 2, ele: 0, esp: 2, foi: 4, omb: 0 }
+  growth: { hp: 3, will: 2, energy: 1, mana: 3, for: 0.5, ele: 0.2, esp: 0.5, foi: 1, omb: 0.2 }
   forms:
     - id: spectres_lumiere
       level: 1
@@ -142,8 +142,8 @@ chimere:
   tags: [bete]
   weapon: machoires
   defaultDist: 1
-  base: { hp: 190, will: 70, energy: 120, mana: 0, atk: 7 }
-  growth: { hp: 8, will: 1, energy: 2, mana: 1, atk: 2 }
+  base: { hp: 190, will: 70, energy: 120, mana: 0, for: 7, ele: 1, esp: 1, foi: 1, omb: 1 }
+  growth: { hp: 8, will: 1, energy: 2, mana: 1, for: 2, ele: 0.4, esp: 0.4, foi: 0.4, omb: 0.4 }
   forms:
     - id: chimere
       level: 1
@@ -159,8 +159,8 @@ archers_celestes:
   tags: [celeste]
   weapon: arc_m
   defaultDist: 3
-  base: { hp: 75, will: 70, energy: 100, mana: 0, atk: 6 }
-  growth: { hp: 5, will: 1, energy: 2, mana: 1, atk: 1 }
+  base: { hp: 75, will: 70, energy: 100, mana: 0, for: 6, ele: 1, esp: 3, foi: 1, omb: 1 }
+  growth: { hp: 5, will: 1, energy: 2, mana: 1, for: 1, ele: 0.2, esp: 0.5, foi: 0.2, omb: 0.2 }
   forms:
     - id: archers_celestes
       level: 1
@@ -176,8 +176,8 @@ gardien_seuil:
   tags: [celeste]
   weapon: lame_lumiere
   defaultDist: 1
-  base: { hp: 210, will: 99, energy: 120, mana: 30, atk: 7 }
-  growth: { hp: 8, will: 1, energy: 2, mana: 1, atk: 2 }
+  base: { hp: 210, will: 99, energy: 120, mana: 30, for: 7, ele: 1, esp: 3, foi: 3, omb: 1 }
+  growth: { hp: 8, will: 1, energy: 2, mana: 1, for: 2, ele: 0.4, esp: 1, foi: 1, omb: 0.4 }
   forms:
     - id: gardien_seuil
       level: 1
@@ -193,8 +193,9 @@ archonte_dechu:
   tags: [celeste]
   weapon: lame_lumiere
   defaultDist: 2
-  base: { hp: 480, will: 99, energy: 150, mana: 100, atk: 11 }
-  growth: { hp: 13, will: 2, energy: 2, mana: 2, atk: 2 }
+  immune: [sacre]
+  base: { hp: 480, will: 99, energy: 150, mana: 100, for: 11, ele: 5, esp: 5, foi: 5, omb: 5 }
+  growth: { hp: 13, will: 2, energy: 2, mana: 2, for: 2, ele: 1, esp: 1, foi: 1, omb: 1 }
   forms:
     - id: archonte_dechu
       level: 1

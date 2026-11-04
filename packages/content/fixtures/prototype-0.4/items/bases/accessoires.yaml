@@ -1,0 +1,113 @@
+# Bases d’équipement : pool de stats (poids), arme le cas échéant.
+
+bottes_1:
+  tier: 1
+  slot: accessoire
+  cat: bottes
+  value: 26
+  tags: [cuir, fil]
+  pool: [[hp, 2], [energy, 2], [res, 1, contondant], [will, 1]]
+bottes_2:
+  tier: 2
+  slot: accessoire
+  cat: bottes
+  value: 60
+  tags: [cuir, fil]
+  pool: [[hp, 2], [energy, 2], [res, 1, contondant], [will, 1]]
+bottes_3:
+  tier: 3
+  slot: accessoire
+  cat: bottes
+  value: 119
+  tags: [cuir, fil]
+  pool: [[hp, 2], [energy, 2], [res, 1, contondant], [will, 1]]
+bottes_4:
+  tier: 4
+  slot: accessoire
+  cat: bottes
+  value: 221
+  tags: [cuir, fil]
+  pool: [[hp, 2], [energy, 2], [res, 1, contondant], [will, 1]]
+  workshop: true
+bottes_5:
+  tier: 5
+  slot: accessoire
+  cat: bottes
+  value: 383
+  tags: [cuir, fil]
+  pool: [[hp, 2], [energy, 2], [res, 1, contondant], [will, 1]]
+  workshop: true
+anneau_1:
+  tier: 1
+  slot: accessoire
+  cat: anneau
+  value: 26
+  tags: [essence, pierre, metal]
+  pool: [[mana, 2], [will, 2], [atk, 1], [res, 2]]
+anneau_2:
+  tier: 2
+  slot: accessoire
+  cat: anneau
+  value: 60
+  tags: [essence, pierre, metal]
+  pool: [[mana, 2], [will, 2], [atk, 1], [res, 2]]
+anneau_3:
+  tier: 3
+  slot: accessoire
+  cat: anneau
+  value: 119
+  tags: [essence, pierre, metal]
+  pool: [[mana, 2], [will, 2], [atk, 1], [res, 2]]
+anneau_4:
+  tier: 4
+  slot: accessoire
+  cat: anneau
+  value: 221
+  tags: [essence, pierre, metal]
+  pool: [[mana, 2], [will, 2], [atk, 1], [res, 2]]
+  workshop: true
+anneau_5:
+  tier: 5
+  slot: accessoire
+  cat: anneau
+  value: 383
+  tags: [essence, pierre, metal]
+  pool: [[mana, 2], [will, 2], [atk, 1], [res, 2]]
+  workshop: true
+collier_1:
+  tier: 1
+  slot: accessoire
+  cat: collier
+  value: 26
+  tags: [cuir, metal, os]
+  pool: [[atk, 2], [hp, 2], [energy, 1], [res, 1]]
+collier_2:
+  tier: 2
+  slot: accessoire
+  cat: collier
+  value: 60
+  tags: [cuir, metal, os]
+  pool: [[atk, 2], [hp, 2], [energy, 1], [res, 1]]
+collier_3:
+  tier: 3
+  slot: accessoire
+  cat: collier
+  value: 119
+  tags: [cuir, metal, os]
+  pool: [[atk, 2], [hp, 2], [energy, 1], [res, 1]]
+collier_4:
+  tier: 4
+  slot: accessoire
+  cat: collier
+  value: 221
+  tags: [cuir, metal, os]
+  pool: [[atk, 2], [hp, 2], [energy, 1], [res, 1]]
+  workshop: true
+collier_5:
+  tier: 5
+  slot: accessoire
+  cat: collier
+  value: 383
+  tags: [cuir, metal, os]
+  pool: [[atk, 2], [hp, 2], [energy, 1], [res, 1]]
+  workshop: true

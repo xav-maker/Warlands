@@ -5,46 +5,46 @@ bandage:
   tier: 1
   value: 6
   tags: []
-  effect: { hp: 15 }
+  effect: { hpFlat: 50 }
 potion_mineure:
   kind: consommable
   tier: 1
   value: 12
   tags: []
-  effect: { hp: 30 }
+  effect: { hpFlat: 100 }
 potion_soin:
   kind: consommable
   tier: 2
   value: 25
   tags: []
-  effect: { hp: 50 }
+  effect: { hpFlat: 220 }
 potion_mana:
   kind: consommable
   tier: 1
   value: 12
   tags: []
-  effect: { mana: 40 }
+  effect: { manaFlat: 40 }
 potion_mana_normale:
   kind: consommable
   tier: 2
   value: 25
   tags: []
-  effect: { mana: 80 }
+  effect: { manaFlat: 90 }
 potion_majeure:
   kind: consommable
   tier: 3
   value: 50
   tags: []
-  effect: { hp: 80 }
+  effect: { hpFlat: 450 }
 tonique:
   kind: consommable
   tier: 3
   value: 40
   tags: []
-  effect: { hp: 25, mana: 25 }
+  effect: { hpFlat: 150, manaFlat: 50 }
 onguent:
   kind: consommable
   tier: 5
   value: 90
   tags: []
-  effect: { hp: 100 }
+  effect: { hpFlat: 1200 }

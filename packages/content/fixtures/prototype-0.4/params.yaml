@@ -1,0 +1,85 @@
+# Paramètres du moteur (engine), de l’économie (eco) et des générateurs.
+
+engine:
+  timeLimit: 3000
+  tick: 20
+  waitRegen: 50
+  waitManaRegen: 50
+  woundWill: 500
+  allyDeathWill: 100
+  sameTroopDeathWill: 200
+  killWill: 100
+  hasteMod: 750
+  slowMod: 1250
+  resCap: 750
+  resFloor: -1000
+  moveMult: 1000
+  fleeMult: 2000
+  manaSkipsRule: 1
+  stallTime: 100
+  dotTick: 4
+  healMult: 1200
+  healCooldown: 60
+  hotCooldown: 100
+eco:
+  startGold: 200
+  startTroops: [[milicien, 1], [chasseur, 1]]
+  startItems: { bandage: 3 }
+  startRecipe: acolyte
+  manaRegenEnd: 25
+  monsterHp: [1250, 1700, 2300, 4500, 3800]
+  monsterAtk: [1200, 1500, 1900, 3200, 2800]
+  guardianAdj: [1000, 1000, 1050, 480, 1050]
+  bagSlots: 20
+  bankSlots: 100
+  buyBack: 0.2
+  sellMarkup: 1.5
+  shopRoll: 800
+  recruitGoldPerPop: 40
+  craftGoldPerTier: 6
+  xpPerMonsterLevelPop: 8
+  maxLevel: 30
+  table: { materiau: 85, composant: 5, consommable: 7, equipement: 3 }
+  guardianTable: { composant: 50, equipement: 30, materiau: 20 }
+gauges: { mult: 3 }
+items:
+  boost: 2
+  tierBudget: { '1': 10, '2': 20, '3': 35, '4': 55, '5': 80 }
+  tierNStats: { '1': 2, '2': 2, '3': 3, '4': 3, '5': 4 }
+  tierLevel: { '1': 1, '2': 6, '3': 11, '4': 16, '5': 21 }
+  statCost:
+    atk: { per: 1 }
+    hp: { per: 5 }
+    will: { per: 3 }
+    energy: { per: 4 }
+    mana: { per: 3 }
+    res: { per: 2, unit: '%' }
+    wdmg: { per: 1 }
+    wspeed: { per: 0.25 }
+    wcost: { per: 0.5 }
+recipes:
+  craftConsumables: [bandage, potion_mineure, potion_soin, potion_mana, potion_mana_normale, potion_majeure, tonique]
+  consumableTags:
+    bandage: [fil, cuir, herbe]
+    potion_mineure: [herbe, essence]
+    potion_soin: [herbe, essence, bete]
+    potion_mana: [essence, plume, herbe]
+    potion_mana_normale: [essence, plume]
+    potion_majeure: [herbe, essence, bete]
+    tonique: [essence, herbe]
+  consumableValueMult: 0.7
+  recruitValue: [0, 1, 2.5, 5, 9, 15]
+rares: { chance: 15, minWins: 10 }
+
+# Règles du jeu en ligne qui n'existent pas dans le prototype (README partie II) ; [H] = à régler.
+online:
+  # Moteur joué pour ce contenu (encore celui du prototype : attaque unique) ; ajustement du gardien
+  # limité au gardien lui-même (README 16, point 2).
+  engineVersion: proto-0.4.2
+  guardianAdjust: guardian
+  squad: { maxUnits: 8, maxPop: 11 } # README 20 [Xavier]
+  encounters: { popMult: 2, slots: 8 } # README 20 [H] : population des étapes ×2, 8 emplacements
+  # Taille des piles par famille (prototype : constante STACK de monde.ts).
+  stack: { materiau: 50, composant: 20, consommable: 10, trophee: 20 }
+  # Blocage de rediffusion : durée du combat lue à cette vitesse (README 10.2, point ouvert 2) [H].
+  watch: { instantsPerSecond: 100 }

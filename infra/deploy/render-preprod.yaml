@@ -1,6 +1,9 @@
 # Blueprint Render de la préproduction (guide 17.1 et 18). Région Francfort (UE).
 # Les services tournent sur l'image publiée par la CI dans ghcr.io : la CI déclenche chaque
 # déploiement avec l'image du commit (crochets de déploiement), d'où autoDeploy: false.
+# Attention : une synchronisation du Blueprint remet l'image écrite ici (ancienne), dont les migrations
+# sont en retard sur la base : le prédéploiement échoue. Garder la synchronisation manuelle, et après
+# une synchronisation relancer le job deploy-preprod de la CI (gh run rerun <id> --job <job>).
 # Mise en place et exploitation : infra/deploy/README.md.
 
 envVarGroups:

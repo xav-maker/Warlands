@@ -49,6 +49,11 @@ items:
   tierLevel: { '1': 1, '2': 6, '3': 11, '4': 16, '5': 21 }
   statCost:
     atk: { per: 1 }
+    for: { per: 1 }
+    ele: { per: 1 }
+    esp: { per: 1 }
+    foi: { per: 1 }
+    omb: { per: 1 }
     hp: { per: 5 }
     will: { per: 3 }
     energy: { per: 4 }
@@ -73,9 +78,9 @@ rares: { chance: 15, minWins: 10 }
 
 # Règles du jeu en ligne qui n'existent pas dans le prototype (README partie II) ; [H] = à régler.
 online:
-  # Moteur joué pour ce contenu (encore celui du prototype : attaque unique) ; ajustement du gardien
-  # limité au gardien lui-même (README 16, point 2).
-  engineVersion: proto-0.4.2
+  # Moteur joué pour ce contenu (v1 : 5 puissances, immunités, soins fixes, README 19) ; ajustement du
+  # gardien limité au gardien lui-même (README 16, point 2).
+  engineVersion: v1
   guardianAdjust: guardian
   squad: { maxUnits: 8, maxPop: 11 } # README 20 [Xavier]
   encounters: { popMult: 2, slots: 8 } # README 20 [H] : population des étapes ×2, 8 emplacements

@@ -26,7 +26,7 @@
   <% if (it.part === 'troupes' || it.part === 'monstres') { %>
     <% const monsters = it.part === 'monstres' %>
     <table class="data">
-      <thead><tr><th>Nom</th><th>Pop.</th><th>Unités</th><th><%= monsters ? 'Région' : 'Ville' %></th><th>Rôle</th><th>Capacités (niveau)</th></tr></thead>
+      <thead><tr><th>Nom</th><th>Pop.</th><th>Unités</th><th><%= monsters ? 'Région' : 'Ville' %></th><th>Rôle</th><% if (monsters) { %><th>Immunités</th><% } %><th>Capacités (niveau)</th></tr></thead>
       <tbody>
         <% for (const [id, t] of Object.entries(c.troops)) { if (!!c.monsters[id] !== monsters) continue; const m = c.monsters[id] %>
           <tr>
@@ -34,6 +34,7 @@
             <td><%= t.pop %></td><td><%= t.units %></td>
             <td><%= monsters ? (m.region + 1) : (c.regions.find((r) => r.city.recruit.includes(id))?.city.name ?? '—') %></td>
             <td><%= t.role %></td>
+            <% if (monsters) { %><td><%= L.immune(id) || '—' %></td><% } %>
             <td><%= t.forms[0].skills.map(([s, l]) => L.skill(s) + ' ' + l).join(', ') %></td>
           </tr>
         <% } %>

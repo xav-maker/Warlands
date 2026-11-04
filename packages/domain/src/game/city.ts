@@ -121,7 +121,7 @@ export const merchantSell = command({
 
 /**
  * Consommable sur une unité (README 7.5) : partout entre deux combats ; en ville le sac puis la banque,
- * en expédition le sac seulement. Effet : +ceil(max × % / 100) (contenu du prototype). Refusé si plein.
+ * en expédition le sac seulement. Effet : +ceil(max × % / 100) (prototype) ou valeur fixe (hpFlat, manaFlat : README 19.5). Refusé si plein.
  */
 export const useConsumable = command({
   name: 'consumable.use',
@@ -131,20 +131,22 @@ export const useConsumable = command({
   async run(ctx, input) {
     const c = ctx.content;
     const pid = ctx.player.id;
-    const it = c.pack.items[input.item] as { kind: string; effect?: { hp?: number; mana?: number } } | undefined;
+    const it = c.pack.items[input.item] as
+      { kind: string; effect?: { hp?: number; mana?: number; hpFlat?: number; manaFlat?: number } } | undefined;
     if (it?.kind !== 'consommable') throw new GameError('NOT_CONSUMABLE');
     const t = (await loadTroops(ctx.tx, pid)).find((x) => x.id === input.troop);
     const u = t?.units.find((x) => x.n === input.unit);
     if (!t || !u) throw new GameError('UNIT_NOT_FOUND');
     const s = statsOf(c, t, u);
     const e = it.effect ?? {};
-    const hpFull = !e.hp || u.hp >= s.hpMax;
-    const manaFull = !e.mana || s.manaMax === 0 || u.mana >= s.manaMax;
+    const hpFull = !(e.hp || e.hpFlat) || u.hp >= s.hpMax;
+    const manaFull = !(e.mana || e.manaFlat) || s.manaMax === 0 || u.mana >= s.manaMax;
     if (hpFull && manaFull) throw new GameError('GAUGE_FULL');
     const from: StackContainer = (await stackQty(ctx.tx, pid, 'BAG', input.item)) > 0 || ctx.player.pos_kind !== 'city' ? 'BAG' : 'BANK';
     await takeStack(ctx.tx, pid, from, input.item, 1, 'SYSTEM', 'consommé');
-    const hp = e.hp ? Math.min(s.hpMax, u.hp + Math.ceil((s.hpMax * e.hp) / 100)) : u.hp;
-    const mana = e.mana ? Math.min(s.manaMax, u.mana + Math.ceil((s.manaMax * e.mana) / 100)) : u.mana;
+    const gain = (cur: number, max: number, pct = 0, flat = 0): number => Math.min(max, cur + Math.ceil((max * pct) / 100) + flat);
+    const hp = gain(u.hp, s.hpMax, e.hp, e.hpFlat);
+    const mana = s.manaMax ? gain(u.mana, s.manaMax, e.mana, e.manaFlat) : u.mana;
     await setUnit(ctx.tx, t.id, u.n, { hp, mana });
     return { hp, mana };
   },

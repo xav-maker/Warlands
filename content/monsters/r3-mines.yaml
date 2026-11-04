@@ -6,8 +6,8 @@ kobolds:
   tags: [kobold]
   weapon: lame_rouillee
   defaultDist: 1
-  base: { hp: 42, will: 40, energy: 80, mana: 0, atk: 3 }
-  growth: { hp: 3, will: 1, energy: 1, mana: 0, atk: 1 }
+  base: { hp: 42, will: 40, energy: 80, mana: 0, for: 3, ele: 0, esp: 1, foi: 0, omb: 1 }
+  growth: { hp: 3, will: 1, energy: 1, mana: 0, for: 1, ele: 0.2, esp: 0.5, foi: 0.2, omb: 0.5 }
   forms:
     - id: kobolds
       level: 1
@@ -23,8 +23,8 @@ artificier:
   tags: [kobold]
   weapon: flasques
   defaultDist: 3
-  base: { hp: 50, will: 45, energy: 70, mana: 30, atk: 3 }
-  growth: { hp: 3, will: 1, energy: 1, mana: 0, atk: 1 }
+  base: { hp: 50, will: 45, energy: 70, mana: 30, for: 3, ele: 1, esp: 1, foi: 0, omb: 0 }
+  growth: { hp: 3, will: 1, energy: 1, mana: 0, for: 1, ele: 0.5, esp: 0.5, foi: 0.2, omb: 0.2 }
   forms:
     - id: artificier
       level: 1
@@ -40,8 +40,8 @@ golem_pierre:
   tags: [construct]
   weapon: poing_pierre
   defaultDist: 1
-  base: { hp: 200, will: 99, energy: 110, mana: 0, atk: 6 }
-  growth: { hp: 8, will: 1, energy: 2, mana: 1, atk: 2 }
+  base: { hp: 200, will: 99, energy: 110, mana: 0, for: 6, ele: 1, esp: 1, foi: 1, omb: 1 }
+  growth: { hp: 8, will: 1, energy: 2, mana: 1, for: 2, ele: 0.4, esp: 0.4, foi: 0.4, omb: 0.4 }
   forms:
     - id: golem_pierre
       level: 1
@@ -57,8 +57,8 @@ chauves_souris:
   tags: [bete]
   weapon: bec
   defaultDist: 1
-  base: { hp: 28, will: 40, energy: 60, mana: 0, atk: 2 }
-  growth: { hp: 3, will: 1, energy: 1, mana: 0, atk: 1 }
+  base: { hp: 28, will: 40, energy: 60, mana: 0, for: 2, ele: 0, esp: 0, foi: 0, omb: 0 }
+  growth: { hp: 3, will: 1, energy: 1, mana: 0, for: 1, ele: 0.2, esp: 0.2, foi: 0.2, omb: 0.2 }
   forms:
     - id: chauves_souris
       level: 1
@@ -74,8 +74,8 @@ ver_galeries:
   tags: [bete]
   weapon: machoires
   defaultDist: 1
-  base: { hp: 130, will: 50, energy: 100, mana: 0, atk: 5 }
-  growth: { hp: 5, will: 1, energy: 2, mana: 1, atk: 1 }
+  base: { hp: 130, will: 50, energy: 100, mana: 0, for: 5, ele: 1, esp: 1, foi: 1, omb: 1 }
+  growth: { hp: 5, will: 1, energy: 2, mana: 1, for: 1, ele: 0.2, esp: 0.2, foi: 0.2, omb: 0.2 }
   forms:
     - id: ver_galeries
       level: 1
@@ -91,8 +91,8 @@ nains_renegats:
   tags: [nain]
   weapon: pioche
   defaultDist: 1
-  base: { hp: 90, will: 65, energy: 100, mana: 0, atk: 5 }
-  growth: { hp: 5, will: 1, energy: 2, mana: 1, atk: 1 }
+  base: { hp: 90, will: 65, energy: 100, mana: 0, for: 5, ele: 1, esp: 2, foi: 2, omb: 1 }
+  growth: { hp: 5, will: 1, energy: 2, mana: 1, for: 1, ele: 0.2, esp: 0.5, foi: 0.5, omb: 0.2 }
   forms:
     - id: nains_renegats
       level: 1
@@ -108,8 +108,9 @@ elementaire_cristal:
   tags: [construct]
   weapon: mains_spectrales
   defaultDist: 3
-  base: { hp: 80, will: 99, energy: 70, mana: 60, atk: 3 }
-  growth: { hp: 3, will: 2, energy: 1, mana: 3, atk: 1 }
+  immune: [glace]
+  base: { hp: 80, will: 99, energy: 70, mana: 60, for: 1, ele: 3, esp: 0, foi: 0, omb: 0 }
+  growth: { hp: 3, will: 2, energy: 1, mana: 3, for: 0.5, ele: 1, esp: 0.2, foi: 0.2, omb: 0.2 }
   forms:
     - id: elementaire_cristal
       level: 1
@@ -125,8 +126,8 @@ basilic:
   tags: [reptile]
   weapon: machoires
   defaultDist: 1
-  base: { hp: 160, will: 70, energy: 100, mana: 40, atk: 6 }
-  growth: { hp: 8, will: 1, energy: 2, mana: 1, atk: 2 }
+  base: { hp: 160, will: 70, energy: 100, mana: 40, for: 6, ele: 1, esp: 1, foi: 1, omb: 3 }
+  growth: { hp: 8, will: 1, energy: 2, mana: 1, for: 2, ele: 0.4, esp: 0.4, foi: 0.4, omb: 1 }
   forms:
     - id: basilic
       level: 1
@@ -142,8 +143,8 @@ gelee:
   tags: [vase]
   weapon: dard
   defaultDist: 1
-  base: { hp: 80, will: 99, energy: 60, mana: 0, atk: 3 }
-  growth: { hp: 3, will: 1, energy: 1, mana: 0, atk: 1 }
+  base: { hp: 80, will: 99, energy: 60, mana: 0, for: 3, ele: 0, esp: 0, foi: 0, omb: 0 }
+  growth: { hp: 3, will: 1, energy: 1, mana: 0, for: 1, ele: 0.2, esp: 0.2, foi: 0.2, omb: 0.2 }
   forms:
     - id: gelee
       level: 1
@@ -159,8 +160,8 @@ contremaitre:
   tags: [kobold]
   weapon: lame_rouillee
   defaultDist: 2
-  base: { hp: 90, will: 70, energy: 90, mana: 30, atk: 4 }
-  growth: { hp: 5, will: 1, energy: 2, mana: 1, atk: 1 }
+  base: { hp: 90, will: 70, energy: 90, mana: 30, for: 4, ele: 0, esp: 2, foi: 0, omb: 2 }
+  growth: { hp: 5, will: 1, energy: 2, mana: 1, for: 1, ele: 0.2, esp: 0.5, foi: 0.2, omb: 0.5 }
   forms:
     - id: contremaitre
       level: 1
@@ -176,8 +177,8 @@ mineurs_fantomes:
   tags: [mort-vivant]
   weapon: pioche
   defaultDist: 1
-  base: { hp: 70, will: 80, energy: 80, mana: 30, atk: 4 }
-  growth: { hp: 5, will: 1, energy: 2, mana: 1, atk: 1 }
+  base: { hp: 70, will: 80, energy: 80, mana: 30, for: 4, ele: 0, esp: 2, foi: 0, omb: 2 }
+  growth: { hp: 5, will: 1, energy: 2, mana: 1, for: 1, ele: 0.2, esp: 0.5, foi: 0.2, omb: 0.5 }
   forms:
     - id: mineurs_fantomes
       level: 1
@@ -193,8 +194,9 @@ coeur_forge:
   tags: [construct]
   weapon: poing_pierre
   defaultDist: 1
-  base: { hp: 420, will: 99, energy: 140, mana: 60, atk: 10 }
-  growth: { hp: 13, will: 2, energy: 2, mana: 2, atk: 2 }
+  immune: [feu]
+  base: { hp: 420, will: 99, energy: 140, mana: 60, for: 10, ele: 5, esp: 5, foi: 5, omb: 5 }
+  growth: { hp: 13, will: 2, energy: 2, mana: 2, for: 2, ele: 1, esp: 1, foi: 1, omb: 1 }
   forms:
     - id: coeur_forge
       level: 1

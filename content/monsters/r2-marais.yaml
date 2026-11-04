@@ -6,8 +6,8 @@ noyes:
   tags: [mort-vivant]
   weapon: lame_rouillee
   defaultDist: 1
-  base: { hp: 50, will: 90, energy: 70, mana: 0, atk: 3 }
-  growth: { hp: 3, will: 1, energy: 1, mana: 0, atk: 1 }
+  base: { hp: 50, will: 90, energy: 70, mana: 0, for: 3, ele: 0, esp: 1, foi: 0, omb: 1 }
+  growth: { hp: 3, will: 1, energy: 1, mana: 0, for: 1, ele: 0.2, esp: 0.5, foi: 0.2, omb: 0.5 }
   forms:
     - id: noyes
       level: 1
@@ -23,8 +23,8 @@ crapaud:
   tags: [bete]
   weapon: dard
   defaultDist: 1
-  base: { hp: 110, will: 50, energy: 90, mana: 0, atk: 4 }
-  growth: { hp: 5, will: 1, energy: 2, mana: 1, atk: 1 }
+  base: { hp: 110, will: 50, energy: 90, mana: 0, for: 4, ele: 0, esp: 0, foi: 0, omb: 0 }
+  growth: { hp: 5, will: 1, energy: 2, mana: 1, for: 1, ele: 0.2, esp: 0.2, foi: 0.2, omb: 0.2 }
   forms:
     - id: crapaud
       level: 1
@@ -40,8 +40,8 @@ sangsues:
   tags: [bete]
   weapon: dard
   defaultDist: 1
-  base: { hp: 40, will: 40, energy: 70, mana: 30, atk: 2 }
-  growth: { hp: 3, will: 1, energy: 1, mana: 0, atk: 1 }
+  base: { hp: 40, will: 40, energy: 70, mana: 30, for: 2, ele: 0, esp: 0, foi: 0, omb: 1 }
+  growth: { hp: 3, will: 1, energy: 1, mana: 0, for: 1, ele: 0.2, esp: 0.2, foi: 0.2, omb: 0.5 }
   forms:
     - id: sangsues
       level: 1
@@ -57,8 +57,9 @@ feu_follet:
   tags: [esprit]
   weapon: mains_spectrales
   defaultDist: 3
-  base: { hp: 45, will: 70, energy: 60, mana: 50, atk: 3 }
-  growth: { hp: 3, will: 2, energy: 1, mana: 3, atk: 1 }
+  immune: [feu]
+  base: { hp: 45, will: 70, energy: 60, mana: 50, for: 1, ele: 3, esp: 0, foi: 0, omb: 0 }
+  growth: { hp: 3, will: 2, energy: 1, mana: 3, for: 0.5, ele: 1, esp: 0.2, foi: 0.2, omb: 0.2 }
   forms:
     - id: feu_follet
       level: 1
@@ -74,8 +75,8 @@ hommes_lezards:
   tags: [reptile]
   weapon: harpon_m
   defaultDist: 1
-  base: { hp: 80, will: 55, energy: 90, mana: 0, atk: 4 }
-  growth: { hp: 5, will: 1, energy: 2, mana: 1, atk: 1 }
+  base: { hp: 80, will: 55, energy: 90, mana: 0, for: 4, ele: 0, esp: 2, foi: 0, omb: 2 }
+  growth: { hp: 5, will: 1, energy: 2, mana: 1, for: 1, ele: 0.2, esp: 0.5, foi: 0.2, omb: 0.5 }
   forms:
     - id: hommes_lezards
       level: 1
@@ -91,8 +92,8 @@ sorciere_noyee:
   tags: [mort-vivant]
   weapon: baton_m
   defaultDist: 3
-  base: { hp: 70, will: 80, energy: 70, mana: 55, atk: 2 }
-  growth: { hp: 3, will: 2, energy: 1, mana: 3, atk: 1 }
+  base: { hp: 70, will: 80, energy: 70, mana: 55, for: 1, ele: 0, esp: 1, foi: 0, omb: 2 }
+  growth: { hp: 3, will: 2, energy: 1, mana: 3, for: 0.5, ele: 0.2, esp: 0.5, foi: 0.2, omb: 1 }
   forms:
     - id: sorciere_noyee
       level: 1
@@ -108,8 +109,8 @@ crocodile:
   tags: [reptile, bete]
   weapon: machoires
   defaultDist: 1
-  base: { hp: 170, will: 55, energy: 110, mana: 0, atk: 7 }
-  growth: { hp: 8, will: 1, energy: 2, mana: 1, atk: 2 }
+  base: { hp: 170, will: 55, energy: 110, mana: 0, for: 7, ele: 1, esp: 1, foi: 1, omb: 1 }
+  growth: { hp: 8, will: 1, energy: 2, mana: 1, for: 2, ele: 0.4, esp: 0.4, foi: 0.4, omb: 0.4 }
   forms:
     - id: crocodile
       level: 1
@@ -125,8 +126,8 @@ moustiques:
   tags: [bete]
   weapon: dard
   defaultDist: 1
-  base: { hp: 22, will: 30, energy: 60, mana: 0, atk: 1 }
-  growth: { hp: 3, will: 1, energy: 1, mana: 0, atk: 1 }
+  base: { hp: 22, will: 30, energy: 60, mana: 0, for: 1, ele: 0, esp: 0, foi: 0, omb: 0 }
+  growth: { hp: 3, will: 1, energy: 1, mana: 0, for: 1, ele: 0.2, esp: 0.2, foi: 0.2, omb: 0.2 }
   forms:
     - id: moustiques
       level: 1
@@ -142,8 +143,8 @@ troll_marais:
   tags: [geant]
   weapon: gourdin
   defaultDist: 1
-  base: { hp: 180, will: 55, energy: 110, mana: 30, atk: 6 }
-  growth: { hp: 8, will: 1, energy: 2, mana: 1, atk: 2 }
+  base: { hp: 180, will: 55, energy: 110, mana: 30, for: 6, ele: 1, esp: 1, foi: 3, omb: 1 }
+  growth: { hp: 8, will: 1, energy: 2, mana: 1, for: 2, ele: 0.4, esp: 0.4, foi: 1, omb: 0.4 }
   forms:
     - id: troll_marais
       level: 1
@@ -159,8 +160,8 @@ spectre_brumes:
   tags: [mort-vivant, esprit]
   weapon: mains_spectrales
   defaultDist: 2
-  base: { hp: 70, will: 90, energy: 80, mana: 45, atk: 3 }
-  growth: { hp: 3, will: 2, energy: 1, mana: 3, atk: 1 }
+  base: { hp: 70, will: 90, energy: 80, mana: 45, for: 1, ele: 0, esp: 1, foi: 0, omb: 3 }
+  growth: { hp: 3, will: 2, energy: 1, mana: 3, for: 0.5, ele: 0.2, esp: 0.5, foi: 0.2, omb: 1 }
   forms:
     - id: spectre_brumes
       level: 1
@@ -176,8 +177,8 @@ pecheurs_maudits:
   tags: [mort-vivant]
   weapon: harpon_m
   defaultDist: 2
-  base: { hp: 65, will: 80, energy: 80, mana: 0, atk: 4 }
-  growth: { hp: 5, will: 1, energy: 2, mana: 1, atk: 1 }
+  base: { hp: 65, will: 80, energy: 80, mana: 0, for: 4, ele: 0, esp: 2, foi: 0, omb: 2 }
+  growth: { hp: 5, will: 1, energy: 2, mana: 1, for: 1, ele: 0.2, esp: 0.5, foi: 0.2, omb: 0.5 }
   forms:
     - id: pecheurs_maudits
       level: 1
@@ -193,8 +194,9 @@ mere_noyes:
   tags: [mort-vivant]
   weapon: mains_spectrales
   defaultDist: 2
-  base: { hp: 320, will: 100, energy: 120, mana: 80, atk: 9 }
-  growth: { hp: 13, will: 2, energy: 2, mana: 2, atk: 2 }
+  immune: [maladie]
+  base: { hp: 320, will: 100, energy: 120, mana: 80, for: 9, ele: 4, esp: 4, foi: 4, omb: 4 }
+  growth: { hp: 13, will: 2, energy: 2, mana: 2, for: 2, ele: 1, esp: 1, foi: 1, omb: 1 }
   forms:
     - id: mere_noyes
       level: 1

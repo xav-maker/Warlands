@@ -1,5 +1,5 @@
 /** Troupes : formes, capacités apprises, stats, règles par défaut (prototype content.ts, à l'identique). */
-import type { Rule } from '@cr/engine';
+import { POWERS, type Powers, type Rule } from '@cr/engine';
 import type { Form, GenContent, TroopDef } from './content.ts';
 
 /** Chaîne d'évolution, de la forme de base à `formId`. */
@@ -44,7 +44,10 @@ export interface TroopStats {
   willMax: number;
   energyMax: number;
   manaMax: number;
+  /** Attaque (prototype) ; en v1, la plus forte des puissances (affichage). */
   atk: number;
+  /** v1 : les 5 puissances. */
+  pow?: Powers;
   speed: number;
   res: Record<string, number>;
   tags: string[];
@@ -53,8 +56,9 @@ export interface TroopStats {
 export function computeStats(c: GenContent, t: TroopDef, formId: string, level: number): TroopStats {
   const chain = formChain(t, formId);
   const f = chain[chain.length - 1]!;
-  const g2 = (k: keyof TroopDef['base']): number => t.base[k] + Math.floor(t.growth[k] * (level - 1));
-  const b = (k: 'will' | 'energy' | 'mana' | 'atk'): number => f.bonus?.[k] ?? 0;
+  const g2 = (k: keyof TroopDef['base']): number => (t.base[k] ?? 0) + Math.floor((t.growth[k] ?? 0) * (level - 1));
+  const b = (k: keyof NonNullable<typeof f.bonus>): number => f.bonus?.[k] ?? 0;
+  const pow = t.base.for !== undefined ? (Object.fromEntries(POWERS.map((k) => [k, g2(k) + b(k)])) as Powers) : undefined;
   const hp = Math.floor((g2('hp') * (f.hpMult ?? 1e3)) / 1e3) * c.gaugeMult;
   const res: Record<string, number> = {};
   for (const ty of c.dmgTypes) res[ty] = (f.res[ty] ?? 0) * 10;
@@ -65,7 +69,8 @@ export function computeStats(c: GenContent, t: TroopDef, formId: string, level: 
     willMax: g2('will') + b('will'),
     energyMax: (g2('energy') + b('energy')) * c.gaugeMult,
     manaMax: t.base.mana || t.growth.mana ? (g2('mana') + b('mana')) * c.gaugeMult : 0,
-    atk: g2('atk') + b('atk'),
+    atk: pow ? Math.max(...POWERS.map((k) => pow[k])) : g2('atk') + b('atk'),
+    ...(pow ? { pow } : {}),
     speed: f.speed,
     res,
     tags,

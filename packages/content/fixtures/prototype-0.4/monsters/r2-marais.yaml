@@ -1,0 +1,206 @@
+# Monstres : définition de troupe, butin (drops), gardien (boss), région.
+
+noyes:
+  units: 3
+  pop: 3
+  tags: [mort-vivant]
+  weapon: lame_rouillee
+  defaultDist: 1
+  base: { hp: 50, will: 90, energy: 70, mana: 0, atk: 3 }
+  growth: { hp: 3, will: 1, energy: 1, mana: 0, atk: 1 }
+  forms:
+    - id: noyes
+      level: 1
+      speed: 21
+      res: { maladie: 50, sacre: -40, glace: 20 }
+      skills: [[emploi, 1], [repos, 1], [lame_saignante, 1]]
+  drops: [algue_noire, os_ancien, perle_noyee]
+  boss: false
+  region: 1
+crapaud:
+  units: 1
+  pop: 2
+  tags: [bete]
+  weapon: dard
+  defaultDist: 1
+  base: { hp: 110, will: 50, energy: 90, mana: 0, atk: 4 }
+  growth: { hp: 5, will: 1, energy: 2, mana: 1, atk: 1 }
+  forms:
+    - id: crapaud
+      level: 1
+      speed: 20
+      res: { maladie: 40 }
+      skills: [[morsure, 1], [repos, 1], [morsure_venin, 1], [jet_toile, 1]]
+  drops: [venin, ecaille_terne]
+  boss: false
+  region: 1
+sangsues:
+  units: 3
+  pop: 2
+  tags: [bete]
+  weapon: dard
+  defaultDist: 1
+  base: { hp: 40, will: 40, energy: 70, mana: 30, atk: 2 }
+  growth: { hp: 3, will: 1, energy: 1, mana: 0, atk: 1 }
+  forms:
+    - id: sangsues
+      level: 1
+      speed: 17
+      res: { maladie: 30, feu: -30 }
+      skills: [[morsure, 1], [toucher_spectral, 1]]
+  drops: [algue_noire, venin]
+  boss: false
+  region: 1
+feu_follet:
+  units: 1
+  pop: 1
+  tags: [esprit]
+  weapon: mains_spectrales
+  defaultDist: 3
+  base: { hp: 45, will: 70, energy: 60, mana: 50, atk: 3 }
+  growth: { hp: 3, will: 2, energy: 1, mana: 3, atk: 1 }
+  forms:
+    - id: feu_follet
+      level: 1
+      speed: 18
+      res: { feu: 60, glace: -30, tranchant: 30 }
+      skills: [[emploi, 1], [trait_flammes, 1], [meditation, 1]]
+  drops: [tourbe, plume_heron]
+  boss: false
+  region: 1
+hommes_lezards:
+  units: 2
+  pop: 2
+  tags: [reptile]
+  weapon: harpon_m
+  defaultDist: 1
+  base: { hp: 80, will: 55, energy: 90, mana: 0, atk: 4 }
+  growth: { hp: 5, will: 1, energy: 2, mana: 1, atk: 1 }
+  forms:
+    - id: hommes_lezards
+      level: 1
+      speed: 19
+      res: { glace: -20, maladie: 20 }
+      skills: [[emploi, 1], [repos, 1], [coup_jarret, 1], [grappin, 1]]
+  drops: [ecaille_terne, cuir_epais]
+  boss: false
+  region: 1
+sorciere_noyee:
+  units: 1
+  pop: 2
+  tags: [mort-vivant]
+  weapon: baton_m
+  defaultDist: 3
+  base: { hp: 70, will: 80, energy: 70, mana: 55, atk: 2 }
+  growth: { hp: 3, will: 2, energy: 1, mana: 3, atk: 1 }
+  forms:
+    - id: sorciere_noyee
+      level: 1
+      speed: 23
+      res: { maladie: 40, sacre: -40 }
+      skills: [[emploi, 1], [fleau, 1], [affaiblissement, 1], [meditation, 1]]
+  drops: [algue_noire, perle_noyee, seve_ambree]
+  boss: false
+  region: 1
+crocodile:
+  units: 1
+  pop: 3
+  tags: [reptile, bete]
+  weapon: machoires
+  defaultDist: 1
+  base: { hp: 170, will: 55, energy: 110, mana: 0, atk: 7 }
+  growth: { hp: 8, will: 1, energy: 2, mana: 1, atk: 2 }
+  forms:
+    - id: crocodile
+      level: 1
+      speed: 24
+      res: { tranchant: 20, glace: -20 }
+      skills: [[morsure, 1], [repos, 1], [assassinat, 1]]
+  drops: [ecaille_terne, cuir_epais, os_ancien]
+  boss: false
+  region: 1
+moustiques:
+  units: 3
+  pop: 1
+  tags: [bete]
+  weapon: dard
+  defaultDist: 1
+  base: { hp: 22, will: 30, energy: 60, mana: 0, atk: 1 }
+  growth: { hp: 3, will: 1, energy: 1, mana: 0, atk: 1 }
+  forms:
+    - id: moustiques
+      level: 1
+      speed: 12
+      res: { feu: -40 }
+      skills: [[morsure, 1], [morsure_venin, 1]]
+  drops: [venin, tourbe]
+  boss: false
+  region: 1
+troll_marais:
+  units: 1
+  pop: 3
+  tags: [geant]
+  weapon: gourdin
+  defaultDist: 1
+  base: { hp: 180, will: 55, energy: 110, mana: 30, atk: 6 }
+  growth: { hp: 8, will: 1, energy: 2, mana: 1, atk: 2 }
+  forms:
+    - id: troll_marais
+      level: 1
+      speed: 26
+      res: { contondant: 20, feu: -30 }
+      skills: [[emploi, 1], [repos, 1], [coup_massue, 1], [seve, 1]]
+  drops: [os_ancien, tourbe, cuir_epais]
+  boss: false
+  region: 1
+spectre_brumes:
+  units: 1
+  pop: 2
+  tags: [mort-vivant, esprit]
+  weapon: mains_spectrales
+  defaultDist: 2
+  base: { hp: 70, will: 90, energy: 80, mana: 45, atk: 3 }
+  growth: { hp: 3, will: 2, energy: 1, mana: 3, atk: 1 }
+  forms:
+    - id: spectre_brumes
+      level: 1
+      speed: 18
+      res: { tranchant: 40, contondant: 40, sacre: -50 }
+      skills: [[emploi, 1], [toucher_spectral, 1], [cri_effroi, 1]]
+  drops: [plume_heron, perle_noyee]
+  boss: false
+  region: 1
+pecheurs_maudits:
+  units: 2
+  pop: 2
+  tags: [mort-vivant]
+  weapon: harpon_m
+  defaultDist: 2
+  base: { hp: 65, will: 80, energy: 80, mana: 0, atk: 4 }
+  growth: { hp: 5, will: 1, energy: 2, mana: 1, atk: 1 }
+  forms:
+    - id: pecheurs_maudits
+      level: 1
+      speed: 20
+      res: { maladie: 40, sacre: -40 }
+      skills: [[emploi, 1], [repos, 1], [grappin, 1]]
+  drops: [algue_noire, fer_noir]
+  boss: false
+  region: 1
+mere_noyes:
+  units: 1
+  pop: 5
+  tags: [mort-vivant]
+  weapon: mains_spectrales
+  defaultDist: 2
+  base: { hp: 320, will: 100, energy: 120, mana: 80, atk: 9 }
+  growth: { hp: 13, will: 2, energy: 2, mana: 2, atk: 2 }
+  forms:
+    - id: mere_noyes
+      level: 1
+      speed: 22
+      res: { maladie: 50, glace: 30, sacre: -40 }
+      skills: [[emploi, 1], [fleau, 1], [tempete_givre, 1], [toucher_spectral, 1], [cercle_soins, 1]]
+  drops: [perle_noyee, algue_noire, coeur_marais]
+  boss: true
+  region: 1

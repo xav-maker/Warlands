@@ -6,8 +6,8 @@ gobelins:
   tags: [gobelin]
   weapon: coutelas
   defaultDist: 1
-  base: { hp: 38, will: 40, energy: 70, mana: 0, atk: 2 }
-  growth: { hp: 3, will: 1, energy: 1, mana: 0, atk: 1 }
+  base: { hp: 38, will: 40, energy: 70, mana: 0, for: 2, ele: 0, esp: 1, foi: 0, omb: 1 }
+  growth: { hp: 3, will: 1, energy: 1, mana: 0, for: 1, ele: 0.2, esp: 0.5, foi: 0.2, omb: 0.5 }
   forms:
     - id: gobelin
       level: 1
@@ -22,8 +22,8 @@ frondeurs_gob:
   tags: [gobelin]
   weapon: fronde_gob
   defaultDist: 3
-  base: { hp: 32, will: 35, energy: 70, mana: 0, atk: 2 }
-  growth: { hp: 2, will: 1, energy: 1, mana: 0, atk: 1 }
+  base: { hp: 32, will: 35, energy: 70, mana: 0, for: 2, ele: 0, esp: 1, foi: 0, omb: 0 }
+  growth: { hp: 2, will: 1, energy: 1, mana: 0, for: 1, ele: 0.2, esp: 0.5, foi: 0.2, omb: 0.2 }
   forms:
     - id: frondeur_gob
       level: 1
@@ -38,8 +38,8 @@ loup_gris:
   tags: [bete]
   weapon: crocs_gris
   defaultDist: 1
-  base: { hp: 60, will: 45, energy: 90, mana: 0, atk: 4 }
-  growth: { hp: 4, will: 1, energy: 2, mana: 0, atk: 1 }
+  base: { hp: 60, will: 45, energy: 90, mana: 0, for: 4, ele: 0, esp: 2, foi: 0, omb: 0 }
+  growth: { hp: 4, will: 1, energy: 2, mana: 0, for: 1, ele: 0.2, esp: 0.5, foi: 0.2, omb: 0.2 }
   forms:
     - id: loup_gris
       level: 1
@@ -54,8 +54,8 @@ araignee:
   tags: [bete]
   weapon: chelicères
   defaultDist: 2
-  base: { hp: 75, will: 50, energy: 80, mana: 30, atk: 3 }
-  growth: { hp: 4, will: 1, energy: 1, mana: 2, atk: 1 }
+  base: { hp: 75, will: 50, energy: 80, mana: 30, for: 3, ele: 0, esp: 0, foi: 0, omb: 1 }
+  growth: { hp: 4, will: 1, energy: 1, mana: 2, for: 1, ele: 0.2, esp: 0.2, foi: 0.2, omb: 0.5 }
   forms:
     - id: araignee
       level: 1
@@ -70,8 +70,8 @@ chaman:
   tags: [gobelin]
   weapon: baton_os
   defaultDist: 3
-  base: { hp: 55, will: 60, energy: 70, mana: 45, atk: 2 }
-  growth: { hp: 3, will: 2, energy: 1, mana: 3, atk: 1 }
+  base: { hp: 55, will: 60, energy: 70, mana: 45, for: 1, ele: 1, esp: 1, foi: 1, omb: 2 }
+  growth: { hp: 3, will: 2, energy: 1, mana: 3, for: 0.5, ele: 0.5, esp: 0.5, foi: 0.5, omb: 1 }
   forms:
     - id: chaman
       level: 1
@@ -86,8 +86,8 @@ troll:
   tags: [geant]
   weapon: gourdin
   defaultDist: 1
-  base: { hp: 150, will: 55, energy: 110, mana: 0, atk: 6 }
-  growth: { hp: 9, will: 1, energy: 2, mana: 0, atk: 2 }
+  base: { hp: 150, will: 55, energy: 110, mana: 0, for: 6, ele: 1, esp: 1, foi: 1, omb: 1 }
+  growth: { hp: 9, will: 1, energy: 2, mana: 0, for: 2, ele: 0.4, esp: 0.4, foi: 0.4, omb: 0.4 }
   forms:
     - id: troll
       level: 1
@@ -102,8 +102,9 @@ sylvain:
   tags: [plante]
   weapon: branches
   defaultDist: 1
-  base: { hp: 300, will: 90, energy: 130, mana: 30, atk: 9 }
-  growth: { hp: 12, will: 2, energy: 2, mana: 2, atk: 2 }
+  immune: [maladie]
+  base: { hp: 300, will: 90, energy: 130, mana: 30, for: 9, ele: 4, esp: 4, foi: 4, omb: 4 }
+  growth: { hp: 12, will: 2, energy: 2, mana: 2, for: 2, ele: 1, esp: 1, foi: 1, omb: 1 }
   forms:
     - id: sylvain
       level: 1
@@ -119,8 +120,8 @@ loup_alpha:
   tags: [bete]
   weapon: crocs_gris
   defaultDist: 1
-  base: { hp: 90, will: 60, energy: 100, mana: 0, atk: 6 }
-  growth: { hp: 5, will: 1, energy: 2, mana: 1, atk: 1 }
+  base: { hp: 90, will: 60, energy: 100, mana: 0, for: 6, ele: 1, esp: 3, foi: 1, omb: 1 }
+  growth: { hp: 5, will: 1, energy: 2, mana: 1, for: 1, ele: 0.2, esp: 0.5, foi: 0.2, omb: 0.2 }
   forms:
     - id: loup_alpha
       level: 1
@@ -136,8 +137,8 @@ corbeaux:
   tags: [bete]
   weapon: bec
   defaultDist: 1
-  base: { hp: 30, will: 35, energy: 70, mana: 0, atk: 2 }
-  growth: { hp: 3, will: 1, energy: 1, mana: 0, atk: 1 }
+  base: { hp: 30, will: 35, energy: 70, mana: 0, for: 2, ele: 0, esp: 0, foi: 0, omb: 0 }
+  growth: { hp: 3, will: 1, energy: 1, mana: 0, for: 1, ele: 0.2, esp: 0.2, foi: 0.2, omb: 0.2 }
   forms:
     - id: corbeaux
       level: 1

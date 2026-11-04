@@ -1,0 +1,206 @@
+# Monstres : définition de troupe, butin (drops), gardien (boss), région.
+
+sentinelles:
+  units: 2
+  pop: 2
+  tags: [construct]
+  weapon: lame_lumiere
+  defaultDist: 1
+  base: { hp: 110, will: 99, energy: 100, mana: 0, atk: 5 }
+  growth: { hp: 5, will: 1, energy: 2, mana: 1, atk: 1 }
+  forms:
+    - id: sentinelles
+      level: 1
+      speed: 22
+      res: { tranchant: 30, contondant: 20, sacre: 40 }
+      skills: [[emploi, 1], [provocation, 1], [repos, 1]]
+  drops: [pierre_lune, eclat_astral]
+  boss: false
+  region: 4
+gargouilles:
+  units: 2
+  pop: 2
+  tags: [construct]
+  weapon: poing_pierre
+  defaultDist: 1
+  base: { hp: 110, will: 99, energy: 100, mana: 0, atk: 6 }
+  growth: { hp: 5, will: 1, energy: 2, mana: 1, atk: 1 }
+  forms:
+    - id: gargouilles
+      level: 1
+      speed: 23
+      res: { contondant: 30, tranchant: 30 }
+      skills: [[emploi, 1], [coup_massue, 1], [carapace_epines, 1]]
+  drops: [pierre_lune, poussiere_etoile]
+  boss: false
+  region: 4
+anges_dechus:
+  units: 1
+  pop: 2
+  tags: [celeste]
+  weapon: lame_lumiere
+  defaultDist: 2
+  base: { hp: 100, will: 80, energy: 90, mana: 50, atk: 6 }
+  growth: { hp: 5, will: 1, energy: 2, mana: 1, atk: 1 }
+  forms:
+    - id: anges_dechus
+      level: 1
+      speed: 18
+      res: { tenebres: 40, sacre: 40 }
+      skills: [[emploi, 1], [lame_ombre, 1], [toucher_spectral, 1]]
+  drops: [plume_seraphique, larme_aube]
+  boss: false
+  region: 4
+harpies:
+  units: 3
+  pop: 2
+  tags: [bete]
+  weapon: griffes_m
+  defaultDist: 1
+  base: { hp: 55, will: 50, energy: 90, mana: 0, atk: 4 }
+  growth: { hp: 3, will: 1, energy: 1, mana: 0, atk: 1 }
+  forms:
+    - id: harpies
+      level: 1
+      speed: 13
+      res: { glace: 20 }
+      skills: [[morsure, 1], [cri_effroi, 1], [repos, 1]]
+  drops: [plume_seraphique, fil_lumiere]
+  boss: false
+  region: 4
+astromancien:
+  units: 1
+  pop: 2
+  tags: [humain]
+  weapon: baton_m
+  defaultDist: 3
+  base: { hp: 80, will: 90, energy: 70, mana: 70, atk: 3 }
+  growth: { hp: 3, will: 2, energy: 1, mana: 3, atk: 1 }
+  forms:
+    - id: astromancien
+      level: 1
+      speed: 22
+      res: { glace: 40, psychique: 30 }
+      skills: [[emploi, 1], [tempete_givre, 1], [mot_silence, 1], [meditation, 1]]
+  drops: [eclat_astral, poussiere_etoile]
+  boss: false
+  region: 4
+golem_astral:
+  units: 1
+  pop: 3
+  tags: [construct]
+  weapon: poing_pierre
+  defaultDist: 1
+  base: { hp: 230, will: 99, energy: 120, mana: 0, atk: 7 }
+  growth: { hp: 8, will: 1, energy: 2, mana: 1, atk: 2 }
+  forms:
+    - id: golem_astral
+      level: 1
+      speed: 27
+      res: { contondant: 35, tranchant: 35, sacre: 30 }
+      skills: [[emploi, 1], [coup_tonnerre, 1], [carapace_epines, 1]]
+  drops: [eclat_astral, pierre_lune, plume_archonte]
+  boss: false
+  region: 4
+griffons:
+  units: 1
+  pop: 2
+  tags: [bete]
+  weapon: griffes_m
+  defaultDist: 1
+  base: { hp: 120, will: 60, energy: 110, mana: 0, atk: 6 }
+  growth: { hp: 5, will: 1, energy: 2, mana: 1, atk: 1 }
+  forms:
+    - id: griffons
+      level: 1
+      speed: 15
+      res: { tranchant: 15 }
+      skills: [[morsure, 1], [charge, 1], [repos, 1]]
+  drops: [plume_seraphique, fil_lumiere]
+  boss: false
+  region: 4
+spectres_lumiere:
+  units: 2
+  pop: 2
+  tags: [esprit]
+  weapon: lame_lumiere
+  defaultDist: 3
+  base: { hp: 65, will: 90, energy: 70, mana: 50, atk: 4 }
+  growth: { hp: 3, will: 2, energy: 1, mana: 3, atk: 1 }
+  forms:
+    - id: spectres_lumiere
+      level: 1
+      speed: 20
+      res: { sacre: 60, tenebres: -40, tranchant: 30 }
+      skills: [[emploi, 1], [nova_sacree, 1], [javelot_lumiere, 1]]
+  drops: [larme_aube, fil_lumiere]
+  boss: false
+  region: 4
+chimere:
+  units: 1
+  pop: 3
+  tags: [bete]
+  weapon: machoires
+  defaultDist: 1
+  base: { hp: 190, will: 70, energy: 120, mana: 0, atk: 7 }
+  growth: { hp: 8, will: 1, energy: 2, mana: 1, atk: 2 }
+  forms:
+    - id: chimere
+      level: 1
+      speed: 20
+      res: { feu: 40, maladie: 30 }
+      skills: [[morsure, 1], [souffle_feu, 1], [morsure_venin, 1]]
+  drops: [poussiere_etoile, os_dragonnet]
+  boss: false
+  region: 4
+archers_celestes:
+  units: 2
+  pop: 2
+  tags: [celeste]
+  weapon: arc_m
+  defaultDist: 3
+  base: { hp: 75, will: 70, energy: 100, mana: 0, atk: 6 }
+  growth: { hp: 5, will: 1, energy: 2, mana: 1, atk: 1 }
+  forms:
+    - id: archers_celestes
+      level: 1
+      speed: 17
+      res: { sacre: 30 }
+      skills: [[tir_arc, 1], [tir_perforant, 1], [repos, 1]]
+  drops: [fil_lumiere, eclat_astral]
+  boss: false
+  region: 4
+gardien_seuil:
+  units: 1
+  pop: 3
+  tags: [celeste]
+  weapon: lame_lumiere
+  defaultDist: 1
+  base: { hp: 210, will: 99, energy: 120, mana: 30, atk: 7 }
+  growth: { hp: 8, will: 1, energy: 2, mana: 1, atk: 2 }
+  forms:
+    - id: gardien_seuil
+      level: 1
+      speed: 22
+      res: { sacre: 50, tranchant: 25, contondant: 25 }
+      skills: [[emploi, 1], [provocation, 1], [coup_tonnerre, 1], [benediction, 1]]
+  drops: [larme_aube, plume_archonte]
+  boss: false
+  region: 4
+archonte_dechu:
+  units: 1
+  pop: 6
+  tags: [celeste]
+  weapon: lame_lumiere
+  defaultDist: 2
+  base: { hp: 480, will: 99, energy: 150, mana: 100, atk: 11 }
+  growth: { hp: 13, will: 2, energy: 2, mana: 2, atk: 2 }
+  forms:
+    - id: archonte_dechu
+      level: 1
+      speed: 21
+      res: { sacre: 50, tenebres: 50, psychique: 40 }
+      skills: [[emploi, 1], [nova_sacree, 1], [eruption, 1], [cercle_soins, 1], [mot_silence, 1], [lame_ombre, 1]]
+  drops: [couronne_aube, plume_archonte, larme_aube]
+  boss: true
+  region: 4

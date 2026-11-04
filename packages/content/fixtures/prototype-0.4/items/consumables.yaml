@@ -1,0 +1,50 @@
+# Objets non équipables. Noms et descriptions : texts/fr.yaml.
+
+bandage:
+  kind: consommable
+  tier: 1
+  value: 6
+  tags: []
+  effect: { hp: 15 }
+potion_mineure:
+  kind: consommable
+  tier: 1
+  value: 12
+  tags: []
+  effect: { hp: 30 }
+potion_soin:
+  kind: consommable
+  tier: 2
+  value: 25
+  tags: []
+  effect: { hp: 50 }
+potion_mana:
+  kind: consommable
+  tier: 1
+  value: 12
+  tags: []
+  effect: { mana: 40 }
+potion_mana_normale:
+  kind: consommable
+  tier: 2
+  value: 25
+  tags: []
+  effect: { mana: 80 }
+potion_majeure:
+  kind: consommable
+  tier: 3
+  value: 50
+  tags: []
+  effect: { hp: 80 }
+tonique:
+  kind: consommable
+  tier: 3
+  value: 40
+  tags: []
+  effect: { hp: 25, mana: 25 }
+onguent:
+  kind: consommable
+  tier: 5
+  value: 90
+  tags: []
+  effect: { hp: 100 }

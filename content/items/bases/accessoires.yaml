@@ -43,28 +43,28 @@ anneau_1:
   cat: anneau
   value: 26
   tags: [essence, pierre, metal]
-  pool: [[mana, 2], [will, 2], [atk, 1], [res, 2]]
+  pool: [[mana, 2], [will, 2], [for, 1], [ele, 1], [omb, 1], [res, 2]]
 anneau_2:
   tier: 2
   slot: accessoire
   cat: anneau
   value: 60
   tags: [essence, pierre, metal]
-  pool: [[mana, 2], [will, 2], [atk, 1], [res, 2]]
+  pool: [[mana, 2], [will, 2], [for, 1], [ele, 1], [omb, 1], [res, 2]]
 anneau_3:
   tier: 3
   slot: accessoire
   cat: anneau
   value: 119
   tags: [essence, pierre, metal]
-  pool: [[mana, 2], [will, 2], [atk, 1], [res, 2]]
+  pool: [[mana, 2], [will, 2], [for, 1], [ele, 1], [omb, 1], [res, 2]]
 anneau_4:
   tier: 4
   slot: accessoire
   cat: anneau
   value: 221
   tags: [essence, pierre, metal]
-  pool: [[mana, 2], [will, 2], [atk, 1], [res, 2]]
+  pool: [[mana, 2], [will, 2], [for, 1], [ele, 1], [omb, 1], [res, 2]]
   workshop: true
 anneau_5:
   tier: 5
@@ -72,7 +72,7 @@ anneau_5:
   cat: anneau
   value: 383
   tags: [essence, pierre, metal]
-  pool: [[mana, 2], [will, 2], [atk, 1], [res, 2]]
+  pool: [[mana, 2], [will, 2], [for, 1], [ele, 1], [omb, 1], [res, 2]]
   workshop: true
 collier_1:
   tier: 1
@@ -80,28 +80,28 @@ collier_1:
   cat: collier
   value: 26
   tags: [cuir, metal, os]
-  pool: [[atk, 2], [hp, 2], [energy, 1], [res, 1]]
+  pool: [[for, 2], [hp, 2], [energy, 1], [res, 1]]
 collier_2:
   tier: 2
   slot: accessoire
   cat: collier
   value: 60
   tags: [cuir, metal, os]
-  pool: [[atk, 2], [hp, 2], [energy, 1], [res, 1]]
+  pool: [[for, 2], [hp, 2], [energy, 1], [res, 1]]
 collier_3:
   tier: 3
   slot: accessoire
   cat: collier
   value: 119
   tags: [cuir, metal, os]
-  pool: [[atk, 2], [hp, 2], [energy, 1], [res, 1]]
+  pool: [[for, 2], [hp, 2], [energy, 1], [res, 1]]
 collier_4:
   tier: 4
   slot: accessoire
   cat: collier
   value: 221
   tags: [cuir, metal, os]
-  pool: [[atk, 2], [hp, 2], [energy, 1], [res, 1]]
+  pool: [[for, 2], [hp, 2], [energy, 1], [res, 1]]
   workshop: true
 collier_5:
   tier: 5
@@ -109,5 +109,5 @@ collier_5:
   cat: collier
   value: 383
   tags: [cuir, metal, os]
-  pool: [[atk, 2], [hp, 2], [energy, 1], [res, 1]]
+  pool: [[for, 2], [hp, 2], [energy, 1], [res, 1]]
   workshop: true

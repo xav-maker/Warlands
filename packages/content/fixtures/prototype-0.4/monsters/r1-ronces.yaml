@@ -1,0 +1,149 @@
+# Monstres : définition de troupe, butin (drops), gardien (boss), région.
+
+gobelins:
+  units: 3
+  pop: 3
+  tags: [gobelin]
+  weapon: coutelas
+  defaultDist: 1
+  base: { hp: 38, will: 40, energy: 70, mana: 0, atk: 2 }
+  growth: { hp: 3, will: 1, energy: 1, mana: 0, atk: 1 }
+  forms:
+    - id: gobelin
+      level: 1
+      speed: 17
+      res: { tenebres: 10, sacre: -10 }
+      skills: [[emploi, 1], [repos, 1], [lame_saignante, 4], [exploit, 7]]
+  drops: [oreille_gobelin, ferraille, cuir_brut]
+  region: 0
+frondeurs_gob:
+  units: 2
+  pop: 2
+  tags: [gobelin]
+  weapon: fronde_gob
+  defaultDist: 3
+  base: { hp: 32, will: 35, energy: 70, mana: 0, atk: 2 }
+  growth: { hp: 2, will: 1, energy: 1, mana: 0, atk: 1 }
+  forms:
+    - id: frondeur_gob
+      level: 1
+      speed: 18
+      res: { sacre: -10 }
+      skills: [[tir_fronde, 1], [repos, 1], [marque, 6]]
+  drops: [oreille_gobelin, pierre_lisse, cuir_brut]
+  region: 0
+loup_gris:
+  units: 1
+  pop: 1
+  tags: [bete]
+  weapon: crocs_gris
+  defaultDist: 1
+  base: { hp: 60, will: 45, energy: 90, mana: 0, atk: 4 }
+  growth: { hp: 4, will: 1, energy: 2, mana: 0, atk: 1 }
+  forms:
+    - id: loup_gris
+      level: 1
+      speed: 15
+      res: { glace: 20, feu: -20 }
+      skills: [[morsure, 1], [repos, 1], [charge, 4], [hurlement, 8]]
+  drops: [croc_loup, cuir_brut, cuir_epais]
+  region: 0
+araignee:
+  units: 1
+  pop: 2
+  tags: [bete]
+  weapon: chelicères
+  defaultDist: 2
+  base: { hp: 75, will: 50, energy: 80, mana: 30, atk: 3 }
+  growth: { hp: 4, will: 1, energy: 1, mana: 2, atk: 1 }
+  forms:
+    - id: araignee
+      level: 1
+      speed: 18
+      res: { maladie: 40, feu: -25 }
+      skills: [[emploi, 1], [repos, 1], [nuage, 3], [grappin, 6]]
+  drops: [fil_araignee, venin, champignon_pale]
+  region: 0
+chaman:
+  units: 1
+  pop: 2
+  tags: [gobelin]
+  weapon: baton_os
+  defaultDist: 3
+  base: { hp: 55, will: 60, energy: 70, mana: 45, atk: 2 }
+  growth: { hp: 3, will: 2, energy: 1, mana: 3, atk: 1 }
+  forms:
+    - id: chaman
+      level: 1
+      speed: 22
+      res: { tenebres: 25, sacre: -25 }
+      skills: [[emploi, 1], [trait_flammes, 1], [soin_mineur, 3], [murmure, 6], [malediction, 9]]
+  drops: [plume_corbeau, champignon_pale, oreille_gobelin, totem_gobelin]
+  region: 0
+troll:
+  units: 1
+  pop: 3
+  tags: [geant]
+  weapon: gourdin
+  defaultDist: 1
+  base: { hp: 150, will: 55, energy: 110, mana: 0, atk: 6 }
+  growth: { hp: 9, will: 1, energy: 2, mana: 0, atk: 2 }
+  forms:
+    - id: troll
+      level: 1
+      speed: 26
+      res: { contondant: 20, feu: -20 }
+      skills: [[emploi, 1], [repos, 1], [exploit, 3], [riposte, 6]]
+  drops: [os_ancien, cuir_epais, pierre_lisse]
+  region: 0
+sylvain:
+  units: 1
+  pop: 4
+  tags: [plante]
+  weapon: branches
+  defaultDist: 1
+  base: { hp: 300, will: 90, energy: 130, mana: 30, atk: 9 }
+  growth: { hp: 12, will: 2, energy: 2, mana: 2, atk: 2 }
+  forms:
+    - id: sylvain
+      level: 1
+      speed: 25
+      res: { tranchant: 25, contondant: 15, maladie: 30, feu: -30 }
+      skills: [[emploi, 1], [repos, 1], [repousser, 1], [brise_armure, 1], [regeneration, 1], [riposte, 1]]
+  drops: [seve_ambree, bois_tordu, resine, coeur_ronce]
+  boss: true
+  region: 0
+loup_alpha:
+  units: 1
+  pop: 2
+  tags: [bete]
+  weapon: crocs_gris
+  defaultDist: 1
+  base: { hp: 90, will: 60, energy: 100, mana: 0, atk: 6 }
+  growth: { hp: 5, will: 1, energy: 2, mana: 1, atk: 1 }
+  forms:
+    - id: loup_alpha
+      level: 1
+      speed: 14
+      res: { glace: 25, feu: -20 }
+      skills: [[morsure, 1], [repos, 1], [charge, 1], [hurlement, 1]]
+  drops: [croc_loup, cuir_epais, cuir_brut]
+  boss: false
+  region: 0
+corbeaux:
+  units: 3
+  pop: 2
+  tags: [bete]
+  weapon: bec
+  defaultDist: 1
+  base: { hp: 30, will: 35, energy: 70, mana: 0, atk: 2 }
+  growth: { hp: 3, will: 1, energy: 1, mana: 0, atk: 1 }
+  forms:
+    - id: corbeaux
+      level: 1
+      speed: 13
+      res: { contondant: -20 }
+      skills: [[morsure, 1], [repos, 1]]
+  drops: [plume_corbeau, champignon_pale]
+  boss: false
+  region: 0

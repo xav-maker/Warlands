@@ -187,7 +187,7 @@ describe('traversée complète (critère de J2, côté serveur)', () => {
       .orderBy('id')
       .execute();
     expect(battles.map((b) => b.kind)).toEqual(['route', 'route', 'route', 'route', 'guardian']);
-    expect(new Set(battles.map((b) => `${b.engine_version} ${b.content_version}`))).toEqual(new Set([`proto-0.4.2 ${content.hash}`]));
+    expect(new Set(battles.map((b) => `${b.engine_version} ${b.content_version}`))).toEqual(new Set([`v1 ${content.hash}`]));
   });
 });
 
@@ -311,7 +311,7 @@ describe('services de ville (README 7.2, 7.5, 8.3)', () => {
     const max = statsOf(content, m!, m!.units[0]!).hpMax;
     await expect(run(pid, useConsumable, { item: 'bandage', troop: m!.id, unit: 1 })).rejects.toMatchObject({ code: 'GAUGE_FULL' });
     await t.db.transaction().execute((tx) => setUnit(tx, m!.id, 1, { hp: 10, mana: 0 }));
-    expect((await run(pid, useConsumable, { item: 'bandage', troop: m!.id, unit: 1 })).hp).toBe(10 + Math.ceil((max * 15) / 100));
+    expect((await run(pid, useConsumable, { item: 'bandage', troop: m!.id, unit: 1 })).hp).toBe(Math.min(max, 10 + 50)); // bandage : +50 PV fixes (README 19.5)
     await expect(run(pid, useConsumable, { item: 'bois_tordu', troop: m!.id, unit: 1 })).rejects.toMatchObject({ code: 'NOT_CONSUMABLE' });
   });
 });

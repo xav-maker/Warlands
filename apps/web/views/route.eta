@@ -17,7 +17,7 @@
         <% if (e.rare) { %><p class="flash rare">Monstre rare : <b><%= it.L.troop(e.rare) %></b></p><% } %>
         <ul class="group">
           <% for (const t of e.side.troops) { %>
-            <li><b><%= it.L.troop(t.type) %></b> <span class="muted">niv. <%= t.level %><%= t.units.length > 1 ? ' · ' + t.units.length + ' unités' : '' %></span></li>
+            <li><b><%= it.L.troop(t.type) %></b> <span class="muted">niv. <%= t.level %><%= t.units.length > 1 ? ' · ' + t.units.length + ' unités' : '' %><% const im = it.L.immune(t.type) %><%= im ? ' · immunisé : ' + im : '' %></span></li>
           <% } %>
         </ul>
         <form method="post" action="/combat">

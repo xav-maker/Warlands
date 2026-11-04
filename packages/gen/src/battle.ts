@@ -2,7 +2,7 @@
  * Entrée du moteur pour un combat d'expédition (prototype jeu.ts, buildInput et unitStats).
  * Fonctions pures : l'escouade et la rencontre sont passées en paramètre, rien n'est lu dans un état global.
  */
-import type { Rule, UnitInput, Weapon } from '@cr/engine';
+import { POWERS, type Power, type Powers, type Rule, type UnitInput, type Weapon } from '@cr/engine';
 import type { GenContent } from './content.ts';
 import type { MonsterGroup } from './encounters.ts';
 import type { EquipInstance } from './equip.ts';
@@ -56,14 +56,23 @@ export function unitStats(c: GenContent, t: PlayerTroop, u: PlayerUnit): UnitSta
   const res = { ...s.res };
   const arme = u.equip.arme;
   const weaponBase: Weapon = arme ? { ...c.equip[arme.base]!.weapon!, name: c.equip[arme.base]!.name } : { ...c.weapons[def.weapon]! };
-  const out: UnitStats = { ...s, res, weapon: weaponBase };
+  const out: UnitStats = { ...s, res, weapon: weaponBase, ...(s.pow ? { pow: { ...s.pow } } : {}) };
   for (const it of Object.values(u.equip)) {
     if (!it) continue;
     for (const st0 of it.stats) {
       const v = st0.v * c.itemBoost;
       switch (st0.k) {
         case 'atk':
-          out.atk += v;
+          // v1 : l'attaque d'un exemplaire d'avant les puissances compte en Force (README 19.6).
+          if (out.pow) out.pow.for += v;
+          else out.atk += v;
+          break;
+        case 'for':
+        case 'ele':
+        case 'esp':
+        case 'foi':
+        case 'omb':
+          if (out.pow) out.pow[st0.k as Power] += v;
           break;
         case 'hp':
           out.hpMax += v * c.gaugeMult;
@@ -129,7 +138,7 @@ export function battleUnits(c: GenContent, squad: PlayerTroop[], group: MonsterG
         willMax: s.willMax,
         energyMax: s.energyMax,
         manaMax: s.manaMax,
-        atk: s.atk,
+        ...(s.pow ? { pow: s.pow } : { atk: s.atk }),
         speed: s.speed,
         res: s.res,
         weapon: s.weapon,
@@ -165,7 +174,8 @@ export function battleUnits(c: GenContent, squad: PlayerTroop[], group: MonsterG
         willMax: s.willMax,
         energyMax: s.energyMax,
         manaMax: s.manaMax,
-        atk: mAtk(s.atk),
+        ...(s.pow ? { pow: Object.fromEntries(POWERS.map((k) => [k, mAtk(s.pow![k])])) as Powers } : { atk: mAtk(s.atk) }),
+        ...(def.immune?.length ? { immune: def.immune } : {}),
         speed: s.speed,
         res: s.res,
         weapon: { ...w, dmg: mAtk(w.dmg) },

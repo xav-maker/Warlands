@@ -49,8 +49,8 @@ const calls = (c: GenContent): Record<string, (...a: any[]) => unknown> => ({
   battleUnits: (squad: PlayerTroop[], group: MonsterGroup, o: BattleOptions) => battleUnits(c, squad, group, o),
 });
 
-/** Le même contenu compilé depuis content/ (YAML) : les tirages doivent être identiques (ordre des entrées). */
-const compiled = validateContent(join(DIR, '../../../../content'));
+/** Le même contenu compilé depuis le YAML figé du prototype (packages/content/fixtures) : les tirages doivent être identiques (ordre des entrées). */
+const compiled = validateContent(join(DIR, '../../../content/fixtures/prototype-0.4'));
 const contents: [string, GenContent][] = [
   ['instantané du prototype', c],
   ['pack compilé depuis le YAML', compiled.pack as unknown as GenContent],

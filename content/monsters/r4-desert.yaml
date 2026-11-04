@@ -6,8 +6,8 @@ scorpions_geants:
   tags: [bete]
   weapon: dard
   defaultDist: 1
-  base: { hp: 85, will: 55, energy: 90, mana: 0, atk: 5 }
-  growth: { hp: 5, will: 1, energy: 2, mana: 1, atk: 1 }
+  base: { hp: 85, will: 55, energy: 90, mana: 0, for: 5, ele: 1, esp: 1, foi: 1, omb: 1 }
+  growth: { hp: 5, will: 1, energy: 2, mana: 1, for: 1, ele: 0.2, esp: 0.2, foi: 0.2, omb: 0.2 }
   forms:
     - id: scorpions_geants
       level: 1
@@ -23,8 +23,8 @@ momies:
   tags: [mort-vivant]
   weapon: lame_rouillee
   defaultDist: 1
-  base: { hp: 95, will: 99, energy: 80, mana: 30, atk: 4 }
-  growth: { hp: 5, will: 1, energy: 2, mana: 1, atk: 1 }
+  base: { hp: 95, will: 99, energy: 80, mana: 30, for: 4, ele: 0, esp: 2, foi: 0, omb: 2 }
+  growth: { hp: 5, will: 1, energy: 2, mana: 1, for: 1, ele: 0.2, esp: 0.5, foi: 0.2, omb: 0.5 }
   forms:
     - id: momies
       level: 1
@@ -40,8 +40,9 @@ djinn:
   tags: [esprit]
   weapon: souffle
   defaultDist: 3
-  base: { hp: 85, will: 80, energy: 70, mana: 70, atk: 4 }
-  growth: { hp: 3, will: 2, energy: 1, mana: 3, atk: 1 }
+  immune: [feu]
+  base: { hp: 85, will: 80, energy: 70, mana: 70, for: 2, ele: 4, esp: 0, foi: 0, omb: 0 }
+  growth: { hp: 3, will: 2, energy: 1, mana: 3, for: 0.5, ele: 1, esp: 0.2, foi: 0.2, omb: 0.2 }
   forms:
     - id: djinn
       level: 1
@@ -57,8 +58,8 @@ pillards_sable:
   tags: [humain]
   weapon: lame_rouillee
   defaultDist: 1
-  base: { hp: 65, will: 50, energy: 90, mana: 0, atk: 5 }
-  growth: { hp: 5, will: 1, energy: 2, mana: 1, atk: 1 }
+  base: { hp: 65, will: 50, energy: 90, mana: 0, for: 5, ele: 1, esp: 2, foi: 1, omb: 2 }
+  growth: { hp: 5, will: 1, energy: 2, mana: 1, for: 1, ele: 0.2, esp: 0.5, foi: 0.2, omb: 0.5 }
   forms:
     - id: pillards_sable
       level: 1
@@ -74,8 +75,8 @@ archers_nomades:
   tags: [humain]
   weapon: arc_m
   defaultDist: 3
-  base: { hp: 70, will: 55, energy: 90, mana: 0, atk: 5 }
-  growth: { hp: 5, will: 1, energy: 2, mana: 1, atk: 1 }
+  base: { hp: 70, will: 55, energy: 90, mana: 0, for: 5, ele: 1, esp: 2, foi: 1, omb: 1 }
+  growth: { hp: 5, will: 1, energy: 2, mana: 1, for: 1, ele: 0.2, esp: 0.5, foi: 0.2, omb: 0.2 }
   forms:
     - id: archers_nomades
       level: 1
@@ -91,8 +92,8 @@ salamandre:
   tags: [reptile]
   weapon: souffle
   defaultDist: 2
-  base: { hp: 110, will: 60, energy: 110, mana: 0, atk: 5 }
-  growth: { hp: 5, will: 1, energy: 2, mana: 1, atk: 1 }
+  base: { hp: 110, will: 60, energy: 110, mana: 0, for: 5, ele: 1, esp: 1, foi: 1, omb: 1 }
+  growth: { hp: 5, will: 1, energy: 2, mana: 1, for: 1, ele: 0.2, esp: 0.2, foi: 0.2, omb: 0.2 }
   forms:
     - id: salamandre
       level: 1
@@ -108,8 +109,8 @@ ver_sables:
   tags: [bete]
   weapon: machoires
   defaultDist: 1
-  base: { hp: 200, will: 50, energy: 120, mana: 0, atk: 7 }
-  growth: { hp: 8, will: 1, energy: 2, mana: 1, atk: 2 }
+  base: { hp: 200, will: 50, energy: 120, mana: 0, for: 7, ele: 1, esp: 1, foi: 1, omb: 1 }
+  growth: { hp: 8, will: 1, energy: 2, mana: 1, for: 2, ele: 0.4, esp: 0.4, foi: 0.4, omb: 0.4 }
   forms:
     - id: ver_sables
       level: 1
@@ -125,8 +126,8 @@ vautours:
   tags: [bete]
   weapon: bec
   defaultDist: 1
-  base: { hp: 35, will: 40, energy: 70, mana: 0, atk: 3 }
-  growth: { hp: 3, will: 1, energy: 1, mana: 0, atk: 1 }
+  base: { hp: 35, will: 40, energy: 70, mana: 0, for: 3, ele: 0, esp: 0, foi: 0, omb: 0 }
+  growth: { hp: 3, will: 1, energy: 1, mana: 0, for: 1, ele: 0.2, esp: 0.2, foi: 0.2, omb: 0.2 }
   forms:
     - id: vautours
       level: 1
@@ -142,8 +143,8 @@ ombre_mirage:
   tags: [esprit]
   weapon: mains_spectrales
   defaultDist: 2
-  base: { hp: 60, will: 80, energy: 80, mana: 40, atk: 5 }
-  growth: { hp: 3, will: 2, energy: 1, mana: 3, atk: 1 }
+  base: { hp: 60, will: 80, energy: 80, mana: 40, for: 5, ele: 1, esp: 2, foi: 1, omb: 2 }
+  growth: { hp: 3, will: 2, energy: 1, mana: 3, for: 1, ele: 0.2, esp: 0.5, foi: 0.2, omb: 0.5 }
   forms:
     - id: ombre_mirage
       level: 1
@@ -159,8 +160,8 @@ golem_verre:
   tags: [construct]
   weapon: poing_pierre
   defaultDist: 1
-  base: { hp: 190, will: 99, energy: 110, mana: 0, atk: 6 }
-  growth: { hp: 8, will: 1, energy: 2, mana: 1, atk: 2 }
+  base: { hp: 190, will: 99, energy: 110, mana: 0, for: 6, ele: 1, esp: 1, foi: 1, omb: 1 }
+  growth: { hp: 8, will: 1, energy: 2, mana: 1, for: 2, ele: 0.4, esp: 0.4, foi: 0.4, omb: 0.4 }
   forms:
     - id: golem_verre
       level: 1
@@ -176,8 +177,8 @@ pretre_scarabee:
   tags: [humain]
   weapon: baton_m
   defaultDist: 3
-  base: { hp: 80, will: 80, energy: 70, mana: 60, atk: 3 }
-  growth: { hp: 3, will: 2, energy: 1, mana: 3, atk: 1 }
+  base: { hp: 80, will: 80, energy: 70, mana: 60, for: 1, ele: 0, esp: 1, foi: 3, omb: 1 }
+  growth: { hp: 3, will: 2, energy: 1, mana: 3, for: 0.5, ele: 0.2, esp: 0.5, foi: 1, omb: 0.5 }
   forms:
     - id: pretre_scarabee
       level: 1
@@ -193,8 +194,9 @@ dragon_cendre:
   tags: [dragon]
   weapon: souffle
   defaultDist: 1
-  base: { hp: 600, will: 99, energy: 150, mana: 80, atk: 13 }
-  growth: { hp: 13, will: 2, energy: 2, mana: 2, atk: 2 }
+  immune: [feu]
+  base: { hp: 600, will: 99, energy: 150, mana: 80, for: 13, ele: 6, esp: 6, foi: 6, omb: 6 }
+  growth: { hp: 13, will: 2, energy: 2, mana: 2, for: 2, ele: 1, esp: 1, foi: 1, omb: 1 }
   forms:
     - id: dragon_cendre
       level: 1

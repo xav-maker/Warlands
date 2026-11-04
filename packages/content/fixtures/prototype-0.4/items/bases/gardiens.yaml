@@ -1,0 +1,48 @@
+# Bases réservées au butin des gardiens (non fabricables).
+
+ecorce_vivante:
+  tier: 2
+  slot: armure
+  cat: moyenne
+  value: 110
+  tags: []
+  craft: false
+  nStats: 3
+  pool: [[hp, 3], [res, 2, tranchant], [res, 2, feu], [energy, 1]]
+cape_noyes:
+  tier: 3
+  slot: accessoire
+  cat: anneau
+  value: 220
+  tags: []
+  craft: false
+  nStats: 4
+  pool: [[mana, 2], [will, 2], [res, 2, maladie], [res, 2, glace], [hp, 1]]
+poings_forge:
+  tier: 4
+  slot: arme
+  cat: gantelets
+  value: 400
+  tags: []
+  craft: false
+  nStats: 4
+  weapon: { type: feu, dmg: 17, speed: 14, cost: 6 }
+  pool: [[atk, 3], [wdmg, 3], [wspeed, 1], [wcost, 2], [energy, 1]]
+ecailles_dragon:
+  tier: 5
+  slot: armure
+  cat: lourde
+  value: 650
+  tags: []
+  craft: false
+  nStats: 5
+  pool: [[hp, 4], [res, 3, feu], [res, 3, tranchant], [res, 2, contondant], [energy, 1]]
+diademe_aube:
+  tier: 5
+  slot: accessoire
+  cat: anneau
+  value: 650
+  tags: []
+  craft: false
+  nStats: 5
+  pool: [[mana, 2], [will, 2], [atk, 2], [hp, 2], [res, 1]]

@@ -1,0 +1,52 @@
+# Objets non équipables. Noms et descriptions : texts/fr.yaml.
+
+totem_gobelin:
+  kind: composant
+  tier: 2
+  value: 25
+  tags: [gobelin, essence]
+coeur_ronce:
+  kind: composant
+  tier: 3
+  value: 45
+  tags: [bois, essence]
+perle_noyee:
+  kind: composant
+  tier: 3
+  value: 35
+  tags: [essence]
+coeur_marais:
+  kind: composant
+  tier: 3
+  value: 60
+  tags: [essence, herbe]
+noyau_golem:
+  kind: composant
+  tier: 4
+  value: 60
+  tags: [pierre, metal]
+gemme_profonde:
+  kind: composant
+  tier: 4
+  value: 90
+  tags: [pierre, essence]
+flamme_figee:
+  kind: composant
+  tier: 5
+  value: 100
+  tags: [essence]
+coeur_dragon:
+  kind: composant
+  tier: 5
+  value: 140
+  tags: [bete, essence]
+plume_archonte:
+  kind: composant
+  tier: 5
+  value: 110
+  tags: [plume, essence]
+couronne_aube:
+  kind: composant
+  tier: 5
+  value: 180
+  tags: [metal, essence]

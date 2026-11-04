@@ -1,0 +1,150 @@
+# Bases d’équipement : pool de stats (poids), arme le cas échéant.
+
+legere_1:
+  tier: 1
+  slot: armure
+  cat: legere
+  value: 30
+  tags: [cuir, fil]
+  pool: [[hp, 3], [energy, 2], [res, 2, tranchant], [res, 1, contondant], [res, 1]]
+legere_2:
+  tier: 2
+  slot: armure
+  cat: legere
+  value: 70
+  tags: [cuir, fil]
+  pool: [[hp, 3], [energy, 2], [res, 2, tranchant], [res, 1, contondant], [res, 1]]
+legere_3:
+  tier: 3
+  slot: armure
+  cat: legere
+  value: 140
+  tags: [cuir, fil]
+  pool: [[hp, 3], [energy, 2], [res, 2, tranchant], [res, 1, contondant], [res, 1]]
+legere_4:
+  tier: 4
+  slot: armure
+  cat: legere
+  value: 260
+  tags: [cuir, fil]
+  pool: [[hp, 3], [energy, 2], [res, 2, tranchant], [res, 1, contondant], [res, 1]]
+  workshop: true
+legere_5:
+  tier: 5
+  slot: armure
+  cat: legere
+  value: 450
+  tags: [cuir, fil]
+  pool: [[hp, 3], [energy, 2], [res, 2, tranchant], [res, 1, contondant], [res, 1]]
+  workshop: true
+moyenne_1:
+  tier: 1
+  slot: armure
+  cat: moyenne
+  value: 30
+  tags: [metal, cuir]
+  pool: [[hp, 3], [res, 3, tranchant], [res, 2, contondant], [will, 1], [res, 1]]
+moyenne_2:
+  tier: 2
+  slot: armure
+  cat: moyenne
+  value: 70
+  tags: [metal, cuir]
+  pool: [[hp, 3], [res, 3, tranchant], [res, 2, contondant], [will, 1], [res, 1]]
+moyenne_3:
+  tier: 3
+  slot: armure
+  cat: moyenne
+  value: 140
+  tags: [metal, cuir]
+  pool: [[hp, 3], [res, 3, tranchant], [res, 2, contondant], [will, 1], [res, 1]]
+moyenne_4:
+  tier: 4
+  slot: armure
+  cat: moyenne
+  value: 260
+  tags: [metal, cuir]
+  pool: [[hp, 3], [res, 3, tranchant], [res, 2, contondant], [will, 1], [res, 1]]
+  workshop: true
+moyenne_5:
+  tier: 5
+  slot: armure
+  cat: moyenne
+  value: 450
+  tags: [metal, cuir]
+  pool: [[hp, 3], [res, 3, tranchant], [res, 2, contondant], [will, 1], [res, 1]]
+  workshop: true
+lourde_1:
+  tier: 1
+  slot: armure
+  cat: lourde
+  value: 30
+  tags: [metal, pierre]
+  pool: [[hp, 4], [res, 3, tranchant], [res, 3, contondant], [res, 1]]
+lourde_2:
+  tier: 2
+  slot: armure
+  cat: lourde
+  value: 70
+  tags: [metal, pierre]
+  pool: [[hp, 4], [res, 3, tranchant], [res, 3, contondant], [res, 1]]
+lourde_3:
+  tier: 3
+  slot: armure
+  cat: lourde
+  value: 140
+  tags: [metal, pierre]
+  pool: [[hp, 4], [res, 3, tranchant], [res, 3, contondant], [res, 1]]
+lourde_4:
+  tier: 4
+  slot: armure
+  cat: lourde
+  value: 260
+  tags: [metal, pierre]
+  pool: [[hp, 4], [res, 3, tranchant], [res, 3, contondant], [res, 1]]
+  workshop: true
+lourde_5:
+  tier: 5
+  slot: armure
+  cat: lourde
+  value: 450
+  tags: [metal, pierre]
+  pool: [[hp, 4], [res, 3, tranchant], [res, 3, contondant], [res, 1]]
+  workshop: true
+robe_1:
+  tier: 1
+  slot: armure
+  cat: robe
+  value: 30
+  tags: [fil, herbe, plume]
+  pool: [[mana, 3], [will, 2], [hp, 1], [res, 1]]
+robe_2:
+  tier: 2
+  slot: armure
+  cat: robe
+  value: 70
+  tags: [fil, herbe, plume]
+  pool: [[mana, 3], [will, 2], [hp, 1], [res, 1]]
+robe_3:
+  tier: 3
+  slot: armure
+  cat: robe
+  value: 140
+  tags: [fil, herbe, plume]
+  pool: [[mana, 3], [will, 2], [hp, 1], [res, 1]]
+robe_4:
+  tier: 4
+  slot: armure
+  cat: robe
+  value: 260
+  tags: [fil, herbe, plume]
+  pool: [[mana, 3], [will, 2], [hp, 1], [res, 1]]
+  workshop: true
+robe_5:
+  tier: 5
+  slot: armure
+  cat: robe
+  value: 450
+  tags: [fil, herbe, plume]
+  pool: [[mana, 3], [will, 2], [hp, 1], [res, 1]]
+  workshop: true

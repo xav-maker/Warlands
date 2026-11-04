@@ -1,0 +1,362 @@
+# Monstres : définition de troupe, butin (drops), gardien (boss), région.
+
+rare_lisiere:
+  units: 1
+  pop: 2
+  tags: [bete]
+  weapon: crocs_gris
+  defaultDist: 1
+  base: { hp: 144, will: 59, energy: 90, mana: 0, atk: 7 }
+  growth: { hp: 9.6, will: 1, energy: 2, mana: 0, atk: 1 }
+  forms:
+    - id: loup_gris
+      level: 1
+      speed: 15
+      res: { glace: 20, feu: -20 }
+      skills: [[morsure, 1], [repos, 1], [charge, 4], [hurlement, 8]]
+  drops: [fourrure_givre]
+  boss: false
+  region: 0
+  rare: { step: lisiere, trophy: fourrure_givre, base: loup_gris }
+rare_sentier:
+  units: 1
+  pop: 2
+  tags: [gobelin]
+  weapon: coutelas
+  defaultDist: 1
+  base: { hp: 274, will: 52, energy: 70, mana: 0, atk: 5 }
+  growth: { hp: 21.6, will: 1, energy: 1, mana: 0, atk: 1 }
+  forms:
+    - id: gobelin
+      level: 1
+      speed: 17
+      res: { tenebres: 10, sacre: -10 }
+      skills: [[emploi, 1], [repos, 1], [lame_saignante, 4], [exploit, 7]]
+  drops: [banniere_grishnak]
+  boss: false
+  region: 0
+  rare: { step: sentier, trophy: banniere_grishnak, base: gobelins }
+rare_nids:
+  units: 1
+  pop: 2
+  tags: [bete]
+  weapon: chelicères
+  defaultDist: 2
+  base: { hp: 180, will: 65, energy: 80, mana: 30, atk: 6 }
+  growth: { hp: 9.6, will: 1, energy: 1, mana: 2, atk: 1 }
+  forms:
+    - id: araignee
+      level: 1
+      speed: 18
+      res: { maladie: 40, feu: -25 }
+      skills: [[emploi, 1], [repos, 1], [nuage, 3], [grappin, 6]]
+  drops: [oeuf_reine_soie]
+  boss: false
+  region: 0
+  rare: { step: nids, trophy: oeuf_reine_soie, base: araignee }
+rare_camp:
+  units: 1
+  pop: 2
+  tags: [geant]
+  weapon: gourdin
+  defaultDist: 1
+  base: { hp: 360, will: 72, energy: 110, mana: 0, atk: 9 }
+  growth: { hp: 21.6, will: 1, energy: 2, mana: 0, atk: 2 }
+  forms:
+    - id: troll
+      level: 1
+      speed: 26
+      res: { contondant: 20, feu: -20 }
+      skills: [[emploi, 1], [repos, 1], [exploit, 3], [riposte, 6]]
+  drops: [oeil_machefer]
+  boss: false
+  region: 0
+  rare: { step: camp, trophy: oeil_machefer, base: troll }
+rare_berges:
+  units: 1
+  pop: 2
+  tags: [bete]
+  weapon: dard
+  defaultDist: 1
+  base: { hp: 264, will: 65, energy: 90, mana: 0, atk: 7 }
+  growth: { hp: 12, will: 1, energy: 2, mana: 1, atk: 1 }
+  forms:
+    - id: crapaud
+      level: 1
+      speed: 20
+      res: { maladie: 40 }
+      skills: [[morsure, 1], [repos, 1], [morsure_venin, 1], [jet_toile, 1]]
+  drops: [langue_vase]
+  boss: false
+  region: 1
+  rare: { step: berges, trophy: langue_vase, base: crapaud }
+rare_roselieres:
+  units: 1
+  pop: 2
+  tags: [reptile]
+  weapon: harpon_m
+  defaultDist: 1
+  base: { hp: 384, will: 72, energy: 90, mana: 0, atk: 7 }
+  growth: { hp: 24, will: 1, energy: 2, mana: 1, atk: 1 }
+  forms:
+    - id: hommes_lezards
+      level: 1
+      speed: 19
+      res: { glace: -20, maladie: 20 }
+      skills: [[emploi, 1], [repos, 1], [coup_jarret, 1], [grappin, 1]]
+  drops: [crane_ssark]
+  boss: false
+  region: 1
+  rare: { step: roselieres, trophy: crane_ssark, base: hommes_lezards }
+rare_epaves:
+  units: 1
+  pop: 2
+  tags: [mort-vivant]
+  weapon: harpon_m
+  defaultDist: 2
+  base: { hp: 250, will: 104, energy: 80, mana: 0, atk: 7 }
+  growth: { hp: 19.2, will: 1, energy: 2, mana: 1, atk: 1 }
+  forms:
+    - id: pecheurs_maudits
+      level: 1
+      speed: 20
+      res: { maladie: 40, sacre: -40 }
+      skills: [[emploi, 1], [repos, 1], [grappin, 1]]
+  drops: [lanterne_capitaine]
+  boss: false
+  region: 1
+  rare: { step: epaves, trophy: lanterne_capitaine, base: pecheurs_maudits }
+rare_tertre:
+  units: 1
+  pop: 2
+  tags: [reptile, bete]
+  weapon: machoires
+  defaultDist: 1
+  base: { hp: 326, will: 72, energy: 110, mana: 0, atk: 10 }
+  growth: { hp: 15.4, will: 1, energy: 2, mana: 1, atk: 2 }
+  forms:
+    - id: crocodile
+      level: 1
+      speed: 24
+      res: { tranchant: 20, glace: -20 }
+      skills: [[morsure, 1], [repos, 1], [assassinat, 1]]
+  drops: [dent_mangeur]
+  boss: false
+  region: 1
+  rare: { step: tertre, trophy: dent_mangeur, base: crocodile }
+rare_entree:
+  units: 1
+  pop: 2
+  tags: [kobold]
+  weapon: flasques
+  defaultDist: 3
+  base: { hp: 120, will: 59, energy: 70, mana: 30, atk: 6 }
+  growth: { hp: 7.2, will: 1, energy: 1, mana: 0, atk: 1 }
+  forms:
+    - id: artificier
+      level: 1
+      speed: 19
+      res: { feu: 30 }
+      skills: [[tir_fronde, 1], [fleche_feu, 1], [repos, 1]]
+  drops: [detonateur]
+  boss: false
+  region: 2
+  rare: { step: entree, trophy: detonateur, base: artificier }
+rare_galeries:
+  units: 1
+  pop: 2
+  tags: [bete]
+  weapon: machoires
+  defaultDist: 1
+  base: { hp: 312, will: 65, energy: 100, mana: 0, atk: 8 }
+  growth: { hp: 12, will: 1, energy: 2, mana: 1, atk: 1 }
+  forms:
+    - id: ver_galeries
+      level: 1
+      speed: 23
+      res: { contondant: 20 }
+      skills: [[morsure, 1], [morsure_venin, 1], [frappe_sismique, 1]]
+  drops: [mandibule_ver]
+  boss: false
+  region: 2
+  rare: { step: galeries, trophy: mandibule_ver, base: ver_galeries }
+rare_filons:
+  units: 1
+  pop: 2
+  tags: [construct]
+  weapon: mains_spectrales
+  defaultDist: 3
+  base: { hp: 173, will: 129, energy: 70, mana: 60, atk: 6 }
+  growth: { hp: 6.5, will: 2, energy: 1, mana: 3, atk: 1 }
+  forms:
+    - id: elementaire_cristal
+      level: 1
+      speed: 22
+      res: { glace: 60, contondant: -30 }
+      skills: [[emploi, 1], [eclat_glace, 1], [tempete_givre, 1], [meditation, 1]]
+  drops: [coeur_prisme]
+  boss: false
+  region: 2
+  rare: { step: filons, trophy: coeur_prisme, base: elementaire_cristal }
+rare_puits:
+  units: 1
+  pop: 2
+  tags: [reptile]
+  weapon: machoires
+  defaultDist: 1
+  base: { hp: 307, will: 91, energy: 100, mana: 40, atk: 9 }
+  growth: { hp: 15.4, will: 1, energy: 2, mana: 1, atk: 2 }
+  forms:
+    - id: basilic
+      level: 1
+      speed: 23
+      res: { tranchant: 20, maladie: 20 }
+      skills: [[morsure, 1], [affaiblissement, 1], [morsure_venin, 1]]
+  drops: [oeil_or]
+  boss: false
+  region: 2
+  rare: { step: puits, trophy: oeil_or, base: basilic }
+rare_dunes:
+  units: 1
+  pop: 2
+  tags: [esprit]
+  weapon: mains_spectrales
+  defaultDist: 2
+  base: { hp: 173, will: 104, energy: 80, mana: 40, atk: 9 }
+  growth: { hp: 8.6, will: 2, energy: 1, mana: 3, atk: 1 }
+  forms:
+    - id: ombre_mirage
+      level: 1
+      speed: 15
+      res: { tranchant: 40, contondant: 40, sacre: -40 }
+      skills: [[emploi, 1], [lame_ombre, 1], [mot_silence, 1]]
+  drops: [voile_mirage]
+  boss: false
+  region: 3
+  rare: { step: dunes, trophy: voile_mirage, base: ombre_mirage }
+rare_caravane:
+  units: 1
+  pop: 2
+  tags: [humain]
+  weapon: lame_rouillee
+  defaultDist: 1
+  base: { hp: 468, will: 65, energy: 90, mana: 0, atk: 8 }
+  growth: { hp: 36, will: 1, energy: 2, mana: 1, atk: 1 }
+  forms:
+    - id: pillards_sable
+      level: 1
+      speed: 17
+      res: { feu: 20 }
+      skills: [[emploi, 1], [repos, 1], [assassinat, 1]]
+  drops: [sceau_main_rouge]
+  boss: false
+  region: 3
+  rare: { step: caravane, trophy: sceau_main_rouge, base: pillards_sable }
+rare_tombeaux:
+  units: 1
+  pop: 2
+  tags: [humain]
+  weapon: baton_m
+  defaultDist: 3
+  base: { hp: 288, will: 104, energy: 70, mana: 60, atk: 8 }
+  growth: { hp: 10.8, will: 2, energy: 1, mana: 3, atk: 1 }
+  forms:
+    - id: pretre_scarabee
+      level: 1
+      speed: 22
+      res: { feu: 30, sacre: 20 }
+      skills: [[emploi, 1], [soin_mineur, 1], [affaiblissement, 1], [meditation, 1]]
+  drops: [scarabee_or]
+  boss: false
+  region: 3
+  rare: { step: tombeaux, trophy: scarabee_or, base: pretre_scarabee }
+rare_verrerie:
+  units: 1
+  pop: 2
+  tags: [bete]
+  weapon: machoires
+  defaultDist: 1
+  base: { hp: 480, will: 65, energy: 120, mana: 0, atk: 10 }
+  growth: { hp: 19.2, will: 1, energy: 2, mana: 1, atk: 2 }
+  forms:
+    - id: ver_sables
+      level: 1
+      speed: 25
+      res: { contondant: 25 }
+      skills: [[morsure, 1], [frappe_sismique, 1], [repos, 1]]
+  drops: [perle_ver_roi]
+  boss: false
+  region: 3
+  rare: { step: verrerie, trophy: perle_ver_roi, base: ver_sables }
+rare_marches:
+  units: 1
+  pop: 2
+  tags: [bete]
+  weapon: griffes_m
+  defaultDist: 1
+  base: { hp: 288, will: 78, energy: 110, mana: 0, atk: 9 }
+  growth: { hp: 12, will: 1, energy: 2, mana: 1, atk: 1 }
+  forms:
+    - id: griffons
+      level: 1
+      speed: 15
+      res: { tranchant: 15 }
+      skills: [[morsure, 1], [charge, 1], [repos, 1]]
+  drops: [remige_argent]
+  boss: false
+  region: 4
+  rare: { step: marches, trophy: remige_argent, base: griffons }
+rare_parvis:
+  units: 1
+  pop: 2
+  tags: [construct]
+  weapon: lame_lumiere
+  defaultDist: 1
+  base: { hp: 370, will: 129, energy: 100, mana: 0, atk: 8 }
+  growth: { hp: 16.8, will: 1, energy: 2, mana: 1, atk: 1 }
+  forms:
+    - id: sentinelles
+      level: 1
+      speed: 22
+      res: { tranchant: 30, contondant: 20, sacre: 40 }
+      skills: [[emploi, 1], [provocation, 1], [repos, 1]]
+  drops: [glyphe_vigilance]
+  boss: false
+  region: 4
+  rare: { step: parvis, trophy: glyphe_vigilance, base: sentinelles }
+rare_observatoire:
+  units: 1
+  pop: 2
+  tags: [humain]
+  weapon: baton_m
+  defaultDist: 3
+  base: { hp: 192, will: 117, energy: 70, mana: 70, atk: 6 }
+  growth: { hp: 7.2, will: 2, energy: 1, mana: 3, atk: 1 }
+  forms:
+    - id: astromancien
+      level: 1
+      speed: 22
+      res: { glace: 40, psychique: 30 }
+      skills: [[emploi, 1], [tempete_givre, 1], [mot_silence, 1], [meditation, 1]]
+  drops: [astrolabe_brise]
+  boss: false
+  region: 4
+  rare: { step: observatoire, trophy: astrolabe_brise, base: astromancien }
+rare_jardins:
+  units: 1
+  pop: 2
+  tags: [bete]
+  weapon: machoires
+  defaultDist: 1
+  base: { hp: 319, will: 91, energy: 120, mana: 0, atk: 10 }
+  growth: { hp: 13.4, will: 1, energy: 2, mana: 1, atk: 2 }
+  forms:
+    - id: chimere
+      level: 1
+      speed: 20
+      res: { feu: 40, maladie: 30 }
+      skills: [[morsure, 1], [souffle_feu, 1], [morsure_venin, 1]]
+  drops: [corne_chimere]
+  boss: false
+  region: 4
+  rare: { step: jardins, trophy: corne_chimere, base: chimere }

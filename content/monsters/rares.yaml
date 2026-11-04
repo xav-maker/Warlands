@@ -6,8 +6,8 @@ rare_lisiere:
   tags: [bete]
   weapon: crocs_gris
   defaultDist: 1
-  base: { hp: 144, will: 59, energy: 90, mana: 0, atk: 7 }
-  growth: { hp: 9.6, will: 1, energy: 2, mana: 0, atk: 1 }
+  base: { hp: 144, will: 59, energy: 90, mana: 0, for: 7, ele: 1, esp: 3, foi: 1, omb: 1 }
+  growth: { hp: 9.6, will: 1, energy: 2, mana: 0, for: 1, ele: 0.2, esp: 0.5, foi: 0.2, omb: 0.2 }
   forms:
     - id: loup_gris
       level: 1
@@ -24,8 +24,8 @@ rare_sentier:
   tags: [gobelin]
   weapon: coutelas
   defaultDist: 1
-  base: { hp: 274, will: 52, energy: 70, mana: 0, atk: 5 }
-  growth: { hp: 21.6, will: 1, energy: 1, mana: 0, atk: 1 }
+  base: { hp: 274, will: 52, energy: 70, mana: 0, for: 5, ele: 1, esp: 2, foi: 1, omb: 2 }
+  growth: { hp: 21.6, will: 1, energy: 1, mana: 0, for: 1, ele: 0.2, esp: 0.5, foi: 0.2, omb: 0.5 }
   forms:
     - id: gobelin
       level: 1
@@ -42,8 +42,8 @@ rare_nids:
   tags: [bete]
   weapon: chelicères
   defaultDist: 2
-  base: { hp: 180, will: 65, energy: 80, mana: 30, atk: 6 }
-  growth: { hp: 9.6, will: 1, energy: 1, mana: 2, atk: 1 }
+  base: { hp: 180, will: 65, energy: 80, mana: 30, for: 6, ele: 1, esp: 1, foi: 1, omb: 3 }
+  growth: { hp: 9.6, will: 1, energy: 1, mana: 2, for: 1, ele: 0.2, esp: 0.2, foi: 0.2, omb: 0.5 }
   forms:
     - id: araignee
       level: 1
@@ -60,8 +60,8 @@ rare_camp:
   tags: [geant]
   weapon: gourdin
   defaultDist: 1
-  base: { hp: 360, will: 72, energy: 110, mana: 0, atk: 9 }
-  growth: { hp: 21.6, will: 1, energy: 2, mana: 0, atk: 2 }
+  base: { hp: 360, will: 72, energy: 110, mana: 0, for: 9, ele: 1, esp: 1, foi: 1, omb: 1 }
+  growth: { hp: 21.6, will: 1, energy: 2, mana: 0, for: 2, ele: 0.4, esp: 0.4, foi: 0.4, omb: 0.4 }
   forms:
     - id: troll
       level: 1
@@ -78,8 +78,8 @@ rare_berges:
   tags: [bete]
   weapon: dard
   defaultDist: 1
-  base: { hp: 264, will: 65, energy: 90, mana: 0, atk: 7 }
-  growth: { hp: 12, will: 1, energy: 2, mana: 1, atk: 1 }
+  base: { hp: 264, will: 65, energy: 90, mana: 0, for: 7, ele: 1, esp: 1, foi: 1, omb: 1 }
+  growth: { hp: 12, will: 1, energy: 2, mana: 1, for: 1, ele: 0.2, esp: 0.2, foi: 0.2, omb: 0.2 }
   forms:
     - id: crapaud
       level: 1
@@ -96,8 +96,8 @@ rare_roselieres:
   tags: [reptile]
   weapon: harpon_m
   defaultDist: 1
-  base: { hp: 384, will: 72, energy: 90, mana: 0, atk: 7 }
-  growth: { hp: 24, will: 1, energy: 2, mana: 1, atk: 1 }
+  base: { hp: 384, will: 72, energy: 90, mana: 0, for: 7, ele: 1, esp: 3, foi: 1, omb: 3 }
+  growth: { hp: 24, will: 1, energy: 2, mana: 1, for: 1, ele: 0.2, esp: 0.5, foi: 0.2, omb: 0.5 }
   forms:
     - id: hommes_lezards
       level: 1
@@ -114,8 +114,8 @@ rare_epaves:
   tags: [mort-vivant]
   weapon: harpon_m
   defaultDist: 2
-  base: { hp: 250, will: 104, energy: 80, mana: 0, atk: 7 }
-  growth: { hp: 19.2, will: 1, energy: 2, mana: 1, atk: 1 }
+  base: { hp: 250, will: 104, energy: 80, mana: 0, for: 7, ele: 1, esp: 3, foi: 1, omb: 3 }
+  growth: { hp: 19.2, will: 1, energy: 2, mana: 1, for: 1, ele: 0.2, esp: 0.5, foi: 0.2, omb: 0.5 }
   forms:
     - id: pecheurs_maudits
       level: 1
@@ -132,8 +132,8 @@ rare_tertre:
   tags: [reptile, bete]
   weapon: machoires
   defaultDist: 1
-  base: { hp: 326, will: 72, energy: 110, mana: 0, atk: 10 }
-  growth: { hp: 15.4, will: 1, energy: 2, mana: 1, atk: 2 }
+  base: { hp: 326, will: 72, energy: 110, mana: 0, for: 10, ele: 2, esp: 2, foi: 2, omb: 2 }
+  growth: { hp: 15.4, will: 1, energy: 2, mana: 1, for: 2, ele: 0.4, esp: 0.4, foi: 0.4, omb: 0.4 }
   forms:
     - id: crocodile
       level: 1
@@ -150,8 +150,8 @@ rare_entree:
   tags: [kobold]
   weapon: flasques
   defaultDist: 3
-  base: { hp: 120, will: 59, energy: 70, mana: 30, atk: 6 }
-  growth: { hp: 7.2, will: 1, energy: 1, mana: 0, atk: 1 }
+  base: { hp: 120, will: 59, energy: 70, mana: 30, for: 6, ele: 3, esp: 3, foi: 1, omb: 1 }
+  growth: { hp: 7.2, will: 1, energy: 1, mana: 0, for: 1, ele: 0.5, esp: 0.5, foi: 0.2, omb: 0.2 }
   forms:
     - id: artificier
       level: 1
@@ -168,8 +168,8 @@ rare_galeries:
   tags: [bete]
   weapon: machoires
   defaultDist: 1
-  base: { hp: 312, will: 65, energy: 100, mana: 0, atk: 8 }
-  growth: { hp: 12, will: 1, energy: 2, mana: 1, atk: 1 }
+  base: { hp: 312, will: 65, energy: 100, mana: 0, for: 8, ele: 1, esp: 1, foi: 1, omb: 1 }
+  growth: { hp: 12, will: 1, energy: 2, mana: 1, for: 1, ele: 0.2, esp: 0.2, foi: 0.2, omb: 0.2 }
   forms:
     - id: ver_galeries
       level: 1
@@ -186,8 +186,8 @@ rare_filons:
   tags: [construct]
   weapon: mains_spectrales
   defaultDist: 3
-  base: { hp: 173, will: 129, energy: 70, mana: 60, atk: 6 }
-  growth: { hp: 6.5, will: 2, energy: 1, mana: 3, atk: 1 }
+  base: { hp: 173, will: 129, energy: 70, mana: 60, for: 3, ele: 6, esp: 1, foi: 1, omb: 1 }
+  growth: { hp: 6.5, will: 2, energy: 1, mana: 3, for: 0.5, ele: 1, esp: 0.2, foi: 0.2, omb: 0.2 }
   forms:
     - id: elementaire_cristal
       level: 1
@@ -204,8 +204,8 @@ rare_puits:
   tags: [reptile]
   weapon: machoires
   defaultDist: 1
-  base: { hp: 307, will: 91, energy: 100, mana: 40, atk: 9 }
-  growth: { hp: 15.4, will: 1, energy: 2, mana: 1, atk: 2 }
+  base: { hp: 307, will: 91, energy: 100, mana: 40, for: 9, ele: 1, esp: 1, foi: 1, omb: 4 }
+  growth: { hp: 15.4, will: 1, energy: 2, mana: 1, for: 2, ele: 0.4, esp: 0.4, foi: 0.4, omb: 1 }
   forms:
     - id: basilic
       level: 1
@@ -222,8 +222,8 @@ rare_dunes:
   tags: [esprit]
   weapon: mains_spectrales
   defaultDist: 2
-  base: { hp: 173, will: 104, energy: 80, mana: 40, atk: 9 }
-  growth: { hp: 8.6, will: 2, energy: 1, mana: 3, atk: 1 }
+  base: { hp: 173, will: 104, energy: 80, mana: 40, for: 9, ele: 1, esp: 4, foi: 1, omb: 4 }
+  growth: { hp: 8.6, will: 2, energy: 1, mana: 3, for: 1, ele: 0.2, esp: 0.5, foi: 0.2, omb: 0.5 }
   forms:
     - id: ombre_mirage
       level: 1
@@ -240,8 +240,8 @@ rare_caravane:
   tags: [humain]
   weapon: lame_rouillee
   defaultDist: 1
-  base: { hp: 468, will: 65, energy: 90, mana: 0, atk: 8 }
-  growth: { hp: 36, will: 1, energy: 2, mana: 1, atk: 1 }
+  base: { hp: 468, will: 65, energy: 90, mana: 0, for: 8, ele: 1, esp: 4, foi: 1, omb: 4 }
+  growth: { hp: 36, will: 1, energy: 2, mana: 1, for: 1, ele: 0.2, esp: 0.5, foi: 0.2, omb: 0.5 }
   forms:
     - id: pillards_sable
       level: 1
@@ -258,8 +258,8 @@ rare_tombeaux:
   tags: [humain]
   weapon: baton_m
   defaultDist: 3
-  base: { hp: 288, will: 104, energy: 70, mana: 60, atk: 8 }
-  growth: { hp: 10.8, will: 2, energy: 1, mana: 3, atk: 1 }
+  base: { hp: 288, will: 104, energy: 70, mana: 60, for: 4, ele: 1, esp: 4, foi: 8, omb: 4 }
+  growth: { hp: 10.8, will: 2, energy: 1, mana: 3, for: 0.5, ele: 0.2, esp: 0.5, foi: 1, omb: 0.5 }
   forms:
     - id: pretre_scarabee
       level: 1
@@ -276,8 +276,8 @@ rare_verrerie:
   tags: [bete]
   weapon: machoires
   defaultDist: 1
-  base: { hp: 480, will: 65, energy: 120, mana: 0, atk: 10 }
-  growth: { hp: 19.2, will: 1, energy: 2, mana: 1, atk: 2 }
+  base: { hp: 480, will: 65, energy: 120, mana: 0, for: 10, ele: 2, esp: 2, foi: 2, omb: 2 }
+  growth: { hp: 19.2, will: 1, energy: 2, mana: 1, for: 2, ele: 0.4, esp: 0.4, foi: 0.4, omb: 0.4 }
   forms:
     - id: ver_sables
       level: 1
@@ -294,8 +294,8 @@ rare_marches:
   tags: [bete]
   weapon: griffes_m
   defaultDist: 1
-  base: { hp: 288, will: 78, energy: 110, mana: 0, atk: 9 }
-  growth: { hp: 12, will: 1, energy: 2, mana: 1, atk: 1 }
+  base: { hp: 288, will: 78, energy: 110, mana: 0, for: 9, ele: 1, esp: 1, foi: 1, omb: 1 }
+  growth: { hp: 12, will: 1, energy: 2, mana: 1, for: 1, ele: 0.2, esp: 0.2, foi: 0.2, omb: 0.2 }
   forms:
     - id: griffons
       level: 1
@@ -312,8 +312,8 @@ rare_parvis:
   tags: [construct]
   weapon: lame_lumiere
   defaultDist: 1
-  base: { hp: 370, will: 129, energy: 100, mana: 0, atk: 8 }
-  growth: { hp: 16.8, will: 1, energy: 2, mana: 1, atk: 1 }
+  base: { hp: 370, will: 129, energy: 100, mana: 0, for: 8, ele: 1, esp: 4, foi: 4, omb: 1 }
+  growth: { hp: 16.8, will: 1, energy: 2, mana: 1, for: 1, ele: 0.2, esp: 0.5, foi: 0.5, omb: 0.2 }
   forms:
     - id: sentinelles
       level: 1
@@ -330,8 +330,8 @@ rare_observatoire:
   tags: [humain]
   weapon: baton_m
   defaultDist: 3
-  base: { hp: 192, will: 117, energy: 70, mana: 70, atk: 6 }
-  growth: { hp: 7.2, will: 2, energy: 1, mana: 3, atk: 1 }
+  base: { hp: 192, will: 117, energy: 70, mana: 70, for: 3, ele: 6, esp: 3, foi: 1, omb: 1 }
+  growth: { hp: 7.2, will: 2, energy: 1, mana: 3, for: 0.5, ele: 1, esp: 0.5, foi: 0.2, omb: 0.2 }
   forms:
     - id: astromancien
       level: 1
@@ -348,8 +348,8 @@ rare_jardins:
   tags: [bete]
   weapon: machoires
   defaultDist: 1
-  base: { hp: 319, will: 91, energy: 120, mana: 0, atk: 10 }
-  growth: { hp: 13.4, will: 1, energy: 2, mana: 1, atk: 2 }
+  base: { hp: 319, will: 91, energy: 120, mana: 0, for: 10, ele: 2, esp: 2, foi: 2, omb: 2 }
+  growth: { hp: 13.4, will: 1, energy: 2, mana: 1, for: 2, ele: 0.4, esp: 0.4, foi: 0.4, omb: 0.4 }
   forms:
     - id: chimere
       level: 1

@@ -1,0 +1,442 @@
+# Sorts ajoutés (effets génériques fx).
+
+eclat_glace:
+  kind: active
+  target: enemy
+  range: 4
+  energy: 0
+  mana: 8
+  durBase: unit
+  durMult: 1000
+  p: {}
+  attack: true
+  ai: attack
+  fx:
+    - { k: dmg, v: 16, type: glace }
+    - { k: state, s: ralenti, dur: 40 }
+tempete_givre:
+  kind: active
+  target: enemy
+  range: 5
+  energy: 0
+  mana: 20
+  durBase: unit
+  durMult: 2000
+  p: {}
+  attack: true
+  ai: aoe
+  fx:
+    - { k: dmg, v: 14, type: glace, area: rank }
+    - { k: state, s: ralenti, dur: 60, area: rank }
+pluie_feu:
+  kind: active
+  target: enemy
+  range: 5
+  energy: 0
+  mana: 24
+  durBase: unit
+  durMult: 2500
+  p: {}
+  attack: true
+  ai: aoe
+  fx:
+    - { k: dmg, v: 12, type: feu, area: allEnemies }
+    - { k: state, s: brulure, v: 4, dur: 40, area: allEnemies }
+eruption:
+  kind: active
+  target: enemy
+  range: 5
+  energy: 0
+  mana: 30
+  durBase: unit
+  durMult: 3000
+  p: {}
+  attack: true
+  ai: aoe
+  fx:
+    - { k: dmg, v: 24, type: feu, area: allEnemies }
+    - { k: stun, v: 10, area: front }
+souffle_feu:
+  kind: active
+  target: enemy
+  range: 2
+  energy: 30
+  mana: 0
+  durBase: unit
+  durMult: 2000
+  p: {}
+  attack: true
+  ai: aoe
+  fx:
+    - { k: dmg, v: 18, type: feu, area: rank }
+    - { k: state, s: brulure, v: 5, dur: 40, area: rank }
+javelot_lumiere:
+  kind: active
+  target: enemy
+  range: 5
+  energy: 0
+  mana: 12
+  durBase: unit
+  durMult: 1000
+  p: {}
+  attack: true
+  ai: attack
+  fx:
+    - { k: dmg, v: 22, type: sacre, tag: mort-vivant, tagMult: 2000 }
+nova_sacree:
+  kind: active
+  target: enemy
+  range: 5
+  energy: 0
+  mana: 18
+  durBase: unit
+  durMult: 2000
+  p: {}
+  attack: true
+  ai: aoe
+  fx:
+    - { k: dmg, v: 15, type: sacre, area: front, tag: mort-vivant, tagMult: 2000 }
+fleau:
+  kind: active
+  target: enemy
+  range: 4
+  energy: 0
+  mana: 14
+  durBase: unit
+  durMult: 1000
+  p: {}
+  attack: true
+  ai: debuff
+  fx:
+    - { k: state, s: poison, v: 4, dur: 100, cap: 3 }
+    - { k: dmg, v: 8, type: maladie }
+toucher_spectral:
+  kind: active
+  target: enemy
+  range: 3
+  energy: 0
+  mana: 10
+  durBase: unit
+  durMult: 1000
+  p: {}
+  attack: true
+  ai: attack
+  fx:
+    - { k: drain, v: 18, type: tenebres }
+lame_ombre:
+  kind: active
+  target: enemy
+  range: 1
+  energy: 20
+  mana: 0
+  durBase: weapon
+  durMult: 1000
+  p: {}
+  attack: true
+  melee: true
+  ai: attack
+  fx:
+    - { k: wdmg, v: 1300, type: tenebres }
+cri_effroi:
+  kind: active
+  target: enemy
+  range: 5
+  energy: 20
+  mana: 0
+  durBase: unit
+  durMult: 1000
+  p: {}
+  ai: control
+  fx:
+    - { k: will, v: -150, area: front }
+mot_silence:
+  kind: active
+  target: enemy
+  range: 5
+  energy: 0
+  mana: 12
+  durBase: unit
+  durMult: 1000
+  p: {}
+  ai: debuff
+  fx:
+    - { k: state, s: silence, dur: 80 }
+affaiblissement:
+  kind: active
+  target: enemy
+  range: 5
+  energy: 0
+  mana: 10
+  durBase: unit
+  durMult: 1000
+  p: {}
+  ai: debuff
+  fx:
+    - { k: state, s: affaibli, v: 250, dur: 80 }
+jet_toile:
+  kind: active
+  target: enemy
+  range: 4
+  energy: 15
+  mana: 0
+  durBase: unit
+  durMult: 1000
+  p: {}
+  ai: control
+  fx:
+    - { k: state, s: ralenti, dur: 80 }
+    - { k: pull, v: 1 }
+coup_jarret:
+  kind: active
+  target: enemy
+  range: 1
+  energy: 15
+  mana: 0
+  durBase: weapon
+  durMult: 1000
+  p: {}
+  attack: true
+  melee: true
+  ai: control
+  fx:
+    - { k: wdmg, v: 700 }
+    - { k: state, s: ralenti, dur: 60 }
+tir_recul:
+  kind: active
+  target: enemy
+  range: 4
+  energy: 18
+  mana: 0
+  durBase: weapon
+  durMult: 1000
+  p: {}
+  attack: true
+  ai: control
+  fx:
+    - { k: wdmg, v: 800 }
+    - { k: push, v: 1 }
+coup_tonnerre:
+  kind: active
+  target: enemy
+  range: 1
+  energy: 25
+  mana: 0
+  durBase: weapon
+  durMult: 1500
+  p: {}
+  attack: true
+  melee: true
+  ai: control
+  fx:
+    - { k: wdmg, v: 1200 }
+    - { k: stun, v: 15 }
+frappe_sismique:
+  kind: active
+  target: enemy
+  range: 1
+  energy: 30
+  mana: 0
+  durBase: weapon
+  durMult: 2000
+  p: {}
+  attack: true
+  melee: true
+  ai: aoe
+  fx:
+    - { k: wdmg, v: 900, area: rank }
+assassinat:
+  kind: active
+  target: enemy
+  range: 1
+  energy: 30
+  mana: 0
+  durBase: weapon
+  durMult: 1500
+  p: {}
+  attack: true
+  melee: true
+  ai: finisher
+  fx:
+    - { k: wdmg, v: 1800 }
+    - { k: state, s: saignement, v: 5, dur: 60 }
+coup_massue:
+  kind: active
+  target: enemy
+  range: 1
+  energy: 22
+  mana: 0
+  durBase: weapon
+  durMult: 1500
+  p: {}
+  attack: true
+  melee: true
+  ai: attack
+  fx:
+    - { k: wdmg, v: 1400 }
+    - { k: push, v: 1 }
+tir_perforant:
+  kind: active
+  target: enemy
+  range: 5
+  energy: 20
+  mana: 0
+  durBase: weapon
+  durMult: 1500
+  p: {}
+  attack: true
+  ai: aoe
+  fx:
+    - { k: wdmg, v: 900, area: rank }
+tir_empoisonne:
+  kind: active
+  target: enemy
+  range: 4
+  energy: 15
+  mana: 0
+  durBase: weapon
+  durMult: 1000
+  p: {}
+  attack: true
+  ai: debuff
+  fx:
+    - { k: state, s: poison, v: 3, dur: 80, cap: 3 }
+    - { k: wdmg, v: 900 }
+fleche_feu:
+  kind: active
+  target: enemy
+  range: 4
+  energy: 15
+  mana: 0
+  durBase: weapon
+  durMult: 1000
+  p: {}
+  attack: true
+  ai: attack
+  fx:
+    - { k: wdmg, v: 1000, type: feu }
+    - { k: state, s: brulure, v: 4, dur: 40 }
+morsure_venin:
+  kind: active
+  target: enemy
+  range: 1
+  energy: 12
+  mana: 0
+  durBase: weapon
+  durMult: 1000
+  p: {}
+  attack: true
+  melee: true
+  ai: debuff
+  fx:
+    - { k: state, s: poison, v: 3, dur: 80, cap: 3 }
+    - { k: wdmg, v: 900 }
+soin_majeur:
+  kind: active
+  target: ally
+  range: 3
+  energy: 0
+  mana: 16
+  durBase: unit
+  durMult: 1000
+  p: {}
+  ai: heal
+  fx:
+    - { k: heal, v: 450 }
+cercle_soins:
+  kind: active
+  target: self
+  range: 1
+  energy: 0
+  mana: 20
+  durBase: unit
+  durMult: 2000
+  p: {}
+  ai: groupHeal
+  fx:
+    - { k: heal, v: 180, area: allies }
+seve:
+  kind: active
+  target: ally
+  range: 2
+  energy: 0
+  mana: 12
+  durBase: unit
+  durMult: 1000
+  p: {}
+  ai: buffAlly
+  fx:
+    - { k: state, s: regeneration, v: 40, dur: 100 }
+peau_ecorce:
+  kind: active
+  target: ally
+  range: 2
+  energy: 0
+  mana: 10
+  durBase: unit
+  durMult: 1000
+  p: {}
+  ai: buffAlly
+  fx:
+    - { k: state, s: garde, v: 250, dur: 100 }
+benediction:
+  kind: active
+  target: self
+  range: 1
+  energy: 0
+  mana: 16
+  durBase: unit
+  durMult: 2000
+  p: {}
+  ai: buffGroup
+  fx:
+    - { k: state, s: garde, v: 150, dur: 80, area: allies }
+chant_guerre:
+  kind: active
+  target: self
+  range: 1
+  energy: 0
+  mana: 12
+  durBase: unit
+  durMult: 1500
+  p: {}
+  ai: buffGroup
+  fx:
+    - { k: state, s: cri, v: 150, dur: 80, area: allies }
+    - { k: will, v: 100, area: allies }
+vent_rapide:
+  kind: active
+  target: self
+  range: 1
+  energy: 0
+  mana: 18
+  durBase: unit
+  durMult: 1500
+  p: {}
+  ai: buffGroup
+  fx:
+    - { k: state, s: hate, dur: 60, area: allyRank }
+carapace_epines:
+  kind: active
+  target: self
+  range: 1
+  energy: 15
+  mana: 0
+  durBase: unit
+  durMult: 1000
+  p: {}
+  ai: buffSelf
+  fx:
+    - { k: state, s: epines, v: 6, dur: 100 }
+second_souffle:
+  kind: active
+  target: self
+  range: 1
+  energy: 0
+  mana: 0
+  durBase: unit
+  durMult: 1500
+  p: {}
+  ai: restore
+  fx:
+    - { k: energy, v: 300 }
+    - { k: heal, v: 80 }

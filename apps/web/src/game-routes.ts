@@ -76,12 +76,16 @@ export interface GameRouteDeps {
 }
 
 /** Libellés lus dans le pack, pour les vues. */
+const DMG_LABEL: Record<string, string> = { tenebres: 'ténèbres', sacre: 'sacré' };
+
 export function labels(c: GameContent) {
   const p = c.pack;
   return {
     item: (id: string): string => p.items[id]?.name ?? p.equip[id]?.name ?? id,
     troop: (id: string): string => p.troops[id]?.name ?? id,
     skill: (id: string): string => p.skills[id]?.name ?? id,
+    /** Immunités d'un monstre (README 19.4), en clair ; vide sans immunité. */
+    immune: (id: string): string => (p.troops[id]?.immune ?? []).map((x) => DMG_LABEL[x] ?? x).join(', '),
     isConsumable: (id: string): boolean => p.items[id]?.kind === 'consommable',
     region: (id: string) => region(c, id),
     quality,

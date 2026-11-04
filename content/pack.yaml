@@ -1,7 +1,7 @@
 # Pack de contenu. files : fichiers de chaque collection, dans l’ordre (l’ordre des entrées compte pour les tirages).
 
-id: prototype-0.4
-engineVersion: proto-0.4-ville
+id: cible-0.1
+engineVersion: v1
 files:
   skills: [skills/base.yaml, skills/sorts.yaml]
   troops:

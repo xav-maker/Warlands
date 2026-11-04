@@ -64,6 +64,7 @@ souffle_feu:
   mana: 0
   durBase: unit
   durMult: 2000
+  power: for
   p: {}
   attack: true
   ai: aoe
@@ -131,6 +132,7 @@ lame_ombre:
   mana: 0
   durBase: weapon
   durMult: 1000
+  power: for
   p: {}
   attack: true
   melee: true
@@ -295,6 +297,7 @@ tir_empoisonne:
   mana: 0
   durBase: weapon
   durMult: 1000
+  power: for
   p: {}
   attack: true
   ai: debuff
@@ -309,6 +312,7 @@ fleche_feu:
   mana: 0
   durBase: weapon
   durMult: 1000
+  power: for
   p: {}
   attack: true
   ai: attack
@@ -323,6 +327,7 @@ morsure_venin:
   mana: 0
   durBase: weapon
   durMult: 1000
+  power: for
   p: {}
   attack: true
   melee: true
@@ -338,10 +343,11 @@ soin_majeur:
   mana: 16
   durBase: unit
   durMult: 1000
+  coef: 8000
   p: {}
   ai: heal
   fx:
-    - { k: heal, v: 450 }
+    - { k: heal, v: 90 }
 cercle_soins:
   kind: active
   target: self
@@ -350,10 +356,11 @@ cercle_soins:
   mana: 20
   durBase: unit
   durMult: 2000
+  coef: 3000
   p: {}
   ai: groupHeal
   fx:
-    - { k: heal, v: 180, area: allies }
+    - { k: heal, v: 30, area: allies }
 seve:
   kind: active
   target: ally
@@ -362,10 +369,11 @@ seve:
   mana: 12
   durBase: unit
   durMult: 1000
+  coef: 800
   p: {}
   ai: buffAlly
   fx:
-    - { k: state, s: regeneration, v: 40, dur: 100 }
+    - { k: state, s: regeneration, v: 6, dur: 100 }
 peau_ecorce:
   kind: active
   target: ally
@@ -398,6 +406,7 @@ chant_guerre:
   mana: 12
   durBase: unit
   durMult: 1500
+  power: esp
   p: {}
   ai: buffGroup
   fx:
@@ -435,8 +444,10 @@ second_souffle:
   mana: 0
   durBase: unit
   durMult: 1500
+  power: esp
+  coef: 2000
   p: {}
   ai: restore
   fx:
     - { k: energy, v: 300 }
-    - { k: heal, v: 80 }
+    - { k: heal, v: 20 }

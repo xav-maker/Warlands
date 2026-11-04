@@ -1,6 +1,11 @@
 # Textes affichés, en français. Clé : <genre>.<id>[.<sous-partie>].<champ>.
 
 stat.atk.label: Attaque
+stat.for.label: Force
+stat.ele.label: Élémentaire
+stat.esp.label: Esprit
+stat.foi.label: Foi
+stat.omb.label: Ombre
 stat.hp.label: PV max
 stat.will.label: Volonté max
 stat.energy.label: Énergie max

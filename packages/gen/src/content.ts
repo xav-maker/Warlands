@@ -3,7 +3,7 @@
  * C, ITEMS, EQUIP, MONSTERS, REGIONS, ECO…), réunies en un seul objet passé explicitement : les
  * générateurs ne lisent plus aucun état global. Le pack compilé depuis le YAML aura cette forme (guide 5).
  */
-import type { Params, Rule, Skill, Weapon } from '@cr/engine';
+import type { Params, Power, Rule, Skill, Weapon } from '@cr/engine';
 
 export interface Form {
   id: string;
@@ -11,7 +11,7 @@ export interface Form {
   level: number;
   parent?: string;
   hpMult?: number;
-  bonus?: Partial<Record<'will' | 'energy' | 'mana' | 'atk', number>>;
+  bonus?: Partial<Record<'will' | 'energy' | 'mana' | 'atk' | Power, number>>;
   speed: number;
   res: Record<string, number>;
   tags?: string[];
@@ -19,12 +19,13 @@ export interface Form {
   skills: [string, number][];
 }
 
-export interface StatBlock {
+/** Attaque unique (prototype) ou 5 puissances (moteur v1). */
+export interface StatBlock extends Partial<Record<Power, number>> {
   hp: number;
   will: number;
   energy: number;
   mana: number;
-  atk: number;
+  atk?: number;
 }
 
 export interface TroopDef {
@@ -39,6 +40,8 @@ export interface TroopDef {
   growth: StatBlock;
   forms: Form[];
   rules: Rule[];
+  /** v1 : immunités (monstres). */
+  immune?: string[];
 }
 
 export interface MonsterMeta {

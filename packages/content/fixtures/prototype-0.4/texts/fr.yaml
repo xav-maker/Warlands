@@ -1,0 +1,920 @@
+# Textes affichés, en français. Clé : <genre>.<id>[.<sous-partie>].<champ>.
+
+stat.atk.label: Attaque
+stat.hp.label: PV max
+stat.will.label: Volonté max
+stat.energy.label: Énergie max
+stat.mana.label: Mana max
+stat.res.label: Résistance
+stat.wdmg.label: Dégâts de l'arme
+stat.wspeed.label: Vitesse de l'arme
+stat.wcost.label: Coût en énergie de l'arme
+weapon.epee.name: Épée courte
+weapon.fronde.name: Fronde
+weapon.masse.name: Masse de prêtre
+weapon.baton.name: Bâton
+weapon.arc.name: Arc
+weapon.hache2m.name: Hache à deux mains
+weapon.crocs.name: Crocs
+weapon.gantelets.name: Gantelets
+weapon.masse_lourde.name: Masse lourde
+weapon.coutelas.name: Coutelas ébréché
+weapon.fronde_gob.name: Fronde de gobelin
+weapon.crocs_gris.name: Crocs
+weapon.chelicères.name: Chélicères
+weapon.baton_os.name: Bâton d'os
+weapon.gourdin.name: Gourdin
+weapon.branches.name: Branches
+weapon.griffes_m.name: Griffes
+weapon.dard.name: Dard
+weapon.lame_rouillee.name: Lame rouillée
+weapon.poing_pierre.name: Poings de pierre
+weapon.harpon_m.name: Harpon
+weapon.baton_m.name: Bâton tordu
+weapon.arc_m.name: Arc court
+weapon.bec.name: Bec
+weapon.mains_spectrales.name: Mains spectrales
+weapon.lame_lumiere.name: Lame de lumière
+weapon.machoires.name: Mâchoires
+weapon.souffle.name: Souffle brûlant
+weapon.lance.name: Lance
+weapon.dague.name: Dague
+weapon.arbalete.name: Arbalète
+weapon.griffes.name: Griffes de combat
+weapon.sceptre.name: Sceptre
+weapon.pioche.name: Pioche
+weapon.flasques.name: Flasques
+weapon.dard_s.name: Dards
+skill.emploi.name: Emploi d'arme
+skill.emploi.desc: "1x dégâts de l'arme. DE : un autre ennemi. EC : se frappe."
+skill.exploit.name: Exploit d'arme
+skill.exploit.desc: '2x dégâts + spécial (Saignement si tranchant, Étourdi si contondant). DE : rien. EC : frappe un allié.'
+skill.meditation.name: Méditation
+skill.meditation.desc: '+20 % de volonté. DE : +5 %. EC : perd 10 % de PV.'
+skill.repos.name: Repos
+skill.repos.desc: "+10 % d'énergie. DE : rien. EC : perd 7,5 % de PV."
+skill.coup_bouclier.name: Coup de bouclier
+skill.coup_bouclier.desc: '0,5x dégâts + Étourdi 30. DE : sans étourdir. EC : s’étourdit.'
+skill.repousser.name: Repousser
+skill.repousser.desc: '0,5x dégâts, la cible recule (Étourdi 30 si déjà à 3). DE : sans recul. EC : le lanceur recule.'
+skill.repousser_renforce.name: Repousser renforcé
+skill.repousser_renforce.desc: Repousser sur tous les ennemis au contact.
+skill.provocation.name: Provocation
+skill.provocation.desc: 'Les attaques ennemies doivent le viser s’il est à portée, 60 instants. DE : 30. EC : −15 % de volonté.'
+skill.riposte.name: Riposte
+skill.riposte.desc: 'Réaction : touché au corps à corps, contre-attaque à 0,5x (10 énergie).'
+skill.dernier_rempart.name: Dernier rempart
+skill.dernier_rempart.desc: 'Passif, une fois : un allié du même rang qui devrait mourir reste à 1 PV ; −20 % de volonté.'
+skill.mur_boucliers.name: Mur de boucliers
+skill.mur_boucliers.desc: 'Bouclier de 25 aux alliés de son rang, 80 instants. DE : sur lui seul.'
+skill.execution.name: Exécution
+skill.execution.desc: '1x dégâts, triplés sous 25 % de PV. DE : rien. EC : frappe un allié.'
+skill.fracas.name: Fracas
+skill.fracas.desc: '1x dégâts, triplés si la cible est Gelée (brise le gel). DE : 0,5x. EC : frappe un allié.'
+skill.brise_armure.name: Brise-armure
+skill.brise_armure.desc: '0,5x dégâts et −20 % de résistance physique, cumulable 3. DE : sans l’affaiblissement. EC : sur soi.'
+skill.charge.name: Charge
+skill.charge.desc: 'Avance au rang 1 et frappe à 1,5x. DE : avance sans frapper. EC : avance et s’étourdit.'
+skill.tir_fronde.name: Tir de fronde
+skill.tir_fronde.desc: "1x dégâts de l'arme, portée 3. DE : autre ennemi. EC : touche un allié."
+skill.volee.name: Volée
+skill.volee.desc: '0,6x dégâts à tout un rang. DE : une seule unité. EC : rien.'
+skill.tir_arc.name: Tir à l'arc
+skill.tir_arc.desc: "1x dégâts de l'arme, portée 4. DE : autre ennemi. EC : touche un allié."
+skill.tir_precis.name: Tir précis
+skill.tir_precis.desc: '2x dégâts, ignore 50 % des résistances. DE : 1x. EC : rien.'
+skill.marque.name: Marque du chasseur
+skill.marque.desc: 'Les 3 prochaines attaques alliées sur la cible font +30 %. DE : 1 attaque. EC : sur un allié.'
+skill.soin_mineur.name: Soin mineur
+skill.soin_mineur.desc: '+25 % des PV max. DE : +10 %. EC : −10 %.'
+skill.regeneration.name: Régénération
+skill.regeneration.desc: '+3 % des PV max par tic, 100 instants. DE : 50. EC : sur un ennemi.'
+skill.priere.name: Prière collective
+skill.priere.desc: '+10 % des PV max à tous les alliés. DE : son rang. EC : −20 % de volonté.'
+skill.purification.name: Purification
+skill.purification.desc: 'Retire les états négatifs. DE : le plus récent. EC : retire les positifs.'
+skill.trait_sacre.name: Trait sacré
+skill.trait_sacre.desc: '20 dégâts sacrés, x2 contre mort-vivant et démon. DE : moitié. EC : soigne la cible.'
+skill.trait_sacre_renforce.name: Trait sacré renforcé
+skill.trait_sacre_renforce.desc: Trait sacré, x3 contre mort-vivant et démon.
+skill.bouclier_foi.name: Bouclier de foi
+skill.bouclier_foi.desc: 'Bouclier de 40 PV, 100 instants. DE : 15. EC : rien.'
+skill.aura_serenite.name: Aura de sérénité
+skill.aura_serenite.desc: 'Passif : +5 % de volonté par tic aux alliés de son rang.'
+skill.confusion.name: Confusion
+skill.confusion.desc: 'La prochaine action de la cible est un demi-échec. DE : −10 % de volonté. EC : sur soi.'
+skill.confusion_moine.name: Confusion (moine)
+skill.confusion_moine.desc: Confusion sans mana, 20 énergie.
+skill.trait_flammes.name: Trait de flammes
+skill.trait_flammes.desc: '15 dégâts de feu + Brûlure courte. DE : sans brûlure. EC : Brûlure sur soi.'
+skill.boule_feu.name: Boule de feu
+skill.boule_feu.desc: '30 à la cible, 10 à son rang, Brûlure. DE : autre unité du rang. EC : explose sur son rang.'
+skill.arme_enflammee.name: Arme enflammée
+skill.arme_enflammee.desc: 'Les attaques d’arme de l’allié ajoutent 8 feu et Brûlure, 80 instants. DE : 40. EC : Brûlure sur l’allié.'
+skill.mur_flammes.name: Mur de flammes
+skill.mur_flammes.desc: 'Brûlure à tout un rang ennemi. DE : une unité. EC : son propre rang.'
+skill.embrasement.name: Embrasement
+skill.embrasement.desc: 'Chaque ennemi qui brûle subit le double des dégâts de brûlure restants. DE : le plus proche. EC : les alliés.'
+skill.coeur_ardent.name: Cœur ardent
+skill.coeur_ardent.desc: 'Passif : dégâts de feu +20 % sur les cibles qui brûlent.'
+skill.lame_saignante.name: Lame saignante
+skill.lame_saignante.desc: '0,8x dégâts + Saignement. DE : sans saignement. EC : saigne lui-même.'
+skill.cri_guerre.name: Cri de guerre
+skill.cri_guerre.desc: '+20 % de volonté et +10 % d’attaque aux alliés, 80 instants. DE : lui seul. EC : −10 % de volonté.'
+skill.rage.name: Rage
+skill.rage.desc: 'Passif : +2 % d’attaque par 10 % de PV perdus ; ses blessures ne baissent pas sa volonté.'
+skill.tourbillon.name: Tourbillon
+skill.tourbillon.desc: '1x dégâts à tous les ennemis au contact. DE : moitié. EC : touche aussi son rang.'
+skill.morsure.name: Morsure
+skill.morsure.desc: '1x dégâts + Saignement si la cible est sous 50 %. DE : sans saignement. EC : rien.'
+skill.hurlement.name: Hurlement
+skill.hurlement.desc: '+15 % de volonté aux alliés, −10 % aux ennemis des rangs 1 et 2. DE : alliés seulement. EC : −10 % aux alliés.'
+skill.instinct_meute.name: Instinct de meute
+skill.instinct_meute.desc: 'Passif : +15 % sur une cible déjà attaquée par l’autre loup depuis le dernier tic.'
+skill.drain.name: Drain de vie
+skill.drain.desc: '20 ténèbres, récupère la moitié. DE : sans soin. EC : le lien s’inverse.'
+skill.murmure.name: Murmure de terreur
+skill.murmure.desc: '10 psychiques et −25 % de volonté. DE : −10 %. EC : −15 % sur soi.'
+skill.terreur_masse.name: Terreur de masse
+skill.terreur_masse.desc: Murmure de terreur sur tout un rang.
+skill.malediction.name: Malédiction de faiblesse
+skill.malediction.desc: '−25 % de résistance à tout, 80 instants. DE : 40. EC : sur soi.'
+skill.nuage.name: Nuage pestilentiel
+skill.nuage.desc: 'Poison sur un rang (3 par tic, cumulable 3). DE : une unité. EC : son propre rang.'
+skill.nuage_renforce.name: Nuage renforcé
+skill.nuage_renforce.desc: Nuage pestilentiel, 5 charges max.
+skill.lien_vital.name: Lien vital
+skill.lien_vital.desc: '30 % des dégâts subis par le lanceur sont renvoyés sur la cible, 60 instants. DE : 30. EC : sens inverse.'
+skill.non_mort.name: Non-mort
+skill.non_mort.desc: 'Passif : insensible au Poison et au Saignement.'
+skill.contagion.name: Contagion
+skill.contagion.desc: 'Passif : quand un ennemi empoisonné meurt, son poison passe au plus proche.'
+skill.pieges_glace.name: Pièges de glace
+skill.pieges_glace.desc: 'Passif : le premier ennemi qui avance au contact est Ralenti.'
+skill.esprit_inebranlable.name: Esprit inébranlable
+skill.esprit_inebranlable.desc: 'Passif : sa volonté ne descend jamais sous 50 %.'
+skill.hate.name: Hâte
+skill.hate.desc: 'Hâte sur soi, 80 instants. DE : 40. EC : Ralenti.'
+skill.paume_vide.name: Paume du vide
+skill.paume_vide.desc: '25 psychiques + Confusion + −20 % de volonté. DE : dégâts seuls. EC : se confond.'
+skill.seisme.name: Séisme
+skill.seisme.desc: '20 dégâts aux ennemis des rangs 1 et 2, Étourdi au contact. DE : sans étourdir. EC : s’étourdit et perd 10 %.'
+skill.fleche_givre.name: Flèche de givre
+skill.fleche_givre.desc: '15 glace + Ralenti ; Gelé 20 si déjà ralenti (pas de nouveau gel sur la même cible pendant 100 instants). DE : Ralenti seul. EC : se ralentit.'
+skill.grappin.name: Grappin
+skill.grappin.desc: 'Attire la cible au rang 1. DE : d’un cran. EC : le lanceur est tiré au rang 1.'
+skill.eclat_glace.name: Éclat de glace
+skill.eclat_glace.desc: 16 glace + Ralenti 40.
+skill.tempete_givre.name: Tempête de givre
+skill.tempete_givre.desc: 14 glace et Ralenti 60 à tout un rang.
+skill.pluie_feu.name: Pluie de feu
+skill.pluie_feu.desc: 12 feu et Brûlure à tous les ennemis.
+skill.eruption.name: Éruption
+skill.eruption.desc: 24 feu à tous les ennemis, Étourdi 10 aux rangs 1-2.
+skill.souffle_feu.name: Souffle de feu
+skill.souffle_feu.desc: 18 feu et Brûlure à un rang proche.
+skill.javelot_lumiere.name: Javelot de lumière
+skill.javelot_lumiere.desc: 22 sacré, x2 contre les morts-vivants.
+skill.nova_sacree.name: Nova sacrée
+skill.nova_sacree.desc: 15 sacré aux ennemis des rangs 1-2.
+skill.fleau.name: Fléau
+skill.fleau.desc: Poison 4 par tic (3 charges) et 8 maladie.
+skill.toucher_spectral.name: Toucher spectral
+skill.toucher_spectral.desc: 18 ténèbres, rend la moitié en PV.
+skill.lame_ombre.name: Lame d'ombre
+skill.lame_ombre.desc: 1,3x l'arme en ténèbres.
+skill.cri_effroi.name: Cri d'effroi
+skill.cri_effroi.desc: −15 % de volonté aux ennemis des rangs 1-2.
+skill.mot_silence.name: Mot de silence
+skill.mot_silence.desc: 'Silence 80 : la cible ne peut plus lancer de sort à mana.'
+skill.affaiblissement.name: Affaiblissement
+skill.affaiblissement.desc: −25 % d’attaque pendant 80.
+skill.jet_toile.name: Jet de toile
+skill.jet_toile.desc: Ralenti 80 et attire d’un rang.
+skill.coup_jarret.name: Coup au jarret
+skill.coup_jarret.desc: 0,7x l’arme et Ralenti 60.
+skill.tir_recul.name: Tir repoussant
+skill.tir_recul.desc: 0,8x l’arme et repousse d’un rang.
+skill.coup_tonnerre.name: Coup de tonnerre
+skill.coup_tonnerre.desc: 1,2x l’arme et Étourdi 15.
+skill.frappe_sismique.name: Frappe sismique
+skill.frappe_sismique.desc: 0,9x l’arme à tout le rang au contact.
+skill.assassinat.name: Assassinat
+skill.assassinat.desc: 1,8x l’arme et Saignement.
+skill.coup_massue.name: Coup de massue
+skill.coup_massue.desc: 1,4x l’arme et repousse d’un rang.
+skill.tir_perforant.name: Tir perforant
+skill.tir_perforant.desc: 0,9x l’arme à tout le rang visé.
+skill.tir_empoisonne.name: Tir empoisonné
+skill.tir_empoisonne.desc: 0,9x l’arme et Poison.
+skill.fleche_feu.name: Flèche enflammée
+skill.fleche_feu.desc: 1x l’arme en feu et Brûlure.
+skill.morsure_venin.name: Morsure venimeuse
+skill.morsure_venin.desc: 0,9x l’arme et Poison.
+skill.soin_majeur.name: Soin majeur
+skill.soin_majeur.desc: +45 % des PV max.
+skill.cercle_soins.name: Cercle de soins
+skill.cercle_soins.desc: +18 % des PV max à tous les alliés.
+skill.seve.name: Sève régénératrice
+skill.seve.desc: Régénération +4 % par tic pendant 100.
+skill.peau_ecorce.name: Peau d'écorce
+skill.peau_ecorce.desc: +25 % de résistance à tout pendant 100.
+skill.benediction.name: Bénédiction
+skill.benediction.desc: +15 % de résistance à tout aux alliés pendant 80.
+skill.chant_guerre.name: Chant de guerre
+skill.chant_guerre.desc: +15 % d’attaque et +10 % de volonté aux alliés.
+skill.vent_rapide.name: Vent rapide
+skill.vent_rapide.desc: Hâte 60 aux alliés de son rang.
+skill.carapace_epines.name: Carapace d'épines
+skill.carapace_epines.desc: Renvoie 6 dégâts à chaque attaque au contact pendant 100.
+skill.second_souffle.name: Second souffle
+skill.second_souffle.desc: +30 % d’énergie et +8 % de PV.
+troop.milicien.name: Milicien
+troop.milicien.role: contact, protection
+troop.milicien.forms.milicien.name: Milicien
+troop.milicien.forms.fantassin.name: Fantassin
+troop.milicien.forms.garde.name: Garde du rempart
+troop.milicien.forms.lame.name: Lame vétérane
+troop.frondeurs.name: Frondeurs
+troop.frondeurs.role: tir depuis l’arrière
+troop.frondeurs.forms.frondeur.name: Frondeur
+troop.frondeurs.forms.tirailleur.name: Tirailleur
+troop.acolyte.name: Acolyte
+troop.acolyte.role: soin
+troop.acolyte.forms.acolyte.name: Acolyte
+troop.acolyte.forms.pretre.name: Prêtre
+troop.acolyte.forms.haut_pretre.name: Haut-prêtre
+troop.acolyte.forms.inquisiteur.name: Inquisiteur
+troop.pyromancien.name: Apprenti pyromancien
+troop.pyromancien.role: dégâts de zone
+troop.pyromancien.forms.apprenti.name: Apprenti pyromancien
+troop.pyromancien.forms.pyromancien.name: Pyromancien
+troop.pyromancien.forms.maitre_cendres.name: Maître des cendres
+troop.chasseur.name: Chasseur
+troop.chasseur.role: contrôle à distance
+troop.chasseur.forms.chasseur.name: Chasseur
+troop.chasseur.forms.traqueur.name: Traqueur des neiges
+troop.berserker.name: Berserker
+troop.berserker.role: dégâts au contact
+troop.berserker.forms.berserker.name: Berserker
+troop.berserker.forms.massacreur.name: Massacreur
+troop.loups.name: Loups jumeaux
+troop.loups.role: harcèlement
+troop.loups.forms.loup.name: Loup
+troop.loups.forms.alpha.name: Loup alpha
+troop.adepte.name: Adepte des ombres
+troop.adepte.role: affaiblissements
+troop.adepte.forms.adepte.name: Adepte des ombres
+troop.adepte.forms.necromancien.name: Nécromancien
+troop.adepte.forms.liche.name: Liche
+troop.adepte.forms.sorcier_peste.name: Sorcier de peste
+troop.moine.name: Novice du monastère
+troop.moine.role: contact, contrôle
+troop.moine.forms.novice.name: Novice
+troop.moine.forms.moine.name: Moine
+troop.moine.forms.maitre_souffle.name: Maître du souffle
+troop.briseur.name: Briseur
+troop.briseur.role: tank lourd
+troop.briseur.forms.briseur.name: Briseur
+troop.briseur.forms.colosse.name: Colosse de siège
+troop.ecuyer.name: Écuyer
+troop.ecuyer.role: contact, ralentit
+troop.ecuyer.forms.ecuyer.name: Écuyer
+troop.herboriste.name: Herboriste
+troop.herboriste.role: soin, protection
+troop.herboriste.forms.herboriste.name: Herboriste
+troop.braconniers.name: Braconniers
+troop.braconniers.role: tir, poison
+troop.braconniers.forms.braconniers.name: Braconniers
+troop.harponneur.name: Harponneur
+troop.harponneur.role: attire et achève
+troop.harponneur.forms.harponneur.name: Harponneur
+troop.sorciere_marais.name: Sorcière des marais
+troop.sorciere_marais.role: poison, affaiblissement
+troop.sorciere_marais.forms.sorciere_marais.name: Sorcière des marais
+troop.gardes_maree.name: Gardes de la marée
+troop.gardes_maree.role: protection
+troop.gardes_maree.forms.gardes_maree.name: Gardes de la marée
+troop.arbaletrier.name: Arbalétrier
+troop.arbaletrier.role: tir lourd
+troop.arbaletrier.forms.arbaletrier.name: Arbalétrier
+troop.chamane_crues.name: Chamane des crues
+troop.chamane_crues.role: glace, soin
+troop.chamane_crues.forms.chamane_crues.name: Chamane des crues
+troop.mineurs.name: Mineurs de fond
+troop.mineurs.role: nuée au contact
+troop.mineurs.forms.mineurs.name: Mineurs de fond
+troop.forgeron_runes.name: Forgeron des runes
+troop.forgeron_runes.role: renfort, étourdit
+troop.forgeron_runes.forms.forgeron_runes.name: Forgeron des runes
+troop.eclaireuse.name: Éclaireuse des galeries
+troop.eclaireuse.role: assassin
+troop.eclaireuse.forms.eclaireuse.name: Éclaireuse des galeries
+troop.alchimiste.name: Alchimiste
+troop.alchimiste.role: feu et poison à distance
+troop.alchimiste.forms.alchimiste.name: Alchimiste
+troop.gardien_pierre.name: Gardien de pierre
+troop.gardien_pierre.role: tank
+troop.gardien_pierre.forms.gardien_pierre.name: Gardien de pierre
+troop.mage_cristal.name: Mage de cristal
+troop.mage_cristal.role: glace, silence
+troop.mage_cristal.forms.mage_cristal.name: Mage de cristal
+troop.lanciers_cendres.name: Lanciers des cendres
+troop.lanciers_cendres.role: contact, charge
+troop.lanciers_cendres.forms.lanciers_cendres.name: Lanciers des cendres
+troop.nomade.name: Nomade des sables
+troop.nomade.role: tir, contrôle
+troop.nomade.forms.nomade.name: Nomade des sables
+troop.derviche.name: Derviche
+troop.derviche.role: tourbillon
+troop.derviche.forms.derviche.name: Derviche
+troop.pretresse_soleil.name: Prêtresse du soleil
+troop.pretresse_soleil.role: soin, sacré
+troop.pretresse_soleil.forms.pretresse_soleil.name: Prêtresse du soleil
+troop.scorpions.name: Scorpions dressés
+troop.scorpions.role: poison au contact
+troop.scorpions.forms.scorpions.name: Scorpions dressés
+troop.mage_cendre.name: Mage de cendre
+troop.mage_cendre.role: feu de zone
+troop.mage_cendre.forms.mage_cendre.name: Mage de cendre
+troop.garde_oasis.name: Garde de l'oasis
+troop.garde_oasis.role: protection
+troop.garde_oasis.forms.garde_oasis.name: Garde de l'oasis
+troop.barde.name: Barde du désert
+troop.barde.role: renfort, peur
+troop.barde.forms.barde.name: Barde du désert
+troop.paladin.name: Paladin de l'aube
+troop.paladin.role: tank sacré
+troop.paladin.forms.paladin.name: Paladin de l'aube
+troop.archonte_aube.name: Archonte
+troop.archonte_aube.role: soin de groupe, sacré
+troop.archonte_aube.forms.archonte_aube.name: Archonte
+troop.lames_jumelles.name: Lames jumelles
+troop.lames_jumelles.role: assassins
+troop.lames_jumelles.forms.lames_jumelles.name: Lames jumelles
+troop.tireur_astral.name: Tireur astral
+troop.tireur_astral.role: tir de précision
+troop.tireur_astral.forms.tireur_astral.name: Tireur astral
+troop.oracle.name: Oracle
+troop.oracle.role: affaiblissements
+troop.oracle.forms.oracle.name: Oracle
+troop.chevalier_griffon.name: Chevalier-griffon
+troop.chevalier_griffon.role: charge lourde
+troop.chevalier_griffon.forms.chevalier_griffon.name: Chevalier-griffon
+troop.invocatrice.name: Invocatrice des tempêtes
+troop.invocatrice.role: glace et feu de zone
+troop.invocatrice.forms.invocatrice.name: Invocatrice des tempêtes
+troop.gardiens_celestes.name: Gardiens célestes
+troop.gardiens_celestes.role: mur de boucliers
+troop.gardiens_celestes.forms.gardiens_celestes.name: Gardiens célestes
+troop.gobelins.name: Gobelins pillards
+troop.gobelins.role: nuée au contact
+troop.gobelins.forms.gobelin.name: Gobelin pillard
+troop.frondeurs_gob.name: Gobelins frondeurs
+troop.frondeurs_gob.role: tir
+troop.frondeurs_gob.forms.frondeur_gob.name: Gobelin frondeur
+troop.loup_gris.name: Loup gris
+troop.loup_gris.role: harcèlement
+troop.loup_gris.forms.loup_gris.name: Loup gris
+troop.araignee.name: Araignée des ronces
+troop.araignee.role: poison
+troop.araignee.forms.araignee.name: Araignée des ronces
+troop.chaman.name: Chaman gobelin
+troop.chaman.role: soin, malédictions
+troop.chaman.forms.chaman.name: Chaman gobelin
+troop.troll.name: Troll des fourrés
+troop.troll.role: brute
+troop.troll.forms.troll.name: Troll des fourrés
+troop.sylvain.name: Sylvain des Ronces
+troop.sylvain.role: gardien
+troop.sylvain.forms.sylvain.name: Sylvain des Ronces
+troop.loup_alpha.name: Loup alpha
+troop.loup_alpha.role: chef de meute
+troop.loup_alpha.forms.loup_alpha.name: Loup alpha
+troop.corbeaux.name: Nuée de corbeaux
+troop.corbeaux.role: harcèlement
+troop.corbeaux.forms.corbeaux.name: Nuée de corbeaux
+troop.noyes.name: Noyés
+troop.noyes.role: nuée au contact
+troop.noyes.forms.noyes.name: Noyés
+troop.crapaud.name: Crapaud géant
+troop.crapaud.role: poison
+troop.crapaud.forms.crapaud.name: Crapaud géant
+troop.sangsues.name: Sangsues géantes
+troop.sangsues.role: drain
+troop.sangsues.forms.sangsues.name: Sangsues géantes
+troop.feu_follet.name: Feu follet
+troop.feu_follet.role: feu à distance
+troop.feu_follet.forms.feu_follet.name: Feu follet
+troop.hommes_lezards.name: Hommes-lézards
+troop.hommes_lezards.role: contact, ralentit
+troop.hommes_lezards.forms.hommes_lezards.name: Hommes-lézards
+troop.sorciere_noyee.name: Sorcière noyée
+troop.sorciere_noyee.role: malédictions
+troop.sorciere_noyee.forms.sorciere_noyee.name: Sorcière noyée
+troop.crocodile.name: Crocodile des fanges
+troop.crocodile.role: brute
+troop.crocodile.forms.crocodile.name: Crocodile des fanges
+troop.moustiques.name: Essaim de moustiques
+troop.moustiques.role: nuée
+troop.moustiques.forms.moustiques.name: Essaim de moustiques
+troop.troll_marais.name: Troll des marais
+troop.troll_marais.role: brute qui se soigne
+troop.troll_marais.forms.troll_marais.name: Troll des marais
+troop.spectre_brumes.name: Spectre des brumes
+troop.spectre_brumes.role: drain, peur
+troop.spectre_brumes.forms.spectre_brumes.name: Spectre des brumes
+troop.pecheurs_maudits.name: Pêcheurs maudits
+troop.pecheurs_maudits.role: attirent
+troop.pecheurs_maudits.forms.pecheurs_maudits.name: Pêcheurs maudits
+troop.mere_noyes.name: Mère des Noyés
+troop.mere_noyes.role: gardienne
+troop.mere_noyes.forms.mere_noyes.name: Mère des Noyés
+troop.kobolds.name: Kobolds
+troop.kobolds.role: nuée
+troop.kobolds.forms.kobolds.name: Kobolds
+troop.artificier.name: Kobold artificier
+troop.artificier.role: explosifs
+troop.artificier.forms.artificier.name: Kobold artificier
+troop.golem_pierre.name: Golem de pierre
+troop.golem_pierre.role: tank
+troop.golem_pierre.forms.golem_pierre.name: Golem de pierre
+troop.chauves_souris.name: Chauves-souris des puits
+troop.chauves_souris.role: harcèlement
+troop.chauves_souris.forms.chauves_souris.name: Chauves-souris des puits
+troop.ver_galeries.name: Ver des galeries
+troop.ver_galeries.role: poison, secousses
+troop.ver_galeries.forms.ver_galeries.name: Ver des galeries
+troop.nains_renegats.name: Nains renégats
+troop.nains_renegats.role: contact, étourdit
+troop.nains_renegats.forms.nains_renegats.name: Nains renégats
+troop.elementaire_cristal.name: Élémentaire de cristal
+troop.elementaire_cristal.role: glace
+troop.elementaire_cristal.forms.elementaire_cristal.name: Élémentaire de cristal
+troop.basilic.name: Basilic
+troop.basilic.role: regard affaiblissant
+troop.basilic.forms.basilic.name: Basilic
+troop.gelee.name: Gelée acide
+troop.gelee.role: poison
+troop.gelee.forms.gelee.name: Gelée acide
+troop.contremaitre.name: Contremaître kobold
+troop.contremaitre.role: chef
+troop.contremaitre.forms.contremaitre.name: Contremaître kobold
+troop.mineurs_fantomes.name: Mineurs fantômes
+troop.mineurs_fantomes.role: drain
+troop.mineurs_fantomes.forms.mineurs_fantomes.name: Mineurs fantômes
+troop.coeur_forge.name: Cœur-de-Forge
+troop.coeur_forge.role: gardien
+troop.coeur_forge.forms.coeur_forge.name: Cœur-de-Forge
+troop.scorpions_geants.name: Scorpions géants
+troop.scorpions_geants.role: poison
+troop.scorpions_geants.forms.scorpions_geants.name: Scorpions géants
+troop.momies.name: Momies
+troop.momies.role: maladie
+troop.momies.forms.momies.name: Momies
+troop.djinn.name: Djinn mineur
+troop.djinn.role: feu de zone
+troop.djinn.forms.djinn.name: Djinn mineur
+troop.pillards_sable.name: Pillards des sables
+troop.pillards_sable.role: assassins
+troop.pillards_sable.forms.pillards_sable.name: Pillards des sables
+troop.archers_nomades.name: Archers nomades
+troop.archers_nomades.role: tir enflammé
+troop.archers_nomades.forms.archers_nomades.name: Archers nomades
+troop.salamandre.name: Salamandre
+troop.salamandre.role: souffle
+troop.salamandre.forms.salamandre.name: Salamandre
+troop.ver_sables.name: Ver des sables
+troop.ver_sables.role: secousses
+troop.ver_sables.forms.ver_sables.name: Ver des sables
+troop.vautours.name: Vautours
+troop.vautours.role: harcèlement
+troop.vautours.forms.vautours.name: Vautours
+troop.ombre_mirage.name: Ombre du mirage
+troop.ombre_mirage.role: silence
+troop.ombre_mirage.forms.ombre_mirage.name: Ombre du mirage
+troop.golem_verre.name: Golem de verre
+troop.golem_verre.role: épines
+troop.golem_verre.forms.golem_verre.name: Golem de verre
+troop.pretre_scarabee.name: Prêtre-scarabée
+troop.pretre_scarabee.role: soin, affaiblit
+troop.pretre_scarabee.forms.pretre_scarabee.name: Prêtre-scarabée
+troop.dragon_cendre.name: Dragon de cendre
+troop.dragon_cendre.role: gardien
+troop.dragon_cendre.forms.dragon_cendre.name: Dragon de cendre
+troop.sentinelles.name: Sentinelles de marbre
+troop.sentinelles.role: protection
+troop.sentinelles.forms.sentinelles.name: Sentinelles de marbre
+troop.gargouilles.name: Gargouilles
+troop.gargouilles.role: épines, coups lourds
+troop.gargouilles.forms.gargouilles.name: Gargouilles
+troop.anges_dechus.name: Ange déchu
+troop.anges_dechus.role: ombre et drain
+troop.anges_dechus.forms.anges_dechus.name: Ange déchu
+troop.harpies.name: Harpies célestes
+troop.harpies.role: peur
+troop.harpies.forms.harpies.name: Harpies célestes
+troop.astromancien.name: Astromancien
+troop.astromancien.role: glace, silence
+troop.astromancien.forms.astromancien.name: Astromancien
+troop.golem_astral.name: Golem astral
+troop.golem_astral.role: tank
+troop.golem_astral.forms.golem_astral.name: Golem astral
+troop.griffons.name: Griffon sauvage
+troop.griffons.role: charge
+troop.griffons.forms.griffons.name: Griffon sauvage
+troop.spectres_lumiere.name: Spectres de lumière
+troop.spectres_lumiere.role: sacré de zone
+troop.spectres_lumiere.forms.spectres_lumiere.name: Spectres de lumière
+troop.chimere.name: Chimère
+troop.chimere.role: feu et poison
+troop.chimere.forms.chimere.name: Chimère
+troop.archers_celestes.name: Archers célestes
+troop.archers_celestes.role: tir perforant
+troop.archers_celestes.forms.archers_celestes.name: Archers célestes
+troop.gardien_seuil.name: Gardien du seuil
+troop.gardien_seuil.role: protection, étourdit
+troop.gardien_seuil.forms.gardien_seuil.name: Gardien du seuil
+troop.archonte_dechu.name: Archonte déchu
+troop.archonte_dechu.role: gardien
+troop.archonte_dechu.forms.archonte_dechu.name: Archonte déchu
+troop.rare_lisiere.name: Croc-de-Givre
+troop.rare_lisiere.role: monstre rare (harcèlement)
+troop.rare_lisiere.forms.loup_gris.name: Croc-de-Givre
+troop.rare_sentier.name: Grishnak le Balafré
+troop.rare_sentier.role: monstre rare (nuée au contact)
+troop.rare_sentier.forms.gobelin.name: Grishnak le Balafré
+troop.rare_nids.name: Reine-Soie
+troop.rare_nids.role: monstre rare (poison)
+troop.rare_nids.forms.araignee.name: Reine-Soie
+troop.rare_camp.name: Vieux Mâchefer
+troop.rare_camp.role: monstre rare (brute)
+troop.rare_camp.forms.troll.name: Vieux Mâchefer
+troop.rare_berges.name: Gueule-de-Vase
+troop.rare_berges.role: monstre rare (poison)
+troop.rare_berges.forms.crapaud.name: Gueule-de-Vase
+troop.rare_roselieres.name: Ssark l’Écorcheur
+troop.rare_roselieres.role: monstre rare (contact, ralentit)
+troop.rare_roselieres.forms.hommes_lezards.name: Ssark l’Écorcheur
+troop.rare_epaves.name: Capitaine sans visage
+troop.rare_epaves.role: monstre rare (attirent)
+troop.rare_epaves.forms.pecheurs_maudits.name: Capitaine sans visage
+troop.rare_tertre.name: Mangeur-de-Barques
+troop.rare_tertre.role: monstre rare (brute)
+troop.rare_tertre.forms.crocodile.name: Mangeur-de-Barques
+troop.rare_entree.name: Brûle-Mèche
+troop.rare_entree.role: monstre rare (explosifs)
+troop.rare_entree.forms.artificier.name: Brûle-Mèche
+troop.rare_galeries.name: Grand Ver blanc
+troop.rare_galeries.role: monstre rare (poison, secousses)
+troop.rare_galeries.forms.ver_galeries.name: Grand Ver blanc
+troop.rare_filons.name: Prisme vivant
+troop.rare_filons.role: monstre rare (glace)
+troop.rare_filons.forms.elementaire_cristal.name: Prisme vivant
+troop.rare_puits.name: Basilic à l’œil d’or
+troop.rare_puits.role: monstre rare (regard affaiblissant)
+troop.rare_puits.forms.basilic.name: Basilic à l’œil d’or
+troop.rare_dunes.name: Mirage jumeau
+troop.rare_dunes.role: monstre rare (silence)
+troop.rare_dunes.forms.ombre_mirage.name: Mirage jumeau
+troop.rare_caravane.name: Khaled Main-Rouge
+troop.rare_caravane.role: monstre rare (assassins)
+troop.rare_caravane.forms.pillards_sable.name: Khaled Main-Rouge
+troop.rare_tombeaux.name: Grand prêtre Ankhaset
+troop.rare_tombeaux.role: monstre rare (soin, affaiblit)
+troop.rare_tombeaux.forms.pretre_scarabee.name: Grand prêtre Ankhaset
+troop.rare_verrerie.name: Ver-Roi des sables
+troop.rare_verrerie.role: monstre rare (secousses)
+troop.rare_verrerie.forms.ver_sables.name: Ver-Roi des sables
+troop.rare_marches.name: Griffon aux ailes d’argent
+troop.rare_marches.role: monstre rare (charge)
+troop.rare_marches.forms.griffons.name: Griffon aux ailes d’argent
+troop.rare_parvis.name: Sentinelle éveillée
+troop.rare_parvis.role: monstre rare (protection)
+troop.rare_parvis.forms.sentinelles.name: Sentinelle éveillée
+troop.rare_observatoire.name: Astromancien fou
+troop.rare_observatoire.role: monstre rare (glace, silence)
+troop.rare_observatoire.forms.astromancien.name: Astromancien fou
+troop.rare_jardins.name: Chimère à trois têtes
+troop.rare_jardins.role: monstre rare (feu et poison)
+troop.rare_jardins.forms.chimere.name: Chimère à trois têtes
+item.bois_tordu.name: Bois tordu
+item.bois_tordu.desc: ''
+item.resine.name: Résine collante
+item.resine.desc: ''
+item.cuir_brut.name: Cuir brut
+item.cuir_brut.desc: ''
+item.croc_loup.name: Croc de loup
+item.croc_loup.desc: ''
+item.oreille_gobelin.name: Oreille de gobelin
+item.oreille_gobelin.desc: ''
+item.ferraille.name: Ferraille rouillée
+item.ferraille.desc: ''
+item.fil_araignee.name: Fil d'araignée
+item.fil_araignee.desc: ''
+item.champignon_pale.name: Champignon pâle
+item.champignon_pale.desc: ''
+item.pierre_lisse.name: Pierre lisse
+item.pierre_lisse.desc: ''
+item.plume_corbeau.name: Plume de corbeau
+item.plume_corbeau.desc: ''
+item.cuir_epais.name: Cuir épais
+item.cuir_epais.desc: ''
+item.venin.name: Glande à venin
+item.venin.desc: ''
+item.fer_noir.name: Fer noir
+item.fer_noir.desc: ''
+item.seve_ambree.name: Sève ambrée
+item.seve_ambree.desc: ''
+item.os_ancien.name: Os ancien
+item.os_ancien.desc: ''
+item.algue_noire.name: Algue noire
+item.algue_noire.desc: ''
+item.ecaille_terne.name: Écaille terne
+item.ecaille_terne.desc: ''
+item.tourbe.name: Tourbe compacte
+item.tourbe.desc: ''
+item.plume_heron.name: Plume de héron
+item.plume_heron.desc: ''
+item.minerai_argent.name: Minerai d'argent
+item.minerai_argent.desc: ''
+item.cristal_brut.name: Cristal brut
+item.cristal_brut.desc: ''
+item.charbon_dense.name: Charbon dense
+item.charbon_dense.desc: ''
+item.cuir_basilic.name: Cuir de basilic
+item.cuir_basilic.desc: ''
+item.soie_profonde.name: Soie des profondeurs
+item.soie_profonde.desc: ''
+item.soufre.name: Soufre
+item.soufre.desc: ''
+item.verre_cendre.name: Verre de cendre
+item.verre_cendre.desc: ''
+item.sel_ardent.name: Sel ardent
+item.sel_ardent.desc: ''
+item.os_dragonnet.name: Os de dragonnet
+item.os_dragonnet.desc: ''
+item.ecorce_cendre.name: Écorce de cendre
+item.ecorce_cendre.desc: ''
+item.essence_mirage.name: Essence de mirage
+item.essence_mirage.desc: ''
+item.chitine_doree.name: Chitine dorée
+item.chitine_doree.desc: ''
+item.plume_seraphique.name: Plume séraphique
+item.plume_seraphique.desc: ''
+item.eclat_astral.name: Éclat astral
+item.eclat_astral.desc: ''
+item.pierre_lune.name: Pierre de lune
+item.pierre_lune.desc: ''
+item.poussiere_etoile.name: Poussière d'étoile
+item.poussiere_etoile.desc: ''
+item.larme_aube.name: Larme d'aube
+item.larme_aube.desc: ''
+item.fil_lumiere.name: Fil de lumière
+item.fil_lumiere.desc: ''
+item.totem_gobelin.name: Totem gobelin
+item.totem_gobelin.desc: Composant rare du camp gobelin.
+item.coeur_ronce.name: Cœur de ronce
+item.coeur_ronce.desc: Composant du gardien des Ronces.
+item.perle_noyee.name: Perle noyée
+item.perle_noyee.desc: Composant rare du Marais des Noyés.
+item.coeur_marais.name: Cœur du marais
+item.coeur_marais.desc: Composant de la Mère des Noyés.
+item.noyau_golem.name: Noyau de golem
+item.noyau_golem.desc: Composant rare des mines.
+item.gemme_profonde.name: Gemme profonde
+item.gemme_profonde.desc: Composant du Cœur-de-Forge.
+item.flamme_figee.name: Flamme figée
+item.flamme_figee.desc: Composant rare du désert.
+item.coeur_dragon.name: Cœur de dragon
+item.coeur_dragon.desc: Composant du Dragon de cendre.
+item.plume_archonte.name: Plume d'archonte
+item.plume_archonte.desc: Composant rare des Ruines Célestes.
+item.couronne_aube.name: Couronne de l'aube
+item.couronne_aube.desc: Composant de l'Archonte déchu.
+item.bandage.name: Bandage
+item.bandage.desc: +15 % des PV max
+item.potion_mineure.name: Potion de soin mineure
+item.potion_mineure.desc: +30 % des PV max
+item.potion_soin.name: Potion de soin
+item.potion_soin.desc: +50 % des PV max
+item.potion_mana.name: Potion de mana mineure
+item.potion_mana.desc: +40 % du mana max
+item.potion_mana_normale.name: Potion de mana
+item.potion_mana_normale.desc: +80 % du mana max
+item.potion_majeure.name: Potion de soin majeure
+item.potion_majeure.desc: +80 % des PV max
+item.tonique.name: Tonique
+item.tonique.desc: +25 % des PV et du mana max
+item.onguent.name: Onguent de remise
+item.onguent.desc: Soigne entièrement une unité (butin rare)
+item.fourrure_givre.name: Fourrure de Croc-de-Givre
+item.fourrure_givre.desc: Trophée de Croc-de-Givre (Forêt des Ronces). Demandé par les quêtes des villes.
+item.banniere_grishnak.name: Bannière de Grishnak
+item.banniere_grishnak.desc: Trophée de Grishnak le Balafré (Forêt des Ronces). Demandé par les quêtes des villes.
+item.oeuf_reine_soie.name: Œuf de Reine-Soie
+item.oeuf_reine_soie.desc: Trophée de Reine-Soie (Forêt des Ronces). Demandé par les quêtes des villes.
+item.oeil_machefer.name: Œil de Mâchefer
+item.oeil_machefer.desc: Trophée de Vieux Mâchefer (Forêt des Ronces). Demandé par les quêtes des villes.
+item.langue_vase.name: Langue de Gueule-de-Vase
+item.langue_vase.desc: Trophée de Gueule-de-Vase (Marais des Noyés). Demandé par les quêtes des villes.
+item.crane_ssark.name: Crâne peint de Ssark
+item.crane_ssark.desc: Trophée de Ssark l’Écorcheur (Marais des Noyés). Demandé par les quêtes des villes.
+item.lanterne_capitaine.name: Lanterne du Capitaine
+item.lanterne_capitaine.desc: Trophée de Capitaine sans visage (Marais des Noyés). Demandé par les quêtes des villes.
+item.dent_mangeur.name: Dent du Mangeur-de-Barques
+item.dent_mangeur.desc: Trophée de Mangeur-de-Barques (Marais des Noyés). Demandé par les quêtes des villes.
+item.detonateur.name: Détonateur de Brûle-Mèche
+item.detonateur.desc: Trophée de Brûle-Mèche (Mines de Fer-Hurlant). Demandé par les quêtes des villes.
+item.mandibule_ver.name: Mandibule du Grand Ver
+item.mandibule_ver.desc: Trophée de Grand Ver blanc (Mines de Fer-Hurlant). Demandé par les quêtes des villes.
+item.coeur_prisme.name: Cœur de prisme
+item.coeur_prisme.desc: Trophée de Prisme vivant (Mines de Fer-Hurlant). Demandé par les quêtes des villes.
+item.oeil_or.name: Œil d’or
+item.oeil_or.desc: Trophée de Basilic à l’œil d’or (Mines de Fer-Hurlant). Demandé par les quêtes des villes.
+item.voile_mirage.name: Voile du Mirage jumeau
+item.voile_mirage.desc: Trophée de Mirage jumeau (Désert de Cendre). Demandé par les quêtes des villes.
+item.sceau_main_rouge.name: Sceau de Main-Rouge
+item.sceau_main_rouge.desc: Trophée de Khaled Main-Rouge (Désert de Cendre). Demandé par les quêtes des villes.
+item.scarabee_or.name: Scarabée d’or d’Ankhaset
+item.scarabee_or.desc: Trophée de Grand prêtre Ankhaset (Désert de Cendre). Demandé par les quêtes des villes.
+item.perle_ver_roi.name: Perle du Ver-Roi
+item.perle_ver_roi.desc: Trophée de Ver-Roi des sables (Désert de Cendre). Demandé par les quêtes des villes.
+item.remige_argent.name: Rémige d’argent
+item.remige_argent.desc: Trophée de Griffon aux ailes d’argent (Ruines Célestes). Demandé par les quêtes des villes.
+item.glyphe_vigilance.name: Glyphe de vigilance
+item.glyphe_vigilance.desc: Trophée de Sentinelle éveillée (Ruines Célestes). Demandé par les quêtes des villes.
+item.astrolabe_brise.name: Astrolabe brisé
+item.astrolabe_brise.desc: Trophée de Astromancien fou (Ruines Célestes). Demandé par les quêtes des villes.
+item.corne_chimere.name: Corne de chimère
+item.corne_chimere.desc: Trophée de Chimère à trois têtes (Ruines Célestes). Demandé par les quêtes des villes.
+equip.lame_1.name: Épée courte
+equip.lame_2.name: Lame de fer noir
+equip.lame_3.name: Épée d'argent
+equip.lame_4.name: Cimeterre de cendre
+equip.lame_5.name: Lame de l'aube
+equip.masse_1.name: Masse cloutée
+equip.masse_2.name: Masse de fer noir
+equip.masse_3.name: Marteau runique
+equip.masse_4.name: Masse de verre-cendre
+equip.masse_5.name: Étoile du matin
+equip.deuxmains_1.name: Hache de bûcheron
+equip.deuxmains_2.name: Hache des fanges
+equip.deuxmains_3.name: Grand marteau nain
+equip.deuxmains_4.name: Fauchard de cendre
+equip.deuxmains_5.name: Lance céleste
+equip.fronde_1.name: Fronde tressée
+equip.fronde_2.name: Fronde en cuir épais
+equip.fronde_3.name: Lance-pierre d'argent
+equip.fronde_4.name: Fronde à soufre
+equip.fronde_5.name: Fronde stellaire
+equip.arc_1.name: Arc de frêne
+equip.arc_2.name: Arc des marais
+equip.arc_3.name: Arc composite d'argent
+equip.arc_4.name: Arc du désert
+equip.arc_5.name: Arc astral
+equip.baton_1.name: Bâton noueux
+equip.baton_2.name: Bâton de sève
+equip.baton_3.name: Bâton de cristal
+equip.baton_4.name: Bâton de braise
+equip.baton_5.name: Sceptre de l'aube
+equip.gantelets_1.name: Gantelets cloutés
+equip.gantelets_2.name: Poings écaillés
+equip.gantelets_3.name: Gantelets runiques
+equip.gantelets_4.name: Griffes de verre
+equip.gantelets_5.name: Gantelets séraphiques
+equip.legere_1.name: Gilet de cuir
+equip.legere_2.name: Veste d'écailles
+equip.legere_3.name: Cuir de basilic
+equip.legere_4.name: Tunique de chitine
+equip.legere_5.name: Cuirasse de plumes
+equip.moyenne_1.name: Brigandine usée
+equip.moyenne_2.name: Cotte de mailles
+equip.moyenne_3.name: Maille d'argent
+equip.moyenne_4.name: Écailles de dragonnet
+equip.moyenne_5.name: Haubert lunaire
+equip.lourde_1.name: Plastron de ferraille
+equip.lourde_2.name: Armure de fer noir
+equip.lourde_3.name: Plaques naines
+equip.lourde_4.name: Armure de verre-cendre
+equip.lourde_5.name: Plate de l'aube
+equip.robe_1.name: Robe de lin
+equip.robe_2.name: Robe d'algues
+equip.robe_3.name: Robe de soie profonde
+equip.robe_4.name: Robe de mirage
+equip.robe_5.name: Robe étoilée
+equip.bottes_1.name: Bottes rapiécées
+equip.bottes_2.name: Bottes de marais
+equip.bottes_3.name: Bottes de mineur
+equip.bottes_4.name: Sandales du désert
+equip.bottes_5.name: Bottes ailées
+equip.anneau_1.name: Anneau de cuivre
+equip.anneau_2.name: Anneau d'ambre
+equip.anneau_3.name: Anneau de cristal
+equip.anneau_4.name: Anneau de sel ardent
+equip.anneau_5.name: Anneau de pierre de lune
+equip.collier_1.name: Collier à pointes
+equip.collier_2.name: Collier d'écailles
+equip.collier_3.name: Collier d'argent
+equip.collier_4.name: Collier de chitine
+equip.collier_5.name: Collier d'étoiles
+equip.ecorce_vivante.name: Armure d’écorce vivante
+equip.cape_noyes.name: Cape des Noyés
+equip.poings_forge.name: Poings du Cœur-de-Forge
+equip.ecailles_dragon.name: Écailles du dragon de cendre
+equip.diademe_aube.name: Diadème de l'aube
+region.ronces.name: Pays de Havre-Gris
+region.ronces.city.name: Havre-Gris
+region.ronces.city.desc: Capitale de la région. Banque, atelier, recrutement, temple et marchand.
+region.ronces.territory.name: Forêt des Ronces
+region.ronces.territory.desc: Une forêt étouffée de ronces où gobelins, bêtes et araignées se disputent les sentiers. Le Sylvain qui garde son cœur barre la route du marais.
+region.ronces.steps.lisiere.name: Lisière
+region.ronces.steps.lisiere.desc: Des loups rôdent et quelques gobelins guettent les voyageurs.
+region.ronces.steps.sentier.name: Sentier des pillards
+region.ronces.steps.sentier.desc: Les bandes gobelines tiennent le sentier.
+region.ronces.steps.nids.name: Nids de soie
+region.ronces.steps.nids.desc: Les arbres sont pris dans les toiles.
+region.ronces.steps.camp.name: Camp gobelin
+region.ronces.steps.camp.desc: Le chaman y tient sa cour, protégé par un troll.
+region.ronces.steps.coeur.name: Cœur des Ronces
+region.ronces.steps.coeur.desc: Le gardien de la forêt. Le vaincre ouvre la route du marais.
+region.marais.name: Côte de Port-Salant
+region.marais.city.name: Port-Salant
+region.marais.city.desc: Port de pêcheurs adossé au marais, ses quais sentent la vase et le goudron.
+region.marais.territory.name: Marais des Noyés
+region.marais.territory.desc: Des eaux noires où les morts ne restent pas couchés. Au centre, la Mère des Noyés.
+region.marais.steps.berges.name: Berges
+region.marais.steps.berges.desc: Moustiques et crapauds sur la vase.
+region.marais.steps.roselieres.name: Roselières
+region.marais.steps.roselieres.desc: Les hommes-lézards chassent entre les roseaux.
+region.marais.steps.epaves.name: Cimetière des épaves
+region.marais.steps.epaves.desc: Des barques coulées, et ceux qui les menaient.
+region.marais.steps.tertre.name: Tertre de la sorcière
+region.marais.steps.tertre.desc: La sorcière noyée y garde ses bêtes.
+region.marais.steps.gouffre.name: Gouffre des Noyés
+region.marais.steps.gouffre.desc: La gardienne du marais.
+region.mines.name: Monts de Rochecreuse
+region.mines.city.name: Rochecreuse
+region.mines.city.desc: Cité naine creusée dans la montagne, forges allumées jour et nuit.
+region.mines.territory.name: Mines de Fer-Hurlant
+region.mines.territory.desc: Des galeries abandonnées par les nains, reprises par les kobolds et pire encore.
+region.mines.steps.entree.name: Entrée des mines
+region.mines.steps.entree.desc: Kobolds et chauves-souris.
+region.mines.steps.galeries.name: Galeries effondrées
+region.mines.steps.galeries.desc: Les vers creusent de nouveaux tunnels.
+region.mines.steps.filons.name: Filons de cristal
+region.mines.steps.filons.desc: Les élémentaires gardent les gisements.
+region.mines.steps.puits.name: Puits du basilic
+region.mines.steps.puits.desc: Le regard du basilic fige les imprudents.
+region.mines.steps.forge.name: Forge oubliée
+region.mines.steps.forge.desc: Le gardien des mines.
+region.desert.name: Terres de Cendrelune
+region.desert.city.name: Cendrelune
+region.desert.city.desc: Oasis fortifiée au bord du désert, carrefour des caravanes.
+region.desert.territory.name: Désert de Cendre
+region.desert.territory.desc: Dunes grises et ruines brûlées. Un dragon dort sous la plus haute.
+region.desert.steps.dunes.name: Dunes grises
+region.desert.steps.dunes.desc: Vautours et scorpions.
+region.desert.steps.caravane.name: Piste des caravanes
+region.desert.steps.caravane.desc: Les pillards guettent les convois.
+region.desert.steps.tombeaux.name: Tombeaux ensablés
+region.desert.steps.tombeaux.desc: Les momies veillent leurs prêtres.
+region.desert.steps.verrerie.name: Champs de verre
+region.desert.steps.verrerie.desc: Le sable fondu a donné naissance à des golems.
+region.desert.steps.antre.name: Antre du dragon
+region.desert.steps.antre.desc: Le gardien du désert.
+region.ciel.name: Hauteurs de l'Aube
+region.ciel.city.name: Sanctuaire de l'Aube
+region.ciel.city.desc: Dernier temple debout au pied des ruines célestes.
+region.ciel.territory.name: Ruines Célestes
+region.ciel.territory.desc: Les marches brisées d'une cité tombée du ciel. L'Archonte déchu y règne encore.
+region.ciel.steps.marches.name: Marches brisées
+region.ciel.steps.marches.desc: Harpies et gargouilles.
+region.ciel.steps.parvis.name: Parvis des sentinelles
+region.ciel.steps.parvis.desc: Les gardiens de marbre tiennent encore leur poste.
+region.ciel.steps.observatoire.name: Observatoire
+region.ciel.steps.observatoire.desc: Les astromanciens lisent un ciel qui n’existe plus.
+region.ciel.steps.jardins.name: Jardins suspendus
+region.ciel.steps.jardins.desc: Chimères et golems errent entre les fontaines.
+region.ciel.steps.trone.name: Trône de l'Archonte
+region.ciel.steps.trone.desc: Le gardien des ruines.
+rare.rare_lisiere.name: Croc-de-Givre
+rare.rare_sentier.name: Grishnak le Balafré
+rare.rare_nids.name: Reine-Soie
+rare.rare_camp.name: Vieux Mâchefer
+rare.rare_berges.name: Gueule-de-Vase
+rare.rare_roselieres.name: Ssark l’Écorcheur
+rare.rare_epaves.name: Capitaine sans visage
+rare.rare_tertre.name: Mangeur-de-Barques
+rare.rare_entree.name: Brûle-Mèche
+rare.rare_galeries.name: Grand Ver blanc
+rare.rare_filons.name: Prisme vivant
+rare.rare_puits.name: Basilic à l’œil d’or
+rare.rare_dunes.name: Mirage jumeau
+rare.rare_caravane.name: Khaled Main-Rouge
+rare.rare_tombeaux.name: Grand prêtre Ankhaset
+rare.rare_verrerie.name: Ver-Roi des sables
+rare.rare_marches.name: Griffon aux ailes d’argent
+rare.rare_parvis.name: Sentinelle éveillée
+rare.rare_observatoire.name: Astromancien fou
+rare.rare_jardins.name: Chimère à trois têtes

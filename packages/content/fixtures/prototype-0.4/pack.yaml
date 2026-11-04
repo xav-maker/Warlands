@@ -1,0 +1,18 @@
+# Pack de contenu. files : fichiers de chaque collection, dans l’ordre (l’ordre des entrées compte pour les tirages).
+
+id: prototype-0.4
+engineVersion: proto-0.4-ville
+files:
+  skills: [skills/base.yaml, skills/sorts.yaml]
+  troops:
+    [
+      troops/recrutables.yaml,
+      monsters/r1-ronces.yaml,
+      monsters/r2-marais.yaml,
+      monsters/r3-mines.yaml,
+      monsters/r4-desert.yaml,
+      monsters/r5-ciel.yaml,
+      monsters/rares.yaml,
+    ]
+  items: [items/materials.yaml, items/components.yaml, items/consumables.yaml, items/trophies.yaml]
+  equip: [items/bases/armes.yaml, items/bases/armures.yaml, items/bases/accessoires.yaml, items/bases/gardiens.yaml]

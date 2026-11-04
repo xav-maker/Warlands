@@ -1,5 +1,5 @@
 /**
- * Le pack compilé depuis content/ (YAML) doit redonner exactement le contenu du prototype
+ * Le pack du prototype (YAML figé dans packages/content/fixtures/prototype-0.4, copie de content/ à la fin de J3) doit redonner exactement le contenu du prototype
  * (packages/gen/golden/v0.4/content.json, tiré du prototype par tools/extract-prototype).
  * L'ordre des entrées, qui compte pour les tirages, est vérifié par les vecteurs de packages/gen,
  * rejoués sur ce pack.
@@ -12,7 +12,7 @@ import { describe, expect, it } from 'vitest';
 import { validateContent } from '../src/index.ts';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '../../..');
-const CONTENT = join(ROOT, 'content');
+const CONTENT = join(ROOT, 'packages/content/fixtures/prototype-0.4');
 const snapshot = JSON.parse(readFileSync(join(ROOT, 'packages/gen/golden/v0.4/content.json'), 'utf8')) as Record<string, unknown>;
 
 /** JSON aux clés d'objet triées : compare le contenu sans dépendre de l'ordre des champs. */
@@ -54,7 +54,7 @@ describe('pack du prototype', () => {
 });
 
 describe('validation', () => {
-  /** Copie de content/ modifiée par `edit`, puis validée. */
+  /** Copie du pack du prototype modifiée par `edit`, puis validée. */
   function broken(rel: string, edit: (s: string) => string): string[] {
     const dir = mkdtempSync(join(tmpdir(), 'cr-content-'));
     try {

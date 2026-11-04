@@ -52,14 +52,33 @@ export const Skill = z.strictObject({
 
 export const Weapon = z.strictObject({ type: id, dmg: int, speed: int, cost: int });
 
-const Stats = z.strictObject({ hp: num, will: num, energy: num, mana: num, atk: num });
+/** Stats de base et croissance : l'attaque unique (prototype) ou les 5 puissances (moteur v1, README 19.1). */
+const Stats = z
+  .strictObject({
+    hp: num,
+    will: num,
+    energy: num,
+    mana: num,
+    atk: num.optional(),
+    for: num.optional(),
+    ele: num.optional(),
+    esp: num.optional(),
+    foi: num.optional(),
+    omb: num.optional(),
+  })
+  .refine((s) => (s.atk !== undefined) !== (['for', 'ele', 'esp', 'foi', 'omb'] as const).every((k) => s[k] !== undefined), {
+    message: "l'attaque (atk) ou les 5 puissances (for, ele, esp, foi, omb), pas les deux",
+  });
+const powerBonus = { for: int.optional(), ele: int.optional(), esp: int.optional(), foi: int.optional(), omb: int.optional() };
 
 export const Form = z.strictObject({
   id,
   level: int,
   parent: id.optional(),
   hpMult: int.optional(),
-  bonus: z.strictObject({ will: int.optional(), energy: int.optional(), mana: int.optional(), atk: int.optional() }).optional(),
+  bonus: z
+    .strictObject({ will: int.optional(), energy: int.optional(), mana: int.optional(), atk: int.optional(), ...powerBonus })
+    .optional(),
   speed: int,
   res: z.record(z.string(), int),
   tags: z.array(z.string()).optional(),
@@ -76,6 +95,8 @@ export const Troop = z.strictObject({
   base: Stats,
   growth: Stats,
   forms: z.array(Form).min(1),
+  /** v1 : types de dégâts auxquels le monstre est immunisé (au plus 2, README 19.4). */
+  immune: z.array(id).max(2).optional(),
   slots: z.record(z.string(), z.array(z.string())).optional(),
   drops: z.array(id).optional(),
   boss: z.boolean().optional(),
