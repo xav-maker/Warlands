@@ -34,7 +34,7 @@ Vérification : 18 régions ont 3 routes, 2 en ont 2 (Hauteurs de l'Aube et Bois
 
 ## 2. Les 29 routes
 
-Palier d'une route = le plus petit des paliers de ses deux régions (README 18.2). Niveaux des étapes (bonus +2 compris) : L+2/L+3, L+3/L+4, L+4/L+5, L+5/L+6, gardien L+7/L+8. Population des étapes : celle de la section 3.2 × 2 (README 20). Monstres : étapes 1 et 2 dans les monstres **légers** des bestiaires des deux régions, étapes 3 et 4 dans les **lourds**, escorte du gardien dans les lourds (les 5 routes actuelles gardent leurs pools). Les 4 monstres rares occupent les étapes 1 à 4, dans l'ordre.
+Palier d'une route = le plus petit des paliers de ses deux régions (README 18.2). Niveaux des étapes (bonus +2 compris) : L+2/L+3, L+3/L+4, L+4/L+5, L+5/L+6, gardien L+7/L+8. Palier 1 : 1-2, 3-4, 4-6, 6-7, gardien 8-9 [Xavier, 5 novembre 2026]. Population des étapes : celle de la section 3.2 × 2 (README 20). Monstres : étapes 1 et 2 dans les monstres **légers** des bestiaires des deux régions, étapes 3 et 4 dans les **lourds**, escorte du gardien dans les lourds (les 5 routes actuelles gardent leurs pools). Les 4 monstres rares occupent les étapes 1 à 4, dans l'ordre.
 
 | Route | Relie | Palier | Nom | Étapes 1 → 5 | Gardien (imposé à l'étape 5) | Monstres rares (modèle) | Donjon |
 |---|---|---|---|---|---|---|---|

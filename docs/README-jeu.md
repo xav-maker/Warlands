@@ -110,7 +110,7 @@ Pour une région de niveau minimal `L` et de palier `T`, l'étape `i` (0 à 4) a
 | 4 | L+3+2 à L+4+2 | 5-7 | 2 | 22 × T² |
 | 5 (gardien) | L+5+2 à L+6+2 | `guardianPop` | 2-3 + 1 garanti | 40 × T² |
 
-Le « +2 » est `MONSTER_LEVEL_BONUS` [Xavier]. `firstPop` vaut [1,2] (région 1), [2,3] (régions 2 et 3), [3,4] (régions 4 et 5). `guardianPop` vaut [8,9] (régions 1 et 3), [6,7] (région 2), [9,10] (région 4), [7,7] (région 5). Le gardien est **imposé** dans le groupe de la 5e étape ; le reste du budget est complété par des monstres du pool de l'étape (section 6.1).
+Exception au palier 1 [Xavier, 5 novembre 2026] : les étapes 1 à 3 sont aux niveaux 1-2, 3-4 et 4-6 (l’étape 4 et le gardien ne changent pas), pour que les premières troupes, de niveau 1, rencontrent des monstres de leur niveau. Le « +2 » est `MONSTER_LEVEL_BONUS` [Xavier]. `firstPop` vaut [1,2] (région 1), [2,3] (régions 2 et 3), [3,4] (régions 4 et 5). `guardianPop` vaut [8,9] (régions 1 et 3), [6,7] (région 2), [9,10] (région 4), [7,7] (région 5). Le gardien est **imposé** dans le groupe de la 5e étape ; le reste du budget est complété par des monstres du pool de l'étape (section 6.1).
 
 ### 3.3 Déplacements [Xavier, 3 novembre 2026]
 
