@@ -34,89 +34,91 @@
   tier: 1
   minLevel: 1
   city:
-    recruit: [milicien, frondeurs]
+    recruit: [milicien, frondeurs, garde_champetre, faucheurs, bergere, apicultrice, meunier, guerisseuse_bourg]
     shop: [lame_1, baton_1, arc_1, legere_1, robe_1, bandage, potion_mineure]
 - id: saulnes
   tier: 1
   minLevel: 1
   city:
-    recruit: [chasseur, acolyte]
+    recruit: [chasseur, acolyte, ondine_apprivoisee, passeurs, pecheuse, farfadet, loutres, batelier]
     shop: [lame_1, baton_1, arc_1, legere_1, robe_1, bandage, potion_mineure]
 - id: fort_bruyere
   tier: 1
   minLevel: 1
   city:
-    recruit: [ecuyer, braconniers]
+    recruit: [ecuyer, braconniers, brigands, arbaletriers_fort, druide_menhirs, chevaucheur, pleureuse, molosses]
     shop: [lame_1, baton_1, arc_1, legere_1, robe_1, bandage, potion_mineure]
 - id: brumefosse
   tier: 2
   minLevel: 6
   city:
-    recruit: [loups, harponneur]
+    recruit: [loups, harponneur, chasseurs_garous, sorciere_brumes, garou, bucherons, moine_brume, corbeautiere]
     shop: [lame_2, deuxmains_2, arc_2, moyenne_2, robe_2, bandage, potion_mineure, potion_soin, potion_mana]
 - id: corbeval
   tier: 2
   minLevel: 6
   city:
-    recruit: [adepte, gardes_maree]
+    recruit: [adepte, gardes_maree, fossoyeurs, exorciste, squelettes_lies, necrophage, penitent, chien_cimetiere]
     shop: [lame_2, deuxmains_2, arc_2, moyenne_2, robe_2, bandage, potion_mineure, potion_soin, potion_mana]
 - id: ambrerive
   tier: 2
   minLevel: 6
   city:
-    recruit: [herboriste, berserker]
+    recruit: [herboriste, berserker, gardes_forestiers, dryade, ours_ambre, cueilleuse, cerfs, archere_sylvaine]
     shop: [lame_2, deuxmains_2, arc_2, moyenne_2, robe_2, bandage, potion_mineure, potion_soin, potion_mana]
 - id: givrecime
   tier: 3
   minLevel: 11
   city:
-    recruit: [mage_cristal, mineurs]
+    recruit: [mage_cristal, mineurs, nains_givre, chamane_blizzard, yeti, skieurs, ermite, ours_polaires]
     shop: [masse_3, fronde_3, gantelets_3, lourde_3, robe_3, bandage, potion_mineure, potion_soin, potion_mana]
 - id: lanterne_noire
   tier: 3
   minLevel: 11
   city:
-    recruit: [eclaireuse, sorciere_marais]
+    recruit:
+      [eclaireuse, sorciere_marais, lame_elfe_noire, tisseuse, araignees_dressees, porte_lanterne, arbaletrieres_drows, champignon_errant]
     shop: [masse_3, fronde_3, gantelets_3, lourde_3, robe_3, bandage, potion_mineure, potion_soin, potion_mana]
 - id: braise_haute
   tier: 3
   minLevel: 11
   city:
-    recruit: [gardien_pierre, alchimiste]
+    recruit:
+      [gardien_pierre, alchimiste, forgeronne_lave, pyro_caldeira, salamandres, gardiens_basalte, pretresse_cendres, briseurs_obsidienne]
     shop: [masse_3, fronde_3, gantelets_3, lourde_3, robe_3, bandage, potion_mineure, potion_soin, potion_mana]
 - id: port_corsaire
   tier: 4
   minLevel: 16
   city:
-    recruit: [arbaletrier, lanciers_cendres]
+    recruit: [arbaletrier, lanciers_cendres, corsaires, canonniere, naga, sirene, crabes, aumonier]
     shop: [lame_4, arc_4, baton_4, legere_4, moyenne_4, bandage, potion_mineure, potion_soin, potion_mana]
 - id: verdeloin
   tier: 4
   minLevel: 16
   city:
-    recruit: [scorpions, nomade]
+    recruit: [scorpions, nomade, homme_fauve, sarbacanieres, chamane_crapaud, gorille, pretresse_jade, serpents_temple]
     shop: [lame_4, arc_4, baton_4, legere_4, moyenne_4, bandage, potion_mineure, potion_soin, potion_mana]
 - id: kharak
   tier: 4
   minLevel: 16
   city:
-    recruit: [derviche, garde_oasis]
+    recruit: [derviche, garde_oasis, centaure, orcs, chamane_tempetes, hyenes, khan, harpies_dressees]
     shop: [lame_4, arc_4, baton_4, legere_4, moyenne_4, bandage, potion_mineure, potion_soin, potion_mana]
 - id: ys_profonde
   tier: 5
   minLevel: 21
   city:
-    recruit: [tireur_astral, oracle]
+    recruit: [tireur_astral, oracle, hommes_poissons, oracle_noyee, meduses, pretre_marees, requin_garou, scaphandrier]
     shop: [lame_5, deuxmains_5, baton_5, lourde_5, robe_5, bandage, potion_mineure, potion_soin, potion_mana]
 - id: citadelle_obsidienne
   tier: 5
   minLevel: 21
   city:
-    recruit: [paladin, lames_jumelles]
+    recruit: [paladin, lames_jumelles, demoniste, chevalier_obsidienne, succube, molosses_verre, inquisitrice, arbaletriers_verre]
     shop: [lame_5, deuxmains_5, baton_5, lourde_5, robe_5, bandage, potion_mineure, potion_soin, potion_mana]
 - id: lune_dormante
   tier: 5
   minLevel: 21
   city:
-    recruit: [archonte_aube, invocatrice]
+    recruit: [archonte_aube, invocatrice, chevaliers_lune, fee_songes, licorne, archeres_rosee, dormeur, tisseur_reves]
     shop: [lame_5, deuxmains_5, baton_5, lourde_5, robe_5, bandage, potion_mineure, potion_soin, potion_mana]

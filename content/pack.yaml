@@ -9,6 +9,7 @@ files:
     - skills/cible.yaml
   troops:
     - troops/recrutables.yaml
+    - troops/cible.yaml
     - monsters/r1-ronces.yaml
     - monsters/r2-marais.yaml
     - monsters/r3-mines.yaml

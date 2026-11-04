@@ -36,3 +36,4 @@ sceptre: { type: sacre, dmg: 7, speed: 22, cost: 6 }
 pioche: { type: contondant, dmg: 12, speed: 21, cost: 10 }
 flasques: { type: feu, dmg: 7, speed: 18, cost: 7 }
 dard_s: { type: maladie, dmg: 9, speed: 15, cost: 7 }
+orbe: { type: psychique, dmg: 6, speed: 22, cost: 6 }

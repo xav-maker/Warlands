@@ -1,0 +1,3232 @@
+# Troupes recrutables du contenu cible (contenu-cible-unites.md 4.1 et 5), 6 par ville nouvelle.
+
+garde_champetre:
+  units: 1
+  pop: 1
+  tags: [humain]
+  weapon: epee
+  defaultDist: 1
+  base: { hp: 110, will: 65, energy: 100, mana: 0, for: 5, ele: 0, esp: 1, foi: 1, omb: 0 }
+  growth: { hp: 7, will: 1, energy: 2, mana: 0, for: 1, ele: 0, esp: 0.3, foi: 0.3, omb: 0 }
+  forms:
+    - id: garde_champetre
+      level: 1
+      speed: 20
+      res: { tranchant: 10 }
+      skills: [[emploi, 1], [coup_bouclier, 2], [cri_defi, 5], [coup_assommant, 9]]
+    - id: garde_champetre_sergent_bourg
+      level: 10
+      parent: garde_champetre
+      hpMult: 1150
+      bonus: { will: 10, energy: 10, for: 3 }
+      speed: 19
+      res: { tranchant: 10 }
+      skills: [[rempart_vivant, 10], [peau_dure, 14]]
+    - id: garde_champetre_capitaine_milice
+      level: 20
+      parent: garde_champetre_sergent_bourg
+      hpMult: 1553
+      bonus: { will: 30, energy: 10, for: 3 }
+      speed: 20
+      res: { tranchant: 20, contondant: 10 }
+      skills: [[aura_protection, 20], [mur_boucliers, 24]]
+    - id: garde_champetre_capitaine_bretteur
+      level: 20
+      parent: garde_champetre_sergent_bourg
+      hpMult: 1323
+      bonus: { will: 10, energy: 10, for: 11, esp: 3 }
+      speed: 18
+      res: { tranchant: 10 }
+      skills: [[enchainement, 20], [estoc, 24]]
+  slots:
+    arme: [une_main]
+    armure: [legere, moyenne, lourde]
+    accessoire: [bottes, anneau]
+faucheurs:
+  units: 2
+  pop: 2
+  tags: [humain]
+  weapon: lance
+  defaultDist: 1
+  base: { hp: 80, will: 55, energy: 100, mana: 0, for: 6, ele: 0, esp: 1, foi: 0, omb: 1 }
+  growth: { hp: 4, will: 1, energy: 2, mana: 0, for: 1.5, ele: 0, esp: 0.3, foi: 0, omb: 0.3 }
+  forms:
+    - id: faucheurs
+      level: 1
+      speed: 16
+      res: {}
+      skills: [[emploi, 1], [repos, 1], [taillade, 4], [laceration, 8]]
+    - id: faucheurs_moissonneurs
+      level: 10
+      parent: faucheurs
+      hpMult: 1150
+      bonus: { will: 10, energy: 10, for: 3 }
+      speed: 15
+      res: {}
+      skills: [[brise_genou, 10], [enchainement, 14]]
+    - id: faucheurs_faucheurs_guerre
+      level: 20
+      parent: faucheurs_moissonneurs
+      hpMult: 1323
+      bonus: { will: 10, energy: 10, for: 11, esp: 3 }
+      speed: 14
+      res: {}
+      skills: [[estoc, 20], [predateur, 24]]
+  slots:
+    arme: [deux_mains]
+    armure: [moyenne, lourde]
+    accessoire: [bottes, anneau, collier]
+bergere:
+  units: 3
+  pop: 2
+  tags: [humain, bete]
+  weapon: crocs
+  defaultDist: 1
+  base: { hp: 60, will: 50, energy: 100, mana: 0, for: 5, ele: 0, esp: 0, foi: 0, omb: 0 }
+  growth: { hp: 3.4, will: 1, energy: 2, mana: 0, for: 1.12, ele: 0, esp: 0, foi: 0, omb: 0 }
+  forms:
+    - id: bergere
+      level: 1
+      speed: 14
+      res: {}
+      skills: [[morsure, 1], [repos, 1], [hurlement, 4], [laceration, 8]]
+    - id: bergere_meute_berger
+      level: 10
+      parent: bergere
+      hpMult: 1150
+      bonus: { will: 10, energy: 10, for: 3 }
+      speed: 13
+      res: {}
+      skills: [[bond, 10], [predateur, 14]]
+    - id: bergere_meute_collines
+      level: 20
+      parent: bergere_meute_berger
+      hpMult: 1438
+      bonus: { will: 25, energy: 10, for: 8 }
+      speed: 13
+      res: {}
+      skills: [[pietinement, 20], [instinct_meute, 22]]
+  slots:
+    accessoire: [collier]
+apicultrice:
+  units: 1
+  pop: 1
+  tags: [humain]
+  weapon: baton
+  defaultDist: 3
+  base: { hp: 65, will: 65, energy: 70, mana: 45, for: 1, ele: 0, esp: 2, foi: 0, omb: 6 }
+  growth: { hp: 3, will: 2, energy: 1, mana: 2.5, for: 0.3, ele: 0, esp: 0.5, foi: 0, omb: 1.5 }
+  forms:
+    - id: apicultrice
+      level: 1
+      speed: 23
+      res: { maladie: 20 }
+      skills: [[emploi, 1], [putrefaction, 1], [meditation, 1], [fleau, 5], [nuage, 9]]
+    - id: apicultrice_mere_ruches
+      level: 10
+      parent: apicultrice
+      hpMult: 1150
+      bonus: { will: 10, energy: 10, mana: 10, omb: 3 }
+      speed: 22
+      res: { maladie: 20 }
+      skills: [[peste, 10], [malefice, 14]]
+    - id: apicultrice_reine_essaims
+      level: 20
+      parent: apicultrice_mere_ruches
+      hpMult: 1323
+      bonus: { will: 10, energy: 10, mana: 10, omb: 11, esp: 3 }
+      speed: 21
+      res: { maladie: 20 }
+      skills: [[nuee_ombres, 20], [peste, 24]]
+  slots:
+    arme: [une_main, baton]
+    armure: [robe, legere]
+    accessoire: [anneau]
+meunier:
+  units: 1
+  pop: 2
+  tags: [humain]
+  weapon: masse_lourde
+  defaultDist: 1
+  base: { hp: 203, will: 50, energy: 110, mana: 0, for: 10, ele: 0, esp: 0, foi: 0, omb: 0 }
+  growth: { hp: 13.05, will: 1, energy: 2, mana: 0, for: 2.4, ele: 0, esp: 0, foi: 0, omb: 0 }
+  forms:
+    - id: meunier
+      level: 1
+      speed: 25
+      res: { contondant: 15 }
+      skills: [[emploi, 1], [exploit, 1], [repos, 1], [frappe_brutale, 4], [pietinement, 9]]
+    - id: meunier_meunier_fer
+      level: 10
+      parent: meunier
+      hpMult: 1150
+      bonus: { will: 10, energy: 10, for: 3 }
+      speed: 24
+      res: { contondant: 15 }
+      skills: [[coup_assommant, 10], [peau_dure, 14]]
+    - id: meunier_colosse_moulin
+      level: 20
+      parent: meunier_meunier_fer
+      hpMult: 1553
+      bonus: { will: 30, energy: 10, for: 3 }
+      speed: 25
+      res: { contondant: 25, tranchant: 10 }
+      skills: [[rempart_vivant, 20], [riposte, 22]]
+  slots:
+    arme: [deux_mains]
+    armure: [moyenne, lourde]
+    accessoire: [bottes, anneau, collier]
+guerisseuse_bourg:
+  units: 1
+  pop: 1
+  tags: [humain]
+  weapon: masse
+  defaultDist: 3
+  base: { hp: 70, will: 80, energy: 80, mana: 45, for: 2, ele: 0, esp: 2, foi: 6, omb: 0 }
+  growth: { hp: 4, will: 2, energy: 1, mana: 2.5, for: 0.5, ele: 0, esp: 0.5, foi: 1.5, omb: 0 }
+  forms:
+    - id: guerisseuse_bourg
+      level: 1
+      speed: 22
+      res: { sacre: 20 }
+      skills: [[emploi, 1], [soin_mineur, 1], [meditation, 1], [bouclier_foi, 4], [mains_lumiere, 9]]
+    - id: guerisseuse_bourg_guerisseuse
+      level: 10
+      parent: guerisseuse_bourg
+      hpMult: 1150
+      bonus: { will: 10, energy: 10, mana: 10, foi: 3 }
+      speed: 21
+      res: { sacre: 20 }
+      skills: [[onde_soin, 10], [purification, 14]]
+    - id: guerisseuse_bourg_sainte_val
+      level: 20
+      parent: guerisseuse_bourg_guerisseuse
+      hpMult: 1380
+      bonus: { will: 30, energy: 10, mana: 40, foi: 9 }
+      speed: 21
+      res: { sacre: 20 }
+      skills: [[egide, 20], [ferveur, 24]]
+    - id: guerisseuse_bourg_juge_val
+      level: 20
+      parent: guerisseuse_bourg_guerisseuse
+      hpMult: 1323
+      bonus: { will: 10, energy: 10, mana: 10, foi: 11, for: 3 }
+      speed: 20
+      res: { sacre: 20 }
+      skills: [[rayon_sacre, 20], [jugement, 25]]
+  slots:
+    arme: [une_main, baton]
+    armure: [robe, legere]
+    accessoire: [anneau]
+ondine_apprivoisee:
+  units: 1
+  pop: 1
+  tags: [esprit]
+  weapon: baton
+  defaultDist: 3
+  base: { hp: 65, will: 60, energy: 70, mana: 50, for: 1, ele: 6, esp: 2, foi: 0, omb: 0 }
+  growth: { hp: 3, will: 1, energy: 1, mana: 3, for: 0.3, ele: 1.5, esp: 0.5, foi: 0, omb: 0 }
+  forms:
+    - id: ondine_apprivoisee
+      level: 1
+      speed: 23
+      res: { glace: 30, feu: -20 }
+      skills: [[emploi, 1], [eclat_glace, 1], [meditation, 1], [armure_givre, 5], [javelot_glace, 9]]
+    - id: ondine_apprivoisee_ondine_rapides
+      level: 10
+      parent: ondine_apprivoisee
+      hpMult: 1150
+      bonus: { will: 10, energy: 10, mana: 10, ele: 3 }
+      speed: 22
+      res: { glace: 30, feu: -20 }
+      skills: [[prison_glace, 10], [mains_lumiere, 14]]
+    - id: ondine_apprivoisee_dame_eaux
+      level: 20
+      parent: ondine_apprivoisee_ondine_rapides
+      hpMult: 1380
+      bonus: { will: 30, energy: 10, mana: 40, ele: 3, esp: 6 }
+      speed: 22
+      res: { glace: 30, feu: -20 }
+      skills: [[onde_soin, 20], [armure_givre, 22]]
+    - id: ondine_apprivoisee_ondine_glaciale
+      level: 20
+      parent: ondine_apprivoisee_ondine_rapides
+      hpMult: 1323
+      bonus: { will: 10, energy: 10, mana: 10, ele: 11, esp: 3 }
+      speed: 21
+      res: { glace: 30, feu: -20 }
+      skills: [[blizzard, 20], [maitrise_elem, 24]]
+  slots:
+    arme: [baton]
+    armure: [robe]
+    accessoire: [anneau]
+passeurs:
+  units: 2
+  pop: 2
+  tags: [humain]
+  weapon: lance
+  defaultDist: 1
+  base: { hp: 110, will: 65, energy: 100, mana: 0, for: 5, ele: 0, esp: 1, foi: 1, omb: 0 }
+  growth: { hp: 7, will: 1, energy: 2, mana: 0, for: 1, ele: 0, esp: 0.3, foi: 0.3, omb: 0 }
+  forms:
+    - id: passeurs
+      level: 1
+      speed: 20
+      res: { glace: 10 }
+      skills: [[emploi, 1], [repos, 1], [harpon_tir, 3], [coup_jarret, 6]]
+    - id: passeurs_gardes_gue
+      level: 10
+      parent: passeurs
+      hpMult: 1150
+      bonus: { will: 10, energy: 10, for: 3 }
+      speed: 19
+      res: { glace: 10 }
+      skills: [[cri_defi, 10], [brise_genou, 14]]
+    - id: passeurs_gardiens_ponts
+      level: 20
+      parent: passeurs_gardes_gue
+      hpMult: 1553
+      bonus: { will: 30, energy: 10, for: 3 }
+      speed: 20
+      res: { glace: 10, contondant: 10, tranchant: 10 }
+      skills: [[rempart_vivant, 20], [peau_dure, 22]]
+  slots:
+    arme: [une_main]
+    armure: [legere, moyenne, lourde]
+    accessoire: [bottes, anneau]
+pecheuse:
+  units: 1
+  pop: 1
+  tags: [humain]
+  weapon: fronde
+  defaultDist: 3
+  base: { hp: 70, will: 55, energy: 95, mana: 0, for: 5, ele: 0, esp: 1, foi: 0, omb: 0 }
+  growth: { hp: 4, will: 1, energy: 2, mana: 0, for: 1.3, ele: 0, esp: 0.3, foi: 0, omb: 0 }
+  forms:
+    - id: pecheuse
+      level: 1
+      speed: 18
+      res: {}
+      skills: [[tir_fronde, 1], [repos, 1], [filet, 3], [marque, 7]]
+    - id: pecheuse_pecheuse_rapides
+      level: 10
+      parent: pecheuse
+      hpMult: 1150
+      bonus: { will: 10, energy: 10, for: 3 }
+      speed: 17
+      res: {}
+      skills: [[rafale, 10], [tir_recul, 14]]
+    - id: pecheuse_reine_filets
+      level: 20
+      parent: pecheuse_pecheuse_rapides
+      hpMult: 1438
+      bonus: { will: 25, energy: 10, for: 8 }
+      speed: 17
+      res: {}
+      skills: [[carreau_lourd, 20], [predateur, 24]]
+  slots:
+    arme: [arc, fronde]
+    armure: [legere]
+    accessoire: [bottes, anneau]
+farfadet:
+  units: 1
+  pop: 1
+  tags: [fee]
+  weapon: dague
+  defaultDist: 2
+  base: { hp: 75, will: 95, energy: 90, mana: 30, for: 3, ele: 0, esp: 6, foi: 0, omb: 0 }
+  growth: { hp: 4, will: 3, energy: 2, mana: 1.5, for: 0.5, ele: 0, esp: 1.5, foi: 0, omb: 0 }
+  forms:
+    - id: farfadet
+      level: 1
+      speed: 15
+      res: { psychique: 30 }
+      skills: [[emploi, 1], [confusion, 1], [mirage, 3], [vision_terreur, 7]]
+    - id: farfadet_farfadet_malicieux
+      level: 10
+      parent: farfadet
+      hpMult: 1150
+      bonus: { will: 10, energy: 10, mana: 10, esp: 3 }
+      speed: 14
+      res: { psychique: 30 }
+      skills: [[sommeil, 10], [domination, 14]]
+    - id: farfadet_roi_tours
+      level: 20
+      parent: farfadet_farfadet_malicieux
+      hpMult: 1323
+      bonus: { will: 10, energy: 10, mana: 10, esp: 11, for: 3 }
+      speed: 13
+      res: { psychique: 30 }
+      skills: [[hurlement_mental, 20], [onde_mentale, 24]]
+    - id: farfadet_farfadet_gardien
+      level: 20
+      parent: farfadet_farfadet_malicieux
+      hpMult: 1380
+      bonus: { will: 30, energy: 10, mana: 40, esp: 9 }
+      speed: 14
+      res: { psychique: 30 }
+      skills: [[clarte, 20], [lien_esprits, 24]]
+  slots:
+    arme: [une_main]
+    armure: [legere]
+    accessoire: [bottes, anneau]
+loutres:
+  units: 2
+  pop: 2
+  tags: [bete]
+  weapon: crocs
+  defaultDist: 1
+  base: { hp: 70, will: 50, energy: 100, mana: 0, for: 5, ele: 0, esp: 0, foi: 0, omb: 0 }
+  growth: { hp: 4, will: 1, energy: 2, mana: 0, for: 1.2, ele: 0, esp: 0, foi: 0, omb: 0 }
+  forms:
+    - id: loutres
+      level: 1
+      speed: 13
+      res: { glace: 20 }
+      skills: [[morsure, 1], [repos, 1], [laceration, 3], [bond, 8]]
+    - id: loutres_loutres_geantes
+      level: 10
+      parent: loutres
+      hpMult: 1150
+      bonus: { will: 10, energy: 10, for: 3 }
+      speed: 12
+      res: { glace: 20 }
+      skills: [[enchainement, 10], [mirage, 14]]
+    - id: loutres_loutres_torrents
+      level: 20
+      parent: loutres_loutres_geantes
+      hpMult: 1323
+      bonus: { will: 10, energy: 10, for: 11, ele: 3 }
+      speed: 11
+      res: { glace: 20 }
+      skills: [[predateur, 20], [estoc, 24]]
+  slots:
+    accessoire: [collier]
+batelier:
+  units: 1
+  pop: 2
+  tags: [humain]
+  weapon: masse_lourde
+  defaultDist: 1
+  base: { hp: 203, will: 50, energy: 110, mana: 0, for: 10, ele: 0, esp: 0, foi: 0, omb: 0 }
+  growth: { hp: 13.05, will: 1, energy: 2, mana: 0, for: 2.4, ele: 0, esp: 0, foi: 0, omb: 0 }
+  forms:
+    - id: batelier
+      level: 1
+      speed: 25
+      res: {}
+      skills: [[emploi, 1], [repos, 1], [coup_massue, 3], [coup_assommant, 8]]
+    - id: batelier_batelier_fer
+      level: 10
+      parent: batelier
+      hpMult: 1150
+      bonus: { will: 10, energy: 10, for: 3 }
+      speed: 24
+      res: {}
+      skills: [[frappe_brutale, 10], [cri_defi, 14]]
+    - id: batelier_colosse_quais
+      level: 20
+      parent: batelier_batelier_fer
+      hpMult: 1553
+      bonus: { will: 30, energy: 10, for: 3 }
+      speed: 25
+      res: { contondant: 10, tranchant: 10 }
+      skills: [[rempart_vivant, 20], [peau_dure, 22]]
+  slots:
+    arme: [deux_mains]
+    armure: [moyenne, lourde]
+    accessoire: [bottes, anneau, collier]
+brigands:
+  units: 2
+  pop: 2
+  tags: [humain]
+  weapon: dague
+  defaultDist: 1
+  base: { hp: 80, will: 55, energy: 100, mana: 0, for: 6, ele: 0, esp: 1, foi: 0, omb: 1 }
+  growth: { hp: 4, will: 1, energy: 2, mana: 0, for: 1.5, ele: 0, esp: 0.3, foi: 0, omb: 0.3 }
+  forms:
+    - id: brigands
+      level: 1
+      speed: 16
+      res: {}
+      skills: [[emploi, 1], [repos, 1], [laceration, 3], [enchainement, 8]]
+    - id: brigands_coupe_jarrets
+      level: 10
+      parent: brigands
+      hpMult: 1150
+      bonus: { will: 10, energy: 10, for: 3 }
+      speed: 15
+      res: {}
+      skills: [[brise_genou, 10], [mirage, 14]]
+    - id: brigands_maitres_voleurs
+      level: 20
+      parent: brigands_coupe_jarrets
+      hpMult: 1323
+      bonus: { will: 10, energy: 10, for: 11, esp: 3 }
+      speed: 14
+      res: {}
+      skills: [[estoc, 20], [predateur, 22]]
+  slots:
+    arme: [une_main]
+    armure: [legere]
+    accessoire: [bottes, anneau]
+arbaletriers_fort:
+  units: 2
+  pop: 2
+  tags: [humain]
+  weapon: arbalete
+  defaultDist: 3
+  base: { hp: 70, will: 55, energy: 95, mana: 0, for: 5, ele: 0, esp: 1, foi: 0, omb: 0 }
+  growth: { hp: 4, will: 1, energy: 2, mana: 0, for: 1.3, ele: 0, esp: 0.3, foi: 0, omb: 0 }
+  forms:
+    - id: arbaletriers_fort
+      level: 1
+      speed: 18
+      res: {}
+      skills: [[tir_arc, 1], [repos, 1], [carreau_lourd, 5], [rafale, 9]]
+    - id: arbaletriers_fort_arbaletriers_veterans
+      level: 10
+      parent: arbaletriers_fort
+      hpMult: 1150
+      bonus: { will: 10, energy: 10, for: 3 }
+      speed: 17
+      res: {}
+      skills: [[estoc, 10], [filet, 14]]
+    - id: arbaletriers_fort_garde_rempart_nord
+      level: 20
+      parent: arbaletriers_fort_arbaletriers_veterans
+      hpMult: 1438
+      bonus: { will: 25, energy: 10, for: 8 }
+      speed: 17
+      res: {}
+      skills: [[tir_precis, 20], [predateur, 24]]
+  slots:
+    arme: [arc, fronde]
+    armure: [legere]
+    accessoire: [bottes, anneau]
+druide_menhirs:
+  units: 1
+  pop: 2
+  tags: [humain]
+  weapon: baton
+  defaultDist: 3
+  base: { hp: 102, will: 80, energy: 80, mana: 45, for: 2, ele: 0, esp: 4, foi: 7, omb: 0 }
+  growth: { hp: 5.8, will: 2, energy: 1, mana: 2.5, for: 0.6, ele: 0, esp: 0.6, foi: 1.8, omb: 0 }
+  forms:
+    - id: druide_menhirs
+      level: 1
+      speed: 22
+      res: { psychique: 20 }
+      skills: [[emploi, 1], [seve, 1], [meditation, 1], [peau_ecorce, 4], [clarte, 8], [cercle_soins, 14]]
+    - id: druide_menhirs_druide_pierres_levees
+      level: 10
+      parent: druide_menhirs
+      hpMult: 1150
+      bonus: { will: 10, energy: 10, mana: 10, foi: 3 }
+      speed: 21
+      res: { psychique: 20 }
+      skills: [[onde_soin, 10], [aura_protection, 14]]
+    - id: druide_menhirs_archidruide
+      level: 20
+      parent: druide_menhirs_druide_pierres_levees
+      hpMult: 1380
+      bonus: { will: 30, energy: 10, mana: 40, foi: 9 }
+      speed: 21
+      res: { psychique: 20 }
+      skills: [[purification_masse, 20], [ferveur, 24]]
+    - id: druide_menhirs_druide_cercle_noir
+      level: 20
+      parent: druide_menhirs_druide_pierres_levees
+      hpMult: 1323
+      bonus: { will: 10, energy: 10, mana: 10, foi: 11, for: 3 }
+      speed: 20
+      res: { psychique: 20 }
+      skills: [[silence_tombe, 20], [malefice, 22]]
+  slots:
+    arme: [une_main, baton]
+    armure: [robe, legere]
+    accessoire: [anneau]
+chevaucheur:
+  units: 1
+  pop: 2
+  tags: [humain]
+  weapon: lance
+  defaultDist: 1
+  base: { hp: 139, will: 55, energy: 100, mana: 0, for: 7, ele: 0, esp: 1, foi: 0, omb: 1 }
+  growth: { hp: 6.96, will: 1, energy: 2, mana: 0, for: 1.8, ele: 0, esp: 0.36, foi: 0, omb: 0.36 }
+  forms:
+    - id: chevaucheur
+      level: 1
+      speed: 16
+      res: {}
+      skills: [[emploi, 1], [repos, 1], [charge, 1], [bond, 6], [pietinement, 10]]
+    - id: chevaucheur_cavalier_lande
+      level: 10
+      parent: chevaucheur
+      hpMult: 1150
+      bonus: { will: 10, energy: 10, for: 3 }
+      speed: 15
+      res: {}
+      skills: [[taillade, 10], [cri_defi, 14]]
+    - id: chevaucheur_chevalier_bruyere
+      level: 20
+      parent: chevaucheur_cavalier_lande
+      hpMult: 1438
+      bonus: { will: 25, energy: 10, for: 8 }
+      speed: 15
+      res: {}
+      skills: [[enchainement, 20], [estoc, 24]]
+  slots:
+    arme: [deux_mains]
+    armure: [moyenne, lourde]
+    accessoire: [bottes, anneau, collier]
+pleureuse:
+  units: 1
+  pop: 1
+  tags: [humain]
+  weapon: baton
+  defaultDist: 3
+  base: { hp: 65, will: 65, energy: 70, mana: 45, for: 1, ele: 0, esp: 2, foi: 0, omb: 6 }
+  growth: { hp: 3, will: 2, energy: 1, mana: 2.5, for: 0.3, ele: 0, esp: 0.5, foi: 0, omb: 1.5 }
+  forms:
+    - id: pleureuse
+      level: 1
+      speed: 23
+      res: { tenebres: 20, sacre: -20 }
+      skills: [[emploi, 1], [trait_ombre, 1], [meditation, 1], [toucher_tombe, 4], [malediction, 8]]
+    - id: pleureuse_pleureuse_tombes
+      level: 10
+      parent: pleureuse
+      hpMult: 1150
+      bonus: { will: 10, energy: 10, mana: 10, omb: 3 }
+      speed: 22
+      res: { tenebres: 20, sacre: -20 }
+      skills: [[drain_ame, 10], [marque_mort, 14]]
+    - id: pleureuse_voix_morts
+      level: 20
+      parent: pleureuse_pleureuse_tombes
+      hpMult: 1323
+      bonus: { will: 10, energy: 10, mana: 10, omb: 11, esp: 3 }
+      speed: 21
+      res: { tenebres: 20, sacre: -20 }
+      skills: [[nuee_ombres, 20], [silence_tombe, 24]]
+  slots:
+    arme: [baton]
+    armure: [robe]
+    accessoire: [anneau]
+molosses:
+  units: 2
+  pop: 2
+  tags: [bete]
+  weapon: crocs
+  defaultDist: 1
+  base: { hp: 70, will: 50, energy: 100, mana: 0, for: 5, ele: 0, esp: 0, foi: 0, omb: 0 }
+  growth: { hp: 4, will: 1, energy: 2, mana: 0, for: 1.2, ele: 0, esp: 0, foi: 0, omb: 0 }
+  forms:
+    - id: molosses
+      level: 1
+      speed: 15
+      res: {}
+      skills: [[morsure, 1], [repos, 1], [hurlement, 4], [laceration, 8]]
+    - id: molosses_molosses_guerre
+      level: 10
+      parent: molosses
+      hpMult: 1150
+      bonus: { will: 10, energy: 10, for: 3 }
+      speed: 14
+      res: {}
+      skills: [[bond, 10], [peau_dure, 14]]
+    - id: molosses_molosses_fort
+      level: 20
+      parent: molosses_molosses_guerre
+      hpMult: 1553
+      bonus: { will: 30, energy: 10, for: 3 }
+      speed: 15
+      res: { contondant: 10, tranchant: 10 }
+      skills: [[riposte, 20], [cri_defi, 22]]
+    - id: molosses_molosses_sanguinaires
+      level: 20
+      parent: molosses_molosses_guerre
+      hpMult: 1323
+      bonus: { will: 10, energy: 10, for: 11, ele: 3 }
+      speed: 13
+      res: {}
+      skills: [[predateur, 20], [enchainement, 24]]
+  slots:
+    accessoire: [collier]
+chasseurs_garous:
+  units: 1
+  pop: 1
+  tags: [humain]
+  weapon: arbalete
+  defaultDist: 3
+  base: { hp: 70, will: 55, energy: 95, mana: 0, for: 5, ele: 0, esp: 1, foi: 2, omb: 0 }
+  growth: { hp: 4, will: 1, energy: 2, mana: 0, for: 1.3, ele: 0, esp: 0.3, foi: 0, omb: 0 }
+  forms:
+    - id: chasseurs_garous
+      level: 1
+      speed: 18
+      res: { tenebres: 15 }
+      skills: [[tir_arc, 1], [repos, 1], [marque, 3], [carreau_lourd, 6], [chatiment, 10]]
+    - id: chasseurs_garous_traqueur_argent
+      level: 10
+      parent: chasseurs_garous
+      hpMult: 1150
+      bonus: { will: 10, energy: 10, for: 3 }
+      speed: 17
+      res: { tenebres: 15 }
+      skills: [[estoc, 10], [filet, 14]]
+    - id: chasseurs_garous_inquisiteur_brumes
+      level: 20
+      parent: chasseurs_garous_traqueur_argent
+      hpMult: 1323
+      bonus: { will: 10, energy: 10, for: 11, esp: 3 }
+      speed: 16
+      res: { tenebres: 15 }
+      skills: [[rayon_sacre, 20], [predateur, 24]]
+  slots:
+    arme: [arc, fronde]
+    armure: [legere]
+    accessoire: [bottes, anneau]
+sorciere_brumes:
+  units: 1
+  pop: 2
+  tags: [humain]
+  weapon: baton
+  defaultDist: 3
+  base: { hp: 109, will: 95, energy: 90, mana: 30, for: 4, ele: 0, esp: 7, foi: 0, omb: 0 }
+  growth: { hp: 5.8, will: 3, energy: 2, mana: 1.5, for: 0.6, ele: 0, esp: 1.8, foi: 0, omb: 0 }
+  forms:
+    - id: sorciere_brumes
+      level: 1
+      speed: 18
+      res: { psychique: 30 }
+      skills: [[emploi, 1], [murmure, 1], [meditation, 1], [mirage, 4], [domination, 8], [sommeil, 14]]
+    - id: sorciere_brumes_mere_brumes
+      level: 10
+      parent: sorciere_brumes
+      hpMult: 1150
+      bonus: { will: 10, energy: 10, mana: 10, esp: 3 }
+      speed: 17
+      res: { psychique: 30 }
+      skills: [[onde_mentale, 10], [vision_terreur, 14]]
+    - id: sorciere_brumes_sorciere_cauchemars
+      level: 20
+      parent: sorciere_brumes_mere_brumes
+      hpMult: 1323
+      bonus: { will: 10, energy: 10, mana: 10, esp: 11, for: 3 }
+      speed: 16
+      res: { psychique: 30 }
+      skills: [[hurlement_mental, 20], [terreur_masse, 24]]
+    - id: sorciere_brumes_tisseuse_brume
+      level: 20
+      parent: sorciere_brumes_mere_brumes
+      hpMult: 1380
+      bonus: { will: 30, energy: 10, mana: 40, esp: 9 }
+      speed: 17
+      res: { psychique: 30 }
+      skills: [[lien_esprits, 20], [clarte, 22]]
+  slots:
+    arme: [baton]
+    armure: [robe]
+    accessoire: [anneau]
+garou:
+  units: 1
+  pop: 2
+  tags: [humain, bete]
+  weapon: griffes
+  defaultDist: 1
+  base: { hp: 133, will: 55, energy: 100, mana: 0, for: 7, ele: 0, esp: 1, foi: 0, omb: 1 }
+  growth: { hp: 6.67, will: 1, energy: 2, mana: 0, for: 1.8, ele: 0, esp: 0.36, foi: 0, omb: 0.36 }
+  forms:
+    - id: garou
+      level: 1
+      speed: 16
+      res: { tranchant: 15, sacre: -20 }
+      skills: [[emploi, 1], [laceration, 1], [rage, 1], [bond, 5], [enchainement, 9]]
+    - id: garou_garou_sauvage
+      level: 10
+      parent: garou
+      hpMult: 1150
+      bonus: { will: 10, energy: 10, for: 3 }
+      speed: 15
+      res: { tranchant: 15, sacre: -20 }
+      skills: [[predateur, 10], [hurlement, 14]]
+    - id: garou_seigneur_garou
+      level: 20
+      parent: garou_garou_sauvage
+      hpMult: 1323
+      bonus: { will: 10, energy: 10, for: 11, esp: 3 }
+      speed: 14
+      res: { tranchant: 15, sacre: -20 }
+      skills: [[taillade, 20], [estoc, 24]]
+    - id: garou_garou_ancien
+      level: 20
+      parent: garou_garou_sauvage
+      hpMult: 1553
+      bonus: { will: 30, energy: 10, for: 3 }
+      speed: 16
+      res: { tranchant: 25, sacre: -20, contondant: 10 }
+      skills: [[peau_dure, 20], [riposte, 22]]
+  slots:
+    accessoire: [collier]
+bucherons:
+  units: 2
+  pop: 2
+  tags: [humain]
+  weapon: hache2m
+  defaultDist: 1
+  base: { hp: 140, will: 50, energy: 110, mana: 0, for: 8, ele: 0, esp: 0, foi: 0, omb: 0 }
+  growth: { hp: 9, will: 1, energy: 2, mana: 0, for: 2, ele: 0, esp: 0, foi: 0, omb: 0 }
+  forms:
+    - id: bucherons
+      level: 1
+      speed: 25
+      res: {}
+      skills: [[emploi, 1], [repos, 1], [frappe_brutale, 4], [taillade, 8]]
+    - id: bucherons_abatteurs
+      level: 10
+      parent: bucherons
+      hpMult: 1150
+      bonus: { will: 10, energy: 10, for: 3 }
+      speed: 24
+      res: {}
+      skills: [[enchainement, 10], [peau_dure, 14]]
+    - id: bucherons_fendeurs_chenes
+      level: 20
+      parent: bucherons_abatteurs
+      hpMult: 1438
+      bonus: { will: 25, energy: 10, for: 8 }
+      speed: 24
+      res: {}
+      skills: [[pietinement, 20], [coup_assommant, 24]]
+  slots:
+    arme: [deux_mains]
+    armure: [moyenne, lourde]
+    accessoire: [bottes, anneau, collier]
+moine_brume:
+  units: 1
+  pop: 1
+  tags: [humain]
+  weapon: gantelets
+  defaultDist: 1
+  base: { hp: 75, will: 95, energy: 90, mana: 30, for: 5, ele: 0, esp: 6, foi: 0, omb: 0 }
+  growth: { hp: 4, will: 3, energy: 2, mana: 1.5, for: 0.5, ele: 0, esp: 1.5, foi: 0, omb: 0 }
+  forms:
+    - id: moine_brume
+      level: 1
+      speed: 18
+      res: { psychique: 30 }
+      skills: [[emploi, 1], [meditation, 1], [repos, 1], [coup_assommant, 4], [mirage, 8]]
+    - id: moine_brume_moine_voile
+      level: 10
+      parent: moine_brume
+      hpMult: 1150
+      bonus: { will: 10, energy: 10, mana: 10, esp: 3 }
+      speed: 17
+      res: { psychique: 30 }
+      skills: [[lame_psychique, 10], [clarte, 14]]
+    - id: moine_brume_poing_brume
+      level: 20
+      parent: moine_brume_moine_voile
+      hpMult: 1323
+      bonus: { will: 10, energy: 10, mana: 10, esp: 11, for: 3 }
+      speed: 16
+      res: { psychique: 30 }
+      skills: [[enchainement, 20], [domination, 24]]
+  slots:
+    arme: [gantelets]
+    armure: [robe, legere]
+    accessoire: [bottes, anneau]
+corbeautiere:
+  units: 1
+  pop: 1
+  tags: [humain]
+  weapon: baton
+  defaultDist: 3
+  base: { hp: 65, will: 65, energy: 70, mana: 45, for: 1, ele: 0, esp: 2, foi: 0, omb: 6 }
+  growth: { hp: 3, will: 2, energy: 1, mana: 2.5, for: 0.3, ele: 0, esp: 0.5, foi: 0, omb: 1.5 }
+  forms:
+    - id: corbeautiere
+      level: 1
+      speed: 23
+      res: { tenebres: 20 }
+      skills: [[emploi, 1], [trait_ombre, 1], [meditation, 1], [marque_mort, 4], [malefice, 9]]
+    - id: corbeautiere_dame_corbeaux
+      level: 10
+      parent: corbeautiere
+      hpMult: 1150
+      bonus: { will: 10, energy: 10, mana: 10, omb: 3 }
+      speed: 22
+      res: { tenebres: 20 }
+      skills: [[toucher_tombe, 10], [nuee_ombres, 14]]
+    - id: corbeautiere_augure_noire
+      level: 20
+      parent: corbeautiere_dame_corbeaux
+      hpMult: 1438
+      bonus: { will: 25, energy: 10, mana: 10, omb: 8 }
+      speed: 22
+      res: { tenebres: 20 }
+      skills: [[silence_tombe, 20], [drain_ame, 22]]
+  slots:
+    arme: [baton]
+    armure: [robe]
+    accessoire: [anneau]
+fossoyeurs:
+  units: 2
+  pop: 2
+  tags: [humain]
+  weapon: pioche
+  defaultDist: 1
+  base: { hp: 80, will: 55, energy: 100, mana: 0, for: 6, ele: 0, esp: 1, foi: 1, omb: 1 }
+  growth: { hp: 4, will: 1, energy: 2, mana: 0, for: 1.5, ele: 0, esp: 0.3, foi: 0, omb: 0.3 }
+  forms:
+    - id: fossoyeurs
+      level: 1
+      speed: 16
+      res: { tenebres: 15 }
+      skills: [[emploi, 1], [repos, 1], [coup_massue, 3], [chatiment, 8]]
+    - id: fossoyeurs_gardiens_tombes
+      level: 10
+      parent: fossoyeurs
+      hpMult: 1150
+      bonus: { will: 10, energy: 10, for: 3 }
+      speed: 15
+      res: { tenebres: 15 }
+      skills: [[coup_assommant, 10], [cri_defi, 14]]
+    - id: fossoyeurs_veilleurs_cryptes
+      level: 20
+      parent: fossoyeurs_gardiens_tombes
+      hpMult: 1553
+      bonus: { will: 30, energy: 10, for: 3 }
+      speed: 16
+      res: { tenebres: 15, contondant: 10, tranchant: 10 }
+      skills: [[rempart_vivant, 20], [aura_protection, 24]]
+  slots:
+    arme: [une_main]
+    armure: [legere, moyenne, lourde]
+    accessoire: [bottes, anneau]
+exorciste:
+  units: 1
+  pop: 1
+  tags: [humain]
+  weapon: sceptre
+  defaultDist: 3
+  base: { hp: 70, will: 80, energy: 80, mana: 45, for: 2, ele: 0, esp: 2, foi: 6, omb: 0 }
+  growth: { hp: 4, will: 2, energy: 1, mana: 2.5, for: 0.5, ele: 0, esp: 0.5, foi: 1.5, omb: 0 }
+  forms:
+    - id: exorciste
+      level: 1
+      speed: 22
+      res: { sacre: 30, tenebres: 15 }
+      skills: [[emploi, 1], [trait_sacre, 1], [meditation, 1], [rayon_sacre, 4], [purification, 8], [consecration, 14]]
+    - id: exorciste_exorciste_confirme
+      level: 10
+      parent: exorciste
+      hpMult: 1150
+      bonus: { will: 10, energy: 10, mana: 10, foi: 3 }
+      speed: 21
+      res: { sacre: 30, tenebres: 15 }
+      skills: [[mains_lumiere, 10], [jugement, 14]]
+    - id: exorciste_grand_exorciste
+      level: 20
+      parent: exorciste_exorciste_confirme
+      hpMult: 1323
+      bonus: { will: 10, energy: 10, mana: 10, foi: 11, for: 3 }
+      speed: 20
+      res: { sacre: 30, tenebres: 15 }
+      skills: [[jugement, 20], [purification_masse, 24]]
+    - id: exorciste_gardien_ames
+      level: 20
+      parent: exorciste_exorciste_confirme
+      hpMult: 1380
+      bonus: { will: 30, energy: 10, mana: 40, foi: 9 }
+      speed: 21
+      res: { sacre: 30, tenebres: 15 }
+      skills: [[egide, 20], [onde_soin, 22]]
+  slots:
+    arme: [une_main, baton]
+    armure: [robe, legere]
+    accessoire: [anneau]
+squelettes_lies:
+  units: 3
+  pop: 2
+  tags: [mort-vivant]
+  weapon: lame_rouillee
+  defaultDist: 1
+  base: { hp: 61, will: 55, energy: 100, mana: 0, for: 6, ele: 0, esp: 1, foi: 0, omb: 1 }
+  growth: { hp: 3.06, will: 1, energy: 2, mana: 0, for: 1.4, ele: 0, esp: 0.28, foi: 0, omb: 0.28 }
+  forms:
+    - id: squelettes_lies
+      level: 1
+      speed: 16
+      res: { maladie: 50, sacre: -40, contondant: -20 }
+      skills: [[emploi, 1], [repos, 1], [lame_saignante, 4], [non_mort, 1]]
+    - id: squelettes_lies_squelettes_guerriers
+      level: 10
+      parent: squelettes_lies
+      hpMult: 1150
+      bonus: { will: 10, energy: 10, for: 3 }
+      speed: 15
+      res: { maladie: 50, sacre: -40, contondant: -20 }
+      skills: [[enchainement, 10], [peau_dure, 14]]
+    - id: squelettes_lies_legion_os
+      level: 20
+      parent: squelettes_lies_squelettes_guerriers
+      hpMult: 1438
+      bonus: { will: 25, energy: 10, for: 8 }
+      speed: 15
+      res: { maladie: 50, sacre: -40, contondant: -20 }
+      skills: [[taillade, 20], [cri_defi, 22]]
+  slots:
+    accessoire: [collier]
+necrophage:
+  units: 1
+  pop: 2
+  tags: [humain]
+  weapon: baton_os
+  defaultDist: 3
+  base: { hp: 104, will: 65, energy: 70, mana: 45, for: 1, ele: 0, esp: 2, foi: 0, omb: 7 }
+  growth: { hp: 4.79, will: 2, energy: 1, mana: 2.5, for: 0.36, ele: 0, esp: 0.6, foi: 0, omb: 1.8 }
+  forms:
+    - id: necrophage
+      level: 1
+      speed: 23
+      res: { maladie: 30 }
+      skills: [[emploi, 1], [putrefaction, 1], [meditation, 1], [peste, 6], [drain_ame, 10]]
+    - id: necrophage_maitre_charniers
+      level: 10
+      parent: necrophage
+      hpMult: 1150
+      bonus: { will: 10, energy: 10, mana: 10, omb: 3 }
+      speed: 22
+      res: { maladie: 30 }
+      skills: [[toucher_tombe, 10], [contagion, 14]]
+    - id: necrophage_seigneur_peste
+      level: 20
+      parent: necrophage_maitre_charniers
+      hpMult: 1323
+      bonus: { will: 10, energy: 10, mana: 10, omb: 11, esp: 3 }
+      speed: 21
+      res: { maladie: 30 }
+      skills: [[nuee_ombres, 20], [peste, 22]]
+    - id: necrophage_sculpteur_os
+      level: 20
+      parent: necrophage_maitre_charniers
+      hpMult: 1380
+      bonus: { will: 30, energy: 10, mana: 40, omb: 3, esp: 6 }
+      speed: 22
+      res: { maladie: 30 }
+      skills: [[silence_tombe, 20], [malefice, 22]]
+  slots:
+    arme: [baton]
+    armure: [robe]
+    accessoire: [anneau]
+penitent:
+  units: 1
+  pop: 1
+  tags: [humain]
+  weapon: masse
+  defaultDist: 1
+  base: { hp: 80, will: 75, energy: 100, mana: 0, for: 6, ele: 0, esp: 1, foi: 0, omb: 1 }
+  growth: { hp: 4, will: 1, energy: 2, mana: 0, for: 1.5, ele: 0, esp: 0.3, foi: 0, omb: 0.3 }
+  forms:
+    - id: penitent
+      level: 1
+      speed: 16
+      res: { psychique: 20 }
+      skills: [[emploi, 1], [pacte_sang, 1], [rage, 1], [frappe_brutale, 4], [enchainement, 9]]
+    - id: penitent_flagellant
+      level: 10
+      parent: penitent
+      hpMult: 1150
+      bonus: { will: 10, energy: 10, for: 3 }
+      speed: 15
+      res: { psychique: 20 }
+      skills: [[cri_defi, 10], [sang_froid, 14]]
+    - id: penitent_martyr
+      level: 20
+      parent: penitent_flagellant
+      hpMult: 1553
+      bonus: { will: 30, energy: 10, for: 3 }
+      speed: 16
+      res: { psychique: 20, contondant: 10, tranchant: 10 }
+      skills: [[rempart_vivant, 20], [riposte, 22]]
+    - id: penitent_furieux_sacre
+      level: 20
+      parent: penitent_flagellant
+      hpMult: 1323
+      bonus: { will: 10, energy: 10, for: 11, esp: 3 }
+      speed: 14
+      res: { psychique: 20 }
+      skills: [[chatiment, 20], [predateur, 24]]
+  slots:
+    arme: [une_main]
+    armure: [legere, moyenne, lourde]
+    accessoire: [bottes, anneau]
+chien_cimetiere:
+  units: 1
+  pop: 1
+  tags: [bete]
+  weapon: crocs
+  defaultDist: 1
+  base: { hp: 70, will: 50, energy: 100, mana: 0, for: 5, ele: 0, esp: 0, foi: 0, omb: 0 }
+  growth: { hp: 4, will: 1, energy: 2, mana: 0, for: 1.2, ele: 0, esp: 0, foi: 0, omb: 0 }
+  forms:
+    - id: chien_cimetiere
+      level: 1
+      speed: 15
+      res: { tenebres: 20 }
+      skills: [[morsure, 1], [repos, 1], [hurlement, 3], [laceration, 7]]
+    - id: chien_cimetiere_chien_ames
+      level: 10
+      parent: chien_cimetiere
+      hpMult: 1150
+      bonus: { will: 10, energy: 10, for: 3 }
+      speed: 14
+      res: { tenebres: 20 }
+      skills: [[bond, 10], [predateur, 14]]
+    - id: chien_cimetiere_molosse_funebre
+      level: 20
+      parent: chien_cimetiere_chien_ames
+      hpMult: 1438
+      bonus: { will: 25, energy: 10, for: 8 }
+      speed: 14
+      res: { tenebres: 20 }
+      skills: [[peau_dure, 20], [enchainement, 22]]
+  slots:
+    accessoire: [collier]
+gardes_forestiers:
+  units: 2
+  pop: 2
+  tags: [humain]
+  weapon: arc
+  defaultDist: 3
+  base: { hp: 70, will: 55, energy: 95, mana: 0, for: 5, ele: 0, esp: 1, foi: 0, omb: 0 }
+  growth: { hp: 4, will: 1, energy: 2, mana: 0, for: 1.3, ele: 0, esp: 0.3, foi: 0, omb: 0 }
+  forms:
+    - id: gardes_forestiers
+      level: 1
+      speed: 18
+      res: {}
+      skills: [[tir_arc, 1], [repos, 1], [tir_empoisonne, 3], [rafale, 8]]
+    - id: gardes_forestiers_gardes_ambre
+      level: 10
+      parent: gardes_forestiers
+      hpMult: 1150
+      bonus: { will: 10, energy: 10, for: 3 }
+      speed: 17
+      res: {}
+      skills: [[estoc, 10], [filet, 14]]
+    - id: gardes_forestiers_archers_sylvestres
+      level: 20
+      parent: gardes_forestiers_gardes_ambre
+      hpMult: 1323
+      bonus: { will: 10, energy: 10, for: 11, esp: 3 }
+      speed: 16
+      res: {}
+      skills: [[carreau_lourd, 20], [predateur, 24]]
+  slots:
+    arme: [arc, fronde]
+    armure: [legere]
+    accessoire: [bottes, anneau]
+dryade:
+  units: 1
+  pop: 2
+  tags: [plante]
+  weapon: baton
+  defaultDist: 3
+  base: { hp: 102, will: 80, energy: 80, mana: 45, for: 2, ele: 0, esp: 2, foi: 7, omb: 0 }
+  growth: { hp: 5.8, will: 2, energy: 1, mana: 2.5, for: 0.6, ele: 0, esp: 0.6, foi: 1.8, omb: 0 }
+  forms:
+    - id: dryade
+      level: 1
+      speed: 23
+      res: { maladie: 30, feu: -30 }
+      skills: [[emploi, 1], [seve, 1], [meditation, 1], [peau_ecorce, 4], [mains_lumiere, 8], [cercle_soins, 14]]
+    - id: dryade_dryade_automne
+      level: 10
+      parent: dryade
+      hpMult: 1150
+      bonus: { will: 10, energy: 10, mana: 10, foi: 3 }
+      speed: 22
+      res: { maladie: 30, feu: -30 }
+      skills: [[onde_soin, 10], [purification, 14]]
+    - id: dryade_mere_dryade
+      level: 20
+      parent: dryade_dryade_automne
+      hpMult: 1380
+      bonus: { will: 30, energy: 10, mana: 40, foi: 9 }
+      speed: 22
+      res: { maladie: 30, feu: -30 }
+      skills: [[purification_masse, 20], [ferveur, 22]]
+    - id: dryade_dryade_ronces
+      level: 20
+      parent: dryade_dryade_automne
+      hpMult: 1438
+      bonus: { will: 25, energy: 10, mana: 10, foi: 8 }
+      speed: 22
+      res: { maladie: 30, feu: -30 }
+      skills: [[carapace_epines, 20], [peste, 24]]
+  slots:
+    arme: [baton]
+    armure: [robe]
+    accessoire: [anneau]
+ours_ambre:
+  units: 1
+  pop: 2
+  tags: [bete]
+  weapon: griffes
+  defaultDist: 1
+  base: { hp: 203, will: 50, energy: 110, mana: 0, for: 10, ele: 0, esp: 0, foi: 0, omb: 0 }
+  growth: { hp: 13.05, will: 1, energy: 2, mana: 0, for: 2.4, ele: 0, esp: 0, foi: 0, omb: 0 }
+  forms:
+    - id: ours_ambre
+      level: 1
+      speed: 25
+      res: { glace: 20, feu: -10 }
+      skills: [[emploi, 1], [repos, 1], [frappe_brutale, 3], [pietinement, 8]]
+    - id: ours_ambre_ours_roux
+      level: 10
+      parent: ours_ambre
+      hpMult: 1150
+      bonus: { will: 10, energy: 10, for: 3 }
+      speed: 24
+      res: { glace: 20, feu: -10 }
+      skills: [[laceration, 10], [peau_dure, 14]]
+    - id: ours_ambre_ours_roi
+      level: 20
+      parent: ours_ambre_ours_roux
+      hpMult: 1553
+      bonus: { will: 30, energy: 10, for: 3 }
+      speed: 25
+      res: { glace: 20, feu: -10, contondant: 10, tranchant: 10 }
+      skills: [[rempart_vivant, 20], [riposte, 22]]
+    - id: ours_ambre_ours_enrage
+      level: 20
+      parent: ours_ambre_ours_roux
+      hpMult: 1323
+      bonus: { will: 10, energy: 10, for: 11, ele: 3 }
+      speed: 23
+      res: { glace: 20, feu: -10 }
+      skills: [[rage, 20], [enchainement, 22]]
+  slots:
+    accessoire: [collier]
+cueilleuse:
+  units: 1
+  pop: 1
+  tags: [humain]
+  weapon: masse
+  defaultDist: 3
+  base: { hp: 65, will: 65, energy: 70, mana: 45, for: 1, ele: 0, esp: 2, foi: 0, omb: 6 }
+  growth: { hp: 3, will: 2, energy: 1, mana: 2.5, for: 0.3, ele: 0, esp: 0.5, foi: 0, omb: 1.5 }
+  forms:
+    - id: cueilleuse
+      level: 1
+      speed: 23
+      res: { maladie: 30 }
+      skills: [[emploi, 1], [putrefaction, 1], [meditation, 1], [fleau, 5], [affaiblissement, 9]]
+    - id: cueilleuse_mycologue
+      level: 10
+      parent: cueilleuse
+      hpMult: 1150
+      bonus: { will: 10, energy: 10, mana: 10, omb: 3 }
+      speed: 22
+      res: { maladie: 30 }
+      skills: [[peste, 10], [malefice, 14]]
+    - id: cueilleuse_reine_spores
+      level: 20
+      parent: cueilleuse_mycologue
+      hpMult: 1323
+      bonus: { will: 10, energy: 10, mana: 10, omb: 11, esp: 3 }
+      speed: 21
+      res: { maladie: 30 }
+      skills: [[nuee_ombres, 20], [peste, 22]]
+  slots:
+    arme: [une_main, baton]
+    armure: [robe, legere]
+    accessoire: [anneau]
+cerfs:
+  units: 2
+  pop: 2
+  tags: [bete]
+  weapon: crocs
+  defaultDist: 1
+  base: { hp: 77, will: 50, energy: 100, mana: 0, for: 5, ele: 0, esp: 0, foi: 0, omb: 0 }
+  growth: { hp: 4.4, will: 1, energy: 2, mana: 0, for: 1.2, ele: 0, esp: 0, foi: 0, omb: 0 }
+  forms:
+    - id: cerfs
+      level: 1
+      speed: 15
+      res: {}
+      skills: [[morsure, 1], [repos, 1], [charge, 3], [pietinement, 9]]
+    - id: cerfs_cerfs_ambre
+      level: 10
+      parent: cerfs
+      hpMult: 1150
+      bonus: { will: 10, energy: 10, for: 3 }
+      speed: 14
+      res: {}
+      skills: [[bond, 10], [cri_defi, 14]]
+    - id: cerfs_grands_cerfs
+      level: 20
+      parent: cerfs_cerfs_ambre
+      hpMult: 1438
+      bonus: { will: 25, energy: 10, for: 8 }
+      speed: 14
+      res: {}
+      skills: [[peau_dure, 20], [taillade, 24]]
+  slots:
+    accessoire: [collier]
+archere_sylvaine:
+  units: 1
+  pop: 1
+  tags: [plante]
+  weapon: arc
+  defaultDist: 3
+  base: { hp: 70, will: 55, energy: 95, mana: 0, for: 5, ele: 2, esp: 1, foi: 0, omb: 0 }
+  growth: { hp: 4, will: 1, energy: 2, mana: 0, for: 1.3, ele: 0, esp: 0.3, foi: 0, omb: 0 }
+  forms:
+    - id: archere_sylvaine
+      level: 1
+      speed: 18
+      res: { glace: 15 }
+      skills: [[tir_arc, 1], [repos, 1], [fleche_givre, 4], [fleche_feu, 8]]
+    - id: archere_sylvaine_archere_automne
+      level: 10
+      parent: archere_sylvaine
+      hpMult: 1150
+      bonus: { will: 10, energy: 10, for: 3 }
+      speed: 17
+      res: { glace: 15 }
+      skills: [[rafale, 10], [lame_ardente, 14]]
+    - id: archere_sylvaine_archere_saisons
+      level: 20
+      parent: archere_sylvaine_archere_automne
+      hpMult: 1323
+      bonus: { will: 10, energy: 10, for: 11, esp: 3 }
+      speed: 16
+      res: { glace: 15 }
+      skills: [[estoc, 20], [javelot_glace, 24]]
+  slots:
+    arme: [arc, fronde]
+    armure: [legere]
+    accessoire: [bottes, anneau]
+nains_givre:
+  units: 2
+  pop: 2
+  tags: [nain]
+  weapon: hache2m
+  defaultDist: 1
+  base: { hp: 121, will: 65, energy: 100, mana: 0, for: 5, ele: 0, esp: 1, foi: 1, omb: 0 }
+  growth: { hp: 7.7, will: 1, energy: 2, mana: 0, for: 1, ele: 0, esp: 0.3, foi: 0.3, omb: 0 }
+  forms:
+    - id: nains_givre
+      level: 1
+      speed: 20
+      res: { glace: 30, contondant: 10 }
+      skills: [[emploi, 1], [repos, 1], [cri_defi, 3], [frappe_brutale, 7]]
+    - id: nains_givre_gardes_crete
+      level: 10
+      parent: nains_givre
+      hpMult: 1150
+      bonus: { will: 10, energy: 10, for: 3 }
+      speed: 19
+      res: { glace: 30, contondant: 10 }
+      skills: [[rempart_vivant, 10], [peau_dure, 14]]
+    - id: nains_givre_briseurs_glace
+      level: 20
+      parent: nains_givre_gardes_crete
+      hpMult: 1323
+      bonus: { will: 10, energy: 10, for: 11, esp: 3 }
+      speed: 18
+      res: { glace: 30, contondant: 10 }
+      skills: [[taillade, 20], [enchainement, 24]]
+    - id: nains_givre_mur_givre
+      level: 20
+      parent: nains_givre_gardes_crete
+      hpMult: 1553
+      bonus: { will: 30, energy: 10, for: 3 }
+      speed: 20
+      res: { glace: 30, contondant: 20, tranchant: 10 }
+      skills: [[aura_protection, 20], [riposte, 22]]
+  slots:
+    arme: [deux_mains]
+    armure: [moyenne, lourde]
+    accessoire: [bottes, anneau, collier]
+chamane_blizzard:
+  units: 1
+  pop: 2
+  tags: [humain]
+  weapon: baton
+  defaultDist: 3
+  base: { hp: 94, will: 60, energy: 70, mana: 50, for: 1, ele: 7, esp: 2, foi: 0, omb: 0 }
+  growth: { hp: 4.35, will: 1, energy: 1, mana: 3, for: 0.36, ele: 1.8, esp: 0.6, foi: 0, omb: 0 }
+  forms:
+    - id: chamane_blizzard
+      level: 1
+      speed: 23
+      res: { glace: 40, feu: -20 }
+      skills: [[emploi, 1], [eclat_glace, 1], [meditation, 1], [javelot_glace, 4], [tempete_givre, 8], [prison_glace, 14]]
+    - id: chamane_blizzard_voix_hiver
+      level: 10
+      parent: chamane_blizzard
+      hpMult: 1150
+      bonus: { will: 10, energy: 10, mana: 10, ele: 3 }
+      speed: 22
+      res: { glace: 40, feu: -20 }
+      skills: [[blizzard, 10], [armure_givre, 14]]
+    - id: chamane_blizzard_reine_blizzard
+      level: 20
+      parent: chamane_blizzard_voix_hiver
+      hpMult: 1323
+      bonus: { will: 10, energy: 10, mana: 10, ele: 11, esp: 3 }
+      speed: 21
+      res: { glace: 40, feu: -20 }
+      skills: [[maitrise_elem, 20], [meteore, 25]]
+    - id: chamane_blizzard_gardienne_glaces
+      level: 20
+      parent: chamane_blizzard_voix_hiver
+      hpMult: 1380
+      bonus: { will: 30, energy: 10, mana: 40, ele: 3, esp: 6 }
+      speed: 22
+      res: { glace: 40, feu: -20 }
+      skills: [[egide, 20], [mains_lumiere, 22]]
+  slots:
+    arme: [baton]
+    armure: [robe]
+    accessoire: [anneau]
+yeti:
+  units: 1
+  pop: 3
+  tags: [bete]
+  weapon: griffes
+  defaultDist: 1
+  base: { hp: 293, will: 50, energy: 110, mana: 0, for: 11, ele: 0, esp: 0, foi: 0, omb: 0 }
+  growth: { hp: 18.81, will: 1, energy: 2, mana: 0, for: 2.8, ele: 0, esp: 0, foi: 0, omb: 0 }
+  forms:
+    - id: yeti
+      level: 1
+      speed: 25
+      res: { glace: 60, feu: -30 }
+      skills: [[emploi, 1], [repos, 1], [frappe_brutale, 3], [pietinement, 7], [coup_assommant, 12]]
+    - id: yeti_yeti_cimes
+      level: 10
+      parent: yeti
+      hpMult: 1150
+      bonus: { will: 10, energy: 10, for: 3 }
+      speed: 24
+      res: { glace: 60, feu: -30 }
+      skills: [[peau_dure, 10], [rage, 14]]
+    - id: yeti_yeti_ancien
+      level: 20
+      parent: yeti_yeti_cimes
+      hpMult: 1553
+      bonus: { will: 30, energy: 10, for: 3 }
+      speed: 25
+      res: { glace: 60, feu: -30, contondant: 10, tranchant: 10 }
+      skills: [[rempart_vivant, 20], [riposte, 22]]
+  slots:
+    accessoire: [collier]
+skieurs:
+  units: 2
+  pop: 2
+  tags: [humain]
+  weapon: arc
+  defaultDist: 3
+  base: { hp: 70, will: 55, energy: 95, mana: 0, for: 5, ele: 0, esp: 1, foi: 0, omb: 0 }
+  growth: { hp: 4, will: 1, energy: 2, mana: 0, for: 1.3, ele: 0, esp: 0.3, foi: 0, omb: 0 }
+  forms:
+    - id: skieurs
+      level: 1
+      speed: 16
+      res: { glace: 20 }
+      skills: [[tir_arc, 1], [repos, 1], [fleche_givre, 3], [rafale, 8]]
+    - id: skieurs_patrouilleurs_neiges
+      level: 10
+      parent: skieurs
+      hpMult: 1150
+      bonus: { will: 10, energy: 10, for: 3 }
+      speed: 15
+      res: { glace: 20 }
+      skills: [[estoc, 10], [filet, 14]]
+    - id: skieurs_fantomes_blancs
+      level: 20
+      parent: skieurs_patrouilleurs_neiges
+      hpMult: 1323
+      bonus: { will: 10, energy: 10, for: 11, esp: 3 }
+      speed: 14
+      res: { glace: 20 }
+      skills: [[predateur, 20], [carreau_lourd, 24]]
+  slots:
+    arme: [arc, fronde]
+    armure: [legere]
+    accessoire: [bottes, anneau]
+ermite:
+  units: 1
+  pop: 1
+  tags: [humain]
+  weapon: gantelets
+  defaultDist: 2
+  base: { hp: 75, will: 95, energy: 90, mana: 30, for: 3, ele: 0, esp: 6, foi: 0, omb: 0 }
+  growth: { hp: 4, will: 3, energy: 2, mana: 1.5, for: 0.5, ele: 0, esp: 1.5, foi: 0, omb: 0 }
+  forms:
+    - id: ermite
+      level: 1
+      speed: 18
+      res: { psychique: 30, glace: 20 }
+      skills: [[emploi, 1], [meditation, 1], [clarte, 3], [sommeil, 8], [lien_esprits, 13]]
+    - id: ermite_sage_glaciers
+      level: 10
+      parent: ermite
+      hpMult: 1150
+      bonus: { will: 10, energy: 10, mana: 10, esp: 3 }
+      speed: 17
+      res: { psychique: 30, glace: 20 }
+      skills: [[concentration, 10], [domination, 14]]
+    - id: ermite_il_hiver
+      level: 20
+      parent: ermite_sage_glaciers
+      hpMult: 1380
+      bonus: { will: 30, energy: 10, mana: 40, esp: 9 }
+      speed: 17
+      res: { psychique: 30, glace: 20 }
+      skills: [[sang_froid, 20], [lien_esprits, 22]]
+    - id: ermite_esprit_cimes
+      level: 20
+      parent: ermite_sage_glaciers
+      hpMult: 1323
+      bonus: { will: 10, energy: 10, mana: 10, esp: 11, for: 3 }
+      speed: 16
+      res: { psychique: 30, glace: 20 }
+      skills: [[hurlement_mental, 20], [lame_psychique, 22]]
+  slots:
+    arme: [gantelets]
+    armure: [robe, legere]
+    accessoire: [bottes, anneau]
+ours_polaires:
+  units: 2
+  pop: 3
+  tags: [bete]
+  weapon: griffes
+  defaultDist: 1
+  base: { hp: 107, will: 50, energy: 100, mana: 0, for: 6, ele: 0, esp: 0, foi: 0, omb: 0 }
+  growth: { hp: 6.13, will: 1, energy: 2, mana: 0, for: 1.32, ele: 0, esp: 0, foi: 0, omb: 0 }
+  forms:
+    - id: ours_polaires
+      level: 1
+      speed: 15
+      res: { glace: 40 }
+      skills: [[morsure, 1], [repos, 1], [laceration, 3], [pietinement, 9]]
+    - id: ours_polaires_ours_banquise
+      level: 10
+      parent: ours_polaires
+      hpMult: 1150
+      bonus: { will: 10, energy: 10, for: 3 }
+      speed: 14
+      res: { glace: 40 }
+      skills: [[bond, 10], [peau_dure, 14]]
+    - id: ours_polaires_ours_tempetes
+      level: 20
+      parent: ours_polaires_ours_banquise
+      hpMult: 1438
+      bonus: { will: 25, energy: 10, for: 8 }
+      speed: 14
+      res: { glace: 40 }
+      skills: [[enchainement, 20], [predateur, 24]]
+  slots:
+    accessoire: [collier]
+lame_elfe_noire:
+  units: 1
+  pop: 1
+  tags: [elfe]
+  weapon: dague
+  defaultDist: 1
+  base: { hp: 80, will: 55, energy: 100, mana: 0, for: 6, ele: 0, esp: 1, foi: 0, omb: 1 }
+  growth: { hp: 4, will: 1, energy: 2, mana: 0, for: 1.5, ele: 0, esp: 0.3, foi: 0, omb: 0.3 }
+  forms:
+    - id: lame_elfe_noire
+      level: 1
+      speed: 14
+      res: { tenebres: 30, sacre: -20 }
+      skills: [[emploi, 1], [repos, 1], [laceration, 3], [lame_ombre, 6], [estoc, 11]]
+    - id: lame_elfe_noire_lame_nuit
+      level: 10
+      parent: lame_elfe_noire
+      hpMult: 1150
+      bonus: { will: 10, energy: 10, for: 3 }
+      speed: 13
+      res: { tenebres: 30, sacre: -20 }
+      skills: [[mirage, 10], [predateur, 14]]
+    - id: lame_elfe_noire_danseuse_ombre
+      level: 20
+      parent: lame_elfe_noire_lame_nuit
+      hpMult: 1323
+      bonus: { will: 10, energy: 10, for: 11, esp: 3 }
+      speed: 12
+      res: { tenebres: 30, sacre: -20 }
+      skills: [[enchainement, 20], [marque_mort, 24]]
+  slots:
+    arme: [une_main]
+    armure: [legere]
+    accessoire: [bottes, anneau]
+tisseuse:
+  units: 1
+  pop: 2
+  tags: [elfe]
+  weapon: baton
+  defaultDist: 3
+  base: { hp: 94, will: 65, energy: 70, mana: 45, for: 1, ele: 0, esp: 2, foi: 0, omb: 7 }
+  growth: { hp: 4.35, will: 2, energy: 1, mana: 2.5, for: 0.36, ele: 0, esp: 0.6, foi: 0, omb: 1.8 }
+  forms:
+    - id: tisseuse
+      level: 1
+      speed: 23
+      res: { tenebres: 30, maladie: 20 }
+      skills: [[emploi, 1], [trait_ombre, 1], [meditation, 1], [jet_toile, 4], [malefice, 8], [silence_tombe, 14]]
+    - id: tisseuse_matriarche
+      level: 10
+      parent: tisseuse
+      hpMult: 1150
+      bonus: { will: 10, energy: 10, mana: 10, omb: 3 }
+      speed: 22
+      res: { tenebres: 30, maladie: 20 }
+      skills: [[drain_ame, 10], [peste, 14]]
+    - id: tisseuse_grande_matriarche
+      level: 20
+      parent: tisseuse_matriarche
+      hpMult: 1323
+      bonus: { will: 10, energy: 10, mana: 10, omb: 11, esp: 3 }
+      speed: 21
+      res: { tenebres: 30, maladie: 20 }
+      skills: [[nuee_ombres, 20], [marque_mort, 24]]
+    - id: tisseuse_fileuse_destins
+      level: 20
+      parent: tisseuse_matriarche
+      hpMult: 1380
+      bonus: { will: 30, energy: 10, mana: 40, omb: 3, esp: 6 }
+      speed: 22
+      res: { tenebres: 30, maladie: 20 }
+      skills: [[malediction, 20], [sommeil, 22]]
+  slots:
+    arme: [baton]
+    armure: [robe]
+    accessoire: [anneau]
+araignees_dressees:
+  units: 2
+  pop: 2
+  tags: [bete]
+  weapon: chelicères
+  defaultDist: 1
+  base: { hp: 70, will: 50, energy: 100, mana: 0, for: 5, ele: 0, esp: 0, foi: 0, omb: 0 }
+  growth: { hp: 4, will: 1, energy: 2, mana: 0, for: 1.2, ele: 0, esp: 0, foi: 0, omb: 0 }
+  forms:
+    - id: araignees_dressees
+      level: 1
+      speed: 15
+      res: { maladie: 40, feu: -25 }
+      skills: [[morsure_venin, 1], [repos, 1], [jet_toile, 4], [laceration, 9]]
+    - id: araignees_dressees_araignees_loups
+      level: 10
+      parent: araignees_dressees
+      hpMult: 1150
+      bonus: { will: 10, energy: 10, for: 3 }
+      speed: 14
+      res: { maladie: 40, feu: -25 }
+      skills: [[bond, 10], [peste, 14]]
+    - id: araignees_dressees_araignees_geantes
+      level: 20
+      parent: araignees_dressees_araignees_loups
+      hpMult: 1438
+      bonus: { will: 25, energy: 10, for: 8 }
+      speed: 14
+      res: { maladie: 40, feu: -25 }
+      skills: [[predateur, 20], [peau_dure, 22]]
+  slots:
+    accessoire: [collier]
+porte_lanterne:
+  units: 1
+  pop: 1
+  tags: [humain]
+  weapon: masse
+  defaultDist: 3
+  base: { hp: 70, will: 80, energy: 80, mana: 45, for: 2, ele: 0, esp: 2, foi: 6, omb: 0 }
+  growth: { hp: 4, will: 2, energy: 1, mana: 2.5, for: 0.5, ele: 0, esp: 0.5, foi: 1.5, omb: 0 }
+  forms:
+    - id: porte_lanterne
+      level: 1
+      speed: 22
+      res: { tenebres: 30, sacre: 20 }
+      skills: [[emploi, 1], [soin_mineur, 1], [meditation, 1], [rayon_sacre, 4], [egide, 9]]
+    - id: porte_lanterne_gardien_flamme
+      level: 10
+      parent: porte_lanterne
+      hpMult: 1150
+      bonus: { will: 10, energy: 10, mana: 10, foi: 3 }
+      speed: 21
+      res: { tenebres: 30, sacre: 20 }
+      skills: [[mains_lumiere, 10], [consecration, 14]]
+    - id: porte_lanterne_phare_vivant
+      level: 20
+      parent: porte_lanterne_gardien_flamme
+      hpMult: 1380
+      bonus: { will: 30, energy: 10, mana: 40, foi: 9 }
+      speed: 21
+      res: { tenebres: 30, sacre: 20 }
+      skills: [[onde_soin, 20], [aura_protection, 24]]
+    - id: porte_lanterne_porteur_aube
+      level: 20
+      parent: porte_lanterne_gardien_flamme
+      hpMult: 1323
+      bonus: { will: 10, energy: 10, mana: 10, foi: 11, for: 3 }
+      speed: 20
+      res: { tenebres: 30, sacre: 20 }
+      skills: [[jugement, 20], [rayon_sacre, 22]]
+  slots:
+    arme: [une_main, baton]
+    armure: [robe, legere]
+    accessoire: [anneau]
+arbaletrieres_drows:
+  units: 2
+  pop: 2
+  tags: [elfe]
+  weapon: arbalete
+  defaultDist: 3
+  base: { hp: 70, will: 55, energy: 95, mana: 0, for: 5, ele: 0, esp: 1, foi: 0, omb: 0 }
+  growth: { hp: 4, will: 1, energy: 2, mana: 0, for: 1.3, ele: 0, esp: 0.3, foi: 0, omb: 0 }
+  forms:
+    - id: arbaletrieres_drows
+      level: 1
+      speed: 18
+      res: { tenebres: 20 }
+      skills: [[tir_arc, 1], [repos, 1], [tir_empoisonne, 3], [carreau_lourd, 8]]
+    - id: arbaletrieres_drows_arbaletrieres_nuit
+      level: 10
+      parent: arbaletrieres_drows
+      hpMult: 1150
+      bonus: { will: 10, energy: 10, for: 3 }
+      speed: 17
+      res: { tenebres: 20 }
+      skills: [[rafale, 10], [marque_mort, 14]]
+    - id: arbaletrieres_drows_veuves_noires
+      level: 20
+      parent: arbaletrieres_drows_arbaletrieres_nuit
+      hpMult: 1323
+      bonus: { will: 10, energy: 10, for: 11, esp: 3 }
+      speed: 16
+      res: { tenebres: 20 }
+      skills: [[predateur, 20], [estoc, 24]]
+  slots:
+    arme: [arc, fronde]
+    armure: [legere]
+    accessoire: [bottes, anneau]
+champignon_errant:
+  units: 1
+  pop: 2
+  tags: [plante]
+  weapon: branches
+  defaultDist: 1
+  base: { hp: 191, will: 65, energy: 100, mana: 0, for: 6, ele: 0, esp: 1, foi: 1, omb: 0 }
+  growth: { hp: 12.18, will: 1, energy: 2, mana: 0, for: 1.2, ele: 0, esp: 0.36, foi: 0.36, omb: 0 }
+  forms:
+    - id: champignon_errant
+      level: 1
+      speed: 22
+      res: { maladie: 60, feu: -30 }
+      skills: [[emploi, 1], [repos, 1], [nuage, 3], [carapace_epines, 7]]
+    - id: champignon_errant_champignon_colossal
+      level: 10
+      parent: champignon_errant
+      hpMult: 1150
+      bonus: { will: 10, energy: 10, for: 3 }
+      speed: 21
+      res: { maladie: 60, feu: -30 }
+      skills: [[peste, 10], [peau_dure, 14]]
+    - id: champignon_errant_seigneur_spores
+      level: 20
+      parent: champignon_errant_champignon_colossal
+      hpMult: 1553
+      bonus: { will: 30, energy: 10, for: 3 }
+      speed: 22
+      res: { maladie: 60, feu: -30, contondant: 10, tranchant: 10 }
+      skills: [[rempart_vivant, 20], [aura_protection, 24]]
+  slots:
+    accessoire: [collier]
+forgeronne_lave:
+  units: 1
+  pop: 2
+  tags: [nain]
+  weapon: masse
+  defaultDist: 1
+  base: { hp: 160, will: 65, energy: 100, mana: 0, for: 6, ele: 3, esp: 1, foi: 1, omb: 0 }
+  growth: { hp: 10.15, will: 1, energy: 2, mana: 0, for: 1.2, ele: 0, esp: 0.36, foi: 0.36, omb: 0 }
+  forms:
+    - id: forgeronne_lave
+      level: 1
+      speed: 20
+      res: { feu: 40, glace: -20 }
+      skills: [[emploi, 1], [repos, 1], [lame_ardente, 3], [cri_defi, 7], [bouclier_flammes, 12]]
+    - id: forgeronne_lave_maitresse_forge
+      level: 10
+      parent: forgeronne_lave
+      hpMult: 1150
+      bonus: { will: 10, energy: 10, for: 3 }
+      speed: 19
+      res: { feu: 40, glace: -20 }
+      skills: [[frappe_brutale, 10], [aura_protection, 14]]
+    - id: forgeronne_lave_enclume_vivante
+      level: 20
+      parent: forgeronne_lave_maitresse_forge
+      hpMult: 1553
+      bonus: { will: 30, energy: 10, for: 3 }
+      speed: 20
+      res: { feu: 40, glace: -20, contondant: 10, tranchant: 10 }
+      skills: [[rempart_vivant, 20], [peau_dure, 22]]
+    - id: forgeronne_lave_marteau_braise
+      level: 20
+      parent: forgeronne_lave_maitresse_forge
+      hpMult: 1323
+      bonus: { will: 10, energy: 10, for: 11, esp: 3 }
+      speed: 18
+      res: { feu: 40, glace: -20 }
+      skills: [[jet_magma, 20], [enchainement, 22]]
+  slots:
+    arme: [une_main]
+    armure: [legere, moyenne, lourde]
+    accessoire: [bottes, anneau]
+pyro_caldeira:
+  units: 1
+  pop: 2
+  tags: [humain]
+  weapon: baton
+  defaultDist: 3
+  base: { hp: 94, will: 60, energy: 70, mana: 50, for: 1, ele: 7, esp: 2, foi: 0, omb: 0 }
+  growth: { hp: 4.35, will: 1, energy: 1, mana: 3, for: 0.36, ele: 1.8, esp: 0.6, foi: 0, omb: 0 }
+  forms:
+    - id: pyro_caldeira
+      level: 1
+      speed: 23
+      res: { feu: 50, glace: -25 }
+      skills: [[emploi, 1], [trait_flammes, 1], [meditation, 1], [lance_feu, 4], [nova_flammes, 9], [meteore, 15]]
+    - id: pyro_caldeira_mage_cratere
+      level: 10
+      parent: pyro_caldeira
+      hpMult: 1150
+      bonus: { will: 10, energy: 10, mana: 10, ele: 3 }
+      speed: 22
+      res: { feu: 50, glace: -25 }
+      skills: [[jet_magma, 10], [bouclier_flammes, 14]]
+    - id: pyro_caldeira_c_ur_volcan
+      level: 20
+      parent: pyro_caldeira_mage_cratere
+      hpMult: 1323
+      bonus: { will: 10, energy: 10, mana: 10, ele: 11, esp: 3 }
+      speed: 21
+      res: { feu: 50, glace: -25 }
+      skills: [[maitrise_elem, 20], [pluie_feu, 22]]
+  slots:
+    arme: [baton]
+    armure: [robe]
+    accessoire: [anneau]
+salamandres:
+  units: 2
+  pop: 2
+  tags: [bete, reptile]
+  weapon: crocs
+  defaultDist: 1
+  base: { hp: 70, will: 50, energy: 100, mana: 0, for: 5, ele: 0, esp: 0, foi: 0, omb: 0 }
+  growth: { hp: 4, will: 1, energy: 2, mana: 0, for: 1.2, ele: 0, esp: 0, foi: 0, omb: 0 }
+  forms:
+    - id: salamandres
+      level: 1
+      speed: 15
+      res: { feu: 60, glace: -30 }
+      skills: [[morsure, 1], [repos, 1], [lame_ardente, 3], [souffle_feu, 8]]
+    - id: salamandres_salamandres_lave
+      level: 10
+      parent: salamandres
+      hpMult: 1150
+      bonus: { will: 10, energy: 10, for: 3 }
+      speed: 14
+      res: { feu: 60, glace: -30 }
+      skills: [[bond, 10], [peau_dure, 14]]
+    - id: salamandres_salamandres_ancestrales
+      level: 20
+      parent: salamandres_salamandres_lave
+      hpMult: 1438
+      bonus: { will: 25, energy: 10, for: 8 }
+      speed: 14
+      res: { feu: 60, glace: -30 }
+      skills: [[predateur, 20], [nova_flammes, 24]]
+  slots:
+    accessoire: [collier]
+gardiens_basalte:
+  units: 1
+  pop: 3
+  tags: [construct]
+  weapon: masse_lourde
+  defaultDist: 1
+  base: { hp: 285, will: 99, energy: 100, mana: 0, for: 8, ele: 0, esp: 0, foi: 0, omb: 0 }
+  growth: { hp: 17.1, will: 0, energy: 2, mana: 0, for: 2.1, ele: 0, esp: 0, foi: 0, omb: 0 }
+  forms:
+    - id: gardiens_basalte
+      level: 1
+      speed: 26
+      res: { feu: 40, tranchant: 20, contondant: 20 }
+      skills: [[emploi, 1], [repos, 1], [provocation, 3], [pietinement, 8], [peau_dure, 12]]
+    - id: gardiens_basalte_basalte_vivant
+      level: 10
+      parent: gardiens_basalte
+      hpMult: 1150
+      bonus: { will: 10, energy: 10, for: 3 }
+      speed: 25
+      res: { feu: 40, tranchant: 20, contondant: 20 }
+      skills: [[rempart_vivant, 10], [coup_assommant, 14]]
+    - id: gardiens_basalte_colosse_lave
+      level: 20
+      parent: gardiens_basalte_basalte_vivant
+      hpMult: 1553
+      bonus: { will: 30, energy: 10, for: 3 }
+      speed: 26
+      res: { feu: 40, tranchant: 30, contondant: 30 }
+      skills: [[aura_protection, 20], [riposte, 22]]
+  slots:
+    arme: [deux_mains]
+    armure: [moyenne, lourde]
+    accessoire: [bottes, anneau, collier]
+pretresse_cendres:
+  units: 1
+  pop: 1
+  tags: [humain]
+  weapon: sceptre
+  defaultDist: 3
+  base: { hp: 70, will: 80, energy: 80, mana: 45, for: 2, ele: 2, esp: 2, foi: 6, omb: 0 }
+  growth: { hp: 4, will: 2, energy: 1, mana: 2.5, for: 0.5, ele: 0, esp: 0.5, foi: 1.5, omb: 0 }
+  forms:
+    - id: pretresse_cendres
+      level: 1
+      speed: 22
+      res: { feu: 30 }
+      skills: [[emploi, 1], [soin_mineur, 1], [meditation, 1], [bouclier_flammes, 4], [mains_lumiere, 9]]
+    - id: pretresse_cendres_voix_flamme
+      level: 10
+      parent: pretresse_cendres
+      hpMult: 1150
+      bonus: { will: 10, energy: 10, mana: 10, foi: 3 }
+      speed: 21
+      res: { feu: 30 }
+      skills: [[onde_soin, 10], [egide, 14]]
+    - id: pretresse_cendres_sainte_braises
+      level: 20
+      parent: pretresse_cendres_voix_flamme
+      hpMult: 1380
+      bonus: { will: 30, energy: 10, mana: 40, foi: 9 }
+      speed: 21
+      res: { feu: 30 }
+      skills: [[ferveur, 20], [purification_masse, 24]]
+  slots:
+    arme: [une_main, baton]
+    armure: [robe, legere]
+    accessoire: [anneau]
+briseurs_obsidienne:
+  units: 2
+  pop: 2
+  tags: [humain]
+  weapon: hache2m
+  defaultDist: 1
+  base: { hp: 80, will: 55, energy: 100, mana: 0, for: 6, ele: 0, esp: 1, foi: 0, omb: 1 }
+  growth: { hp: 4, will: 1, energy: 2, mana: 0, for: 1.5, ele: 0, esp: 0.3, foi: 0, omb: 0.3 }
+  forms:
+    - id: briseurs_obsidienne
+      level: 1
+      speed: 16
+      res: { feu: 20 }
+      skills: [[emploi, 1], [repos, 1], [enchainement, 4], [taillade, 8]]
+    - id: briseurs_obsidienne_briseurs_verre
+      level: 10
+      parent: briseurs_obsidienne
+      hpMult: 1150
+      bonus: { will: 10, energy: 10, for: 3 }
+      speed: 15
+      res: { feu: 20 }
+      skills: [[estoc, 10], [laceration, 14]]
+    - id: briseurs_obsidienne_lames_obsidienne
+      level: 20
+      parent: briseurs_obsidienne_briseurs_verre
+      hpMult: 1323
+      bonus: { will: 10, energy: 10, for: 11, esp: 3 }
+      speed: 14
+      res: { feu: 20 }
+      skills: [[predateur, 20], [frappe_brutale, 22]]
+  slots:
+    arme: [deux_mains]
+    armure: [moyenne, lourde]
+    accessoire: [bottes, anneau, collier]
+corsaires:
+  units: 2
+  pop: 2
+  tags: [humain]
+  weapon: epee
+  defaultDist: 1
+  base: { hp: 80, will: 55, energy: 100, mana: 0, for: 6, ele: 0, esp: 1, foi: 0, omb: 1 }
+  growth: { hp: 4, will: 1, energy: 2, mana: 0, for: 1.5, ele: 0, esp: 0.3, foi: 0, omb: 0.3 }
+  forms:
+    - id: corsaires
+      level: 1
+      speed: 16
+      res: {}
+      skills: [[emploi, 1], [repos, 1], [enchainement, 1], [laceration, 4], [estoc, 9]]
+    - id: corsaires_flibustiers
+      level: 10
+      parent: corsaires
+      hpMult: 1150
+      bonus: { will: 10, energy: 10, for: 3 }
+      speed: 15
+      res: {}
+      skills: [[mirage, 10], [brise_genou, 14]]
+    - id: corsaires_ecumeurs
+      level: 20
+      parent: corsaires_flibustiers
+      hpMult: 1323
+      bonus: { will: 10, energy: 10, for: 11, esp: 3 }
+      speed: 14
+      res: {}
+      skills: [[taillade, 20], [predateur, 22]]
+  slots:
+    arme: [une_main]
+    armure: [legere]
+    accessoire: [bottes, anneau]
+canonniere:
+  units: 1
+  pop: 2
+  tags: [humain]
+  weapon: arbalete
+  defaultDist: 3
+  base: { hp: 102, will: 55, energy: 95, mana: 0, for: 9, ele: 0, esp: 1, foi: 0, omb: 0 }
+  growth: { hp: 5.8, will: 1, energy: 2, mana: 0, for: 1.56, ele: 0, esp: 0.36, foi: 0, omb: 0 }
+  forms:
+    - id: canonniere
+      level: 1
+      speed: 18
+      res: { feu: 20 }
+      skills: [[tir_arc, 1], [repos, 1], [carreau_lourd, 1], [jet_magma, 5], [rafale, 10]]
+    - id: canonniere_maitresse_canonniere
+      level: 10
+      parent: canonniere
+      hpMult: 1150
+      bonus: { will: 10, energy: 10, for: 3 }
+      speed: 17
+      res: { feu: 20 }
+      skills: [[estoc, 10], [coup_assommant, 14]]
+    - id: canonniere_bordee
+      level: 20
+      parent: canonniere_maitresse_canonniere
+      hpMult: 1438
+      bonus: { will: 25, energy: 10, for: 8 }
+      speed: 17
+      res: { feu: 20 }
+      skills: [[meteore, 20], [carreau_lourd, 22]]
+  slots:
+    arme: [arc, fronde]
+    armure: [legere]
+    accessoire: [bottes, anneau]
+naga:
+  units: 1
+  pop: 2
+  tags: [reptile]
+  weapon: lance
+  defaultDist: 2
+  base: { hp: 94, will: 60, energy: 70, mana: 50, for: 1, ele: 7, esp: 2, foi: 0, omb: 0 }
+  growth: { hp: 4.35, will: 1, energy: 1, mana: 3, for: 0.36, ele: 1.8, esp: 0.6, foi: 0, omb: 0 }
+  forms:
+    - id: naga
+      level: 1
+      speed: 23
+      res: { glace: 40, feu: -20 }
+      skills: [[emploi, 1], [javelot_glace, 1], [meditation, 1], [toucher_tombe, 5], [blizzard, 11]]
+    - id: naga_naga_marees
+      level: 10
+      parent: naga
+      hpMult: 1150
+      bonus: { will: 10, energy: 10, mana: 10, ele: 3 }
+      speed: 22
+      res: { glace: 40, feu: -20 }
+      skills: [[prison_glace, 10], [armure_givre, 14]]
+    - id: naga_reine_naga
+      level: 20
+      parent: naga_naga_marees
+      hpMult: 1323
+      bonus: { will: 10, energy: 10, mana: 10, ele: 11, esp: 3 }
+      speed: 21
+      res: { glace: 40, feu: -20 }
+      skills: [[maitrise_elem, 20], [souffle_glacial, 22]]
+    - id: naga_naga_oracle
+      level: 20
+      parent: naga_naga_marees
+      hpMult: 1380
+      bonus: { will: 30, energy: 10, mana: 40, ele: 3, esp: 6 }
+      speed: 22
+      res: { glace: 40, feu: -20 }
+      skills: [[clarte, 20], [onde_soin, 22]]
+  slots:
+    arme: [baton]
+    armure: [robe]
+    accessoire: [anneau]
+sirene:
+  units: 1
+  pop: 1
+  tags: [humain, esprit]
+  weapon: dague
+  defaultDist: 3
+  base: { hp: 75, will: 95, energy: 90, mana: 30, for: 3, ele: 0, esp: 6, foi: 0, omb: 0 }
+  growth: { hp: 4, will: 3, energy: 2, mana: 1.5, for: 0.5, ele: 0, esp: 1.5, foi: 0, omb: 0 }
+  forms:
+    - id: sirene
+      level: 1
+      speed: 18
+      res: { psychique: 40 }
+      skills: [[emploi, 1], [murmure, 1], [meditation, 1], [sommeil, 4], [domination, 9]]
+    - id: sirene_chanteuse_abysses
+      level: 10
+      parent: sirene
+      hpMult: 1150
+      bonus: { will: 10, energy: 10, mana: 10, esp: 3 }
+      speed: 17
+      res: { psychique: 40 }
+      skills: [[hurlement_mental, 10], [onde_mentale, 14]]
+    - id: sirene_sirene_reine
+      level: 20
+      parent: sirene_chanteuse_abysses
+      hpMult: 1323
+      bonus: { will: 10, energy: 10, mana: 10, esp: 11, for: 3 }
+      speed: 16
+      res: { psychique: 40 }
+      skills: [[terreur_masse, 20], [vision_terreur, 22]]
+  slots:
+    arme: [une_main]
+    armure: [legere]
+    accessoire: [bottes, anneau]
+crabes:
+  units: 2
+  pop: 2
+  tags: [bete]
+  weapon: griffes
+  defaultDist: 1
+  base: { hp: 126, will: 65, energy: 100, mana: 0, for: 5, ele: 0, esp: 1, foi: 1, omb: 0 }
+  growth: { hp: 8.05, will: 1, energy: 2, mana: 0, for: 1, ele: 0, esp: 0.3, foi: 0.3, omb: 0 }
+  forms:
+    - id: crabes
+      level: 1
+      speed: 22
+      res: { tranchant: 30, contondant: 20, feu: -20 }
+      skills: [[morsure, 1], [repos, 1], [provocation, 4], [carapace_epines, 8]]
+    - id: crabes_crabes_cuirasses
+      level: 10
+      parent: crabes
+      hpMult: 1150
+      bonus: { will: 10, energy: 10, for: 3 }
+      speed: 21
+      res: { tranchant: 30, contondant: 20, feu: -20 }
+      skills: [[peau_dure, 10], [coup_assommant, 14]]
+    - id: crabes_crabes_titans
+      level: 20
+      parent: crabes_crabes_cuirasses
+      hpMult: 1553
+      bonus: { will: 30, energy: 10, for: 3 }
+      speed: 22
+      res: { tranchant: 40, contondant: 30, feu: -20 }
+      skills: [[rempart_vivant, 20], [aura_protection, 24]]
+  slots:
+    accessoire: [collier]
+aumonier:
+  units: 1
+  pop: 1
+  tags: [humain]
+  weapon: masse
+  defaultDist: 3
+  base: { hp: 70, will: 80, energy: 80, mana: 45, for: 2, ele: 0, esp: 2, foi: 6, omb: 0 }
+  growth: { hp: 4, will: 2, energy: 1, mana: 2.5, for: 0.5, ele: 0, esp: 0.5, foi: 1.5, omb: 0 }
+  forms:
+    - id: aumonier
+      level: 1
+      speed: 22
+      res: { sacre: 20, glace: 15 }
+      skills: [[emploi, 1], [soin_mineur, 1], [meditation, 1], [mains_lumiere, 3], [egide, 8], [onde_soin, 14]]
+    - id: aumonier_aumonier_flotte
+      level: 10
+      parent: aumonier
+      hpMult: 1150
+      bonus: { will: 10, energy: 10, mana: 10, foi: 3 }
+      speed: 21
+      res: { sacre: 20, glace: 15 }
+      skills: [[purification, 10], [rayon_sacre, 14]]
+    - id: aumonier_benediction_mers
+      level: 20
+      parent: aumonier_aumonier_flotte
+      hpMult: 1380
+      bonus: { will: 30, energy: 10, mana: 40, foi: 9 }
+      speed: 21
+      res: { sacre: 20, glace: 15 }
+      skills: [[purification_masse, 20], [ferveur, 22]]
+  slots:
+    arme: [une_main, baton]
+    armure: [robe, legere]
+    accessoire: [anneau]
+homme_fauve:
+  units: 1
+  pop: 2
+  tags: [humain, bete]
+  weapon: griffes
+  defaultDist: 1
+  base: { hp: 133, will: 55, energy: 100, mana: 0, for: 7, ele: 0, esp: 1, foi: 0, omb: 1 }
+  growth: { hp: 6.67, will: 1, energy: 2, mana: 0, for: 1.8, ele: 0, esp: 0.36, foi: 0, omb: 0.36 }
+  forms:
+    - id: homme_fauve
+      level: 1
+      speed: 15
+      res: {}
+      skills: [[emploi, 1], [laceration, 1], [bond, 3], [predateur, 7], [enchainement, 12]]
+    - id: homme_fauve_fauve_alpha
+      level: 10
+      parent: homme_fauve
+      hpMult: 1150
+      bonus: { will: 10, energy: 10, for: 3 }
+      speed: 14
+      res: {}
+      skills: [[rage, 10], [hurlement, 14]]
+    - id: homme_fauve_roi_jaguar
+      level: 20
+      parent: homme_fauve_fauve_alpha
+      hpMult: 1323
+      bonus: { will: 10, energy: 10, for: 11, esp: 3 }
+      speed: 13
+      res: {}
+      skills: [[estoc, 20], [taillade, 24]]
+    - id: homme_fauve_fauve_ancestral
+      level: 20
+      parent: homme_fauve_fauve_alpha
+      hpMult: 1553
+      bonus: { will: 30, energy: 10, for: 3 }
+      speed: 15
+      res: { contondant: 10, tranchant: 10 }
+      skills: [[peau_dure, 20], [riposte, 22]]
+  slots:
+    accessoire: [collier]
+sarbacanieres:
+  units: 2
+  pop: 2
+  tags: [humain]
+  weapon: dard_s
+  defaultDist: 3
+  base: { hp: 70, will: 55, energy: 95, mana: 0, for: 5, ele: 0, esp: 1, foi: 0, omb: 0 }
+  growth: { hp: 4, will: 1, energy: 2, mana: 0, for: 1.3, ele: 0, esp: 0.3, foi: 0, omb: 0 }
+  forms:
+    - id: sarbacanieres
+      level: 1
+      speed: 18
+      res: { maladie: 30 }
+      skills: [[tir_fronde, 1], [repos, 1], [tir_empoisonne, 1], [putrefaction, 6], [rafale, 11]]
+    - id: sarbacanieres_sarbacanieres_jade
+      level: 10
+      parent: sarbacanieres
+      hpMult: 1150
+      bonus: { will: 10, energy: 10, for: 3 }
+      speed: 17
+      res: { maladie: 30 }
+      skills: [[peste, 10], [filet, 14]]
+    - id: sarbacanieres_ombres_canopee
+      level: 20
+      parent: sarbacanieres_sarbacanieres_jade
+      hpMult: 1323
+      bonus: { will: 10, energy: 10, for: 11, esp: 3 }
+      speed: 16
+      res: { maladie: 30 }
+      skills: [[predateur, 20], [marque_mort, 22]]
+  slots:
+    arme: [arc, fronde]
+    armure: [legere]
+    accessoire: [bottes, anneau]
+chamane_crapaud:
+  units: 1
+  pop: 2
+  tags: [reptile]
+  weapon: baton
+  defaultDist: 3
+  base: { hp: 104, will: 65, energy: 70, mana: 45, for: 1, ele: 0, esp: 2, foi: 0, omb: 7 }
+  growth: { hp: 4.79, will: 2, energy: 1, mana: 2.5, for: 0.36, ele: 0, esp: 0.6, foi: 0, omb: 1.8 }
+  forms:
+    - id: chamane_crapaud
+      level: 1
+      speed: 23
+      res: { maladie: 50 }
+      skills: [[emploi, 1], [fleau, 1], [meditation, 1], [peste, 5], [malefice, 10]]
+    - id: chamane_crapaud_grand_crapaud_sacre
+      level: 10
+      parent: chamane_crapaud
+      hpMult: 1150
+      bonus: { will: 10, energy: 10, mana: 10, omb: 3 }
+      speed: 22
+      res: { maladie: 50 }
+      skills: [[drain_ame, 10], [putrefaction, 14]]
+    - id: chamane_crapaud_prophete_marais
+      level: 20
+      parent: chamane_crapaud_grand_crapaud_sacre
+      hpMult: 1323
+      bonus: { will: 10, energy: 10, mana: 10, omb: 11, esp: 3 }
+      speed: 21
+      res: { maladie: 50 }
+      skills: [[nuee_ombres, 20], [silence_tombe, 22]]
+  slots:
+    arme: [baton]
+    armure: [robe]
+    accessoire: [anneau]
+gorille:
+  units: 1
+  pop: 3
+  tags: [bete]
+  weapon: gantelets
+  defaultDist: 1
+  base: { hp: 293, will: 50, energy: 110, mana: 0, for: 11, ele: 0, esp: 0, foi: 0, omb: 0 }
+  growth: { hp: 18.81, will: 1, energy: 2, mana: 0, for: 2.8, ele: 0, esp: 0, foi: 0, omb: 0 }
+  forms:
+    - id: gorille
+      level: 1
+      speed: 25
+      res: { contondant: 20 }
+      skills: [[emploi, 1], [repos, 1], [frappe_brutale, 1], [pietinement, 5], [coup_assommant, 10]]
+    - id: gorille_gorille_argente
+      level: 10
+      parent: gorille
+      hpMult: 1150
+      bonus: { will: 10, energy: 10, for: 3 }
+      speed: 24
+      res: { contondant: 20 }
+      skills: [[rage, 10], [cri_defi, 14]]
+    - id: gorille_roi_singes
+      level: 20
+      parent: gorille_gorille_argente
+      hpMult: 1438
+      bonus: { will: 25, energy: 10, for: 8 }
+      speed: 24
+      res: { contondant: 20 }
+      skills: [[enchainement, 20], [peau_dure, 22]]
+  slots:
+    accessoire: [collier]
+pretresse_jade:
+  units: 1
+  pop: 2
+  tags: [humain]
+  weapon: sceptre
+  defaultDist: 3
+  base: { hp: 102, will: 80, energy: 80, mana: 45, for: 2, ele: 0, esp: 2, foi: 7, omb: 0 }
+  growth: { hp: 5.8, will: 2, energy: 1, mana: 2.5, for: 0.6, ele: 0, esp: 0.6, foi: 1.8, omb: 0 }
+  forms:
+    - id: pretresse_jade
+      level: 1
+      speed: 22
+      res: { psychique: 20, maladie: 20 }
+      skills: [[emploi, 1], [mains_lumiere, 1], [meditation, 1], [egide, 4], [onde_soin, 9], [purification_masse, 15]]
+    - id: pretresse_jade_gardienne_temple
+      level: 10
+      parent: pretresse_jade
+      hpMult: 1150
+      bonus: { will: 10, energy: 10, mana: 10, foi: 3 }
+      speed: 21
+      res: { psychique: 20, maladie: 20 }
+      skills: [[seve, 10], [aura_protection, 14]]
+    - id: pretresse_jade_voix_quetzal
+      level: 20
+      parent: pretresse_jade_gardienne_temple
+      hpMult: 1380
+      bonus: { will: 30, energy: 10, mana: 40, foi: 9 }
+      speed: 21
+      res: { psychique: 20, maladie: 20 }
+      skills: [[ferveur, 20], [cercle_soins, 22]]
+  slots:
+    arme: [une_main, baton]
+    armure: [robe, legere]
+    accessoire: [anneau]
+serpents_temple:
+  units: 2
+  pop: 2
+  tags: [reptile]
+  weapon: dard_s
+  defaultDist: 1
+  base: { hp: 70, will: 50, energy: 100, mana: 0, for: 5, ele: 0, esp: 0, foi: 0, omb: 0 }
+  growth: { hp: 4, will: 1, energy: 2, mana: 0, for: 1.2, ele: 0, esp: 0, foi: 0, omb: 0 }
+  forms:
+    - id: serpents_temple
+      level: 1
+      speed: 13
+      res: { maladie: 40, glace: -20 }
+      skills: [[morsure_venin, 1], [repos, 1], [laceration, 4], [bond, 9]]
+    - id: serpents_temple_serpents_royaux
+      level: 10
+      parent: serpents_temple
+      hpMult: 1150
+      bonus: { will: 10, energy: 10, for: 3 }
+      speed: 12
+      res: { maladie: 40, glace: -20 }
+      skills: [[peste, 10], [predateur, 14]]
+    - id: serpents_temple_serpents_a_plumes
+      level: 20
+      parent: serpents_temple_serpents_royaux
+      hpMult: 1438
+      bonus: { will: 25, energy: 10, for: 8 }
+      speed: 12
+      res: { maladie: 40, glace: -20 }
+      skills: [[estoc, 20], [mirage, 22]]
+  slots:
+    accessoire: [collier]
+centaure:
+  units: 1
+  pop: 2
+  tags: [centaure]
+  weapon: arc
+  defaultDist: 3
+  base: { hp: 122, will: 55, energy: 95, mana: 0, for: 6, ele: 0, esp: 1, foi: 0, omb: 0 }
+  growth: { hp: 6.96, will: 1, energy: 2, mana: 0, for: 1.56, ele: 0, esp: 0.36, foi: 0, omb: 0 }
+  forms:
+    - id: centaure
+      level: 1
+      speed: 18
+      res: {}
+      skills: [[tir_arc, 1], [repos, 1], [rafale, 3], [estoc, 8], [carreau_lourd, 13]]
+    - id: centaure_centaure_vents
+      level: 10
+      parent: centaure
+      hpMult: 1150
+      bonus: { will: 10, energy: 10, for: 3 }
+      speed: 17
+      res: {}
+      skills: [[bond, 10], [predateur, 14]]
+    - id: centaure_seigneur_centaure
+      level: 20
+      parent: centaure_centaure_vents
+      hpMult: 1323
+      bonus: { will: 10, energy: 10, for: 11, esp: 3 }
+      speed: 16
+      res: {}
+      skills: [[tir_precis, 20], [rafale, 22]]
+  slots:
+    arme: [arc, fronde]
+    armure: [legere]
+    accessoire: [bottes, anneau]
+orcs:
+  units: 2
+  pop: 2
+  tags: [orc]
+  weapon: hache2m
+  defaultDist: 1
+  base: { hp: 140, will: 50, energy: 110, mana: 0, for: 8, ele: 0, esp: 0, foi: 0, omb: 0 }
+  growth: { hp: 9, will: 1, energy: 2, mana: 0, for: 2, ele: 0, esp: 0, foi: 0, omb: 0 }
+  forms:
+    - id: orcs
+      level: 1
+      speed: 25
+      res: {}
+      skills: [[emploi, 1], [repos, 1], [rage, 1], [frappe_brutale, 4], [taillade, 9]]
+    - id: orcs_orcs_berserkers
+      level: 10
+      parent: orcs
+      hpMult: 1150
+      bonus: { will: 10, energy: 10, for: 3 }
+      speed: 24
+      res: {}
+      skills: [[enchainement, 10], [cri_defi, 14]]
+    - id: orcs_horde
+      level: 20
+      parent: orcs_orcs_berserkers
+      hpMult: 1438
+      bonus: { will: 25, energy: 10, for: 8 }
+      speed: 24
+      res: {}
+      skills: [[pietinement, 20], [predateur, 22]]
+  slots:
+    arme: [deux_mains]
+    armure: [moyenne, lourde]
+    accessoire: [bottes, anneau, collier]
+chamane_tempetes:
+  units: 1
+  pop: 2
+  tags: [orc]
+  weapon: baton
+  defaultDist: 3
+  base: { hp: 94, will: 60, energy: 70, mana: 50, for: 1, ele: 7, esp: 5, foi: 0, omb: 0 }
+  growth: { hp: 4.35, will: 1, energy: 1, mana: 3, for: 0.36, ele: 1.8, esp: 0.6, foi: 0, omb: 0 }
+  forms:
+    - id: chamane_tempetes
+      level: 1
+      speed: 23
+      res: { glace: 20, psychique: 20 }
+      skills: [[emploi, 1], [eclat_glace, 1], [meditation, 1], [onde_mentale, 4], [blizzard, 10]]
+    - id: chamane_tempetes_appeleur_foudre
+      level: 10
+      parent: chamane_tempetes
+      hpMult: 1150
+      bonus: { will: 10, energy: 10, mana: 10, ele: 3 }
+      speed: 22
+      res: { glace: 20, psychique: 20 }
+      skills: [[jet_magma, 10], [prison_glace, 14]]
+    - id: chamane_tempetes_il_cyclone
+      level: 20
+      parent: chamane_tempetes_appeleur_foudre
+      hpMult: 1323
+      bonus: { will: 10, energy: 10, mana: 10, ele: 11, esp: 3 }
+      speed: 21
+      res: { glace: 20, psychique: 20 }
+      skills: [[meteore, 20], [hurlement_mental, 22]]
+    - id: chamane_tempetes_esprit_steppes
+      level: 20
+      parent: chamane_tempetes_appeleur_foudre
+      hpMult: 1380
+      bonus: { will: 30, energy: 10, mana: 40, ele: 3, esp: 6 }
+      speed: 22
+      res: { glace: 20, psychique: 20 }
+      skills: [[lien_esprits, 20], [armure_givre, 22]]
+  slots:
+    arme: [baton]
+    armure: [robe]
+    accessoire: [anneau]
+hyenes:
+  units: 3
+  pop: 2
+  tags: [bete]
+  weapon: crocs
+  defaultDist: 1
+  base: { hp: 54, will: 50, energy: 100, mana: 0, for: 5, ele: 0, esp: 0, foi: 0, omb: 0 }
+  growth: { hp: 3.06, will: 1, energy: 2, mana: 0, for: 1.12, ele: 0, esp: 0, foi: 0, omb: 0 }
+  forms:
+    - id: hyenes
+      level: 1
+      speed: 13
+      res: { maladie: 20 }
+      skills: [[morsure, 1], [repos, 1], [laceration, 3], [predateur, 9]]
+    - id: hyenes_hyenes_rieuses
+      level: 10
+      parent: hyenes
+      hpMult: 1150
+      bonus: { will: 10, energy: 10, for: 3 }
+      speed: 12
+      res: { maladie: 20 }
+      skills: [[hurlement, 10], [bond, 14]]
+    - id: hyenes_meute_charognes
+      level: 20
+      parent: hyenes_hyenes_rieuses
+      hpMult: 1438
+      bonus: { will: 25, energy: 10, for: 8 }
+      speed: 12
+      res: { maladie: 20 }
+      skills: [[instinct_meute, 20], [peste, 22]]
+  slots:
+    accessoire: [collier]
+khan:
+  units: 1
+  pop: 2
+  tags: [orc]
+  weapon: epee
+  defaultDist: 1
+  base: { hp: 160, will: 65, energy: 100, mana: 0, for: 6, ele: 0, esp: 4, foi: 1, omb: 0 }
+  growth: { hp: 10.15, will: 1, energy: 2, mana: 0, for: 1.2, ele: 0, esp: 0.36, foi: 0.36, omb: 0 }
+  forms:
+    - id: khan
+      level: 1
+      speed: 20
+      res: { tranchant: 15 }
+      skills: [[emploi, 1], [cri_defi, 1], [cri_guerre, 4], [chant_guerre, 8], [rempart_vivant, 13]]
+    - id: khan_khan_clans
+      level: 10
+      parent: khan
+      hpMult: 1150
+      bonus: { will: 10, energy: 10, for: 3 }
+      speed: 19
+      res: { tranchant: 15 }
+      skills: [[lien_esprits, 10], [aura_protection, 14]]
+    - id: khan_grand_khan
+      level: 20
+      parent: khan_khan_clans
+      hpMult: 1380
+      bonus: { will: 30, energy: 10, for: 3, esp: 6 }
+      speed: 19
+      res: { tranchant: 15 }
+      skills: [[clarte, 20], [mur_boucliers, 22]]
+    - id: khan_khan_guerre
+      level: 20
+      parent: khan_khan_clans
+      hpMult: 1323
+      bonus: { will: 10, energy: 10, for: 11, esp: 3 }
+      speed: 18
+      res: { tranchant: 15 }
+      skills: [[enchainement, 20], [cri_guerre, 22]]
+  slots:
+    arme: [une_main]
+    armure: [legere, moyenne, lourde]
+    accessoire: [bottes, anneau]
+harpies_dressees:
+  units: 3
+  pop: 2
+  tags: [bete]
+  weapon: griffes
+  defaultDist: 1
+  base: { hp: 60, will: 50, energy: 100, mana: 0, for: 5, ele: 0, esp: 0, foi: 0, omb: 0 }
+  growth: { hp: 3.4, will: 1, energy: 2, mana: 0, for: 1.12, ele: 0, esp: 0, foi: 0, omb: 0 }
+  forms:
+    - id: harpies_dressees
+      level: 1
+      speed: 12
+      res: { glace: 20 }
+      skills: [[morsure, 1], [repos, 1], [cri_effroi, 4], [laceration, 9]]
+    - id: harpies_dressees_harpies_orage
+      level: 10
+      parent: harpies_dressees
+      hpMult: 1150
+      bonus: { will: 10, energy: 10, for: 3 }
+      speed: 11
+      res: { glace: 20 }
+      skills: [[bond, 10], [hurlement_mental, 14]]
+    - id: harpies_dressees_harpies_reines
+      level: 20
+      parent: harpies_dressees_harpies_orage
+      hpMult: 1438
+      bonus: { will: 25, energy: 10, for: 8 }
+      speed: 11
+      res: { glace: 20 }
+      skills: [[predateur, 20], [mirage, 22]]
+  slots:
+    accessoire: [collier]
+hommes_poissons:
+  units: 2
+  pop: 2
+  tags: [poisson]
+  weapon: lance
+  defaultDist: 1
+  base: { hp: 80, will: 55, energy: 100, mana: 0, for: 6, ele: 0, esp: 1, foi: 0, omb: 1 }
+  growth: { hp: 4, will: 1, energy: 2, mana: 0, for: 1.5, ele: 0, esp: 0.3, foi: 0, omb: 0.3 }
+  forms:
+    - id: hommes_poissons
+      level: 1
+      speed: 16
+      res: { glace: 30, feu: -20 }
+      skills: [[emploi, 1], [repos, 1], [harpon_tir, 1], [estoc, 3], [enchainement, 8]]
+    - id: hommes_poissons_gardes_profondeurs
+      level: 10
+      parent: hommes_poissons
+      hpMult: 1150
+      bonus: { will: 10, energy: 10, for: 3 }
+      speed: 15
+      res: { glace: 30, feu: -20 }
+      skills: [[peau_dure, 22], [brise_genou, 24]]
+    - id: hommes_poissons_legion_abyssale
+      level: 20
+      parent: hommes_poissons_gardes_profondeurs
+      hpMult: 1438
+      bonus: { will: 25, energy: 10, for: 8 }
+      speed: 15
+      res: { glace: 30, feu: -20 }
+      skills: [[taillade, 25], [predateur, 27]]
+  slots:
+    arme: [une_main]
+    armure: [legere, moyenne, lourde]
+    accessoire: [bottes, anneau]
+oracle_noyee:
+  units: 1
+  pop: 2
+  tags: [mort-vivant]
+  weapon: baton
+  defaultDist: 3
+  base: { hp: 109, will: 95, energy: 90, mana: 30, for: 4, ele: 0, esp: 7, foi: 0, omb: 3 }
+  growth: { hp: 5.8, will: 3, energy: 2, mana: 1.5, for: 0.6, ele: 0, esp: 1.8, foi: 0, omb: 0 }
+  forms:
+    - id: oracle_noyee
+      level: 1
+      speed: 18
+      res: { psychique: 40, glace: 30 }
+      skills: [[emploi, 1], [murmure, 1], [meditation, 1], [domination, 3], [onde_mentale, 8], [sommeil, 13]]
+    - id: oracle_noyee_voix_ys
+      level: 10
+      parent: oracle_noyee
+      hpMult: 1150
+      bonus: { will: 10, energy: 10, mana: 10, esp: 3 }
+      speed: 17
+      res: { psychique: 40, glace: 30 }
+      skills: [[hurlement_mental, 22], [drain_ame, 24]]
+    - id: oracle_noyee_prophetesse_engloutie
+      level: 20
+      parent: oracle_noyee_voix_ys
+      hpMult: 1323
+      bonus: { will: 10, energy: 10, mana: 10, esp: 11, for: 3 }
+      speed: 16
+      res: { psychique: 40, glace: 30 }
+      skills: [[terreur_masse, 25], [vision_terreur, 27]]
+  slots:
+    arme: [baton]
+    armure: [robe]
+    accessoire: [anneau]
+meduses:
+  units: 3
+  pop: 2
+  tags: [bete]
+  weapon: dard
+  defaultDist: 2
+  base: { hp: 50, will: 65, energy: 70, mana: 45, for: 1, ele: 0, esp: 2, foi: 0, omb: 6 }
+  growth: { hp: 2.3, will: 2, energy: 1, mana: 2.5, for: 0.28, ele: 0, esp: 0.47, foi: 0, omb: 1.4 }
+  forms:
+    - id: meduses
+      level: 1
+      speed: 23
+      res: { glace: 30, psychique: 20 }
+      skills: [[emploi, 1], [putrefaction, 1], [toucher_tombe, 5], [peste, 10]]
+    - id: meduses_meduses_lumineuses
+      level: 10
+      parent: meduses
+      hpMult: 1150
+      bonus: { will: 10, energy: 10, mana: 10, omb: 3 }
+      speed: 22
+      res: { glace: 30, psychique: 20 }
+      skills: [[sommeil, 22], [silence_tombe, 24]]
+    - id: meduses_couronnes_abysses
+      level: 20
+      parent: meduses_meduses_lumineuses
+      hpMult: 1438
+      bonus: { will: 25, energy: 10, mana: 10, omb: 8 }
+      speed: 22
+      res: { glace: 30, psychique: 20 }
+      skills: [[nuee_ombres, 25], [peste, 27]]
+  slots:
+    accessoire: [collier]
+pretre_marees:
+  units: 1
+  pop: 2
+  tags: [humain]
+  weapon: sceptre
+  defaultDist: 3
+  base: { hp: 102, will: 80, energy: 80, mana: 45, for: 2, ele: 3, esp: 2, foi: 7, omb: 0 }
+  growth: { hp: 5.8, will: 2, energy: 1, mana: 2.5, for: 0.6, ele: 0, esp: 0.6, foi: 1.8, omb: 0 }
+  forms:
+    - id: pretre_marees
+      level: 1
+      speed: 22
+      res: { glace: 30, sacre: 20 }
+      skills: [[emploi, 1], [mains_lumiere, 1], [meditation, 1], [armure_givre, 3], [onde_soin, 8], [egide, 13]]
+    - id: pretre_marees_grand_pretre_ys
+      level: 10
+      parent: pretre_marees
+      hpMult: 1150
+      bonus: { will: 10, energy: 10, mana: 10, foi: 3 }
+      speed: 21
+      res: { glace: 30, sacre: 20 }
+      skills: [[purification_masse, 22], [cercle_soins, 24]]
+    - id: pretre_marees_c_ur_marees
+      level: 20
+      parent: pretre_marees_grand_pretre_ys
+      hpMult: 1380
+      bonus: { will: 30, energy: 10, mana: 40, foi: 9 }
+      speed: 21
+      res: { glace: 30, sacre: 20 }
+      skills: [[ferveur, 25], [aura_protection, 27]]
+  slots:
+    arme: [une_main, baton]
+    armure: [robe, legere]
+    accessoire: [anneau]
+requin_garou:
+  units: 1
+  pop: 3
+  tags: [bete, poisson]
+  weapon: machoires
+  defaultDist: 1
+  base: { hp: 266, will: 50, energy: 110, mana: 0, for: 11, ele: 0, esp: 0, foi: 0, omb: 0 }
+  growth: { hp: 17.1, will: 1, energy: 2, mana: 0, for: 2.8, ele: 0, esp: 0, foi: 0, omb: 0 }
+  forms:
+    - id: requin_garou
+      level: 1
+      speed: 23
+      res: { glace: 30 }
+      skills: [[emploi, 1], [laceration, 1], [bond, 3], [predateur, 6], [frappe_brutale, 11]]
+    - id: requin_garou_requin_garou_alpha
+      level: 10
+      parent: requin_garou
+      hpMult: 1150
+      bonus: { will: 10, energy: 10, for: 3 }
+      speed: 22
+      res: { glace: 30 }
+      skills: [[rage, 22], [enchainement, 24]]
+    - id: requin_garou_mangeur_hommes
+      level: 20
+      parent: requin_garou_requin_garou_alpha
+      hpMult: 1323
+      bonus: { will: 10, energy: 10, for: 11, ele: 3 }
+      speed: 21
+      res: { glace: 30 }
+      skills: [[estoc, 25], [taillade, 27]]
+  slots:
+    accessoire: [collier]
+scaphandrier:
+  units: 1
+  pop: 2
+  tags: [humain, construct]
+  weapon: masse_lourde
+  defaultDist: 1
+  base: { hp: 199, will: 65, energy: 100, mana: 0, for: 6, ele: 0, esp: 1, foi: 1, omb: 0 }
+  growth: { hp: 12.69, will: 1, energy: 2, mana: 0, for: 1.2, ele: 0, esp: 0.36, foi: 0.36, omb: 0 }
+  forms:
+    - id: scaphandrier
+      level: 1
+      speed: 23
+      res: { glace: 40, tranchant: 25, contondant: 25, feu: -20 }
+      skills: [[emploi, 1], [provocation, 1], [cri_defi, 3], [rempart_vivant, 8], [coup_assommant, 13]]
+    - id: scaphandrier_scaphandrier_fer
+      level: 10
+      parent: scaphandrier
+      hpMult: 1150
+      bonus: { will: 10, energy: 10, for: 3 }
+      speed: 22
+      res: { glace: 40, tranchant: 25, contondant: 25, feu: -20 }
+      skills: [[peau_dure, 22], [aura_protection, 24]]
+    - id: scaphandrier_cloche_abysses
+      level: 20
+      parent: scaphandrier_scaphandrier_fer
+      hpMult: 1553
+      bonus: { will: 30, energy: 10, for: 3 }
+      speed: 23
+      res: { glace: 40, tranchant: 35, contondant: 35, feu: -20 }
+      skills: [[riposte, 25], [egide, 27]]
+  slots:
+    arme: [deux_mains]
+    armure: [moyenne, lourde]
+    accessoire: [bottes, anneau, collier]
+demoniste:
+  units: 1
+  pop: 2
+  tags: [humain]
+  weapon: baton
+  defaultDist: 3
+  base: { hp: 94, will: 65, energy: 70, mana: 45, for: 1, ele: 3, esp: 2, foi: 0, omb: 7 }
+  growth: { hp: 4.35, will: 2, energy: 1, mana: 2.5, for: 0.36, ele: 0, esp: 0.6, foi: 0, omb: 1.8 }
+  forms:
+    - id: demoniste
+      level: 1
+      speed: 23
+      res: { feu: 30, tenebres: 30, sacre: -30 }
+      skills: [[emploi, 1], [trait_ombre, 1], [meditation, 1], [pacte_sang, 3], [drain_ame, 8], [nuee_ombres, 13]]
+    - id: demoniste_maitre_pactes
+      level: 10
+      parent: demoniste
+      hpMult: 1150
+      bonus: { will: 10, energy: 10, mana: 10, omb: 3 }
+      speed: 22
+      res: { feu: 30, tenebres: 30, sacre: -30 }
+      skills: [[malefice, 22], [lance_feu, 24]]
+    - id: demoniste_seigneur_demoniste
+      level: 20
+      parent: demoniste_maitre_pactes
+      hpMult: 1323
+      bonus: { will: 10, energy: 10, mana: 10, omb: 11, esp: 3 }
+      speed: 21
+      res: { feu: 30, tenebres: 30, sacre: -30 }
+      skills: [[meteore, 25], [silence_tombe, 27]]
+    - id: demoniste_lieur_ames
+      level: 20
+      parent: demoniste_maitre_pactes
+      hpMult: 1380
+      bonus: { will: 30, energy: 10, mana: 40, omb: 3, esp: 6 }
+      speed: 22
+      res: { feu: 30, tenebres: 30, sacre: -30 }
+      skills: [[marque_mort, 25], [lien_vital, 27]]
+  slots:
+    arme: [baton]
+    armure: [robe]
+    accessoire: [anneau]
+chevalier_obsidienne:
+  units: 1
+  pop: 3
+  tags: [humain]
+  weapon: epee
+  defaultDist: 1
+  base: { hp: 209, will: 65, energy: 100, mana: 0, for: 10, ele: 0, esp: 1, foi: 1, omb: 0 }
+  growth: { hp: 13.3, will: 1, energy: 2, mana: 0, for: 1.4, ele: 0, esp: 0.42, foi: 0.42, omb: 0 }
+  forms:
+    - id: chevalier_obsidienne
+      level: 1
+      speed: 20
+      res: { feu: 30, tranchant: 20, contondant: 20 }
+      skills: [[emploi, 1], [provocation, 1], [cri_defi, 3], [frappe_brutale, 8], [rempart_vivant, 13]]
+    - id: chevalier_obsidienne_chevalier_noir
+      level: 10
+      parent: chevalier_obsidienne
+      hpMult: 1150
+      bonus: { will: 10, energy: 10, for: 3 }
+      speed: 19
+      res: { feu: 30, tranchant: 20, contondant: 20 }
+      skills: [[peau_dure, 22], [chatiment, 24]]
+    - id: chevalier_obsidienne_rempart_verre
+      level: 20
+      parent: chevalier_obsidienne_chevalier_noir
+      hpMult: 1553
+      bonus: { will: 30, energy: 10, for: 3 }
+      speed: 20
+      res: { feu: 30, tranchant: 30, contondant: 30 }
+      skills: [[aura_protection, 25], [riposte, 27]]
+    - id: chevalier_obsidienne_champion_obsidienne
+      level: 20
+      parent: chevalier_obsidienne_chevalier_noir
+      hpMult: 1323
+      bonus: { will: 10, energy: 10, for: 11, esp: 3 }
+      speed: 18
+      res: { feu: 30, tranchant: 20, contondant: 20 }
+      skills: [[enchainement, 25], [estoc, 27]]
+  slots:
+    arme: [une_main]
+    armure: [legere, moyenne, lourde]
+    accessoire: [bottes, anneau]
+succube:
+  units: 1
+  pop: 2
+  tags: [demon]
+  weapon: dague
+  defaultDist: 2
+  base: { hp: 109, will: 95, energy: 90, mana: 30, for: 4, ele: 0, esp: 7, foi: 0, omb: 3 }
+  growth: { hp: 5.8, will: 3, energy: 2, mana: 1.5, for: 0.6, ele: 0, esp: 1.8, foi: 0, omb: 0 }
+  forms:
+    - id: succube
+      level: 1
+      speed: 18
+      res: { feu: 40, sacre: -30 }
+      skills: [[emploi, 1], [domination, 1], [meditation, 1], [drain_ame, 4], [vision_terreur, 9]]
+    - id: succube_tentatrice
+      level: 10
+      parent: succube
+      hpMult: 1150
+      bonus: { will: 10, energy: 10, mana: 10, esp: 3 }
+      speed: 17
+      res: { feu: 40, sacre: -30 }
+      skills: [[sommeil, 22], [mirage, 24]]
+    - id: succube_reine_desirs
+      level: 20
+      parent: succube_tentatrice
+      hpMult: 1323
+      bonus: { will: 10, energy: 10, mana: 10, esp: 11, for: 3 }
+      speed: 16
+      res: { feu: 40, sacre: -30 }
+      skills: [[hurlement_mental, 25], [terreur_masse, 27]]
+  slots:
+    arme: [une_main]
+    armure: [legere]
+    accessoire: [bottes, anneau]
+molosses_verre:
+  units: 2
+  pop: 2
+  tags: [bete, demon]
+  weapon: crocs
+  defaultDist: 1
+  base: { hp: 70, will: 50, energy: 100, mana: 0, for: 5, ele: 0, esp: 0, foi: 0, omb: 0 }
+  growth: { hp: 4, will: 1, energy: 2, mana: 0, for: 1.2, ele: 0, esp: 0, foi: 0, omb: 0 }
+  forms:
+    - id: molosses_verre
+      level: 1
+      speed: 15
+      res: { feu: 50, sacre: -30 }
+      skills: [[morsure, 1], [repos, 1], [lame_ardente, 1], [bond, 5], [predateur, 10]]
+    - id: molosses_verre_molosses_ardents
+      level: 10
+      parent: molosses_verre
+      hpMult: 1150
+      bonus: { will: 10, energy: 10, for: 3 }
+      speed: 14
+      res: { feu: 50, sacre: -30 }
+      skills: [[souffle_feu, 22], [peau_dure, 24]]
+    - id: molosses_verre_chiens_abime
+      level: 20
+      parent: molosses_verre_molosses_ardents
+      hpMult: 1438
+      bonus: { will: 25, energy: 10, for: 8 }
+      speed: 14
+      res: { feu: 50, sacre: -30 }
+      skills: [[enchainement, 25], [nova_flammes, 27]]
+  slots:
+    accessoire: [collier]
+inquisitrice:
+  units: 1
+  pop: 2
+  tags: [humain]
+  weapon: sceptre
+  defaultDist: 2
+  base: { hp: 102, will: 80, energy: 80, mana: 45, for: 4, ele: 0, esp: 2, foi: 7, omb: 0 }
+  growth: { hp: 5.8, will: 2, energy: 1, mana: 2.5, for: 0.6, ele: 0, esp: 0.6, foi: 1.8, omb: 0 }
+  forms:
+    - id: inquisitrice
+      level: 1
+      speed: 22
+      res: { sacre: 40, tenebres: 30, feu: 20 }
+      skills: [[emploi, 1], [rayon_sacre, 1], [meditation, 1], [jugement, 4], [consecration, 9], [egide, 14]]
+    - id: inquisitrice_main_aube
+      level: 10
+      parent: inquisitrice
+      hpMult: 1150
+      bonus: { will: 10, energy: 10, mana: 10, foi: 3 }
+      speed: 21
+      res: { sacre: 40, tenebres: 30, feu: 20 }
+      skills: [[chatiment, 22], [purification_masse, 24]]
+    - id: inquisitrice_lumiere_vengeresse
+      level: 20
+      parent: inquisitrice_main_aube
+      hpMult: 1323
+      bonus: { will: 10, energy: 10, mana: 10, foi: 11, for: 3 }
+      speed: 20
+      res: { sacre: 40, tenebres: 30, feu: 20 }
+      skills: [[jugement, 25], [maitrise_elem, 27]]
+    - id: inquisitrice_bouclier_aube
+      level: 20
+      parent: inquisitrice_main_aube
+      hpMult: 1380
+      bonus: { will: 30, energy: 10, mana: 40, foi: 9 }
+      speed: 21
+      res: { sacre: 40, tenebres: 30, feu: 20 }
+      skills: [[onde_soin, 25], [ferveur, 27]]
+  slots:
+    arme: [une_main, baton]
+    armure: [robe, legere]
+    accessoire: [anneau]
+arbaletriers_verre:
+  units: 2
+  pop: 2
+  tags: [humain]
+  weapon: arbalete
+  defaultDist: 3
+  base: { hp: 70, will: 55, energy: 95, mana: 0, for: 5, ele: 0, esp: 1, foi: 0, omb: 0 }
+  growth: { hp: 4, will: 1, energy: 2, mana: 0, for: 1.3, ele: 0, esp: 0.3, foi: 0, omb: 0 }
+  forms:
+    - id: arbaletriers_verre
+      level: 1
+      speed: 18
+      res: { feu: 30 }
+      skills: [[tir_arc, 1], [repos, 1], [carreau_lourd, 1], [rafale, 5], [estoc, 10]]
+    - id: arbaletriers_verre_tireurs_obsidienne
+      level: 10
+      parent: arbaletriers_verre
+      hpMult: 1150
+      bonus: { will: 10, energy: 10, for: 3 }
+      speed: 17
+      res: { feu: 30 }
+      skills: [[marque_mort, 22], [predateur, 24]]
+    - id: arbaletriers_verre_il_verre
+      level: 20
+      parent: arbaletriers_verre_tireurs_obsidienne
+      hpMult: 1323
+      bonus: { will: 10, energy: 10, for: 11, esp: 3 }
+      speed: 16
+      res: { feu: 30 }
+      skills: [[tir_precis, 25], [carreau_lourd, 27]]
+  slots:
+    arme: [arc, fronde]
+    armure: [legere]
+    accessoire: [bottes, anneau]
+chevaliers_lune:
+  units: 2
+  pop: 3
+  tags: [fee]
+  weapon: epee
+  defaultDist: 1
+  base: { hp: 135, will: 65, energy: 100, mana: 0, for: 6, ele: 0, esp: 1, foi: 3, omb: 0 }
+  growth: { hp: 8.58, will: 1, energy: 2, mana: 0, for: 1.1, ele: 0, esp: 0.33, foi: 0.33, omb: 0 }
+  forms:
+    - id: chevaliers_lune
+      level: 1
+      speed: 20
+      res: { psychique: 30, tenebres: 20 }
+      skills: [[emploi, 1], [provocation, 1], [cri_defi, 3], [chatiment, 7], [rempart_vivant, 12]]
+    - id: chevaliers_lune_gardiens_reve
+      level: 10
+      parent: chevaliers_lune
+      hpMult: 1150
+      bonus: { will: 10, energy: 10, for: 3 }
+      speed: 19
+      res: { psychique: 30, tenebres: 20 }
+      skills: [[aura_protection, 22], [peau_dure, 24]]
+    - id: chevaliers_lune_ordre_lune
+      level: 20
+      parent: chevaliers_lune_gardiens_reve
+      hpMult: 1553
+      bonus: { will: 30, energy: 10, for: 3 }
+      speed: 20
+      res: { psychique: 30, tenebres: 20, contondant: 10, tranchant: 10 }
+      skills: [[egide, 25], [riposte, 27]]
+  slots:
+    arme: [une_main]
+    armure: [legere, moyenne, lourde]
+    accessoire: [bottes, anneau]
+fee_songes:
+  units: 1
+  pop: 1
+  tags: [fee]
+  weapon: baton
+  defaultDist: 3
+  base: { hp: 75, will: 95, energy: 90, mana: 30, for: 3, ele: 0, esp: 6, foi: 0, omb: 0 }
+  growth: { hp: 4, will: 3, energy: 2, mana: 1.5, for: 0.5, ele: 0, esp: 1.5, foi: 0, omb: 0 }
+  forms:
+    - id: fee_songes
+      level: 1
+      speed: 15
+      res: { psychique: 50 }
+      skills: [[emploi, 1], [sommeil, 1], [meditation, 1], [clarte, 3], [domination, 8], [lien_esprits, 13]]
+    - id: fee_songes_fee_crepuscule
+      level: 10
+      parent: fee_songes
+      hpMult: 1150
+      bonus: { will: 10, energy: 10, mana: 10, esp: 3 }
+      speed: 14
+      res: { psychique: 50 }
+      skills: [[onde_mentale, 22], [mirage, 24]]
+    - id: fee_songes_reine_songes
+      level: 20
+      parent: fee_songes_fee_crepuscule
+      hpMult: 1380
+      bonus: { will: 30, energy: 10, mana: 40, esp: 9 }
+      speed: 14
+      res: { psychique: 50 }
+      skills: [[sang_froid, 25], [hurlement_mental, 27]]
+    - id: fee_songes_fee_cauchemar
+      level: 20
+      parent: fee_songes_fee_crepuscule
+      hpMult: 1323
+      bonus: { will: 10, energy: 10, mana: 10, esp: 11, for: 3 }
+      speed: 13
+      res: { psychique: 50 }
+      skills: [[vision_terreur, 25], [terreur_masse, 27]]
+  slots:
+    arme: [baton]
+    armure: [robe]
+    accessoire: [anneau]
+licorne:
+  units: 1
+  pop: 3
+  tags: [bete, fee]
+  weapon: crocs
+  defaultDist: 1
+  base: { hp: 186, will: 80, energy: 80, mana: 45, for: 7, ele: 0, esp: 3, foi: 8, omb: 0 }
+  growth: { hp: 10.64, will: 2, energy: 1, mana: 2.5, for: 0.7, ele: 0, esp: 0.7, foi: 2.1, omb: 0 }
+  forms:
+    - id: licorne
+      level: 1
+      speed: 18
+      res: { sacre: 40, tenebres: 30 }
+      skills: [[morsure, 1], [mains_lumiere, 1], [charge, 3], [purification, 8], [onde_soin, 13]]
+    - id: licorne_licorne_lune
+      level: 10
+      parent: licorne
+      hpMult: 1150
+      bonus: { will: 10, energy: 10, mana: 10, foi: 3 }
+      speed: 17
+      res: { sacre: 40, tenebres: 30 }
+      skills: [[egide, 22], [bond, 24]]
+    - id: licorne_licorne_aube
+      level: 20
+      parent: licorne_licorne_lune
+      hpMult: 1380
+      bonus: { will: 30, energy: 10, mana: 40, foi: 9 }
+      speed: 17
+      res: { sacre: 40, tenebres: 30 }
+      skills: [[purification_masse, 25], [ferveur, 27]]
+  slots:
+    accessoire: [collier]
+archeres_rosee:
+  units: 2
+  pop: 2
+  tags: [fee]
+  weapon: arc
+  defaultDist: 3
+  base: { hp: 70, will: 55, energy: 95, mana: 0, for: 5, ele: 0, esp: 1, foi: 0, omb: 0 }
+  growth: { hp: 4, will: 1, energy: 2, mana: 0, for: 1.3, ele: 0, esp: 0.3, foi: 0, omb: 0 }
+  forms:
+    - id: archeres_rosee
+      level: 1
+      speed: 18
+      res: { psychique: 20 }
+      skills: [[tir_arc, 1], [repos, 1], [rafale, 1], [fleche_givre, 5], [estoc, 10]]
+    - id: archeres_rosee_archeres_argent
+      level: 10
+      parent: archeres_rosee
+      hpMult: 1150
+      bonus: { will: 10, energy: 10, for: 3 }
+      speed: 17
+      res: { psychique: 20 }
+      skills: [[predateur, 22], [marque, 24]]
+    - id: archeres_rosee_chasseresses_lune
+      level: 20
+      parent: archeres_rosee_archeres_argent
+      hpMult: 1323
+      bonus: { will: 10, energy: 10, for: 11, esp: 3 }
+      speed: 16
+      res: { psychique: 20 }
+      skills: [[carreau_lourd, 25], [tir_precis, 27]]
+  slots:
+    arme: [arc, fronde]
+    armure: [legere]
+    accessoire: [bottes, anneau]
+dormeur:
+  units: 1
+  pop: 3
+  tags: [geant, fee]
+  weapon: masse_lourde
+  defaultDist: 1
+  base: { hp: 285, will: 99, energy: 100, mana: 0, for: 8, ele: 0, esp: 4, foi: 0, omb: 0 }
+  growth: { hp: 17.1, will: 0, energy: 2, mana: 0, for: 2.1, ele: 0, esp: 0, foi: 0, omb: 0 }
+  forms:
+    - id: dormeur
+      level: 1
+      speed: 26
+      res: { psychique: 40, contondant: 20 }
+      skills: [[emploi, 1], [repos, 1], [pietinement, 3], [sommeil, 8], [frappe_brutale, 13]]
+    - id: dormeur_geant_reve
+      level: 10
+      parent: dormeur
+      hpMult: 1150
+      bonus: { will: 10, energy: 10, for: 3 }
+      speed: 25
+      res: { psychique: 40, contondant: 20 }
+      skills: [[peau_dure, 22], [hurlement_mental, 24]]
+    - id: dormeur_titan_endormi
+      level: 20
+      parent: dormeur_geant_reve
+      hpMult: 1553
+      bonus: { will: 30, energy: 10, for: 3 }
+      speed: 26
+      res: { psychique: 40, contondant: 30, tranchant: 10 }
+      skills: [[rempart_vivant, 25], [aura_protection, 27]]
+  slots:
+    arme: [deux_mains]
+    armure: [moyenne, lourde]
+    accessoire: [bottes, anneau, collier]
+tisseur_reves:
+  units: 1
+  pop: 2
+  tags: [fee]
+  weapon: orbe
+  defaultDist: 3
+  base: { hp: 109, will: 95, energy: 90, mana: 30, for: 4, ele: 0, esp: 7, foi: 3, omb: 0 }
+  growth: { hp: 5.8, will: 3, energy: 2, mana: 1.5, for: 0.6, ele: 0, esp: 1.8, foi: 0, omb: 0 }
+  forms:
+    - id: tisseur_reves
+      level: 1
+      speed: 18
+      res: { psychique: 40 }
+      skills: [[emploi, 1], [lame_psychique, 1], [meditation, 1], [mirage, 3], [onde_mentale, 8], [domination, 13]]
+    - id: tisseur_reves_maitre_songes
+      level: 10
+      parent: tisseur_reves
+      hpMult: 1150
+      bonus: { will: 10, energy: 10, mana: 10, esp: 3 }
+      speed: 17
+      res: { psychique: 40 }
+      skills: [[sommeil, 22], [clarte, 24]]
+    - id: tisseur_reves_architecte_reve
+      level: 20
+      parent: tisseur_reves_maitre_songes
+      hpMult: 1323
+      bonus: { will: 10, energy: 10, mana: 10, esp: 11, for: 3 }
+      speed: 16
+      res: { psychique: 40 }
+      skills: [[hurlement_mental, 25], [vision_terreur, 27]]
+  slots:
+    arme: [baton]
+    armure: [robe]
+    accessoire: [anneau]
