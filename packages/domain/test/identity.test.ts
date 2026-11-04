@@ -8,6 +8,9 @@ import {
   login,
   logout,
   memoryMailer,
+  requestPasswordReset,
+  resetPassword,
+  resetTokenValid,
   signup,
   verifyEmail,
   LOGIN_MAX_FAILURES,
@@ -149,5 +152,47 @@ describe('garde-fou des connexions (guide 13.1)', () => {
       'LOGIN_THROTTLED',
     );
     expect(await code(login(t.db, { email: 'ana@example.org', password: 'correct horse battery' }, { ip: '198.51.100.7' }))).toBe('ok');
+  });
+});
+
+describe('mot de passe oublié', () => {
+  const mailer = memoryMailer();
+  const deps = () => ({ db: t.db, mailer, appUrl: 'http://test' });
+  const tokenOf = () => decodeURIComponent(/\/mot-de-passe\/nouveau\?t=([^\s]+)/.exec(mailer.sent.at(-1)!.text)![1]!);
+
+  it('envoie un lien à un compte, rien pour une adresse inconnue ; le lien sert une fois et ferme les sessions', async () => {
+    await signup(deps(), { email: 'oubli@example.org', pseudo: 'Etourdi', password: 'ancien-mot-de-passe', acceptTos: true });
+    const session = await login(t.db, { email: 'oubli@example.org', password: 'ancien-mot-de-passe' }, {});
+    const sent = mailer.sent.length;
+    await requestPasswordReset(deps(), 'personne-ici@example.org');
+    expect(mailer.sent.length).toBe(sent);
+    await requestPasswordReset(deps(), '  OUBLI@example.org ');
+    expect(mailer.sent.length).toBe(sent + 1);
+    const token = tokenOf();
+    expect(await resetTokenValid(t.db, token)).toBe(true);
+    expect(await code(resetPassword(t.db, token, 'court'))).toBe('PASSWORD_TOO_SHORT');
+    await resetPassword(t.db, token, 'nouveau-mot-de-passe');
+    expect(await getAuth(t.db, session.token)).toBeNull();
+    expect(await code(login(t.db, { email: 'oubli@example.org', password: 'ancien-mot-de-passe' }, {}))).toBe('BAD_CREDENTIALS');
+    expect(await code(login(t.db, { email: 'oubli@example.org', password: 'nouveau-mot-de-passe' }, {}))).toBe('ok');
+    expect(await code(resetPassword(t.db, token, 'encore-un-autre'))).toBe('RESET_TOKEN_INVALID');
+    expect(await resetTokenValid(t.db, token)).toBe(false);
+  });
+
+  it('refuse un lien expiré, et invalide les autres liens une fois l’un utilisé', async () => {
+    await requestPasswordReset(deps(), 'oubli@example.org');
+    const first = tokenOf();
+    await requestPasswordReset(deps(), 'oubli@example.org');
+    const second = tokenOf();
+    await resetPassword(t.db, second, 'troisieme-mot-de-passe');
+    expect(await code(resetPassword(t.db, first, 'quatrieme-mot-de-passe'))).toBe('RESET_TOKEN_INVALID');
+    await requestPasswordReset(deps(), 'oubli@example.org');
+    const late = tokenOf();
+    await t.db
+      .updateTable('password_reset')
+      .set({ expires_at: new Date(Date.now() - 1000) })
+      .where('used_at', 'is', null)
+      .execute();
+    expect(await code(resetPassword(t.db, late, 'cinquieme-mot-de-passe'))).toBe('RESET_TOKEN_INVALID');
   });
 });

@@ -13,6 +13,7 @@ await build({
     'grant-role': '../../packages/db/src/grant-role.ts',
     'verify-email': '../../packages/db/src/verify-email.ts',
     'reset-2fa': '../../packages/db/src/reset-2fa.ts',
+    correct: 'src/tools/correct.ts',
   },
   outdir: 'dist',
   bundle: true,

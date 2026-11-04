@@ -101,6 +101,7 @@ export const ERROR_CODES = [
   'INVITE_TAKEN',
   'NO_DUNGEON_HERE',
   'LOGIN_THROTTLED',
+  'RESET_TOKEN_INVALID',
 ] as const;
 
 export type ErrorCode = (typeof ERROR_CODES)[number];

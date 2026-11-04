@@ -432,6 +432,15 @@ export interface DungeonMemberTable {
   left_at: ColumnType<Date | null, Date | null | undefined, Date | null>;
 }
 
+export interface PasswordResetTable {
+  /** SHA-256 du jeton envoyé par e-mail. */
+  token_hash: string;
+  account_id: number;
+  expires_at: Date;
+  used_at: Date | null;
+  created_at: CreatedAt;
+}
+
 export interface LoginFailureTable {
   id: Generated<number>;
   /** `email:<sha256>` ou `ip:<préfixe>`. */
@@ -469,6 +478,7 @@ export interface Database {
   dungeon_run: DungeonRunTable;
   dungeon_member: DungeonMemberTable;
   login_failure: LoginFailureTable;
+  password_reset: PasswordResetTable;
   player_recipe: PlayerRecipeTable;
   player_reserved_material: PlayerReservedMaterialTable;
   quest: QuestTable;

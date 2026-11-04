@@ -7,6 +7,7 @@ import { buildApp } from '../src/app.ts';
 import { loadGameContent } from '../src/content.ts';
 
 const APP = 'http://localhost:3000';
+const mailer = memoryMailer();
 let t: TestDb;
 let app: FastifyInstance;
 
@@ -14,7 +15,7 @@ beforeAll(async () => {
   t = await startTestDb();
   app = await buildApp({
     db: t.db,
-    mailer: memoryMailer(),
+    mailer,
     appUrl: APP,
     cookieSecure: false,
     logLevel: 'silent',
@@ -68,5 +69,31 @@ describe('données personnelles', () => {
     expect((await req('GET', '/compte/supprime')).body).toContain('Votre compte est supprimé');
     expect((await req('GET', '/jeu')).headers.location).toBe('/connexion');
     expect((await req('GET', '/compte/donnees.json')).headers.location).toBe('/connexion');
+  });
+});
+
+describe('mot de passe oublié', () => {
+  it('envoie le lien, accepte un nouveau mot de passe, puis refuse le lien', async () => {
+    jar.clear();
+    await req('GET', '/inscription');
+    await req('POST', '/inscription', { email: 'distrait@example.org', pseudo: 'Distrait', password: 'motdepasse-long', acceptTos: 'on' });
+    const conn = await req('GET', '/connexion');
+    expect(conn.body).toContain('href="/mot-de-passe-oublie"');
+    await req('GET', '/mot-de-passe-oublie');
+    const asked = await req('POST', '/mot-de-passe-oublie', { email: 'distrait@example.org' });
+    expect(asked.body).toContain('Si cette adresse correspond à un compte');
+    const link = /http:\/\/localhost:3000(\/mot-de-passe\/nouveau\?t=[^\s]+)/.exec(mailer.sent.at(-1)!.text)![1]!;
+    const form = await req('GET', link);
+    expect(form.body).toContain('Nouveau mot de passe');
+    const token = decodeURIComponent(link.split('t=')[1]!);
+    expect((await req('POST', '/mot-de-passe/nouveau', { t: token, password: 'court' })).body).toContain('10 caractères');
+    expect((await req('POST', '/mot-de-passe/nouveau', { t: token, password: 'tout-nouveau-secret' })).body).toContain(
+      'Mot de passe changé',
+    );
+    expect((await req('GET', link)).statusCode).toBe(410);
+    await req('GET', '/connexion');
+    expect((await req('POST', '/connexion', { email: 'distrait@example.org', password: 'tout-nouveau-secret' })).headers.location).toBe(
+      '/jeu',
+    );
   });
 });

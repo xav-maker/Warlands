@@ -1,0 +1,11 @@
+<% layout('./layout', { title: 'Nouveau mot de passe' }) %>
+<section class="card narrow">
+  <h1>Nouveau mot de passe</h1>
+  <% if (it.error) { %><p class="flash bad" role="alert"><%= it.error %></p><% } %>
+  <form method="post" action="/mot-de-passe/nouveau" class="stack">
+    <input type="hidden" name="_csrf" value="<%= it.csrf %>">
+    <input type="hidden" name="t" value="<%= it.token %>">
+    <label>Nouveau mot de passe <span class="muted">(<%= it.passwordMin %> caractères au moins)</span><input type="password" name="password" required minlength="<%= it.passwordMin %>" maxlength="200" autocomplete="new-password"></label>
+    <button type="submit" class="primary">Enregistrer</button>
+  </form>
+</section>

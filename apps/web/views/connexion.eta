@@ -15,5 +15,5 @@
     <% } %>
     <button type="submit" class="primary">Se connecter</button>
   </form>
-  <p class="muted">Pas encore de compte ? <a href="/inscription">Créer un compte</a></p>
+  <p class="muted"><a href="/mot-de-passe-oublie">Mot de passe oublié ?</a> · Pas encore de compte ? <a href="/inscription">Créer un compte</a></p>
 </section>

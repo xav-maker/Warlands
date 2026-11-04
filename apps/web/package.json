@@ -38,6 +38,7 @@
   "scripts": {
     "dev": "node ../../packages/ui-combat/build.mjs && tsx watch --env-file-if-exists=../../.env src/main.ts",
     "start": "node dist/main.js",
-    "build": "node build.mjs"
+    "build": "node build.mjs",
+    "correct": "tsx --env-file-if-exists=../../.env src/tools/correct.ts"
   }
 }

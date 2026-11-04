@@ -34,3 +34,4 @@ export * from './social/moderation.ts';
 export * from './social/retention.ts';
 export * from './invariants.ts';
 export * from './privacy.ts';
+export * from './corrections.ts';

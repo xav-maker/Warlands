@@ -93,6 +93,7 @@ const FR: Record<ErrorCode, string> = {
   INVITE_TAKEN: 'Un autre joueur a déjà rejoint ce donjon.',
   NO_DUNGEON_HERE: 'Cette route n’a pas de donjon.',
   LOGIN_THROTTLED: 'Trop de tentatives de connexion : réessayez dans {minutes} minutes.',
+  RESET_TOKEN_INVALID: 'Ce lien n’est plus valable : demandez-en un nouveau.',
   STAFF_2FA_REQUIRED: 'La modération exige la double authentification : activez-la depuis la page Compte.',
 };
 

@@ -18,6 +18,9 @@ import {
   logout,
   memoryRateLimiter,
   resendVerification,
+  requestPasswordReset,
+  resetPassword,
+  resetTokenValid,
   setDungeonAvailable,
   signup,
   verifyEmail,
@@ -309,6 +312,54 @@ export async function buildApp(deps: AppDeps): Promise<FastifyInstance> {
       }
       throw e;
     }
+  });
+
+  // ---------- Mot de passe oublié ----------
+  app.get('/mot-de-passe-oublie', (req, reply) => page(req, reply, 'mot-de-passe-oublie', { form: {} }));
+  app.post('/mot-de-passe-oublie', async (req, reply) => {
+    ipLimit(req, 'reset', 3);
+    const b = (req.body ?? {}) as Record<string, string>;
+    await requestPasswordReset(deps, b.email);
+    // Même réponse dans tous les cas (pas d'énumération des comptes, guide 13.1).
+    return page(req, reply, 'message', {
+      title: 'Vérifiez votre boîte mail',
+      text: 'Si cette adresse correspond à un compte, un lien pour choisir un nouveau mot de passe vient d’y être envoyé. Il est valable une heure.',
+      link: { href: '/connexion', label: 'Retour à la connexion' },
+    });
+  });
+  app.get('/mot-de-passe/nouveau', async (req, reply) => {
+    const t = (req.query as Record<string, string | undefined>).t ?? '';
+    if (!(await resetTokenValid(deps.db, t)))
+      return page(
+        req,
+        reply,
+        'message',
+        {
+          title: 'Lien expiré',
+          text: messageFr('RESET_TOKEN_INVALID'),
+          link: { href: '/mot-de-passe-oublie', label: 'Demander un nouveau lien' },
+          bad: true,
+        },
+        410,
+      );
+    return page(req, reply, 'mot-de-passe-nouveau', { token: t });
+  });
+  app.post('/mot-de-passe/nouveau', async (req, reply) => {
+    ipLimit(req, 'reset-new', 10);
+    const b = (req.body ?? {}) as Record<string, string>;
+    try {
+      await resetPassword(deps.db, b.t ?? '', b.password);
+    } catch (e) {
+      if (isGameError(e) && e.code === 'PASSWORD_TOO_SHORT')
+        return page(req, reply, 'mot-de-passe-nouveau', { token: b.t ?? '', error: messageFr(e.code, e.details) }, 422);
+      throw e;
+    }
+    reply.clearCookie(SID, { path: '/' });
+    return page(req, reply, 'message', {
+      title: 'Mot de passe changé',
+      text: 'Votre nouveau mot de passe est enregistré. Par sécurité, toutes vos sessions ont été fermées.',
+      link: { href: '/connexion', label: 'Se connecter' },
+    });
   });
 
   app.post('/deconnexion', async (req, reply) => {

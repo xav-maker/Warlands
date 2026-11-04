@@ -15,6 +15,7 @@
     "grant-role": "pnpm --filter @cr/db grant-role",
     "verify-email": "pnpm --filter @cr/db verify-email",
     "reset-2fa": "pnpm --filter @cr/db reset-2fa",
+    "correct": "pnpm --filter @cr/web correct",
     "typecheck": "tsc -b && tsc -p tsconfig.test.json && tsc -p packages/ui-combat/tsconfig.json",
     "lint": "eslint .",
     "format": "prettier --write .",

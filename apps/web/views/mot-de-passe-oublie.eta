@@ -1,0 +1,11 @@
+<% layout('./layout', { title: 'Mot de passe oublié' }) %>
+<section class="card narrow">
+  <h1>Mot de passe oublié</h1>
+  <p class="muted">Indiquez l’adresse de votre compte : vous y recevrez un lien pour choisir un nouveau mot de passe.</p>
+  <form method="post" action="/mot-de-passe-oublie" class="stack">
+    <input type="hidden" name="_csrf" value="<%= it.csrf %>">
+    <label>Adresse e-mail<input type="email" name="email" required maxlength="254" autocomplete="email"></label>
+    <button type="submit" class="primary">Recevoir le lien</button>
+  </form>
+  <p class="muted"><a href="/connexion">Retour à la connexion</a></p>
+</section>

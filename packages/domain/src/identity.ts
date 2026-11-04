@@ -180,6 +180,89 @@ export async function verifyEmail(db: Db, token: string): Promise<void> {
   if (!ok) throw new GameError('VERIFY_TOKEN_INVALID');
 }
 
+/** Validité d'un lien de réinitialisation du mot de passe. */
+export const RESET_HOURS = 1;
+
+/**
+ * Mot de passe oublié : même réponse que l'adresse ait un compte ou non (pas d'énumération) ; un compte actif reçoit un
+ * lien valable RESET_HOURS heure, utilisable une fois.
+ */
+export async function requestPasswordReset(deps: IdentityDeps, rawEmail: unknown): Promise<void> {
+  const email = typeof rawEmail === 'string' ? rawEmail.trim().toLowerCase().slice(0, 254) : '';
+  if (!email) return;
+  const acc = await deps.db
+    .selectFrom('account')
+    .select(['id', 'status'])
+    .where('email', '=', email)
+    .where('status', '<>', 'deleted')
+    .executeTakeFirst();
+  if (!acc || acc.status === 'banned') return;
+  const token = newToken();
+  await deps.db
+    .insertInto('password_reset')
+    .values({ token_hash: sha256(token), account_id: acc.id, expires_at: new Date(Date.now() + RESET_HOURS * 3_600_000), used_at: null })
+    .execute();
+  const link = `${deps.appUrl}/mot-de-passe/nouveau?t=${encodeURIComponent(token)}`;
+  await deps.mailer.send({
+    to: email,
+    subject: 'Les Cinq Régions : nouveau mot de passe',
+    text: `Pour choisir un nouveau mot de passe, ouvrez ce lien (valable ${RESET_HOURS} heure, une seule fois) :\n${link}\n\nSi vous n'avez rien demandé, ignorez ce message : votre mot de passe ne change pas.`,
+  });
+}
+
+/** Le lien est-il valable (sans le consommer) ? */
+export async function resetTokenValid(db: Db, token: string): Promise<boolean> {
+  if (!token || token.length > 100) return false;
+  const row = await db
+    .selectFrom('password_reset')
+    .select('account_id')
+    .where('token_hash', '=', sha256(token))
+    .where('used_at', 'is', null)
+    .where('expires_at', '>', new Date())
+    .executeTakeFirst();
+  return !!row;
+}
+
+/** Nouveau mot de passe : le lien est consommé, toutes les sessions sont fermées, les échecs de connexion effacés. */
+export async function resetPassword(db: Db, token: string, password: unknown): Promise<void> {
+  if (typeof password !== 'string' || password.length > 200) throw new GameError('INVALID_INPUT');
+  if (password.length < PASSWORD_MIN) throw new GameError('PASSWORD_TOO_SHORT', { min: PASSWORD_MIN });
+  const passwordHash = await hash(password, ARGON);
+  const ok = await db.transaction().execute(async (tx) => {
+    const row = await tx
+      .updateTable('password_reset')
+      .set({ used_at: new Date() })
+      .where('token_hash', '=', sha256(token))
+      .where('used_at', 'is', null)
+      .where('expires_at', '>', new Date())
+      .returning('account_id')
+      .executeTakeFirst();
+    if (!row) return false;
+    const acc = await tx
+      .updateTable('account')
+      .set({ password_hash: passwordHash, updated_at: new Date() })
+      .where('id', '=', row.account_id)
+      .where('status', '<>', 'deleted')
+      .returning('email')
+      .executeTakeFirst();
+    if (!acc) return false;
+    // Les autres liens en cours deviennent inutiles ; les sessions ouvertes (peut-être par un intrus) sont fermées.
+    await tx
+      .updateTable('password_reset')
+      .set({ used_at: new Date() })
+      .where('account_id', '=', row.account_id)
+      .where('used_at', 'is', null)
+      .execute();
+    await tx.deleteFrom('session').where('account_id', '=', row.account_id).execute();
+    await tx
+      .deleteFrom('login_failure')
+      .where('key', '=', `email:${sha256(acc.email)}`)
+      .execute();
+    return true;
+  });
+  if (!ok) throw new GameError('RESET_TOKEN_INVALID');
+}
+
 export async function resendVerification(deps: IdentityDeps, accountId: number): Promise<void> {
   const acc = await deps.db
     .selectFrom('account')
@@ -476,6 +559,7 @@ export async function logout(db: Db, token: string | undefined): Promise<void> {
 export async function purgeExpiredSessions(db: Db): Promise<number> {
   const r = await db.deleteFrom('session').where('expires_at', '<', new Date()).executeTakeFirst();
   await db.deleteFrom('login_failure').where('at', '<', addDays(new Date(), -1)).execute();
+  await db.deleteFrom('password_reset').where('expires_at', '<', addDays(new Date(), -1)).execute();
   await db.deleteFrom('email_verification').where('expires_at', '<', addDays(new Date(), -7)).execute();
   return Number(r.numDeletedRows);
 }
