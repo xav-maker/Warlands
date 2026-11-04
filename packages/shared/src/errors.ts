@@ -100,6 +100,7 @@ export const ERROR_CODES = [
   'INVITE_EXPIRED',
   'INVITE_TAKEN',
   'NO_DUNGEON_HERE',
+  'LOGIN_THROTTLED',
 ] as const;
 
 export type ErrorCode = (typeof ERROR_CODES)[number];

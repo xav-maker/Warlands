@@ -178,9 +178,47 @@ describe('parcours J0', () => {
   });
 
   it('répond à /health et sert htmx', async () => {
-    expect((await app.inject('/health')).json()).toEqual({ ok: true, version: 'dev' });
+    expect((await app.inject('/health')).json()).toMatchObject({ ok: true, version: 'dev', maintenance: false });
     const js = await app.inject('/static/htmx.min.js');
     expect(js.statusCode).toBe(200);
     expect(js.headers['content-type']).toContain('javascript');
+  });
+});
+
+describe('mode maintenance (guide 17.5)', () => {
+  it('répond une page d’attente partout, sauf la sonde de santé et les fichiers statiques', async () => {
+    const m = await buildApp({
+      db: t.db,
+      mailer,
+      appUrl: APP,
+      cookieSecure: false,
+      logLevel: 'silent',
+      rateLimiter: noRateLimit,
+      maintenance: true,
+    });
+    try {
+      for (const url of ['/', '/connexion', '/jeu', '/moderation']) {
+        const r = await m.inject(url);
+        expect(r.statusCode, url).toBe(503);
+        expect(r.headers['retry-after']).toBe('600');
+        expect(r.body).toContain('en maintenance');
+      }
+      expect((await m.inject({ method: 'POST', url: '/connexion', payload: 'email=a' })).statusCode).toBe(503);
+      expect((await m.inject('/health')).json()).toMatchObject({ ok: true, maintenance: true });
+      expect((await m.inject('/static/htmx.min.js')).statusCode).toBe(200);
+    } finally {
+      await m.close();
+    }
+  });
+});
+
+describe('connexion bloquée après des échecs (guide 13.1)', () => {
+  it('affiche le blocage sur la page de connexion, en 429', async () => {
+    const b = browser();
+    await b.req('GET', '/connexion');
+    for (let i = 0; i < 5; i++) await b.req('POST', '/connexion', { _csrf: b.csrf, email: 'bloque@example.org', password: 'mauvais' });
+    const r = await b.req('POST', '/connexion', { _csrf: b.csrf, email: 'bloque@example.org', password: 'mauvais' });
+    expect(r.statusCode).toBe(429);
+    expect(r.body).toContain('Trop de tentatives de connexion : réessayez dans 15 minutes.');
   });
 });

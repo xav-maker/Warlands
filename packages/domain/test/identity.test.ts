@@ -1,7 +1,19 @@
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import { startTestDb, type TestDb } from '@cr/testing';
 import { GameError } from '@cr/shared';
-import { checkPseudo, getAuth, ipPrefix, login, logout, memoryMailer, signup, verifyEmail, START_REGION } from '../src/index.ts';
+import {
+  checkPseudo,
+  getAuth,
+  ipPrefix,
+  login,
+  logout,
+  memoryMailer,
+  signup,
+  verifyEmail,
+  LOGIN_MAX_FAILURES,
+  LOGIN_MAX_IP_FAILURES,
+  START_REGION,
+} from '../src/index.ts';
 
 let t: TestDb;
 beforeAll(async () => void (t = await startTestDb()));
@@ -99,5 +111,43 @@ describe('inscription, vérification, connexion', () => {
     await t.db.updateTable('account').set({ status: 'suspended' }).where('email', '=', 'ana@example.org').execute();
     expect(await code(login(t.db, { email: 'ana@example.org', password: base.password }, {}))).toBe('ACCOUNT_SUSPENDED');
     await t.db.updateTable('account').set({ status: 'active' }).where('email', '=', 'ana@example.org').execute();
+  });
+});
+
+describe('garde-fou des connexions (guide 13.1)', () => {
+  const mailer = memoryMailer();
+  const deps = () => ({ db: t.db, mailer, appUrl: 'http://test' });
+
+  it('bloque une adresse après 5 échecs, qu’elle ait un compte ou non ; un succès efface les échecs', async () => {
+    await signup(deps(), { email: 'garde@example.org', pseudo: 'Vigie Prudente', password: 'correct horse battery', acceptTos: true });
+    // Quatre échecs puis un succès : le compteur repart de zéro.
+    for (let i = 0; i < LOGIN_MAX_FAILURES - 1; i++)
+      expect(await code(login(t.db, { email: 'garde@example.org', password: 'faux' }, { ip: '203.0.113.9' }))).toBe('BAD_CREDENTIALS');
+    expect(await code(login(t.db, { email: 'garde@example.org', password: 'correct horse battery' }, { ip: '203.0.113.9' }))).toBe('ok');
+    for (let i = 0; i < LOGIN_MAX_FAILURES; i++)
+      expect(await code(login(t.db, { email: 'garde@example.org', password: 'faux' }, { ip: '203.0.113.9' }))).toBe('BAD_CREDENTIALS');
+    // Même le bon mot de passe est refusé tant que la fenêtre n'a pas glissé.
+    expect(await code(login(t.db, { email: 'garde@example.org', password: 'correct horse battery' }, { ip: '203.0.113.9' }))).toBe(
+      'LOGIN_THROTTLED',
+    );
+    // Adresse inconnue : même comportement (pas d'énumération des comptes).
+    for (let i = 0; i < LOGIN_MAX_FAILURES; i++)
+      await code(login(t.db, { email: 'personne@example.org', password: 'x' }, { ip: '203.0.113.9' }));
+    expect(await code(login(t.db, { email: 'personne@example.org', password: 'x' }, { ip: '203.0.113.9' }))).toBe('LOGIN_THROTTLED');
+    // 15 minutes plus tard, la fenêtre a glissé.
+    await t.db
+      .updateTable('login_failure')
+      .set({ at: new Date(Date.now() - 16 * 60_000) } as never)
+      .execute();
+    expect(await code(login(t.db, { email: 'garde@example.org', password: 'correct horse battery' }, { ip: '203.0.113.9' }))).toBe('ok');
+  });
+
+  it('bloque un préfixe d’IP après 50 échecs, quelles que soient les adresses', async () => {
+    for (let i = 0; i < LOGIN_MAX_IP_FAILURES; i++)
+      await code(login(t.db, { email: `essai${i}@example.org`, password: 'x' }, { ip: '192.0.2.44' }));
+    expect(await code(login(t.db, { email: 'ana@example.org', password: 'correct horse battery' }, { ip: '192.0.2.77' }))).toBe(
+      'LOGIN_THROTTLED',
+    );
+    expect(await code(login(t.db, { email: 'ana@example.org', password: 'correct horse battery' }, { ip: '198.51.100.7' }))).toBe('ok');
   });
 });

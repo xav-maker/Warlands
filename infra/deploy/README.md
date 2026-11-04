@@ -50,6 +50,8 @@ Le chat, les messages privés, les demandes d'amis et les boutiques exigent une 
 
 En développement : `pnpm verify-email <e-mail>`, `pnpm grant-role <e-mail> <rôle>` et `pnpm reset-2fa <e-mail>`.
 
+**Mode maintenance.** `MAINTENANCE=true` sur le service web fait répondre une page d’attente (503, `Retry-After`) à toutes les routes du jeu ; `/health` répond toujours (et indique `maintenance: true`). À utiliser pour une opération exceptionnelle (restauration, correction de l’économie), puis remettre à `false`.
+
 ## À vérifier sur Render avant la production
 
 C'est la grille de la section 18 du guide. Ces points sont à confirmer sur les offres du moment :

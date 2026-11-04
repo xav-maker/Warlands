@@ -189,6 +189,42 @@ export async function resendVerification(deps: IdentityDeps, accountId: number):
   if (!acc.email_verified_at) await sendVerification(deps, accountId, acc.email);
 }
 
+/**
+ * Garde-fou des connexions (guide 13.1), en base pour tous les exemplaires : après LOGIN_MAX_FAILURES échecs pour une
+ * adresse en LOGIN_WINDOW_MIN minutes (qu'elle ait un compte ou non), ou LOGIN_MAX_IP_FAILURES depuis un même préfixe
+ * d'IP, la connexion est refusée jusqu'à ce que la fenêtre glisse. Un succès efface les échecs de l'adresse.
+ */
+export const LOGIN_MAX_FAILURES = 5;
+export const LOGIN_MAX_IP_FAILURES = 50;
+export const LOGIN_WINDOW_MIN = 15;
+
+const failureKeys = (email: string, ip: string | undefined): string[] => {
+  const p = ipPrefix(ip);
+  return [`email:${sha256(email)}`, ...(p ? [`ip:${p}`] : [])];
+};
+
+async function assertNotThrottled(db: Db, email: string, ip: string | undefined, now: Date): Promise<void> {
+  const since = new Date(now.getTime() - LOGIN_WINDOW_MIN * 60_000);
+  const [byEmail, byIp] = failureKeys(email, ip);
+  const rows = await db
+    .selectFrom('login_failure')
+    .select(['key', (eb) => eb.fn.countAll<number>().as('n')])
+    .where('key', 'in', [byEmail!, ...(byIp ? [byIp] : [])])
+    .where('at', '>', since)
+    .groupBy('key')
+    .execute();
+  const count = (k: string | undefined) => Number(rows.find((r) => r.key === k)?.n ?? 0);
+  if (count(byEmail) >= LOGIN_MAX_FAILURES || count(byIp) >= LOGIN_MAX_IP_FAILURES)
+    throw new GameError('LOGIN_THROTTLED', { minutes: LOGIN_WINDOW_MIN });
+}
+
+async function recordFailure(db: Db, email: string, ip: string | undefined): Promise<void> {
+  await db
+    .insertInto('login_failure')
+    .values(failureKeys(email, ip).map((key) => ({ key })))
+    .execute();
+}
+
 /** Hash factice : la vérification prend le même temps qu'un compte existe ou non. */
 let dummyHash: Promise<string> | undefined;
 
@@ -201,6 +237,27 @@ export interface NewSession {
 export async function login(db: Db, raw: unknown, meta: { ip?: string | undefined; userAgent?: string | undefined }): Promise<NewSession> {
   const parsed = LoginInput.safeParse(raw);
   if (!parsed.success) throw new GameError('BAD_CREDENTIALS');
+  await assertNotThrottled(db, parsed.data.email, meta.ip, new Date());
+  try {
+    const s = await checkLogin(db, parsed.data, meta);
+    await db
+      .deleteFrom('login_failure')
+      .where('key', '=', `email:${sha256(parsed.data.email)}`)
+      .execute();
+    return s;
+  } catch (e) {
+    if (e instanceof GameError && (e.code === 'BAD_CREDENTIALS' || e.code === 'TOTP_INVALID'))
+      await recordFailure(db, parsed.data.email, meta.ip);
+    throw e;
+  }
+}
+
+async function checkLogin(
+  db: Db,
+  input: z.output<typeof LoginInput>,
+  meta: { ip?: string | undefined; userAgent?: string | undefined },
+): Promise<NewSession> {
+  const parsed = { data: input };
   const acc = await db
     .selectFrom('account')
     .selectAll()
@@ -418,6 +475,7 @@ export async function logout(db: Db, token: string | undefined): Promise<void> {
 
 export async function purgeExpiredSessions(db: Db): Promise<number> {
   const r = await db.deleteFrom('session').where('expires_at', '<', new Date()).executeTakeFirst();
+  await db.deleteFrom('login_failure').where('at', '<', addDays(new Date(), -1)).execute();
   await db.deleteFrom('email_verification').where('expires_at', '<', addDays(new Date(), -7)).execute();
   return Number(r.numDeletedRows);
 }

@@ -30,6 +30,11 @@ const Env = z.object({
     .enum(['true', 'false'])
     .default('true')
     .transform((v) => v === 'true'),
+  // Mode maintenance (guide 17.5) : une page d'attente pour toutes les routes du jeu, pour les opérations exceptionnelles.
+  MAINTENANCE: z
+    .enum(['true', 'false'])
+    .default('false')
+    .transform((v) => v === 'true'),
   // Outils de test (escouade de niveau 30) : préproduction seulement, jamais en production.
   ENABLE_TEST_TOOLS: z
     .enum(['true', 'false'])

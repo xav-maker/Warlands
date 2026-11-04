@@ -64,6 +64,8 @@ export interface AppDeps {
   requireVerifiedEmail?: boolean;
   /** Exiger la double authentification du personnel de modération (REQUIRE_STAFF_2FA ; faux par défaut, pour les tests). */
   requireStaff2fa?: boolean;
+  /** Mode maintenance (MAINTENANCE, guide 17.5) : une page d'attente pour toutes les routes, sauf /health et /static. */
+  maintenance?: boolean;
 }
 
 const here = dirname(fileURLToPath(import.meta.url));
@@ -117,6 +119,25 @@ export async function buildApp(deps: AppDeps): Promise<FastifyInstance> {
   );
 
   app.decorateRequest('auth', null);
+
+  // Maintenance (guide 17.5) : avant toute session ou commande, une page d'attente ; la sonde de santé répond toujours.
+  if (deps.maintenance)
+    app.addHook('onRequest', async (req, reply) => {
+      if (req.url === '/health' || req.url.startsWith('/static/')) return;
+      return reply
+        .status(503)
+        .header('retry-after', '600')
+        .header('cache-control', 'no-store')
+        .type('text/html; charset=utf-8')
+        .send(
+          eta.render('message', {
+            title: 'Maintenance',
+            text: 'Le jeu est en maintenance pour quelques minutes. Votre partie est en sécurité : revenez bientôt.',
+            auth: null,
+            csrf: '',
+          }),
+        );
+    });
 
   // Session, puis protection CSRF : en-tête Origin + jeton (de session, ou cookie de pré-session pour les formulaires anonymes).
   app.addHook('preHandler', async (req, reply) => {
@@ -212,7 +233,10 @@ export async function buildApp(deps: AppDeps): Promise<FastifyInstance> {
   // ---------- Santé ----------
   app.get('/health', async (_req, reply) => {
     await sql`select 1`.execute(deps.db);
-    return reply.header('cache-control', 'no-store').send({ ok: true, version: deps.version ?? 'dev' });
+    // Contrôle de santé (guide 17.5) : base joignable et pack de contenu chargé.
+    return reply
+      .header('cache-control', 'no-store')
+      .send({ ok: true, version: deps.version ?? 'dev', content: deps.content?.hash ?? null, maintenance: !!deps.maintenance });
   });
 
   // ---------- Pages publiques ----------
@@ -251,9 +275,15 @@ export async function buildApp(deps: AppDeps): Promise<FastifyInstance> {
       reply.clearCookie(PRE, { path: '/' });
       return reply.redirect('/jeu', 303);
     } catch (e) {
-      if (isGameError(e) && ['BAD_CREDENTIALS', 'ACCOUNT_SUSPENDED', 'TOTP_REQUIRED', 'TOTP_INVALID'].includes(e.code)) {
+      if (isGameError(e) && ['BAD_CREDENTIALS', 'ACCOUNT_SUSPENDED', 'TOTP_REQUIRED', 'TOTP_INVALID', 'LOGIN_THROTTLED'].includes(e.code)) {
         const totp = e.code === 'TOTP_REQUIRED' || e.code === 'TOTP_INVALID';
-        return page(req, reply, 'connexion', { form: { email: b.email ?? '' }, totp, error: messageFr(e.code) }, 422);
+        return page(
+          req,
+          reply,
+          'connexion',
+          { form: { email: b.email ?? '' }, totp, error: messageFr(e.code, e.details) },
+          e.code === 'LOGIN_THROTTLED' ? 429 : 422,
+        );
       }
       throw e;
     }

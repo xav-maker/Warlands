@@ -432,6 +432,13 @@ export interface DungeonMemberTable {
   left_at: ColumnType<Date | null, Date | null | undefined, Date | null>;
 }
 
+export interface LoginFailureTable {
+  id: Generated<number>;
+  /** `email:<sha256>` ou `ip:<préfixe>`. */
+  key: string;
+  at: ColumnType<Date, Date | undefined, never>;
+}
+
 export interface IdempotencyKeyTable {
   player_id: number;
   key: string;
@@ -461,6 +468,7 @@ export interface Database {
   dungeon_door: DungeonDoorTable;
   dungeon_run: DungeonRunTable;
   dungeon_member: DungeonMemberTable;
+  login_failure: LoginFailureTable;
   player_recipe: PlayerRecipeTable;
   player_reserved_material: PlayerReservedMaterialTable;
   quest: QuestTable;
