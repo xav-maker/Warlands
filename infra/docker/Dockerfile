@@ -24,7 +24,7 @@ RUN pnpm -r --filter "./apps/*" build \
  && pnpm --filter @cr/web deploy --prod --legacy /out/web \
  && pnpm --filter @cr/worker deploy --prod --legacy /out/worker \
  && cp -r apps/web/dist apps/web/views apps/web/public content /out/web/ \
- && cp -r apps/worker/dist /out/worker/
+ && cp -r apps/worker/dist content /out/worker/
 
 FROM node:24-slim
 # SHA du commit, renvoyé par /health : la CI s'en sert pour vérifier qu'un déploiement a pris.

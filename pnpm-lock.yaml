@@ -132,12 +132,18 @@ importers:
 
   apps/worker:
     dependencies:
+      '@cr/content':
+        specifier: workspace:*
+        version: link:../../packages/content
       '@cr/db':
         specifier: workspace:*
         version: link:../../packages/db
       '@cr/domain':
         specifier: workspace:*
         version: link:../../packages/domain
+      '@cr/gen':
+        specifier: workspace:*
+        version: link:../../packages/gen
       '@node-rs/argon2':
         specifier: ^2.2.2
         version: 2.2.2
@@ -153,6 +159,9 @@ importers:
       pino:
         specifier: ^10.4.0
         version: 10.4.0
+      yaml:
+        specifier: 2.9.1
+        version: 2.9.1
       zod:
         specifier: ^4.6.7
         version: 4.6.7
