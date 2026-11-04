@@ -11,9 +11,11 @@ import type { AccountRole } from '@cr/db';
 import { startTestDb, type TestDb } from '@cr/testing';
 import {
   acceptFriend,
+  addInstance,
   addStack,
   applySanction,
   blockPlayer,
+  canOpenLink,
   chatHistory,
   cleanText,
   closeReport,
@@ -22,7 +24,9 @@ import {
   directConversations,
   directThread,
   directUnread,
+  ensureStarted,
   executeCommand,
+  ficheOf,
   filterWords,
   friendsView,
   liftExpiredSuspensions,
@@ -34,6 +38,7 @@ import {
   noRateLimit,
   normalizeText,
   onlineInRegion,
+  parseLink,
   playerFile,
   purgeSocial,
   readDirect,
@@ -598,5 +603,139 @@ describe('rétention', () => {
       (await t.db.selectFrom(table).select('id').where('id', 'in', ids).execute()).map((x) => x.id);
     expect(await left('chat_message', [c6, c8])).toEqual([c6]);
     expect(await left('direct_message', [d80, d100])).toEqual([d80]);
+  });
+});
+
+/** Comme `run`, mais en exigeant une adresse e-mail vérifiée (réglage de production). */
+function runStrict<S extends z.ZodType, R>(pid: number, def: CommandDef<S, R>, input: unknown = {}, now: Date = T0): Promise<R> {
+  return executeCommand(
+    { db: t.db, rateLimiter: noRateLimit, publish: () => {}, content, random: () => 9, clock: () => now, requireVerifiedEmail: true },
+    def,
+    { playerId: pid, input },
+  );
+}
+const verify = (p: P) => t.db.updateTable('account').set({ email_verified_at: new Date() }).where('email', '=', p.email).execute();
+
+describe('adresse e-mail vérifiée (guide 13.1)', () => {
+  it('ferme le chat, les messages privés, les demandes d’amis et la mise en vente tant que l’adresse n’est pas vérifiée', async () => {
+    const [a, b] = [await newPlayer(), await newPlayer()];
+    await t.db.transaction().execute((x) => addStack(x, content, a.id, 'BANK', 'croc_loup', 5, 'SYSTEM', 'test'));
+    const refused = { code: 'EMAIL_NOT_VERIFIED' };
+    await expect(runStrict(a.id, sayInRegion, { text: 'bonjour' })).rejects.toMatchObject(refused);
+    await expect(runStrict(a.id, sendDirect, { to: b.pseudo, text: 'bonjour' })).rejects.toMatchObject(refused);
+    await expect(runStrict(a.id, requestFriend, { pseudo: b.pseudo })).rejects.toMatchObject(refused);
+    await expect(runStrict(a.id, listGoods, { kind: 'stack', item: 'croc_loup', qty: 1, price: 100 })).rejects.toMatchObject(refused);
+    // Sans l'exigence (réglage du serveur), rien n'est fermé.
+    await run(a.id, sayInRegion, { text: 'bonjour' });
+  });
+
+  it('ouvre tout dès que l’adresse est vérifiée', async () => {
+    const [a, b] = [await newPlayer(), await newPlayer()];
+    await t.db.transaction().execute((x) => addStack(x, content, a.id, 'BANK', 'croc_loup', 5, 'SYSTEM', 'test'));
+    await verify(a);
+    await runStrict(a.id, sayInRegion, { text: 'bonjour' });
+    await runStrict(a.id, sendDirect, { to: b.pseudo, text: 'bonjour' }, at(5));
+    await runStrict(a.id, requestFriend, { pseudo: b.pseudo });
+    await runStrict(a.id, listGoods, { kind: 'stack', item: 'croc_loup', qty: 1, price: 100 });
+  });
+});
+
+describe('liens dans le chat (README 25)', () => {
+  const equipBase = Object.keys(content.pack.equip)[0]!;
+  async function owner() {
+    const p = await newPlayer();
+    await run(p.id, ensureStarted);
+    const item = await t.db
+      .transaction()
+      .execute((x) => addInstance(x, content, p.id, 'BANK', { uid: '', base: equipBase, roll: 70, stats: [] }, 'start', 'test'));
+    const troop = await t.db
+      .selectFrom('troop')
+      .select(['id', 'type'])
+      .where('player_id', '=', p.id)
+      .orderBy('id')
+      .executeTakeFirstOrThrow();
+    return { p, item: item!, troop };
+  }
+
+  it('cite un objet, une troupe et une annonce : références gardées, libellés fixés à l’envoi', async () => {
+    const { p, item, troop } = await owner();
+    await t.db.transaction().execute((x) => addStack(x, content, p.id, 'BANK', 'croc_loup', 5, 'SYSTEM', 'test'));
+    const listing = await run(p.id, listGoods, { kind: 'stack', item: 'croc_loup', qty: 2, price: 100 });
+    const links = [
+      { kind: 'item', id: item },
+      { kind: 'troop', id: troop.id },
+      { kind: 'listing', id: listing.listing },
+    ];
+    const r = await run(p.id, sayInRegion, { text: 'Regardez ça', links }, at(100));
+    const line = (await chatHistory(t.db, p.id, 'ronces')).find((l) => l.id === r.id)!;
+    expect(line.links.map(({ kind, id }) => ({ kind, id }))).toEqual(links);
+    expect(line.links[0]!.label).toBe(content.pack.equip[equipBase]!.name);
+    expect(line.links[1]!.label).toMatch(/niv\. 1$/);
+    expect(line.links[2]!.label).toMatch(/× 2 · 100 or$/);
+    // Dans un message privé aussi ; un doublon n'est gardé qu'une fois.
+    const q = await newPlayer();
+    await run(p.id, sendDirect, { to: q.pseudo, text: 'Pour toi', links: [links[0], links[0]] }, at(200));
+    const thread = await directThread(t.db, q.id, p.id);
+    expect(thread.at(-1)!.links.map((l) => l.id)).toEqual([item]);
+  });
+
+  it('refuse de citer le bien d’un autre, un bien inexistant, une annonce close ou trop de liens', async () => {
+    const [a, b] = [await owner(), await owner()];
+    const bad = { code: 'LINK_INVALID' };
+    await expect(run(a.p.id, sayInRegion, { text: 'x', links: [{ kind: 'item', id: b.item }] }, at(300))).rejects.toMatchObject(bad);
+    await expect(run(a.p.id, sayInRegion, { text: 'x', links: [{ kind: 'troop', id: b.troop.id }] }, at(301))).rejects.toMatchObject(bad);
+    await expect(run(a.p.id, sayInRegion, { text: 'x', links: [{ kind: 'listing', id: 999999 }] }, at(302))).rejects.toMatchObject(bad);
+    await expect(run(a.p.id, sayInRegion, { text: 'x', links: [{ kind: 'item', id: 999999 }] }, at(303))).rejects.toMatchObject(bad);
+    const four = [1, 2, 3, 4].map((id) => ({ kind: 'item', id }));
+    await expect(run(a.p.id, sayInRegion, { text: 'x', links: four }, at(304))).rejects.toMatchObject({ code: 'INVALID_INPUT' });
+    // Un refus ne publie rien.
+    expect((await chatHistory(t.db, a.p.id, 'ronces')).some((l) => l.text === 'x')).toBe(false);
+  });
+
+  it('n’ouvre la fiche qu’à qui voit un message qui la cite', async () => {
+    const [a, b, c] = [await owner(), await newPlayer(), await newPlayer()];
+    const ref = { kind: 'item' as const, id: a.item };
+    expect(await canOpenLink(t.db, b.id, ref.kind, ref.id)).toBe(false); // jamais cité : rien à voir
+    const said = await run(a.p.id, sayInRegion, { text: 'Mon objet', links: [ref] }, at(400));
+    expect(await canOpenLink(t.db, b.id, ref.kind, ref.id)).toBe(true);
+    await run(b.id, blockPlayer, { pseudo: a.p.pseudo });
+    expect(await canOpenLink(t.db, b.id, ref.kind, ref.id)).toBe(false); // l'auteur est bloqué : message masqué
+    expect(await canOpenLink(t.db, c.id, ref.kind, ref.id)).toBe(true);
+    const mod = await newPlayer('moderator');
+    await run(mod.id, deleteChatMessage, { message: said.id });
+    expect(await canOpenLink(t.db, c.id, ref.kind, ref.id)).toBe(false); // message supprimé
+    // Message privé : seuls l'expéditeur et le destinataire.
+    const troop = { kind: 'troop' as const, id: a.troop.id };
+    await run(a.p.id, sendDirect, { to: c.pseudo, text: 'Entre nous', links: [troop] }, at(500));
+    expect(await canOpenLink(t.db, c.id, troop.kind, troop.id)).toBe(true);
+    expect(await canOpenLink(t.db, a.p.id, troop.kind, troop.id)).toBe(true);
+    expect(await canOpenLink(t.db, b.id, troop.kind, troop.id)).toBe(false);
+  });
+
+  it('rend les fiches lues en base : objet, troupe, annonce, et bien disparu', async () => {
+    const { p, item, troop } = await owner();
+    const objet = await ficheOf(t.db, content, 'item', item);
+    expect(objet).toMatchObject({ kind: 'item', name: content.pack.equip[equipBase]!.name, roll: 70, owner: p.pseudo });
+    const unite = await ficheOf(t.db, content, 'troop', troop.id);
+    expect(unite).toMatchObject({ kind: 'troop', level: 1, owner: p.pseudo });
+    expect(unite!.kind === 'troop' && unite!.units.length).toBeGreaterThan(0);
+    expect(unite!.kind === 'troop' && unite!.skills.length).toBeGreaterThan(0);
+    await t.db.transaction().execute((x) => addStack(x, content, p.id, 'BANK', 'croc_loup', 5, 'SYSTEM', 'test'));
+    const l = await run(p.id, listGoods, { kind: 'stack', item: 'croc_loup', qty: 1, price: 100 });
+    expect(await ficheOf(t.db, content, 'listing', l.listing)).toMatchObject({
+      kind: 'listing',
+      price: 100,
+      status: 'active',
+      seller: p.pseudo,
+    });
+    expect(await ficheOf(t.db, content, 'item', 999999)).toBeNull();
+    expect(await ficheOf(t.db, content, 'troop', 999999)).toBeNull();
+    expect(await ficheOf(t.db, content, 'listing', 999999)).toBeNull();
+  });
+
+  it('lit « type:id » sans se laisser tromper', () => {
+    expect(parseLink('item:12')).toEqual({ kind: 'item', id: 12 });
+    for (const bad of ['', 'item', 'item:', 'item:-1', 'item:1.5', 'autre:3', 'item:1;drop', ' item:1', undefined, 12])
+      expect(parseLink(bad)).toBeNull();
   });
 });

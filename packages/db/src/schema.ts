@@ -297,7 +297,16 @@ export interface ChatMessageTable {
   filtered: ColumnType<number, number | undefined, number>;
   deleted_at: ColumnType<Date | null, Date | null | undefined, Date | null>;
   deleted_by: ColumnType<number | null, number | null | undefined, number | null>;
+  /** Liens cités (objet, troupe, annonce) : références avec le libellé du moment de l'envoi. */
+  links: ColumnType<MessageLink[], string | undefined, never>;
   created_at: CreatedAt;
+}
+
+export type MessageLinkKind = 'item' | 'troop' | 'listing';
+export interface MessageLink {
+  kind: MessageLinkKind;
+  id: number;
+  label: string;
 }
 
 export interface DirectMessageTable {
@@ -305,6 +314,7 @@ export interface DirectMessageTable {
   sender_id: number;
   recipient_id: number;
   body: string;
+  links: ColumnType<MessageLink[], string | undefined, never>;
   read_at: ColumnType<Date | null, Date | null | undefined, Date | null>;
   created_at: CreatedAt;
 }

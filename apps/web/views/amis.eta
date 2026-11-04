@@ -1,4 +1,5 @@
 <% layout('./layout', { title: 'Amis', v: it.v, error: it.error, script: '/static/social.js' }) %>
+<%~ include('./partials/verify-banner', { auth: it.auth }) %>
 <%~ include('./partials/social-tabs', { tab: 'amis' }) %>
 <section>
   <h1>Amis</h1>

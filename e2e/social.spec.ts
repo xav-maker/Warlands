@@ -3,15 +3,13 @@
  * en direct (flux SSE, sans recharger la page) ; Alice signale un message ; un modérateur sanctionne Bob :
  * la sourdine tombe en direct chez lui, puis une suspension le déconnecte.
  */
-import { execFileSync } from 'node:child_process';
-import { join } from 'node:path';
 import { expect, test, type Browser, type Page } from '@playwright/test';
-import { DATABASE_URL } from './playwright.config.ts';
+import { grantRole, verifyEmail } from './support.ts';
 
 const stamp = `${Date.now() % 1_000_000}`;
 let ips = 0;
 
-async function newPlayer(browser: Browser, tag: string): Promise<{ page: Page; pseudo: string; email: string }> {
+async function newPlayer(browser: Browser, tag: string, verified = true): Promise<{ page: Page; pseudo: string; email: string }> {
   // Une adresse par joueur (l'application est derrière un proxy) : l'inscription est limitée à 5 par minute et par IP.
   const ctx = await browser.newContext({ extraHTTPHeaders: { 'x-forwarded-for': `10.66.${Date.now() % 250}.${++ips}` } });
   const page = await ctx.newPage();
@@ -23,6 +21,8 @@ async function newPlayer(browser: Browser, tag: string): Promise<{ page: Page; p
   await page.getByLabel('Mot de passe').fill('motdepasse-long');
   await page.getByRole('checkbox').check();
   await page.getByRole('button', { name: /créer/i }).click();
+  await expect(page.getByText('Vérifiez votre boîte mail').first()).toBeVisible(); // compte créé
+  if (verified) verifyEmail(email); // sinon le chat reste fermé
   await page.goto('/connexion');
   await page.getByLabel('E-mail').fill(email);
   await page.getByLabel('Mot de passe').fill('motdepasse-long');
@@ -31,28 +31,33 @@ async function newPlayer(browser: Browser, tag: string): Promise<{ page: Page; p
   return { page, pseudo, email };
 }
 
-/** Nomme un modérateur avec l'outil d'exploitation (le même qu'en production). */
-function grant(email: string, role: 'moderator' | 'admin'): void {
-  const tool = join(import.meta.dirname, '../apps/web/dist/grant-role.js');
-  execFileSync(process.execPath, [tool, email, role], { env: { ...process.env, DATABASE_URL }, stdio: 'pipe' });
-}
-
 const hello = `Bonjour Bob ${stamp}, <b>prêt</b> pour les Ronces ?`;
 const retort = `Pas comme ce connard de gobelin ${stamp}`;
 const retortShown = `Pas comme ce ******* de gobelin ${stamp}`;
 
 async function say(page: Page, text: string): Promise<void> {
   await page.getByLabel('Message').fill(text);
-  await page.getByRole('button', { name: 'Envoyer' }).click();
+  await page.getByRole('button', { name: 'Envoyer', exact: true }).click();
 }
 
 test('chat en direct entre deux navigateurs, signalement, sanctions', async ({ browser }) => {
   const alice = await newPlayer(browser, 'Alice');
   const bob = await newPlayer(browser, 'Bob');
   const mod = await newPlayer(browser, 'Mod');
-  grant(mod.email, 'moderator');
+  grantRole(mod.email, 'moderator');
   const errors: string[] = [];
   for (const p of [alice.page, bob.page, mod.page]) p.on('pageerror', (e) => errors.push(e.message));
+
+  // Un compte dont l'adresse n'est pas vérifiée ne peut pas parler ; une fois vérifiée, il le peut.
+  const nina = await newPlayer(browser, 'Nina', false);
+  await nina.page.goto('/chat');
+  await expect(nina.page.getByText('pas encore vérifiée')).toBeVisible();
+  const ninaSays = `Bonjour de Nina ${stamp}`;
+  await say(nina.page, ninaSays);
+  await expect(nina.page.locator('#flash')).toContainText('Confirmez votre adresse e-mail');
+  verifyEmail(nina.email);
+  await say(nina.page, ninaSays);
+  await expect(nina.page.locator('#chat-log')).toContainText(ninaSays);
 
   // Les deux joueurs ouvrent le chat de la région.
   await alice.page.goto('/chat');
@@ -64,6 +69,20 @@ test('chat en direct entre deux navigateurs, signalement, sanctions', async ({ b
   await expect(bob.page.locator('#chat-log')).toContainText(hello);
   await expect(alice.page.locator('#chat-log')).toContainText(hello); // son propre message aussi
   expect(await bob.page.locator('#chat-log b', { hasText: 'prêt' }).count()).toBe(0); // échappé, jamais du HTML
+
+  // Alice cite l'une de ses troupes avec le sélecteur : Bob ouvre la fiche depuis le chat.
+  await alice.page.waitForTimeout(1100);
+  const troopOption = alice.page.locator('select[name="link"] optgroup[label="Mes troupes"] option').first();
+  await alice.page.getByLabel('Citer').selectOption((await troopOption.getAttribute('value'))!);
+  const cite = `Ma première troupe ${stamp}`;
+  await say(alice.page, cite);
+  const cited = bob.page.locator('#chat-log li', { hasText: cite });
+  await expect(cited).toBeVisible();
+  await cited.getByRole('link', { name: /niv\. 1/ }).click();
+  await expect(bob.page.getByRole('heading', { name: /niveau 1/ })).toBeVisible();
+  await expect(bob.page.getByText('Capacités apprises')).toBeVisible();
+  await bob.page.goBack();
+  await expect(bob.page.locator('#chat-log')).toContainText(cite);
 
   // Bob répond, avec un mot masqué par le filtre.
   await alice.page.waitForTimeout(1100); // limite d'un message par seconde
@@ -82,7 +101,7 @@ test('chat en direct entre deux navigateurs, signalement, sanctions', async ({ b
   await bob.page.goto(`/messages/${encodeURIComponent(alice.pseudo)}`);
   await alice.page.goto(`/messages/${encodeURIComponent(bob.pseudo)}`);
   await alice.page.getByLabel('Message').fill(`Rendez-vous à la sortie de la ville ${stamp}.`);
-  await alice.page.getByRole('button', { name: 'Envoyer' }).click();
+  await alice.page.getByRole('button', { name: 'Envoyer', exact: true }).click();
   await expect(bob.page.locator('#thread')).toContainText(`Rendez-vous à la sortie de la ville ${stamp}.`);
   await bob.page.goto('/chat');
 
@@ -100,7 +119,7 @@ test('chat en direct entre deux navigateurs, signalement, sanctions', async ({ b
 
   // Bob ne peut plus parler ; Alice est informée de la décision.
   await bob.page.getByLabel('Message').fill('Je peux encore écrire ?');
-  await bob.page.getByRole('button', { name: 'Envoyer' }).click();
+  await bob.page.getByRole('button', { name: 'Envoyer', exact: true }).click();
   await expect(bob.page.locator('#flash')).toContainText('réduit au silence');
   await alice.page.goto('/notifications');
   await expect(alice.page.getByText(/Votre signalement #\d+ est traité : Sourdine .* Insulte dans le chat de région/)).toBeVisible();

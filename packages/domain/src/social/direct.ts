@@ -6,12 +6,14 @@
  */
 import { z } from 'zod';
 import { GameError } from '@cr/shared';
-import type { Database, Db, Transaction } from '@cr/db';
+import type { Database, Db, MessageLink, Transaction } from '@cr/db';
 import { sql } from '@cr/db';
 import { command } from '../command.ts';
 import { online } from '../game/content.ts';
 import { notify } from '../game/shop.ts';
 import { assertSendSpacing, ONLINE_MS, prepareText } from './chat.ts';
+import { assertEmailVerified } from './access.ts';
+import { LinkRefs, resolveLinks } from './links.ts';
 import { assertNotMuted } from './sanctions.ts';
 
 type Tx = Transaction<Database>;
@@ -45,19 +47,21 @@ export async function blockedBetween(q: Q, a: number, b: number): Promise<boolea
 
 export const sendDirect = command({
   name: 'dm.send',
-  input: z.object({ to: Pseudo, text: z.string().max(5000) }),
+  input: z.object({ to: Pseudo, text: z.string().max(5000), links: LinkRefs }),
   rate: { perMinute: 20 },
   allowedDuringWatch: true,
   async run(ctx, input) {
+    await assertEmailVerified(ctx);
     const { text } = prepareText(input.text, online(ctx.content).chat);
     const to = await playerByPseudo(ctx.tx, input.to);
     if (to.id === ctx.player.id) throw new GameError('SELF_TARGET');
     await assertNotMuted(ctx.tx, ctx.player.id, ctx.now);
     if (await blockedBetween(ctx.tx, ctx.player.id, to.id)) throw new GameError('SOCIAL_REFUSED');
     await assertSendSpacing(ctx.tx, ctx.player.id, ctx.now);
+    const links = await resolveLinks(ctx.tx, ctx.content, ctx.player.id, input.links);
     const row = await ctx.tx
       .insertInto('direct_message')
-      .values({ sender_id: ctx.player.id, recipient_id: to.id, body: text, created_at: ctx.now })
+      .values({ sender_id: ctx.player.id, recipient_id: to.id, body: text, links: JSON.stringify(links), created_at: ctx.now })
       .returning('id')
       .executeTakeFirstOrThrow();
     const away = !to.last_seen_at || ctx.now.getTime() - to.last_seen_at.getTime() > ONLINE_MS;
@@ -157,6 +161,7 @@ export interface DirectLine {
   id: number;
   mine: boolean;
   text: string;
+  links: MessageLink[];
   at: Date;
 }
 
@@ -164,7 +169,7 @@ export interface DirectLine {
 export async function directThread(db: Db, me: number, other: number, limit = 50): Promise<DirectLine[]> {
   const rows = await db
     .selectFrom('direct_message')
-    .select(['id', 'sender_id', 'body', 'created_at'])
+    .select(['id', 'sender_id', 'body', 'links', 'created_at'])
     .where((eb) =>
       eb.or([
         eb.and([eb('sender_id', '=', me), eb('recipient_id', '=', other)]),
@@ -174,7 +179,7 @@ export async function directThread(db: Db, me: number, other: number, limit = 50
     .orderBy('id', 'desc')
     .limit(limit)
     .execute();
-  return rows.reverse().map((r) => ({ id: r.id, mine: r.sender_id === me, text: r.body, at: r.created_at }));
+  return rows.reverse().map((r) => ({ id: r.id, mine: r.sender_id === me, text: r.body, links: r.links, at: r.created_at }));
 }
 
 /** Messages privés non lus (pastille du menu). */

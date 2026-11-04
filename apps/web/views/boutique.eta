@@ -1,6 +1,7 @@
 <% layout('./layout', { title: 'Boutique' }) %>
 <% const f = it.filters; const FAM = { materiau: 'matériaux', composant: 'composants', consommable: 'consommables', trophee: 'trophées', equipement: 'équipement', troupe: 'troupes' } %>
 <% const SLOTS = { arme: 'arme', armure: 'armure', accessoire: 'accessoire' } %>
+<%~ include('./partials/verify-banner', { auth: it.auth }) %>
 <section>
   <p class="eyebrow"><%= it.R.city.name %></p>
   <h1>Boutique</h1>

@@ -42,10 +42,13 @@ const rewind = () =>
 class Browser {
   jar = new Map<string, string>();
   csrf = '';
-  constructor(readonly pseudo: string) {}
+  constructor(
+    readonly pseudo: string,
+    readonly server: FastifyInstance = app,
+  ) {}
 
   async req(method: 'GET' | 'POST', url: string, form?: Record<string, string>, headers: Record<string, string> = {}) {
-    const res = await app.inject({
+    const res = await this.server.inject({
       method,
       url,
       headers: {
@@ -80,6 +83,7 @@ class Browser {
 }
 
 const player = (name: string) => new Browser(name).join();
+const playerOn = (server: FastifyInstance, name: string) => new Browser(name, server).join();
 
 describe('chat de région', () => {
   it('publie un message, l’échappe, et le montre aux joueurs de la région', async () => {
@@ -292,5 +296,94 @@ describe('signalement et modération', () => {
     expect(r.headers.location).toBe('/connexion');
     const login = await new Browser('Sylvain').req('POST', '/connexion', { email: 'sylvain@example.org', password: 'motdepasse-long' });
     expect(login.statusCode).not.toBe(303);
+  });
+});
+
+describe('liens cités dans le chat', () => {
+  const troopOf = async (b: Browser) =>
+    t.db
+      .selectFrom('troop')
+      .select('id')
+      .where('player_id', '=', await b.id())
+      .orderBy('id')
+      .executeTakeFirstOrThrow();
+
+  it('cite une troupe par le sélecteur et rend une fiche à qui voit le message', async () => {
+    const [a, b] = [await player('Armelle'), await player('Benoit')];
+    const troop = await troopOf(a);
+    expect((await a.req('GET', '/chat')).body).toContain(`value="troop:${troop.id}"`); // le sélecteur propose ses troupes
+    const fiche = `/fiche/troop/${troop.id}`;
+    expect((await b.req('GET', fiche)).statusCode).toBe(404); // jamais cité : rien à voir
+
+    await rewind();
+    const sent = await a.req('POST', '/chat', { text: 'Ma troupe de départ', link: `troop:${troop.id}` });
+    expect(sent.headers.location).toBe('/chat');
+    const log = (await b.req('GET', '/chat/messages', undefined, { 'hx-request': 'true' })).body;
+    expect(log).toContain(`href="${fiche}"`);
+    expect(log).toMatch(/\[[^\]]+ niv\. 1\]/);
+
+    const page = await b.req('GET', fiche);
+    expect(page.statusCode).toBe(200);
+    expect(page.body).toContain('Capacités apprises');
+    expect(page.body).toContain('Armelle');
+    expect((await b.req('GET', '/fiche/troop/abc')).statusCode).toBe(404);
+    expect((await b.req('GET', '/fiche/autre/1')).statusCode).toBe(404);
+  });
+
+  it('refuse un lien trafiqué ou vers le bien d’un autre', async () => {
+    const [a, b] = [await player('Cecile'), await player('Denis')];
+    const theirs = await troopOf(b);
+    await rewind();
+    for (const link of [`troop:${theirs.id}`, 'item:abc', 'troop:1;drop table troop', 'listing:999999']) {
+      const res = await a.req('POST', '/chat', { text: `essai ${link}`, link });
+      expect(res.headers.location, link).toContain('e=LINK_INVALID');
+    }
+    expect((await a.req('GET', '/chat')).body).not.toContain('essai troop');
+  });
+
+  it('cite aussi dans un message privé, visible des deux seuls interlocuteurs', async () => {
+    const [a, b, c] = [await player('Emilie'), await player('Fabrice'), await player('Gaelle')];
+    const troop = await troopOf(a);
+    await rewind();
+    await a.req('POST', '/messages/envoyer', { to: b.pseudo, text: 'Entre nous', link: `troop:${troop.id}` });
+    const thread = await b.req('GET', `/messages/${encodeURIComponent(a.pseudo)}`);
+    expect(thread.body).toContain(`/fiche/troop/${troop.id}`);
+    expect((await b.req('GET', `/fiche/troop/${troop.id}`)).statusCode).toBe(200);
+    expect((await c.req('GET', `/fiche/troop/${troop.id}`)).statusCode).toBe(404);
+  });
+});
+
+describe('adresse e-mail à vérifier', () => {
+  let strict: FastifyInstance;
+  beforeAll(async () => {
+    strict = await buildApp({
+      db: t.db,
+      mailer: memoryMailer(),
+      appUrl: APP,
+      cookieSecure: false,
+      logLevel: 'silent',
+      rateLimiter: noRateLimit,
+      content: loadGameContent(),
+      requireVerifiedEmail: true,
+    });
+  });
+  afterAll(async () => strict?.close());
+
+  it('montre le bandeau et refuse de parler, puis laisse faire une fois l’adresse vérifiée', async () => {
+    const a = await playerOn(strict, 'Hortense');
+    const page = await a.req('GET', '/chat');
+    expect(page.body).toContain('pas encore vérifiée');
+    expect(page.body).toContain('Renvoyer l’e-mail');
+
+    const refused = await a.req('POST', '/chat', { text: 'bonjour' });
+    expect(refused.headers.location).toContain('e=EMAIL_NOT_VERIFIED');
+    expect((await a.req('GET', refused.headers.location as string)).body).toContain('Confirmez votre adresse e-mail');
+    expect((await a.req('POST', '/amis/demander', { pseudo: 'Quelquun' })).headers.location).toContain('e=EMAIL_NOT_VERIFIED');
+
+    await t.db.updateTable('account').set({ email_verified_at: new Date() }).where('email', '=', 'hortense@example.org').execute();
+    await rewind();
+    const ok = await a.req('POST', '/chat', { text: 'bonjour, adresse vérifiée' });
+    expect(ok.headers.location).toBe('/chat');
+    expect((await a.req('GET', '/chat')).body).not.toContain('pas encore vérifiée');
   });
 });

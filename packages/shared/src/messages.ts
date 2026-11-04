@@ -16,7 +16,8 @@ const FR: Record<ErrorCode, string> = {
   PASSWORD_TOO_SHORT: 'Mot de passe : {min} caractères au moins.',
   BAD_CREDENTIALS: 'E-mail ou mot de passe incorrect.',
   ACCOUNT_SUSPENDED: 'Ce compte est suspendu.',
-  EMAIL_NOT_VERIFIED: 'Vérifiez d’abord votre adresse e-mail.',
+  EMAIL_NOT_VERIFIED:
+    'Confirmez votre adresse e-mail pour utiliser le chat, les messages, les amis et les boutiques : ouvrez le lien reçu par courriel (la page Ville permet de le renvoyer).',
   VERIFY_TOKEN_INVALID: 'Ce lien de vérification est invalide ou a expiré.',
   PLAYER_NOT_FOUND: 'Joueur introuvable.',
   SQUAD_EMPTY: 'L’escouade n’a aucune unité en état de combattre.',
@@ -59,6 +60,8 @@ const FR: Record<ErrorCode, string> = {
   LISTING_GONE: 'Cette annonce n’est plus en vente.',
   LISTING_ELSEWHERE: 'Cette annonce est à la boutique de {ville}.',
   OWN_LISTING: 'Vous ne pouvez pas acheter votre propre annonce.',
+  LINK_INVALID: 'Vous ne pouvez citer que vos propres objets, troupes et annonces en cours.',
+  LINK_NOT_FOUND: 'Cette fiche n’est plus consultable : le bien cité n’existe plus ou le message a disparu.',
   MUTED: 'Vous êtes réduit au silence {fin}.',
   SHOP_BANNED: 'Vous n’avez plus accès à la mise en vente {fin}.',
   SOCIAL_REFUSED: 'Ce joueur n’accepte pas vos messages ni vos demandes.',

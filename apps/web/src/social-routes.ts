@@ -15,18 +15,22 @@ import {
   adminLog,
   applySanction,
   blockPlayer,
+  canOpenLink,
   chatHistory,
+  citables,
   closeReport,
   createReport,
   deleteChatMessage,
   directConversations,
   directThread,
   ensureStarted,
+  ficheOf,
   friendsView,
   gameView,
   isStaff,
   liftSanction,
   onlineInRegion,
+  parseLink,
   playerByPseudo,
   playerFile,
   readDirect,
@@ -45,6 +49,7 @@ import {
   type GameView,
 } from '@cr/domain';
 import type { z } from 'zod';
+import { labels } from './game-routes.ts';
 
 export interface SocialRouteDeps {
   db: Db;
@@ -81,6 +86,7 @@ function errorOf(q: unknown): string | undefined {
 }
 
 export function registerSocialRoutes(app: FastifyInstance, d: SocialRouteDeps): void {
+  const L = labels(d.content);
   const regionName = (id: string): string => region(d.content, id).name;
 
   async function view(req: FastifyRequest): Promise<GameView> {
@@ -122,6 +128,7 @@ export function registerSocialRoutes(app: FastifyInstance, d: SocialRouteDeps): 
       v,
       regionName: regionName(reg),
       log: await chatHistory(d.db, me, reg),
+      cite: await citables(d.db, d.content, me),
       online: await onlineInRegion(d.db, reg),
       error: errorOf(req.query),
       historyMax: CHAT_HISTORY,
@@ -135,9 +142,31 @@ export function registerSocialRoutes(app: FastifyInstance, d: SocialRouteDeps): 
     return d.page(req, reply, 'partials/chat-log', { log });
   });
 
+  /** Lien choisi dans le sélecteur (« item:12 ») : aucun, ou une référence ; une valeur trafiquée est refusée. */
+  const linksOf = (b: Record<string, string>): { kind: 'item' | 'troop' | 'listing'; id: number }[] => {
+    if (!str(b.link)) return [];
+    const l = parseLink(b.link);
+    if (!l) throw new GameError('LINK_INVALID');
+    return [l];
+  };
+
   app.post('/chat', (req, reply) =>
-    act(req, reply, '/chat', async () => void (await d.run(req, sayInRegion, { text: str(body(req).text) }))),
+    act(req, reply, '/chat', async () => void (await d.run(req, sayInRegion, { text: str(body(req).text), links: linksOf(body(req)) }))),
   );
+
+  /** Fiche d'un bien cité : visible seulement si un message que le lecteur peut voir la cite (voir `canOpenLink`). */
+  app.get('/fiche/:kind/:id', async (req, reply) => {
+    const me = d.requireAuth(req).player.id;
+    const { kind, id } = req.params as Record<string, string>;
+    const link = parseLink(`${kind}:${id}`);
+    const fiche = link && (await canOpenLink(d.db, me, link.kind, link.id)) ? await ficheOf(d.db, d.content, link.kind, link.id) : null;
+    if (!link || !fiche) {
+      return d.page(req, reply, 'message', { title: 'Fiche introuvable', text: messageFr('LINK_NOT_FOUND') }, 404);
+    }
+    const ref = req.headers.referer ?? '';
+    const back = /\/messages\//.test(ref) ? '/messages' : '/chat';
+    return d.page(req, reply, 'fiche', { title: 'Fiche', fiche, L, id: link.id, back });
+  });
 
   // ---------- Messages privés ----------
   app.get('/messages', async (req, reply) => {
@@ -187,6 +216,7 @@ export function registerSocialRoutes(app: FastifyInstance, d: SocialRouteDeps): 
       with: t.other,
       blocked: t.blocked,
       lines: t.lines,
+      cite: await citables(d.db, d.content, me),
     });
   });
 
@@ -199,7 +229,7 @@ export function registerSocialRoutes(app: FastifyInstance, d: SocialRouteDeps): 
   app.post('/messages/envoyer', (req, reply) => {
     const b = body(req);
     return act(req, reply, `/messages/${here(str(b.to))}`, async () => {
-      await d.run(req, sendDirect, { to: str(b.to), text: str(b.text) });
+      await d.run(req, sendDirect, { to: str(b.to), text: str(b.text), links: linksOf(b) });
     });
   });
 

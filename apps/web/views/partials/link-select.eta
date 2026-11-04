@@ -1,0 +1,10 @@
+<% const c = it.cite; if (c && (c.items.length || c.troops.length || c.listings.length)) { %>
+  <label>Citer
+    <select name="link">
+      <option value="">— rien —</option>
+      <% if (c.items.length) { %><optgroup label="Mes objets"><% for (const o of c.items) { %><option value="<%= o.value %>"><%= o.label %></option><% } %></optgroup><% } %>
+      <% if (c.troops.length) { %><optgroup label="Mes troupes"><% for (const o of c.troops) { %><option value="<%= o.value %>"><%= o.label %></option><% } %></optgroup><% } %>
+      <% if (c.listings.length) { %><optgroup label="Mes annonces"><% for (const o of c.listings) { %><option value="<%= o.value %>"><%= o.label %></option><% } %></optgroup><% } %>
+    </select>
+  </label>
+<% } %>

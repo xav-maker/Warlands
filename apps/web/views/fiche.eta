@@ -1,0 +1,43 @@
+<% layout('./layout', { title: 'Fiche' }) %>
+<% const f = it.fiche; const L = it.L; const SLOT = { arme: 'arme', armure: 'armure', accessoire: 'accessoire' }; const STATUS = { active: 'en vente', sold: 'vendue', withdrawn: 'retirée', expired: 'expirée' } %>
+<section>
+  <p class="eyebrow"><%= { item: 'Objet', troop: 'Troupe', listing: 'Annonce de boutique' }[f.kind] %> cité dans la discussion</p>
+
+  <% if (f.kind === 'item') { %>
+    <h1><%= f.name %></h1>
+    <div class="card">
+      <p><%= SLOT[f.slot] ?? f.slot %> · palier <%= f.tier %> · <%= L.quality(f.roll) %></p>
+      <% if (f.stats.length) { %><ul class="items"><% for (const s of f.stats) { %><li><%= L.statText(s) %></li><% } %></ul><% } %>
+      <p class="muted">Valeur : <%= L.value(f.base, f.roll) %> or<%= f.owner ? ' · à ' + f.owner : '' %></p>
+    </div>
+  <% } else if (f.kind === 'troop') { %>
+    <h1><%= f.name %> <span class="muted">niveau <%= f.level %></span></h1>
+    <div class="card">
+      <p>À <%= f.owner %> · population <%= f.pop %> · <%= f.units.length %> unité<%= f.units.length > 1 ? 's' : '' %> en vie</p>
+      <h2>Unités</h2>
+      <ul class="items">
+        <% for (const u of f.units) { %>
+          <li><b>Unité <%= u.n + 1 %></b> : <%= u.hpMax %> PV<%= u.manaMax ? ', ' + u.manaMax + ' mana' : '' %>
+            <% if (u.equip.length) { %><span class="muted">— <%= u.equip.map((e) => e.name + ' (' + L.quality(e.roll) + ')').join(', ') %></span><% } %>
+          </li>
+        <% } %>
+      </ul>
+      <h2>Capacités apprises</h2>
+      <p><%= f.skills.join(', ') %></p>
+    </div>
+  <% } else { %>
+    <h1><%= f.name %><%= f.qty > 1 ? ' × ' + f.qty : '' %></h1>
+    <div class="card">
+      <p><%= f.price %> or · <%= L.region(f.region).city.name %> · par <%= f.seller %></p>
+      <p class="muted">Annonce <%= STATUS[f.status] ?? f.status %><%= f.status === 'active' ? ', jusqu’au ' + f.expiresAt.toLocaleDateString('fr-FR') : '' %>. Elle ne s’achète que dans sa ville : <a href="/boutique">la boutique</a>.</p>
+      <% if (f.goods && f.goods.kind === 'item') { %>
+        <p><%= f.goods.name %> — <%= L.quality(f.goods.roll) %></p>
+        <% if (f.goods.stats.length) { %><ul class="items"><% for (const s of f.goods.stats) { %><li><%= L.statText(s) %></li><% } %></ul><% } %>
+      <% } else if (f.goods && f.goods.kind === 'troop') { %>
+        <p><%= f.goods.name %> niveau <%= f.goods.level %> · <%= f.goods.units.length %> unité<%= f.goods.units.length > 1 ? 's' : '' %> · capacités : <%= f.goods.skills.join(', ') %></p>
+      <% } %>
+      <p><a href="/signaler?kind=listing&amp;ref=<%= it.id %>">Signaler cette annonce</a></p>
+    </div>
+  <% } %>
+  <p><a href="<%= it.back %>">← Retour</a></p>
+</section>

@@ -9,10 +9,12 @@
  */
 import { z } from 'zod';
 import { GameError } from '@cr/shared';
-import type { Database, Db, Transaction } from '@cr/db';
+import type { Database, Db, MessageLink, Transaction } from '@cr/db';
 import { sql } from '@cr/db';
 import { command } from '../command.ts';
 import { online } from '../game/content.ts';
+import { assertEmailVerified } from './access.ts';
+import { LinkRefs, resolveLinks } from './links.ts';
 import { assertNotMuted } from './sanctions.ts';
 import { cleanText, filterWords } from './text.ts';
 
@@ -44,16 +46,25 @@ export function prepareText(raw: string, rules: { maxLength: number; bannedWords
 
 export const sayInRegion = command({
   name: 'chat.say',
-  input: z.object({ text: z.string().max(5000) }),
+  input: z.object({ text: z.string().max(5000), links: LinkRefs }),
   rate: { perMinute: 20 },
   allowedDuringWatch: true,
   async run(ctx, input) {
+    await assertEmailVerified(ctx);
     const { text, hits } = prepareText(input.text, online(ctx.content).chat);
     await assertNotMuted(ctx.tx, ctx.player.id, ctx.now);
     await assertSendSpacing(ctx.tx, ctx.player.id, ctx.now);
+    const links = await resolveLinks(ctx.tx, ctx.content, ctx.player.id, input.links);
     const row = await ctx.tx
       .insertInto('chat_message')
-      .values({ region: ctx.player.pos_region, author_id: ctx.player.id, body: text, filtered: hits, created_at: ctx.now })
+      .values({
+        region: ctx.player.pos_region,
+        author_id: ctx.player.id,
+        body: text,
+        links: JSON.stringify(links),
+        filtered: hits,
+        created_at: ctx.now,
+      })
       .returning('id')
       .executeTakeFirstOrThrow();
     ctx.emit({ topic: `region:${ctx.player.pos_region}`, type: 'chat.message', data: { id: row.id } });
@@ -66,6 +77,7 @@ export interface ChatLine {
   authorId: number;
   pseudo: string;
   text: string;
+  links: MessageLink[];
   at: Date;
   mine: boolean;
 }
@@ -75,7 +87,14 @@ export async function chatHistory(db: Db, viewerId: number, region: string, limi
   const rows = await db
     .selectFrom('chat_message')
     .innerJoin('player', 'player.id', 'chat_message.author_id')
-    .select(['chat_message.id', 'chat_message.author_id', 'player.pseudo', 'chat_message.body', 'chat_message.created_at'])
+    .select([
+      'chat_message.id',
+      'chat_message.author_id',
+      'player.pseudo',
+      'chat_message.body',
+      'chat_message.links',
+      'chat_message.created_at',
+    ])
     .where('chat_message.region', '=', region)
     .where('chat_message.deleted_at', 'is', null)
     .where((eb) =>
@@ -97,6 +116,7 @@ export async function chatHistory(db: Db, viewerId: number, region: string, limi
     authorId: r.author_id,
     pseudo: r.pseudo,
     text: r.body,
+    links: r.links,
     at: r.created_at,
     mine: r.author_id === viewerId,
   }));

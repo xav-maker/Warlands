@@ -8,6 +8,7 @@ import { z } from 'zod';
 import { GameError } from '@cr/shared';
 import type { Database, Db, FriendshipStatus, Transaction } from '@cr/db';
 import { command } from '../command.ts';
+import { assertEmailVerified } from './access.ts';
 import { notify } from '../game/shop.ts';
 import { ONLINE_MS } from './chat.ts';
 import { blockedBetween, playerByPseudo, Pseudo } from './direct.ts';
@@ -41,6 +42,7 @@ export const requestFriend = command({
   rate: { perMinute: 20 },
   allowedDuringWatch: true,
   async run(ctx, input) {
+    await assertEmailVerified(ctx);
     const me = ctx.player.id;
     const other = await playerByPseudo(ctx.tx, input.pseudo);
     if (other.id === me) throw new GameError('SELF_TARGET');

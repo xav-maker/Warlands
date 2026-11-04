@@ -60,6 +60,8 @@ export interface AppDeps {
   testTools?: boolean;
   /** Aléa des tirages de jeu (tests) ; par défaut crypto.randomInt. */
   random?: (max: number) => number;
+  /** Exiger une adresse e-mail vérifiée pour le chat, les messages, les amis et les boutiques (REQUIRE_VERIFIED_EMAIL). */
+  requireVerifiedEmail?: boolean;
 }
 
 const here = dirname(fileURLToPath(import.meta.url));
@@ -162,6 +164,7 @@ export async function buildApp(deps: AppDeps): Promise<FastifyInstance> {
         publish,
         ...(deps.content ? { content: deps.content } : {}),
         ...(deps.random ? { random: deps.random } : {}),
+        requireVerifiedEmail: !!deps.requireVerifiedEmail,
       },
       def,
       {

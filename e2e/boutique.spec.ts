@@ -3,6 +3,7 @@
  * l'acheteur trouve l'annonce et l'achète ; l'or et l'objet changent de mains ; le vendeur est notifié.
  */
 import { expect, test, type Browser, type Page } from '@playwright/test';
+import { verifyEmail } from './support.ts';
 
 async function newPlayer(browser: Browser, tag: string): Promise<Page> {
   const page = await (await browser.newContext()).newPage();
@@ -14,6 +15,8 @@ async function newPlayer(browser: Browser, tag: string): Promise<Page> {
   await page.getByLabel('Mot de passe').fill('motdepasse-long');
   await page.getByRole('checkbox').check();
   await page.getByRole('button', { name: /créer/i }).click();
+  await expect(page.getByText('Vérifiez votre boîte mail').first()).toBeVisible();
+  verifyEmail(email); // les boutiques exigent une adresse vérifiée
   await page.goto('/connexion');
   await page.getByLabel('E-mail').fill(email);
   await page.getByLabel('Mot de passe').fill('motdepasse-long');

@@ -19,6 +19,12 @@ const Env = z.object({
   MAIL_FROM: z.string().min(3),
   LOG_LEVEL: z.enum(['fatal', 'error', 'warn', 'info', 'debug', 'trace']).default('info'),
   APP_VERSION: z.string().default('dev'),
+  // Chat, messages, amis et boutiques réservés aux comptes dont l'e-mail est vérifié (guide 13.1). À mettre à
+  // « false » seulement tant que l'envoi d'e-mails ne fonctionne pas ; `verify-email` vérifie un compte à la main.
+  REQUIRE_VERIFIED_EMAIL: z
+    .enum(['true', 'false'])
+    .default('true')
+    .transform((v) => v === 'true'),
   // Outils de test (escouade de niveau 30) : préproduction seulement, jamais en production.
   ENABLE_TEST_TOOLS: z
     .enum(['true', 'false'])

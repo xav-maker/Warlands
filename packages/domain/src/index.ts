@@ -22,6 +22,8 @@ export * from './game/shop.ts';
 export * from './game/shop-view.ts';
 export * from './game/reset.ts';
 export * from './social/text.ts';
+export * from './social/access.ts';
+export * from './social/links.ts';
 export * from './social/sanctions.ts';
 export * from './social/chat.ts';
 export * from './social/direct.ts';

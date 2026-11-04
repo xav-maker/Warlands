@@ -1,4 +1,5 @@
 <% layout('./layout', { title: 'Discussion', v: it.v, error: it.error, script: '/static/social.js' }) %>
+<%~ include('./partials/verify-banner', { auth: it.auth }) %>
 <%~ include('./partials/social-tabs', { tab: 'chat' }) %>
 <section>
   <p class="eyebrow">Discussion</p>
@@ -9,6 +10,7 @@
     <label class="grow">Message
       <input type="text" name="text" maxlength="300" required autocomplete="off" autofocus>
     </label>
+    <%~ include('./partials/link-select', { cite: it.cite }) %>
     <button type="submit" class="primary">Envoyer</button>
   </form>
 </section>

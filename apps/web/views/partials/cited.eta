@@ -1,0 +1,1 @@
+<% const KIND = { item: 'Objet', troop: 'Troupe', listing: 'Annonce' }; for (const l of it.links ?? []) { %> <a class="chat-link" href="/fiche/<%= l.kind %>/<%= l.id %>" title="<%= KIND[l.kind] %>">[<%= l.label %>]</a><% } %>

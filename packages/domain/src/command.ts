@@ -23,6 +23,8 @@ export interface CommandContext {
   content: GameContent;
   /** Tirage frais côté serveur (guide 8.1) : entier dans [0, max[. */
   random(max: number): number;
+  /** Vrai si le chat, les messages et les boutiques exigent une adresse e-mail vérifiée (guide 13.1). */
+  requireVerifiedEmail: boolean;
 }
 
 export interface CommandDef<S extends z.ZodType, R> {
@@ -51,6 +53,8 @@ export interface CommandDeps {
   content?: GameContent;
   /** Aléa des tirages de jeu ; par défaut crypto.randomInt (imprévisible, guide 8.1). Remplacé dans les tests. */
   random?: (max: number) => number;
+  /** Exiger une adresse e-mail vérifiée pour le chat, les messages privés, les amis et les boutiques (faux par défaut). */
+  requireVerifiedEmail?: boolean;
 }
 
 export interface CommandCall {
@@ -126,6 +130,7 @@ export async function executeCommand<S extends z.ZodType, R>(deps: CommandDeps, 
         return content;
       },
       random,
+      requireVerifiedEmail: deps.requireVerifiedEmail ?? false,
     };
     const value = await def.run(ctx, parsed.data);
 

@@ -432,6 +432,11 @@ button.danger {
 .chat-line.mine b {
   color: var(--a);
 }
+.chat-link {
+  margin-left: 0.25rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
 .chat-tools {
   margin-left: 0.5rem;
   font-size: 0.85em;

@@ -1,4 +1,5 @@
 <% layout('./layout', { title: it.title, v: it.v, error: it.error, script: '/static/social.js' }) %>
+<%~ include('./partials/verify-banner', { auth: it.auth }) %>
 <%~ include('./partials/social-tabs', { tab: 'messages' }) %>
 <section>
   <h1>Messages privés</h1>
@@ -41,6 +42,7 @@
           <form id="dm-form" method="post" action="/messages/envoyer" hx-post="/messages/envoyer" hx-swap="none" class="row chat-form">
             <input type="hidden" name="to" value="<%= it.with.pseudo %>">
             <label class="grow">Message <input type="text" name="text" maxlength="300" required autocomplete="off" autofocus></label>
+            <%~ include('./partials/link-select', { cite: it.cite }) %>
             <button type="submit" class="primary">Envoyer</button>
           </form>
         <% } %>

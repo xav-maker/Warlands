@@ -66,6 +66,8 @@ export const ERROR_CODES = [
   'LISTING_ELSEWHERE',
   'OWN_LISTING',
   // Social et modération (J6)
+  'LINK_INVALID',
+  'LINK_NOT_FOUND',
   'MUTED',
   'SHOP_BANNED',
   'SOCIAL_REFUSED',

@@ -1,10 +1,5 @@
 <% layout('./layout', { title: it.R.city.name, v: it.v, error: it.error }) %>
-<% if (!it.auth.account.email_verified_at) { %>
-  <div class="flash">
-    Votre adresse e-mail n’est pas encore vérifiée : elle le sera avant d’accéder aux boutiques et au chat.
-    <button class="link" hx-post="/verifier/renvoyer" hx-target="#flash">Renvoyer l’e-mail</button>
-  </div>
-<% } %>
+<%~ include('./partials/verify-banner', { auth: it.auth }) %>
 <section class="city">
   <p class="eyebrow"><%= it.R.name %> · palier <%= it.R.tier %></p>
   <h1><%= it.R.city.name %></h1>

@@ -40,6 +40,15 @@ Mis en place le 3 novembre 2026 : https://cr-preprod-web.onrender.com. Inscripti
 
 **Synchronisation du Blueprint.** L'image fixée dans `render-preprod.yaml` ne sert qu'à la création des services : ensuite, c'est la CI qui choisit l'image (crochets de déploiement). Désactiver la synchronisation automatique du Blueprint dans Render (_Blueprints → le Blueprint → Settings_), sinon un push qui touche ce fichier pourrait redéployer l'image qui y est écrite. Synchroniser à la main quand on change l'infrastructure (plans, variables, services).
 
+## Outils d'exploitation
+
+Le chat, les messages privés, les demandes d'amis et les boutiques exigent une adresse e-mail vérifiée (variable `REQUIRE_VERIFIED_EMAIL`, vraie par défaut ; à mettre à `false` seulement si l'envoi d'e-mails tombe en panne). Deux outils de l'image se lancent depuis le shell du service web (_Shell_ dans Render), dans `/app/web`, et journalisent leur action dans `admin_action` :
+
+- `node dist/verify-email.js <e-mail>` : marque une adresse comme vérifiée (courriel perdu, comptes créés avant l'exigence).
+- `node dist/grant-role.js <e-mail> <player|moderator|admin>` : nomme un modérateur ou un administrateur (il n'y a pas d'écran pour le premier).
+
+En développement : `pnpm verify-email <e-mail>` et `pnpm grant-role <e-mail> <rôle>`.
+
 ## À vérifier sur Render avant la production
 
 C'est la grille de la section 18 du guide. Ces points sont à confirmer sur les offres du moment :
