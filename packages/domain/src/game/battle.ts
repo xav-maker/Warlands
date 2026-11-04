@@ -9,7 +9,7 @@ import { simuler } from '@cr/engine';
 import { battleUnits, rollLoot } from '@cr/gen';
 import type { MonsterGroup } from '@cr/gen';
 import { command } from '../command.ts';
-import { online, region, regionIndex, stepOf } from './content.ts';
+import { online, route as routeOf, routeTierIndex, stepOf } from './content.ts';
 import { enterCity, freshSeed } from './expedition.ts';
 import { transferGold } from './gold.ts';
 import { addInstance, addStack } from './inventory.ts';
@@ -58,7 +58,7 @@ export const fight = command({
     const st = stepOf(c, route, step);
     const side = enc.side as MonsterGroup;
     const units = battleUnits(c.pack, squad.map(asPlayerTroop), side, {
-      territory: regionIndex(c, route),
+      territory: routeTierIndex(c, route),
       guardianStep: !!st.guardian,
       guardianAdjust: o.guardianAdjust,
     });
@@ -129,7 +129,7 @@ export const fight = command({
       }
 
       // Butin (README 8.6) : or, trophée du rare, objets vers le sac puis au sol.
-      const R = region(c, route);
+      const R = routeOf(c, route);
       const first = !!st.guardian && !ctx.player.guardians.includes(route);
       const loot = rollLoot(
         c.pack,

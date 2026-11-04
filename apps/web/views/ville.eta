@@ -13,11 +13,12 @@
   <div class="grid">
     <div class="card">
       <h2>Partir</h2>
-      <% for (const d of it.v.departures) { const T = it.L.region(d.route) %>
+      <% for (const d of it.v.departures) { const T = it.L.route(d.route) %>
         <form method="post" action="/depart" class="row between">
           <input type="hidden" name="_csrf" value="<%= it.csrf %>">
           <input type="hidden" name="direction" value="<%= d.direction %>">
-          <span><b><%= T.territory.name %></b><br><span class="muted"><%= d.to ? 'vers ' + it.L.region(d.to).city.name : 'cul-de-sac' %><%= d.direction < 0 ? ' (à rebours)' : '' %></span></span>
+          <input type="hidden" name="route" value="<%= d.route %>">
+          <span><b><%= T.name %></b><br><span class="muted"><%= d.to ? 'vers ' + it.L.region(d.to).city.name : 'cul-de-sac' %><%= d.direction < 0 ? ' (à rebours)' : '' %></span></span>
           <button type="submit" class="primary">Partir</button>
         </form>
       <% } %>

@@ -13,9 +13,16 @@
         <h2><%= i + 1 %>. <%= R.name %> <span class="muted">— palier <%= R.tier %>, niveau <%= R.minLevel %></span></h2>
         <p><b><%= R.city.name %></b> : <%= R.city.desc %></p>
         <p class="muted">Recrute : <%= R.city.recruit.map(L.troop).join(', ') %>.</p>
-        <p><b><%= R.territory.name %></b> : <%= R.territory.desc %></p>
+        <p class="muted">Routes : <%= it.routes.filter((x) => x.from === R.id || x.to === R.id).map((x) => { const o = x.from === R.id ? x.to : x.from; return x.name + (o ? ' (vers ' + L.region(o).city.name + ')' : ' (cul-de-sac)') }).join(', ') || '—' %>.</p>
+      </div>
+    <% }) %>
+    <h2>Routes</h2>
+    <% it.routes.forEach((T) => { %>
+      <div class="card">
+        <h3><%= T.name %> <span class="muted">— palier <%= T.tier %> · <%= L.region(T.from).city.name %><%= T.to ? ' ↔ ' + L.region(T.to).city.name : ' (cul-de-sac)' %></span></h3>
+        <p><%= T.desc %></p>
         <ol>
-          <% for (const s of R.territory.steps) { %>
+          <% for (const s of T.steps) { %>
             <li><b><%= s.name %></b> <span class="muted">— niveaux <%= s.level[0] %>-<%= s.level[1] %> ; <%= s.pool.map(L.troop).join(', ') %><%= s.forced?.length ? ' ; gardien : ' + s.forced.map(L.troop).join(', ') : '' %></span></li>
           <% } %>
         </ol>

@@ -56,10 +56,10 @@ export async function notify(tx: Tx, playerId: number, type: string, data: Recor
     .execute();
 }
 
-/** Prix minimal d'une troupe [H] : l'or de recrutement de son type, 40 × population × numéro de sa région. */
-function troopMinPrice(c: GameContent, type: string): number {
-  const ri = c.pack.regions.findIndex((r) => r.city.recruit.includes(type));
-  return 40 * c.pack.troops[type]!.pop * (Math.max(0, ri) + 1);
+/** Prix minimal d'une troupe [H] : l'or de recrutement de son type, 40 × population × palier de sa ville. */
+export function troopMinPrice(c: GameContent, type: string): number {
+  const tier = c.pack.regions.find((r) => r.city.recruit.includes(type))?.tier ?? 1;
+  return 40 * c.pack.troops[type]!.pop * tier;
 }
 
 const goods = z.discriminatedUnion('kind', [

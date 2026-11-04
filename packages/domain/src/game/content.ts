@@ -1,5 +1,6 @@
 /** Contenu actif (pack compilé) et lecture du monde : régions, routes, étapes. */
-import type { GenContent, OnlineRules, Region, Step } from '@cr/gen';
+import { routes } from '@cr/gen';
+import type { GenContent, OnlineRules, Region, Route, Step } from '@cr/gen';
 
 export interface GameContent {
   pack: GenContent;
@@ -20,11 +21,17 @@ export function regionIndex(c: GameContent, id: string): number {
 
 export const region = (c: GameContent, id: string): Region => c.pack.regions[regionIndex(c, id)]!;
 
+/** Route par identifiant : route du graphe, ou territoire du prototype (identifiant de sa région). */
+export function route(c: GameContent, id: string): Route {
+  const x = routes(c.pack).find((y) => y.id === id);
+  if (!x) throw new Error(`route inconnue : ${id}`);
+  return x;
+}
+
 /**
- * Routes du prototype (README 3.3) : le territoire de la région i relie la ville i à la ville i+1 ; une
- * route porte l'identifiant de la région dont c'est le territoire. Depuis la ville r : vers l'avant le
- * territoire r (arrivée en r+1, cul-de-sac pour la dernière), à rebours le territoire r−1 (arrivée en r−1).
- * Les étapes se font toujours dans le même ordre, gardien au bout.
+ * Départs d'une ville (README 3.3 et 18.1) : chaque route qui la touche, vers l'avant (de `from` à `to`) ou à
+ * rebours. Prototype : le territoire de la région i relie la ville i à la ville i+1 (cul-de-sac pour la
+ * dernière) et porte l'identifiant de sa région. Les étapes se font toujours dans le même ordre, gardien au bout.
  */
 export interface Departure {
   direction: 1 | -1;
@@ -34,19 +41,22 @@ export interface Departure {
 }
 
 export function departures(c: GameContent, from: string): Departure[] {
-  const r = regionIndex(c, from);
-  const R = c.pack.regions;
-  const out: Departure[] = [{ direction: 1, route: R[r]!.id, to: R[r + 1]?.id ?? null }];
-  if (r > 0) out.push({ direction: -1, route: R[r - 1]!.id, to: R[r - 1]!.id });
-  return out;
+  regionIndex(c, from);
+  const all = routes(c.pack);
+  return [
+    ...all.filter((x) => x.from === from).map((x): Departure => ({ direction: 1, route: x.id, to: x.to })),
+    ...all.filter((x) => x.to === from).map((x): Departure => ({ direction: -1, route: x.id, to: x.from })),
+  ];
 }
 
 /** Région d'arrivée d'une route parcourue dans un sens. */
-export function destination(c: GameContent, route: string, direction: number): string | null {
-  const t = regionIndex(c, route);
-  const to = direction > 0 ? t + 1 : t;
-  return c.pack.regions[to]?.id ?? null;
+export function destination(c: GameContent, id: string, direction: number): string | null {
+  const x = route(c, id);
+  return direction > 0 ? x.to : x.from;
 }
 
-export const stepOf = (c: GameContent, route: string, step: number): Step => region(c, route).territory.steps[step]!;
-export const stepCount = (c: GameContent, route: string): number => region(c, route).territory.steps.length;
+/** Palier d'une route, en index (0 à 4) : renfort des monstres (README 18.2). */
+export const routeTierIndex = (c: GameContent, id: string): number => route(c, id).tier - 1;
+
+export const stepOf = (c: GameContent, id: string, step: number): Step => route(c, id).steps[step]!;
+export const stepCount = (c: GameContent, id: string): number => route(c, id).steps.length;

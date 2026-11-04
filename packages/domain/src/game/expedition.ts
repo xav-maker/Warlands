@@ -109,12 +109,15 @@ const emitMoved = (ctx: CommandContext): void => ctx.emit({ topic: `user:${ctx.p
 
 export const depart = command({
   name: 'route.depart',
-  input: z.object({ direction: z.union([z.literal(1), z.literal(-1)]) }),
+  input: z.object({ direction: z.union([z.literal(1), z.literal(-1)]), route: z.string().min(1).optional() }),
   rate: { perMinute: 10 },
   where: ['city'],
   async run(ctx, input) {
     const c = ctx.content;
-    const d = departures(c, ctx.player.pos_region).find((x) => x.direction === input.direction);
+    // Graphe : la route choisie ; sans route (prototype), la première dans ce sens.
+    const d = departures(c, ctx.player.pos_region).find(
+      (x) => x.direction === input.direction && (!input.route || x.route === input.route),
+    );
     if (!d) throw new GameError('NO_SUCH_ROUTE');
     const squad = await loadTroops(ctx.tx, ctx.player.id, ['SQUAD']);
     if (!squad.some((t) => t.units.length)) throw new GameError('SQUAD_EMPTY');

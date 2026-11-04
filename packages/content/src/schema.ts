@@ -142,17 +142,31 @@ export const Step = z.strictObject({
   forced: z.array(id).optional(),
 });
 
+/** Région : sa ville ; dans le prototype, aussi son territoire (route vers la région suivante) et son gardien. */
 export const Region = z.strictObject({
   id,
   tier: int.min(1),
   minLevel: int.min(1),
-  firstItem: id,
-  guardianLoot: id,
+  firstItem: id.optional(),
+  guardianLoot: id.optional(),
   city: z.strictObject({ recruit: z.array(id), shop: z.array(id) }),
-  territory: z.strictObject({ steps: z.array(Step).min(1) }),
+  territory: z.strictObject({ steps: z.array(Step).min(1) }).optional(),
 });
 
-export const Rare = z.strictObject({ id, region: int, step: id, base: id, trophy: id });
+/** Route du monde en graphe (README 18.1) : 5 étapes entre deux régions, gardien au bout. */
+export const Route = z.strictObject({
+  id,
+  from: id,
+  to: id,
+  tier: int.min(1),
+  minLevel: int.min(1),
+  firstItem: id,
+  guardianLoot: id,
+  steps: z.array(Step).min(1),
+});
+
+/** Rare : index du territoire (prototype, `region`) ou identifiant de route (graphe, `route`). */
+export const Rare = z.strictObject({ id, region: int.optional(), route: id.optional(), step: id, base: id, trophy: id });
 
 export const Params = z.strictObject({
   engine: z.record(z.string(), num),
@@ -202,6 +216,9 @@ export const PackFile = z.strictObject({
   }),
 });
 
+/** Fichiers à nom fixe qui peuvent manquer (le prototype n'a pas de routes). */
+export const OPTIONAL_FILES = new Set(['world/routes.yaml']);
+
 /** Schéma de chaque fichier à nom fixe, et des fichiers listés dans pack.yaml par collection. */
 export const FIXED = {
   'pack.yaml': PackFile,
@@ -211,6 +228,7 @@ export const FIXED = {
   'strategies.yaml': z.record(id, z.array(Rule)),
   'world/regions.yaml': z.array(Region).min(1),
   'world/rares.yaml': z.array(Rare),
+  'world/routes.yaml': z.array(Route),
   'quests.yaml': z.strictObject({ givers: z.array(z.array(z.string())) }),
   'texts/fr.yaml': z.record(z.string(), z.string()),
 } as const;
@@ -229,5 +247,6 @@ export type ItemT = z.infer<typeof Item>;
 export type EquipBaseT = z.infer<typeof EquipBase>;
 export type RegionT = z.infer<typeof Region>;
 export type RareT = z.infer<typeof Rare>;
+export type RouteT = z.infer<typeof Route>;
 export type ParamsT = z.infer<typeof Params>;
 export type PackFileT = z.infer<typeof PackFile>;

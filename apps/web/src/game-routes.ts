@@ -23,6 +23,9 @@ import {
   merchantBuy,
   merchantSell,
   region,
+  route,
+  routeTierIndex,
+  troopMinPrice,
   searchEncounter,
   sellPrice,
   takeLoot,
@@ -62,7 +65,7 @@ import {
   type GameContent,
   type GameView,
 } from '@cr/domain';
-import { basicAttack, canWear, computeStats, itemValue, learned, quality, troopActive } from '@cr/gen';
+import { basicAttack, canWear, computeStats, itemValue, learned, quality, routes, troopActive } from '@cr/gen';
 import type { z } from 'zod';
 
 export interface GameRouteDeps {
@@ -88,6 +91,7 @@ export function labels(c: GameContent) {
     immune: (id: string): string => (p.troops[id]?.immune ?? []).map((x) => DMG_LABEL[x] ?? x).join(', '),
     isConsumable: (id: string): boolean => p.items[id]?.kind === 'consommable',
     region: (id: string) => region(c, id),
+    route: (id: string) => route(c, id),
     quality,
     value: (base: string, roll: number): number => itemValue(p, { uid: '', base, roll, stats: [] }),
     buyPrice: (id: string): number => buyPrice(c, id),
@@ -153,7 +157,8 @@ export function registerGameRoutes(app: FastifyInstance, d: GameRouteDeps): void
   });
   app.post('/depart', (req, reply) =>
     act(req, reply, '/ville', async () => {
-      await d.run(req, depart, { direction: int(body(req).direction) });
+      const b = body(req);
+      await d.run(req, depart, { direction: int(b.direction), ...(b.route ? { route: b.route } : {}) });
       return '/route';
     }),
   );
@@ -162,7 +167,7 @@ export function registerGameRoutes(app: FastifyInstance, d: GameRouteDeps): void
   app.get('/route', async (req, reply) => {
     const v = await view(req);
     if (v.kind !== 'route' || !v.route) return reply.redirect('/ville');
-    const R = region(d.content, v.route.id);
+    const R = route(d.content, v.route.id);
     return d.page(req, reply, 'route', { v, L, R, home: region(d.content, v.region), error: errorOf(req.query) });
   });
   const moves: Record<string, CommandDef<z.ZodType, unknown>> = {
@@ -213,10 +218,7 @@ export function registerGameRoutes(app: FastifyInstance, d: GameRouteDeps): void
     const skills = Object.fromEntries(used.map((s) => [s, p.skills[s]!]));
     const replay = {
       journal: `/combat/${b.id}/journal.json`,
-      theme: Math.max(
-        0,
-        p.regions.findIndex((r) => r.id === b.route),
-      ),
+      theme: routeTierIndex(d.content, b.route),
       waitMs,
       next: v.kind === 'route' ? '/route' : '/ville',
       timeLimit: p.params.timeLimit,
@@ -231,7 +233,7 @@ export function registerGameRoutes(app: FastifyInstance, d: GameRouteDeps): void
       b,
       units,
       r: b.rewards,
-      R: region(d.content, b.route),
+      R: route(d.content, b.route),
       waitMs,
       next: v.kind === 'route' ? '/route' : '/ville',
       // JSON dans un <script type="application/json"> : « < » échappé, rien ne peut fermer la balise.
@@ -421,8 +423,7 @@ export function registerGameRoutes(app: FastifyInstance, d: GameRouteDeps): void
       filters,
       mine,
       troops,
-      minTroop: (type: string) =>
-        40 * d.content.pack.troops[type]!.pop * (d.content.pack.regions.findIndex((r) => r.city.recruit.includes(type)) + 1),
+      minTroop: (type: string) => troopMinPrice(d.content, type),
       taxPermille: SHOP.taxPermille,
       error: errorOf(req.query),
     });
@@ -504,6 +505,6 @@ export function registerGameRoutes(app: FastifyInstance, d: GameRouteDeps): void
   app.get('/codex', (req, reply) => {
     const q = (req.query as { p?: string }).p;
     const part = (PARTS as readonly string[]).includes(q ?? '') ? q! : 'regions';
-    return d.page(req, reply, 'codex', { part, parts: PARTS, c: d.content.pack, L });
+    return d.page(req, reply, 'codex', { part, parts: PARTS, c: d.content.pack, L, routes: routes(d.content.pack) });
   });
 }

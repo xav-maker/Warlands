@@ -72,12 +72,27 @@ export function compile(raw: RawContent): Compiled {
     regions: raw.regions.map((R) => ({
       ...withTexts(R, `region.${R.id}`, ['name']),
       city: withTexts(R.city, `region.${R.id}.city`, ['name', 'desc']),
-      territory: {
-        ...withTexts(R.territory, `region.${R.id}.territory`, ['name', 'desc']),
-        steps: R.territory.steps.map((s) => withTexts(s, `region.${R.id}.steps.${s.id}`, ['name', 'desc'])),
-      },
+      ...(R.territory
+        ? {
+            territory: {
+              ...withTexts(R.territory, `region.${R.id}.territory`, ['name', 'desc']),
+              steps: R.territory.steps.map((s) => withTexts(s, `region.${R.id}.steps.${s.id}`, ['name', 'desc'])),
+            },
+          }
+        : {}),
     })),
-    rares: raw.rares.map((x) => withTexts(x, `rare.${x.id}`, ['name'])),
+    ...(raw.routes
+      ? {
+          routes: raw.routes.map((x) => ({
+            ...withTexts(x, `route.${x.id}`, ['name', 'desc']),
+            steps: x.steps.map((s) => withTexts(s, `route.${x.id}.steps.${s.id}`, ['name', 'desc'])),
+          })),
+        }
+      : {}),
+    // Graphe : la route d'un rare devient son index, comme le territoire du prototype (Rare.region).
+    rares: raw.rares.map(({ route, ...x }) =>
+      withTexts(route !== undefined ? { ...x, region: raw.routes?.findIndex((y) => y.id === route) ?? -1 } : x, `rare.${x.id}`, ['name']),
+    ),
     eco: P.eco,
     statCost: map(P.items.statCost, (k, c) => withTexts(c, `stat.${k}`, ['label'])),
     tierBudget: P.items.tierBudget,

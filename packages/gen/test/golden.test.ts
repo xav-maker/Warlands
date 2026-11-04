@@ -40,7 +40,7 @@ const calls = (c: GenContent): Record<string, (...a: any[]) => unknown> => ({
   genEquip: (base: string, seed: number, roll: number | null) => genEquip(c, base, new Rng(seed), roll ?? undefined),
   genMonsters: (spec: MonsterSpec, seed: number) => genMonsters(c, spec, seed),
   rollLoot: (ri: number, si: number, types: string[], seed: number, g: GuardianLoot | null) =>
-    rollLoot(c, c.regions[ri]!.territory.steps[si]!, types, seed, g),
+    rollLoot(c, c.regions[ri]!.territory!.steps[si]!, types, seed, g),
   genRecipes: (seed: number) => genRecipes(c, seed),
   tradeOnly: (seed: number) => tradeOnly(c, seed),
   genQuest: (seed: number, region: number, n: number) => genQuest(c, seed, region, n),

@@ -1,7 +1,7 @@
-<% layout('./layout', { title: it.R.territory.name }) %>
-<% const r = it.v.route; const steps = it.R.territory.steps; const st = steps[r.step]; const last = r.step === steps.length - 1; const cleared = r.cleared[r.step] %>
+<% layout('./layout', { title: it.R.name }) %>
+<% const r = it.v.route; const steps = it.R.steps; const st = steps[r.step]; const last = r.step === steps.length - 1; const cleared = r.cleared[r.step] %>
 <section class="route">
-  <p class="eyebrow"><%= it.R.territory.name %> · <%= r.to ? 'vers ' + it.L.region(r.to).city.name : 'cul-de-sac' %> · départ de <%= it.home.city.name %></p>
+  <p class="eyebrow"><%= it.R.name %> · <%= r.to ? 'vers ' + it.L.region(r.to).city.name : 'cul-de-sac' %> · départ de <%= it.home.city.name %></p>
   <h1><%= st.name %></h1>
   <ol class="steps" aria-label="Étapes">
     <% steps.forEach((s, i) => { %>

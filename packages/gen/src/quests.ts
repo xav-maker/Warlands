@@ -1,5 +1,6 @@
 /** Quêtes de ville : rapporter des trophées de rares (prototype quetes.ts, à l'identique). */
 import { Rng, hash } from '@cr/rng';
+import { routes } from './content.ts';
 import type { GenContent } from './content.ts';
 import { rareOfTrophy } from './encounters.ts';
 import { between, weighted } from './random.ts';
@@ -23,14 +24,22 @@ export interface Quest {
 /** Points d'un trophée : 2 + rang de l'étape de son rare. */
 export function points(c: GenContent, trophy: string): number {
   const r = rareOfTrophy(c, trophy)!;
-  return 2 + c.regions[r.region]!.territory.steps.findIndex((s) => s.id === r.step);
+  return 2 + routes(c)[r.region]!.steps.findIndex((s) => s.id === r.step);
 }
 
 export function genQuest(c: GenContent, seed: number, region: number, n: number): Quest {
   const R = c.regions;
+  const RT = routes(c);
   const r = new Rng(hash(seed, 'quete', region, n));
-  const terr = region > 0 && r.int(10) < 3 ? region - 1 : region;
-  const T = R[terr]!.tier;
+  // Route des trophées : celle qui part de la ville (70 %) ou celle qui y arrive (30 %) dans le prototype ;
+  // dans le graphe, l'une des routes de la ville, au hasard.
+  let terr: number;
+  if (c.routes) {
+    const id = R[region]!.id;
+    const adj = RT.flatMap((x, i) => (x.from === id || x.to === id ? [i] : []));
+    terr = adj[r.int(adj.length)]!;
+  } else terr = region > 0 && r.int(10) < 3 ? region - 1 : region;
+  const T = RT[terr]!.tier;
   const kind = weighted<'equip' | 'troop' | 'items'>(r, [
     ['equip', 40],
     ['troop', 25],
@@ -61,8 +70,10 @@ export function genQuest(c: GenContent, seed: number, region: number, n: number)
       .map((b): [string, number] => [b.id, 1]);
     reward = { kind: 'equip', base: weighted(r, bases)!, roll: between(r, 1250, 1400) };
   } else if (kind === 'troop') {
-    const types2 = R.slice(0, terr + 1).flatMap((rg, i) => rg.city.recruit.map((t): [string, number] => [t, i === region ? 1 : 2]));
-    reward = { kind: 'troop', type: weighted(r, types2)!, level: R[terr]!.minLevel + 3 };
+    // Villes 1 à T (prototype : jusqu'à la région du territoire ; graphe : les villes de palier ≤ T).
+    const cities = c.routes ? R.filter((rg) => rg.tier <= T) : R.slice(0, terr + 1);
+    const types2 = cities.flatMap((rg) => rg.city.recruit.map((t): [string, number] => [t, rg === R[region] ? 1 : 2]));
+    reward = { kind: 'troop', type: weighted(r, types2)!, level: RT[terr]!.minLevel + 3 };
   } else {
     const all = Object.values(c.items);
     const comps = all.filter((i) => i.kind === 'composant' && i.tier >= Math.min(T + 1, 5) && i.tier <= Math.min(T + 2, 5));
@@ -81,7 +92,7 @@ export function genQuest(c: GenContent, seed: number, region: number, n: number)
   const givers = c.questGivers[region]!;
   const giver = givers[r.int(givers.length)]!;
   const rares = needs.map(([t]) => rareOfTrophy(c, t)!);
-  const terrName = R[terr]!.territory.name;
+  const terrName = RT[terr]!.name;
   const title =
     rares.length === 1
       ? [`La traque de ${rares[0]!.name}`, `Prime : ${rares[0]!.name}`, `Le trophée de ${rares[0]!.name}`][r.int(3)]!
@@ -103,7 +114,7 @@ export function genQuest(c: GenContent, seed: number, region: number, n: number)
       'Rapportez-les et vous ne repartirez pas les mains vides.',
     ],
   }[kind];
-  const where = [...new Set(rares.map((x) => `${R[x.region]!.territory.steps.find((s) => s.id === x.step)!.name}`))].join(' et ');
+  const where = [...new Set(rares.map((x) => `${RT[x.region]!.steps.find((s) => s.id === x.step)!.name}`))].join(' et ');
   const text = `« ${pitch[r.int(pitch.length)]} » On les croise parfois : ${where}, ${terrName}.`;
   return { id: `q${region}-${n}`, region, giver, title, text, needs, reward, gold };
 }

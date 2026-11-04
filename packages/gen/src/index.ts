@@ -4,6 +4,7 @@
  * proto-0.4-ville et figées par des vecteurs qu'il a produits (golden/v0.4).
  */
 export type * from './content.ts';
+export { routes } from './content.ts';
 export { between, weighted, uid } from './random.ts';
 export * from './troops.ts';
 export * from './equip.ts';

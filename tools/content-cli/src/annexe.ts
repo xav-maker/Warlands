@@ -366,7 +366,7 @@ export function annexe(c: GenContent & { engineVersion: string }, o: AnnexeOptio
     out.push(`Recrutement : ${city.recruit.map(tName).join(', ')}.`);
     out.push(`Marchand : ${city.shop.map(thing).join(', ')}.`);
     out.push(
-      `Objet de première victoire sur le gardien : ${thing(R.firstItem)}. Butin réservé au gardien : ${thing(R.guardianLoot)}. Renfort des monstres : PV ×${ratio(c.eco.monsterHp[ri]!)}, attaque et dégâts d’arme ×${ratio(c.eco.monsterAtk[ri]!)}, gardien ×${ratio(c.eco.guardianAdj[ri]!)} en plus.`,
+      `Objet de première victoire sur le gardien : ${thing(R.firstItem!)}. Butin réservé au gardien : ${thing(R.guardianLoot!)}. Renfort des monstres : PV ×${ratio(c.eco.monsterHp[ri]!)}, attaque et dégâts d’arme ×${ratio(c.eco.monsterAtk[ri]!)}, gardien ×${ratio(c.eco.guardianAdj[ri]!)} en plus.`,
     );
     out.push(`Territoire : ${terr.desc ?? ''}`);
     blank();

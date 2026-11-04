@@ -3,12 +3,12 @@
  * Les données gardées sont celles du YAML tel quel (pas la sortie de Zod, qui réordonnerait les clés) :
  * l'ordre des entrées fait partie du contenu.
  */
-import { readFileSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import YAML from 'yaml';
 import type { z } from 'zod';
-import { COLLECTION, FIXED } from './schema.ts';
-import type { EquipBaseT, ItemT, PackFileT, ParamsT, RareT, RegionT, RuleT, SkillT, TroopT } from './schema.ts';
+import { COLLECTION, FIXED, OPTIONAL_FILES } from './schema.ts';
+import type { EquipBaseT, ItemT, PackFileT, ParamsT, RareT, RegionT, RouteT, RuleT, SkillT, TroopT } from './schema.ts';
 
 export interface Issue {
   level: 'error' | 'warning';
@@ -23,6 +23,8 @@ export interface RawContent {
   weapons: Record<string, { type: string; dmg: number; speed: number; cost: number }>;
   strategies: Record<string, RuleT[]>;
   regions: RegionT[];
+  /** Monde en graphe ; absent du prototype. */
+  routes?: RouteT[];
   rares: RareT[];
   givers: string[][];
   texts: Record<string, string>;
@@ -57,6 +59,7 @@ export function loadContent(dir: string): { raw: RawContent | null; issues: Issu
   const issues: Issue[] = [];
   const fixed: Record<string, unknown> = {};
   for (const [rel, schema] of Object.entries(FIXED)) {
+    if (OPTIONAL_FILES.has(rel) && !existsSync(join(dir, rel))) continue;
     const data = parse(dir, rel, issues);
     if (data !== undefined && check(schema, data, rel, issues)) fixed[rel] = data;
   }
@@ -84,6 +87,7 @@ export function loadContent(dir: string): { raw: RawContent | null; issues: Issu
       weapons: fixed['weapons.yaml'] as RawContent['weapons'],
       strategies: fixed['strategies.yaml'] as RawContent['strategies'],
       regions: fixed['world/regions.yaml'] as RegionT[],
+      ...(fixed['world/routes.yaml'] ? { routes: fixed['world/routes.yaml'] as RouteT[] } : {}),
       rares: fixed['world/rares.yaml'] as RareT[],
       givers: (fixed['quests.yaml'] as { givers: string[][] }).givers,
       texts: fixed['texts/fr.yaml'] as Record<string, string>,

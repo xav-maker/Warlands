@@ -1,9 +1,9 @@
 <% const waitS = Math.ceil(it.waitMs / 1000) %>
 <% layout('./layout', { title: 'Combat', refresh: waitS > 0 ? waitS : undefined, css: '/static/combat.css', script: '/static/combat.js' }) %>
-<% const r = it.r; const res = it.b.result; const st = it.R.territory.steps[it.b.step] %>
+<% const r = it.r; const res = it.b.result; const st = it.R.steps[it.b.step] %>
 <% const after = new Map(res.units.map((u) => [u.id, u])) %>
 <section class="battle">
-  <p class="eyebrow"><%= it.R.territory.name %> · <%= st.name %><%= it.b.kind === 'guardian' ? ' · gardien' : '' %></p>
+  <p class="eyebrow"><%= it.R.name %> · <%= st.name %><%= it.b.kind === 'guardian' ? ' · gardien' : '' %></p>
   <h1 data-after-replay><%= it.b.won ? 'Victoire' : 'Défaite' %></h1>
   <p class="muted" data-after-replay>Combat de <%= it.b.duration %> instants<%= res.reason === 'timeout' ? ', arrêté à la durée limite' : '' %>.</p>
 

@@ -96,14 +96,35 @@ export interface Region {
   name: string;
   tier: number;
   minLevel: number;
+  /** Prototype : la région porte son territoire et son gardien. Monde en graphe : dans les routes. */
+  firstItem?: string;
+  guardianLoot?: string;
+  city: { name: string; desc?: string; recruit: string[]; shop: string[] };
+  territory?: { name: string; desc?: string; steps: Step[] };
+}
+
+/**
+ * Route : 5 étapes entre deux régions, gardien au bout (README 18.1). Dans le prototype, le territoire de la
+ * région i relie la ville i à la ville i+1 (cul-de-sac pour la dernière) : voir `routes`.
+ */
+export interface Route {
+  id: string;
+  name: string;
+  desc?: string;
+  /** Palier : le plus petit des paliers des deux régions (README 18.2). */
+  tier: number;
+  minLevel: number;
+  from: string;
+  /** null : cul-de-sac (dernier territoire du prototype). */
+  to: string | null;
   firstItem: string;
   guardianLoot: string;
-  city: { name: string; recruit: string[]; shop: string[] };
-  territory: { name: string; steps: Step[] };
+  steps: Step[];
 }
 
 export interface Rare {
   id: string;
+  /** Index de la route (du territoire, dans le prototype) où il apparaît. */
   region: number;
   step: string;
   base: string;
@@ -132,6 +153,8 @@ export interface GenContent {
   items: Record<string, Item>;
   equip: Record<string, EquipBase>;
   regions: Region[];
+  /** Monde en graphe (README 18) ; absent du prototype, dont les territoires sont dans les régions. */
+  routes?: Route[];
   rares: Rare[];
   eco: Eco;
   statCost: Record<string, { per: number; label: string; unit?: string }>;
@@ -161,4 +184,28 @@ export interface OnlineRules {
   encounters: { popMult: number; slots: number };
   stack: Record<string, number>;
   watch: { instantsPerSecond: number };
+}
+
+const derived = new WeakMap<GenContent, Route[]>();
+
+/** Routes du contenu : celles du graphe, ou les territoires du prototype, en ligne droite. */
+export function routes(c: GenContent): Route[] {
+  if (c.routes) return c.routes;
+  let r = derived.get(c);
+  if (!r) {
+    r = c.regions.map((R, i) => ({
+      id: R.id,
+      name: R.territory!.name,
+      ...(R.territory!.desc !== undefined ? { desc: R.territory!.desc } : {}),
+      tier: R.tier,
+      minLevel: R.minLevel,
+      from: R.id,
+      to: c.regions[i + 1]?.id ?? null,
+      firstItem: R.firstItem!,
+      guardianLoot: R.guardianLoot!,
+      steps: R.territory!.steps,
+    }));
+    derived.set(c, r);
+  }
+  return r;
 }

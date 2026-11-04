@@ -1,8 +1,9 @@
 /**
  * Validation du contenu (guide 5.2) : références, textes, tables de butin, stratégies, graphe du monde.
  *
- * Les règles du monde cible (20 régions, 2 à 3 routes chacune, donjons) attendent le format des routes
- * (J4) : pour le contenu du prototype, en ligne droite, on contrôle les régions et étapes existantes.
+ * Monde : les territoires du prototype (en ligne droite, dans les régions) ou le graphe de routes
+ * (world/routes.yaml, README 18) : 2 ou 3 routes par région, tout relié à la première région, palier d'une
+ * route = le plus petit des paliers de ses deux régions.
  */
 import { compile } from './compile.ts';
 import type { Compiled } from './compile.ts';
@@ -49,16 +50,58 @@ export function checkReferences(raw: RawContent): Issue[] {
   }
 
   const steps = new Set<string>();
+  const regionIds = new Set(raw.regions.map((R) => R.id));
   raw.regions.forEach((R, ri) => {
     const where = `world/regions.yaml › ${R.id}`;
-    if (!isItem(R.firstItem)) err(where, `objet de première victoire inconnu ${R.firstItem}`);
-    if (!isEquip(R.guardianLoot)) err(where, `butin de gardien inconnu ${R.guardianLoot}`);
     for (const t of R.city.recruit) if (!(t in raw.troops) || raw.troops[t]!.region !== undefined) err(where, `recrue inconnue ${t}`);
     for (const x of R.city.shop) if (!isItem(x) && !isEquip(x)) err(where, `article de marchand inconnu ${x}`);
-    const guardians = R.territory.steps.filter((s) => s.guardian);
-    if (guardians.length !== 1 || !R.territory.steps.at(-1)!.guardian)
-      err(where, 'le territoire doit finir par une seule étape de gardien');
-    for (const s of R.territory.steps) {
+    if (ri > 0 && !raw.routes && R.minLevel < raw.regions[ri - 1]!.minLevel) err(where, 'niveau minimal inférieur à la région précédente');
+    if (raw.routes && R.territory) err(where, 'avec world/routes.yaml, les territoires sont des routes');
+    if (!raw.routes && !R.territory) err(where, 'territoire manquant (ou world/routes.yaml)');
+  });
+  const tierOf = new Map(raw.regions.map((R) => [R.id, R.tier]));
+  const worldRoutes = raw.routes
+    ? raw.routes.map((x) => ({ where: `world/routes.yaml › ${x.id}`, ...x }))
+    : raw.regions.flatMap((R) => (R.territory ? [{ where: `world/regions.yaml › ${R.id}`, ...R, steps: R.territory.steps }] : []));
+  if (raw.routes) {
+    const ids = new Set<string>();
+    const degree = new Map<string, number>();
+    for (const x of raw.routes) {
+      const where = `world/routes.yaml › ${x.id}`;
+      if (ids.has(x.id) || regionIds.has(x.id)) err(where, `identifiant de route en double ${x.id}`);
+      ids.add(x.id);
+      for (const end of [x.from, x.to]) {
+        if (!regionIds.has(end)) err(where, `région inconnue ${end}`);
+        degree.set(end, (degree.get(end) ?? 0) + 1);
+      }
+      if (x.from === x.to) err(where, 'une route relie deux régions différentes');
+      const t = Math.min(tierOf.get(x.from) ?? 0, tierOf.get(x.to) ?? 0);
+      if (t && x.tier !== t) err(where, `palier ${x.tier}, ${t} attendu (le plus petit des deux régions)`);
+    }
+    for (const R of raw.regions) {
+      const d = degree.get(R.id) ?? 0;
+      if (d < 2 || d > 3) err(`world/regions.yaml › ${R.id}`, `${d} route(s), 2 ou 3 attendues (README 18.1)`);
+    }
+    // Tout est relié à la région de départ (la première).
+    const seen = new Set([raw.regions[0]!.id]);
+    for (let grew = true; grew;) {
+      grew = false;
+      for (const x of raw.routes)
+        if (seen.has(x.from) !== seen.has(x.to)) {
+          seen.add(x.from);
+          seen.add(x.to);
+          grew = true;
+        }
+    }
+    for (const R of raw.regions) if (!seen.has(R.id)) err(`world/regions.yaml › ${R.id}`, 'région non reliée à la région de départ');
+  }
+  for (const R of worldRoutes) {
+    const where = R.where;
+    if (!R.firstItem || !isItem(R.firstItem)) err(where, `objet de première victoire inconnu ${R.firstItem}`);
+    if (!R.guardianLoot || !isEquip(R.guardianLoot)) err(where, `butin de gardien inconnu ${R.guardianLoot}`);
+    const guardians = R.steps.filter((s) => s.guardian);
+    if (guardians.length !== 1 || !R.steps.at(-1)!.guardian) err(where, 'la route doit finir par une seule étape de gardien');
+    for (const s of R.steps) {
       if (steps.has(s.id)) err(where, `étape en double ${s.id}`);
       steps.add(s.id);
       for (const m of [...s.pool, ...(s.forced ?? [])])
@@ -66,9 +109,11 @@ export function checkReferences(raw: RawContent): Issue[] {
       for (const m of s.mats) if (!isItem(m)) err(where, `${s.id} : matériau inconnu ${m}`);
       for (const k of ['level', 'pop', 'draws'] as const) if (s[k][0] > s[k][1]) err(where, `${s.id} : ${k} min > max`);
     }
-    if (ri > 0 && R.minLevel < raw.regions[ri - 1]!.minLevel) err(where, 'niveau minimal inférieur à la région précédente');
-  });
+  }
   for (const x of raw.rares) {
+    if ((x.route === undefined) === (x.region === undefined))
+      err('world/rares.yaml', `${x.id} : region (prototype) ou route, l'un des deux`);
+    if (x.route !== undefined && !raw.routes?.some((y) => y.id === x.route)) err('world/rares.yaml', `${x.id} : route inconnue ${x.route}`);
     if (!steps.has(x.step)) err('world/rares.yaml', `${x.id} : étape inconnue ${x.step}`);
     if (!(x.id in raw.troops)) err('world/rares.yaml', `${x.id} : monstre absent des troupes`);
     if (!isItem(x.trophy)) err('world/rares.yaml', `${x.id} : trophée inconnu ${x.trophy}`);
