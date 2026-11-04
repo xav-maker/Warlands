@@ -44,7 +44,7 @@
                   </form>
                 <% } %>
               </div>
-              <p class="muted">Capacités : <%= f.skills.map(([s, l]) => it.L.skill(s) + ' ' + l).join(', ') %></p>
+              <div class="spells"><% for (const [s, l] of f.skills) { %><%~ include('./partials/spell', { id: s, L: it.L, level: l }) %><% } %></div>
               <p class="muted"><%= r.gold %> or · <%= r.ingredients.map(([i, q]) => it.L.item(i) + ' ' + (e.owned[i] ?? 0) + '/' + q).join(', ') %></p>
             </li>
           <% } %>
@@ -98,7 +98,7 @@
             <li class="row between">
               <label class="check">
                 <input type="checkbox" name="off_<%= s %>"<%= off ? ' checked' : '' %><%= s === it.base ? ' disabled' : '' %>>
-                Désactiver <b><%= it.L.skill(s) %></b><%= s === it.base ? ' (attaque de base)' : '' %>
+                Désactiver <%~ include('./partials/spell', { id: s, L: it.L }) %><%= s === it.base ? ' (attaque de base)' : '' %>
               </label>
               <span class="<%= it.active.includes(s) ? 'good' : 'muted' %>"><%= it.active.includes(s) ? 'active' : off ? 'désactivée' : 'en réserve' %></span>
             </li>

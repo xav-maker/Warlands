@@ -47,7 +47,7 @@
             <td><%= monsters ? (m.region + 1) : (c.regions.find((r) => r.city.recruit.includes(id))?.city.name ?? '—') %></td>
             <td><%= t.role %></td>
             <% if (monsters) { %><td><%= L.immune(id) || '—' %></td><% } %>
-            <td><%= t.forms[0].skills.map(([s, l]) => L.skill(s) + ' ' + l).join(', ') %></td>
+            <td><div class="spells"><% for (const [s, l] of t.forms[0].skills) { %><%~ include('./partials/spell', { id: s, L, level: l > 1 ? l : 0 }) %><% } %></div></td>
           </tr>
         <% } %>
       </tbody>

@@ -1,54 +1,70 @@
 <% layout('./layout', { title: 'Atelier', v: it.v, error: it.error }) %>
-<% const rv = it.rv; const c = it.c %>
-<% const canPay = (r) => it.v.gold >= r.gold && r.ingredients.every(([i, q]) => (rv.owned.get(i) ?? 0) >= q) %>
-<% const equip = Object.values(c.equip).filter((b) => b.tier === it.tier && b.craft !== false && rv.recipes.get(b.id)).map((b) => { const r = rv.recipes.get(b.id); const ws = it.workshopOf(b.id); const here = !ws || ws === it.v.region; return { b, r, ws, here, ok: here && canPay(r) } }).sort((x, y) => Number(y.ok) - Number(x.ok)) %>
-<% const cons = [...rv.recipes.values()].filter((r) => r.kind === 'consommable').map((r) => ({ r, ok: canPay(r) })).sort((x, y) => Number(y.ok) - Number(x.ok)) %>
+<% const rv = it.rv; const c = it.c; const have = (i) => rv.owned.get(i) ?? 0 %>
+<% const ORDER = { ok: 0, partial: 1, none: 2 }; const LABEL = { ok: 'fabricable', partial: 'il manque des ingrédients', none: 'aucun ingrédient' } %>
+<% const equip = Object.values(c.equip).filter((b) => b.tier === it.tier && b.craft !== false && rv.recipes.get(b.id)).map((b) => { const r = rv.recipes.get(b.id); const ws = it.workshopOf(b.id); const here = !ws || ws === it.v.region; const st = it.L.recipeStatus(r, have, it.v.gold); return { b, r, ws, here, st: here || st !== 'ok' ? st : 'partial' } }).sort((x, y) => ORDER[x.st] - ORDER[y.st]) %>
+<% const cons = [...rv.recipes.values()].filter((r) => r.kind === 'consommable').map((r) => ({ r, st: it.L.recipeStatus(r, have, it.v.gold) })).sort((x, y) => ORDER[x.st] - ORDER[y.st]) %>
+<% const n = (list, s) => list.filter((x) => x.st === s).length %>
 <section>
   <p class="eyebrow"><%= it.R.city.name %></p>
   <h1>Atelier</h1>
-  <p class="muted">Vos recettes sont personnelles. Ce qui est fabriqué arrive en banque ; la qualité de l’équipement est tirée à la fabrication. <span class="good">En vert</span> : ce que vous pouvez fabriquer tout de suite.</p>
+  <p class="muted">Vos recettes sont personnelles ; ce qui est fabriqué arrive en banque et la qualité de l’équipement est tirée à la fabrication.</p>
+  <p class="legend"><span class="l-ok">fabricable maintenant</span><span class="l-partial">une partie des ingrédients</span><span class="l-none">aucun ingrédient</span></p>
   <nav class="tabs" aria-label="Palier">
     <% for (const p of [1, 2, 3, 4, 5]) { %><a href="/atelier?p=<%= p %>"<%~ p === it.tier ? ' aria-current="page"' : '' %>>Palier <%= p %></a><% } %>
   </nav>
+  <%~ include('./partials/filterbar', {
+    for: '.craft-list',
+    placeholder: 'Chercher un objet ou un ingrédient…',
+    groups: [{ key: 'status', label: 'État', options: [['*', 'Tout'], ['ok', 'Fabricable'], ['partial', 'Presque'], ['none', 'Rien']] }],
+    selects: [{ key: 'slot', label: 'Type', options: [['*', 'Tous les types'], ['arme', 'Armes'], ['armure', 'Armures'], ['accessoire', 'Accessoires'], ['consommable', 'Consommables']] }],
+  }) %>
   <div class="grid">
     <div class="card">
-      <h2>Équipement de palier <%= it.tier %> <span class="count"><%= equip.filter((x) => x.ok).length %> fabricable<%= equip.filter((x) => x.ok).length > 1 ? 's' : '' %></span></h2>
-      <ul class="offers">
-        <% for (const { b, r, ws, here, ok } of equip) { %>
-          <li class="offer <%= ok ? 'ok' : 'ko' %>">
+      <h2>Équipement de palier <%= it.tier %> <span class="count"><%= n(equip, 'ok') %> fabricable<%= n(equip, 'ok') > 1 ? 's' : '' %></span></h2>
+      <ul class="offers craft-list">
+        <% for (const { b, r, ws, here, st } of equip) { %>
+          <li class="offer <%= st %>" data-text="<%= b.name %> <%= b.cat %> <%= r.ingredients.map(([i]) => it.L.item(i)).join(' ') %>" data-status="<%= st %>" data-slot="<%= b.slot %>">
             <div class="row">
-              <span><span class="title"><%= b.name %></span> <span class="meta">— <%= b.slot %> (<%= b.cat %>)</span></span>
-              <form method="post" action="/atelier/fabriquer" class="inline">
-                <input type="hidden" name="_csrf" value="<%= it.csrf %>">
-                <input type="hidden" name="out" value="<%= b.id %>">
-                <input type="hidden" name="p" value="<%= it.tier %>">
-                <button type="submit" class="buy"<%= ok ? '' : ' disabled' %>>Fabriquer</button>
-              </form>
+              <span><span class="title"><%= b.name %></span> <span class="meta">— <%= b.slot %> · <%= b.cat.replace('_', ' ') %></span></span>
+              <span class="actions">
+                <span class="sr-only"><%= LABEL[st] %></span>
+                <form method="post" action="/atelier/fabriquer" class="inline">
+                  <input type="hidden" name="_csrf" value="<%= it.csrf %>">
+                  <input type="hidden" name="out" value="<%= b.id %>">
+                  <input type="hidden" name="p" value="<%= it.tier %>">
+                  <button type="submit" class="buy"<%= st === 'ok' ? '' : ' disabled' %>>Fabriquer</button>
+                </form>
+              </span>
             </div>
             <%~ include('./partials/cost', { gold: r.gold, have: it.v.gold, ingredients: r.ingredients, owned: rv.owned, L: it.L }) %>
             <% if (ws) { %><p class="meta"><%= here ? 'Base de ' + it.L.region(ws).city.name + ' : fabricable ici seulement.' : 'Fabricable à l’atelier de ' + it.L.region(ws).city.name + ' seulement.' %></p><% } %>
           </li>
         <% } %>
+        <li class="filter-empty" hidden>Aucun objet ne correspond.</li>
         <% if (!equip.length) { %><li class="muted">Aucune recette d’équipement à ce palier.</li><% } %>
       </ul>
     </div>
     <div class="card">
-      <h2>Consommables <span class="count"><%= cons.filter((x) => x.ok).length %> fabricable<%= cons.filter((x) => x.ok).length > 1 ? 's' : '' %></span></h2>
-      <ul class="offers">
-        <% for (const { r, ok } of cons) { %>
-          <li class="offer <%= ok ? 'ok' : 'ko' %>">
+      <h2>Consommables <span class="count"><%= n(cons, 'ok') %> fabricable<%= n(cons, 'ok') > 1 ? 's' : '' %></span></h2>
+      <ul class="offers craft-list">
+        <% for (const { r, st } of cons) { %>
+          <li class="offer <%= st %>" data-text="<%= it.L.item(r.out) %> <%= r.ingredients.map(([i]) => it.L.item(i)).join(' ') %>" data-status="<%= st %>" data-slot="consommable">
             <div class="row">
               <span class="title"><%= it.L.item(r.out) %></span>
-              <form method="post" action="/atelier/fabriquer" class="inline">
-                <input type="hidden" name="_csrf" value="<%= it.csrf %>">
-                <input type="hidden" name="out" value="<%= r.out %>">
-                <input type="hidden" name="p" value="<%= it.tier %>">
-                <button type="submit" class="buy"<%= ok ? '' : ' disabled' %>>Fabriquer</button>
-              </form>
+              <span class="actions">
+                <span class="sr-only"><%= LABEL[st] %></span>
+                <form method="post" action="/atelier/fabriquer" class="inline">
+                  <input type="hidden" name="_csrf" value="<%= it.csrf %>">
+                  <input type="hidden" name="out" value="<%= r.out %>">
+                  <input type="hidden" name="p" value="<%= it.tier %>">
+                  <button type="submit" class="buy"<%= st === 'ok' ? '' : ' disabled' %>>Fabriquer</button>
+                </form>
+              </span>
             </div>
             <%~ include('./partials/cost', { gold: r.gold, have: it.v.gold, ingredients: r.ingredients, owned: rv.owned, L: it.L }) %>
           </li>
         <% } %>
+        <li class="filter-empty" hidden>Aucun consommable ne correspond.</li>
       </ul>
     </div>
   </div>

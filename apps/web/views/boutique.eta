@@ -23,9 +23,14 @@
 
   <div class="card">
     <h2>Annonces <span class="muted">par prix croissant · <span class="good">en vert</span> : à votre portée</span></h2>
-    <ul class="offers">
+    <%~ include('./partials/filterbar', {
+      for: '#listings',
+      placeholder: 'Filtrer les annonces affichées…',
+      groups: [{ key: 'status', label: 'Prix', options: [['*', 'Toutes'], ['ok', 'À ma portée'], ['none', 'Trop chères']] }],
+    }) %>
+    <ul class="offers" id="listings" style="margin-top: 12px">
       <% for (const l of it.found.rows) { const own = l.seller_id === it.auth.player.id; const ok = !own && it.v.gold >= l.price %>
-        <li class="offer row between <%= ok ? 'ok' : own ? '' : 'ko' %>">
+        <li class="offer row between <%= ok ? 'ok' : own ? '' : 'none' %>" data-text="<%= l.name %> <%= l.seller %> <%= FAM[l.family] ?? l.family %>" data-status="<%= own ? 'own' : ok ? 'ok' : 'none' %>">
           <span>
             <span class="title"><%= l.name %></span><%= l.qty > 1 ? ' × ' + l.qty : '' %>
             <span class="meta">— <%= FAM[l.family] ?? l.family %>, palier <%= l.tier %><%= l.level ? ', niveau ' + l.level : '' %><%= l.roll ? ', ' + it.L.quality(l.roll) : '' %><%= l.stats ? ' : ' + l.stats.map(it.L.statText).join(', ') : '' %> · par <%= l.seller %></span>
@@ -40,7 +45,7 @@
           </span>
         </li>
       <% } %>
-      <% if (!it.found.rows.length) { %><li class="muted">Aucune annonce ne correspond.</li><% } %>
+      <% if (!it.found.rows.length) { %><li class="muted">Aucune annonce ne correspond.</li><% } else { %><li class="filter-empty" hidden>Aucune annonce affichée ne correspond.</li><% } %>
     </ul>
     <% if (it.found.next) { %><p><a href="/boutique?<%= new URLSearchParams({ ...(f.q ? { q: f.q } : {}), ...(f.family ? { f: f.family } : {}), ...(f.tier ? { p: String(f.tier) } : {}), ...(f.slot ? { s: f.slot } : {}), apres: it.found.next }).toString() %>">Annonces suivantes</a></p><% } %>
   </div>

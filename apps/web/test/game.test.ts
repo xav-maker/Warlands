@@ -157,7 +157,7 @@ describe('parcours de jeu (J2)', () => {
     expect(page.body).toContain('Acolyte');
     // Recettes : chaque ingrédient en pastille, verte si assez, rouge sinon ; l'offre possible ressort en vert.
     expect(page.body).toMatch(/class="chip (ok|ko)"/);
-    expect(page.body).toMatch(/<li class="offer (ok|ko)">/);
+    expect(page.body).toMatch(/<li class="offer (ok|partial|none)"/);
     expect((await req('POST', '/caserne/recruter', { type: 'acolyte' })).headers.location).toBe('/caserne');
     const pid = await playerId();
     // L'escouade de haut niveau est pleine : la recrue attend en caserne.

@@ -111,6 +111,36 @@ export function labels(c: GameContent) {
     dungeon: (id: string): string => p.dungeons?.find((x) => x.id === id)?.name ?? id,
     troop: (id: string): string => p.troops[id]?.name ?? id,
     skill: (id: string): string => p.skills[id]?.name ?? id,
+    /** Fiche d'un sort pour son infobulle : genre, coût, portée, et effets (réussite, demi-échec, échec critique). */
+    spell: (id: string) => {
+      const s = p.skills[id] as
+        { name: string; desc?: string; kind: string; target: string; range: number; energy: number; mana: number } | undefined;
+      if (!s) return { name: id, meta: '', lines: [] as { k: string; t: string }[] };
+      const parts = (s.desc ?? '').split(/\s*(DE|EC)\s*:\s*/);
+      const lines = [{ k: 'Effet', t: parts[0]!.trim() }];
+      for (let i = 1; i < parts.length; i += 2)
+        lines.push({ k: parts[i] === 'DE' ? 'Demi-échec' : 'Échec critique', t: (parts[i + 1] ?? '').trim().replace(/\.$/, '') + '.' });
+      const kind = s.kind === 'passive' ? 'passif' : s.kind === 'reaction' ? 'réaction' : 'active';
+      const target = s.target === 'enemy' ? 'un ennemi' : s.target === 'ally' ? 'un allié' : 'soi';
+      const cost = [s.energy ? `${s.energy} énergie` : '', s.mana ? `${s.mana} mana` : ''].filter(Boolean).join(', ');
+      const meta = s.kind === 'passive' ? 'passif' : `${kind} · ${target}, portée ${s.range}${cost ? ' · ' + cost : ''}`;
+      return { name: s.name, meta, lines: lines.filter((l) => l.t && l.t !== '.') };
+    },
+    /** Famille d'un objet (filtres du sac et de la boutique). */
+    family: (id: string): string => p.items[id]?.kind ?? (p.equip[id] ? 'equipement' : 'autre'),
+    /**
+     * Couleur d'une recette : ok (tout est là, or compris), partial (une partie des ingrédients, ou tout sauf l'or),
+     * none (aucun ingrédient).
+     */
+    recipeStatus: (
+      r: { gold: number; ingredients: [string, number][] },
+      have: (id: string) => number,
+      gold: number,
+    ): 'ok' | 'partial' | 'none' => {
+      const enough = r.ingredients.every(([i, q]) => have(i) >= q);
+      if (enough && gold >= r.gold) return 'ok';
+      return enough || r.ingredients.some(([i]) => have(i) > 0) ? 'partial' : 'none';
+    },
     /** Immunités d'un monstre (README 19.4), en clair ; vide sans immunité. */
     immune: (id: string): string => (p.troops[id]?.immune ?? []).map((x) => DMG_LABEL[x] ?? x).join(', '),
     isConsumable: (id: string): boolean => p.items[id]?.kind === 'consommable',

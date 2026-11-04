@@ -10,35 +10,74 @@
   <% if (it.css) { %><link rel="stylesheet" href="<%= it.asset(it.css) %>"><% } %>
   <% if (it.script) { %><script src="<%= it.asset(it.script) %>" defer></script><% } %>
   <script src="/static/htmx.min.js" defer></script>
+  <script src="<%= it.asset('/static/ui.js') %>" defer></script>
   <% if (it.auth) { %><script src="<%= it.asset('/static/events.js') %>" defer></script><% } %>
 </head>
-<% const here = (p) => (it.path === p || (p !== '/' && (it.path ?? '').startsWith(p + '/')) ? ' aria-current="page"' : '') %>
-<% const play = ['/jeu', '/ville', '/route', '/donjon', '/caserne', '/atelier', '/marchand', '/boutique', '/quetes', '/troupe', '/combat'].some((p) => it.path === p || (it.path ?? '').startsWith(p + '/')) %>
+<% const at = (p) => it.path === p || (p !== '/' && (it.path ?? '').startsWith(p + '/')) %>
+<% const here = (p) => (at(p) ? ' aria-current="page"' : '') %>
+<% const playPaths = ['/jeu', '/ville', '/route', '/donjon', '/caserne', '/atelier', '/marchand', '/boutique', '/quetes', '/troupe', '/combat', '/sac'] %>
+<% const socialPaths = ['/chat', '/messages', '/amis', '/notifications', '/signaler'] %>
+<% const helpPaths = ['/tutoriel', '/codex'] %>
+<% const cur = (paths) => (paths.some(at) ? ' current' : '') %>
+<% const item = (href, ico, label, hint) => `<a href="${href}"${here(href)}><svg class="ico" aria-hidden="true"><use href="#i-${ico}"></use></svg><span><b>${label}</b>${hint ? `<small>${hint}</small>` : ''}</span></a>` %>
+<% const pos = it.v ? (it.v.kind === 'route' ? 'Ma route' : it.v.kind === 'dungeon' ? 'Mon donjon' : 'Ma ville') : 'Ma position' %>
 <body hx-headers='<%= JSON.stringify({ "x-csrf-token": it.csrf }) %>'>
+  <%~ include('./partials/icons') %>
   <header class="top">
     <div class="wrap">
       <a class="brand" href="/">Les Cinq Régions</a>
-      <nav>
-        <% if (it.auth) { %>
-          <a href="/jeu"<%~ play ? ' aria-current="page"' : '' %>>Jouer</a>
-          <a href="/sac"<%~ here('/sac') %>>Sac</a>
-          <a href="/codex"<%~ here('/codex') %>>Codex</a>
-          <a href="/tutoriel"<%~ here('/tutoriel') %>>Guide</a>
-          <a href="/chat"<%~ here('/chat') %>>Discussion</a>
-          <% if (it.auth.account.role !== 'player') { %><a href="/moderation"<%~ here('/moderation') %>>Modération</a><% } %>
-          <a href="/compte"<%~ here('/compte') %>>Compte</a>
-          <% if (it.v && it.v.unread) { %><a href="/notifications" class="badge" title="Notifications non lues">✉ <%= it.v.unread %></a><% } %>
+      <% if (it.auth) { %>
+        <nav class="mainnav" aria-label="Navigation principale">
+          <details class="menu<%= cur(playPaths) %>">
+            <summary><svg class="ico" aria-hidden="true"><use href="#i-map"></use></svg>Jouer<svg class="ico chev" aria-hidden="true"><use href="#i-chevron"></use></svg></summary>
+            <div class="menu-panel">
+              <%~ item('/jeu', it.v && it.v.kind === 'route' ? 'map' : it.v && it.v.kind === 'dungeon' ? 'door' : 'city', pos, 'là où vous êtes') %>
+              <%~ item('/caserne', 'sword', 'Caserne', 'recruter, engager') %>
+              <%~ item('/atelier', 'hammer', 'Atelier', 'fabriquer') %>
+              <%~ item('/marchand', 'coins', 'Marchand', 'acheter, revendre') %>
+              <%~ item('/boutique', 'shop', 'Boutique', 'entre joueurs') %>
+              <%~ item('/quetes', 'scroll', 'Quêtes', 'trophées à rapporter') %>
+              <%~ item('/sac', 'bag', 'Sac et banque', 'vos objets') %>
+            </div>
+          </details>
+          <details class="menu<%= cur(socialPaths) %>">
+            <summary><svg class="ico" aria-hidden="true"><use href="#i-chat"></use></svg>Social<svg class="ico chev" aria-hidden="true"><use href="#i-chevron"></use></svg></summary>
+            <div class="menu-panel">
+              <%~ item('/chat', 'chat', 'Discussion', 'canal de la région') %>
+              <%~ item('/messages', 'mail', 'Messages', 'privés') %>
+              <%~ item('/amis', 'users', 'Amis', 'liste et demandes') %>
+              <%~ item('/notifications', 'bell', 'Notifications', it.v && it.v.unread ? it.v.unread + ' non lue' + (it.v.unread > 1 ? 's' : '') : 'à jour') %>
+            </div>
+          </details>
+          <details class="menu<%= cur(helpPaths) %>">
+            <summary><svg class="ico" aria-hidden="true"><use href="#i-help"></use></svg>Aide<svg class="ico chev" aria-hidden="true"><use href="#i-chevron"></use></svg></summary>
+            <div class="menu-panel">
+              <%~ item('/tutoriel', 'help', 'Guide', 'premiers pas') %>
+              <%~ item('/codex', 'book', 'Codex', 'troupes, monstres, objets') %>
+            </div>
+          </details>
+        </nav>
+        <div class="userbar">
           <% if (it.v) { %><span class="gold" title="Or"><%= it.v.gold %> or</span><% } %>
-          <span class="who"><%= it.auth.player.pseudo %></span>
-          <form method="post" action="/deconnexion" class="inline">
-            <input type="hidden" name="_csrf" value="<%= it.csrf %>">
-            <button type="submit" class="link">Se déconnecter</button>
-          </form>
-        <% } else { %>
-          <a href="/connexion">Connexion</a>
-          <a href="/inscription" class="btn">Créer un compte</a>
-        <% } %>
-      </nav>
+          <% if (it.v && it.v.unread) { %><a href="/notifications" class="bell" title="Notifications non lues" aria-label="Notifications non lues : <%= it.v.unread %>"><svg class="ico" aria-hidden="true"><use href="#i-bell"></use></svg><span class="badge"><%= it.v.unread %></span></a><% } %>
+          <details class="menu end<%= cur(['/compte', '/moderation']) %>">
+            <summary><svg class="ico" aria-hidden="true"><use href="#i-user"></use></svg><span class="who"><%= it.auth.player.pseudo %></span><svg class="ico chev" aria-hidden="true"><use href="#i-chevron"></use></svg></summary>
+            <div class="menu-panel">
+              <%~ item('/compte', 'user', 'Compte', 'sécurité, données') %>
+              <% if (it.auth.account.role !== 'player') { %><%~ item('/moderation', 'shield', 'Modération', 'signalements, sanctions') %><% } %>
+              <form method="post" action="/deconnexion">
+                <input type="hidden" name="_csrf" value="<%= it.csrf %>">
+                <button type="submit" class="menu-item"><svg class="ico" aria-hidden="true"><use href="#i-logout"></use></svg><span><b>Se déconnecter</b></span></button>
+              </form>
+            </div>
+          </details>
+        </div>
+      <% } else { %>
+        <nav class="userbar">
+          <a href="/connexion" class="btn ghost">Connexion</a>
+          <a href="/inscription" class="btn primary">Créer un compte</a>
+        </nav>
+      <% } %>
     </div>
   </header>
   <main class="wrap">

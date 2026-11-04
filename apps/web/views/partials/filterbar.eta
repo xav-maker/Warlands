@@ -1,0 +1,15 @@
+<%/* Barre de recherche et de filtres (ui.js ; masquée sans JavaScript, les listes restent complètes).
+  it.for : sélecteur des listes filtrées (leurs enfants portent data-text et les clés de filtre en data-*).
+  it.placeholder ; it.groups : [{ key, label, options: [[valeur, libellé]] }] (boutons) ; it.selects : idem (liste). */%>
+<div class="filterbar" data-for="<%= it.for %>" hidden>
+  <label class="search"><span class="sr-only">Rechercher</span><svg class="ico" aria-hidden="true"><use href="#i-search"></use></svg><input type="search" data-search placeholder="<%= it.placeholder ?? 'Rechercher…' %>" autocomplete="off"></label>
+  <% for (const g of it.groups ?? []) { %>
+    <div class="segmented" role="group" aria-label="<%= g.label %>" data-key="<%= g.key %>">
+      <% g.options.forEach(([v, l], i) => { %><button type="button" data-value="<%= v %>" aria-pressed="<%= i === 0 %>"><%= l %></button><% }) %>
+    </div>
+  <% } %>
+  <% for (const s of it.selects ?? []) { %>
+    <select data-key="<%= s.key %>" aria-label="<%= s.label %>"><% for (const [v, l] of s.options) { %><option value="<%= v %>"><%= l %></option><% } %></select>
+  <% } %>
+  <span data-count aria-live="polite"></span>
+</div>

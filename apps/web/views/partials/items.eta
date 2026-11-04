@@ -1,7 +1,7 @@
 <%/* Liste d'un conteneur avec ses actions. it.x (Contents), it.from ('BAG'|'BANK'), it.L, it.csrf, it.actions : banque | vendre | jeter */%>
-<ul class="items">
+<ul class="items<%= it.list ? ' ' + it.list : '' %>">
   <% for (const s of it.x.stacks) { %>
-    <li class="row between">
+    <li class="row between" data-text="<%= it.L.item(s.item) %>" data-family="<%= it.L.family(s.item) %>">
       <span><%= it.L.item(s.item) %> × <%= s.qty %><% if (it.reserved && it.reserved.has(s.item)) { %> <span class="tag" title="Matériau réservé à l’échange : il n’entre dans aucune de vos recettes">inutile pour vous</span><% } %><% if (it.actions.includes('vendre')) { %> <span class="muted">— <%= it.L.sellPrice(s.item) %> or l’unité</span><% } %></span>
       <span class="actions">
         <% for (const a of it.actions) { %>
@@ -18,7 +18,7 @@
     </li>
   <% } %>
   <% for (const i of it.x.instances) { %>
-    <li class="row between">
+    <li class="row between" data-text="<%= it.L.item(i.base) %> <%= it.L.quality(i.roll) %>" data-family="equipement">
       <span><%= it.L.item(i.base) %> <span class="muted">(<%= it.L.quality(i.roll) %> : <%= i.stats.map(it.L.statText).join(', ') %>)</span><% if (it.actions.includes('vendre')) { %> <span class="muted">— <%= it.L.sellInstance(i.base, i.roll) %> or</span><% } %></span>
       <span class="actions">
         <% for (const a of it.actions) { %>
@@ -33,5 +33,5 @@
       </span>
     </li>
   <% } %>
-  <% if (!it.x.stacks.length && !it.x.instances.length) { %><li class="muted">Vide.</li><% } %>
+  <% if (!it.x.stacks.length && !it.x.instances.length) { %><li class="muted">Vide.</li><% } else { %><li class="filter-empty" hidden>Rien ne correspond.</li><% } %>
 </ul>

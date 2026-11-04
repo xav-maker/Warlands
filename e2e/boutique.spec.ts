@@ -54,10 +54,10 @@ test('vente entre deux comptes à la boutique de Havre-Gris', async ({ browser }
   // Le vendeur a son or (moins la taxe de 5 %) et une notification.
   await seller.goto('/ville');
   await expect(seller.getByText('1028 or')).toBeVisible(); // 1000 + 30 − 2
-  await seller.getByRole('link', { name: /✉ 1/ }).click();
+  await seller.getByRole('link', { name: /Notifications non lues/ }).click();
   await expect(seller.getByText(/Vente à Havre-Gris : Bandage × 2 pour 30 or/)).toBeVisible();
   await seller.getByRole('button', { name: 'Tout marquer comme lu' }).click();
-  await expect(seller.getByRole('link', { name: /✉/ })).toHaveCount(0);
+  await expect(seller.getByRole('link', { name: /Notifications non lues/ })).toHaveCount(0);
 
   // L'historique des prix de la ville garde la vente.
   await buyer.goto('/boutique/historique/bandage');

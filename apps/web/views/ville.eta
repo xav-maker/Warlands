@@ -30,13 +30,14 @@
     <div class="card">
       <h2>Services</h2>
       <ul class="tiles">
-        <li><a href="/caserne"><b>Caserne</b><span>recruter, engager, racheter des unités</span></a></li>
-        <li><a href="/atelier"><b>Atelier</b><span>fabriquer l’équipement et les consommables de vos recettes</span></a></li>
-        <li><a href="/quetes"><b>Quêtes</b><span>rapporter les trophées des monstres rares et des boss</span></a></li>
-        <li><a href="/boutique"><b>Boutique</b><span>acheter et vendre entre joueurs, à <%= it.R.city.name %></span></a></li>
-        <li><a href="/marchand"><b>Marchand</b><span>équipement et consommables du palier <%= it.R.tier %></span></a></li>
-        <li><a href="/sac"><b>Sac et banque</b><span>sac <%= it.v.bag.used %> / <%= it.v.bag.cap %>, banque <%= it.v.bank.used %> / <%= it.v.bank.cap %></span></a></li>
-        <li><a href="/codex"><b>Codex</b><span>troupes, monstres, objets, régions</span></a></li>
+        <li><a href="/caserne"><svg class="ico" aria-hidden="true"><use href="#i-sword"></use></svg><b>Caserne</b><span>recruter, engager, racheter des unités</span></a></li>
+        <li><a href="/atelier"><svg class="ico" aria-hidden="true"><use href="#i-hammer"></use></svg><b>Atelier</b><span>fabriquer équipement et consommables</span></a></li>
+        <li><a href="/marchand"><svg class="ico" aria-hidden="true"><use href="#i-coins"></use></svg><b>Marchand</b><span>équipement et consommables du palier <%= it.R.tier %></span></a></li>
+        <li><a href="/boutique"><svg class="ico" aria-hidden="true"><use href="#i-shop"></use></svg><b>Boutique</b><span>acheter et vendre entre joueurs</span></a></li>
+        <li><a href="/quetes"><svg class="ico" aria-hidden="true"><use href="#i-scroll"></use></svg><b>Quêtes</b><span>trophées des rares et des boss</span></a></li>
+        <li><a href="/sac"><svg class="ico" aria-hidden="true"><use href="#i-bag"></use></svg><b>Sac et banque</b><span>sac <%= it.v.bag.used %> / <%= it.v.bag.cap %> · banque <%= it.v.bank.used %> / <%= it.v.bank.cap %></span></a></li>
+        <li><a href="/codex"><svg class="ico" aria-hidden="true"><use href="#i-book"></use></svg><b>Codex</b><span>troupes, monstres, objets, régions</span></a></li>
+        <li><a href="/tutoriel"><svg class="ico" aria-hidden="true"><use href="#i-help"></use></svg><b>Guide</b><span>les premiers pas</span></a></li>
       </ul>
       <%~ include('./partials/dispo', { dungeonAvailable: it.v.dungeonAvailable, csrf: it.csrf }) %>
       <p class="muted">Disponible, vous pouvez être invité au hasard dans le donjon d’un joueur de la région.</p>

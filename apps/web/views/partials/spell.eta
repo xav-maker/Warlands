@@ -1,0 +1,3 @@
+<%/* Un sort, avec son infobulle (survol, focus, toucher). it.id, it.L ; it.level (niveau d'apprentissage, facultatif). */%>
+<% const s = it.L.spell(it.id) %>
+<span class="spell" tabindex="0" role="button" aria-label="<%= s.name %> : voir l’effet"><%= s.name %><% if (it.level) { %> <span class="lvl">niv. <%= it.level %></span><% } %><span class="tip" role="tooltip"><b><%= s.name %></b><% if (s.meta) { %><span class="tip-meta"><%= s.meta %></span><% } %><% for (const l of s.lines) { %><span class="tip-line"><i><%= l.k %></i> <%= l.t %></span><% } %></span></span>

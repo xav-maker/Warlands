@@ -1,63 +1,85 @@
 <% layout('./layout', { title: 'Caserne', v: it.v, error: it.error }) %>
-<% const rv = it.rv; const c = it.c %>
-<% const canPay = (r) => it.v.gold >= r.gold && r.ingredients.every(([i, q]) => (rv.owned.get(i) ?? 0) >= q) %>
-<% const recruits = it.R.city.recruit.filter((type) => rv.recipes.get(type)).map((type) => ({ type, d: c.troops[type], r: rv.recipes.get(type), ok: canPay(rv.recipes.get(type)) })).sort((x, y) => Number(y.ok) - Number(x.ok)) %>
+<% const rv = it.rv; const c = it.c; const have = (i) => rv.owned.get(i) ?? 0 %>
+<% const ORDER = { ok: 0, partial: 1, none: 2 }; const LABEL = { ok: 'recrutable', partial: 'il manque des ingrédients', none: 'aucun ingrédient' } %>
+<% const recruits = it.R.city.recruit.filter((type) => rv.recipes.get(type)).map((type) => ({ type, d: c.troops[type], r: rv.recipes.get(type), st: it.L.recipeStatus(rv.recipes.get(type), have, it.v.gold) })).sort((x, y) => ORDER[x.st] - ORDER[y.st]) %>
+<% const troops = it.v.troops.filter((x) => x.units.length) %>
 <section>
   <p class="eyebrow"><%= it.R.city.name %></p>
   <h1>Caserne</h1>
-  <p class="muted">Vos recettes sont personnelles : les ingrédients sont pris d’abord en banque, puis dans le sac. Une recrue rejoint l’escouade si elle y tient (8 unités, 11 de population), sinon elle attend ici. <span class="good">En vert</span> : ce que vous pouvez recruter tout de suite.</p>
+  <p class="muted">Vos recettes sont personnelles : les ingrédients sont pris d’abord en banque, puis dans le sac. Une recrue rejoint l’escouade si elle y tient (8 unités, 11 de population), sinon elle attend ici. Survolez ou touchez une capacité pour voir son effet.</p>
+  <p class="legend"><span class="l-ok">recrutable maintenant</span><span class="l-partial">une partie des ingrédients</span><span class="l-none">aucun ingrédient</span></p>
   <div class="grid">
-    <div class="card">
-      <h2>Recruter <span class="count"><%= recruits.filter((x) => x.ok).length %> possible<%= recruits.filter((x) => x.ok).length > 1 ? 's' : '' %></span></h2>
-      <ul class="offers">
-        <% for (const { type, d, r, ok } of recruits) { %>
-          <li class="offer <%= ok ? 'ok' : 'ko' %>">
-            <div class="row">
-              <span><span class="title"><%= d.name %></span> <span class="meta">— <%= d.role %> · <%= d.units %> unité<%= d.units > 1 ? 's' : '' %>, <%= d.pop %> de pop. · niv. <%= it.R.minLevel %></span></span>
-              <form method="post" action="/caserne/recruter" class="inline">
-                <input type="hidden" name="_csrf" value="<%= it.csrf %>">
-                <input type="hidden" name="type" value="<%= type %>">
-                <button type="submit" class="buy"<%= ok ? '' : ' disabled' %>>Recruter</button>
-              </form>
-            </div>
-            <%~ include('./partials/cost', { gold: r.gold, have: it.v.gold, ingredients: r.ingredients, owned: rv.owned, L: it.L }) %>
-          </li>
-        <% } %>
-      </ul>
+    <div>
+      <%~ include('./partials/filterbar', {
+        for: '#recruits',
+        placeholder: 'Chercher une troupe, un rôle, un ingrédient…',
+        groups: [{ key: 'status', label: 'État', options: [['*', 'Tout'], ['ok', 'Recrutable'], ['partial', 'Presque'], ['none', 'Rien']] }],
+      }) %>
+      <div class="card">
+        <h2>Recruter <span class="count"><%= recruits.filter((x) => x.st === 'ok').length %> possible<%= recruits.filter((x) => x.st === 'ok').length > 1 ? 's' : '' %></span></h2>
+        <ul class="offers" id="recruits">
+          <% for (const { type, d, r, st } of recruits) { %>
+            <li class="offer <%= st %>" data-text="<%= d.name %> <%= d.role ?? '' %> <%= r.ingredients.map(([i]) => it.L.item(i)).join(' ') %>" data-status="<%= st %>">
+              <div class="row">
+                <span><span class="title"><%= d.name %></span> <span class="meta">— <%= d.role %> · <%= d.units %> unité<%= d.units > 1 ? 's' : '' %>, <%= d.pop %> de pop. · niv. <%= it.R.minLevel %></span></span>
+                <span class="actions">
+                  <span class="sr-only"><%= LABEL[st] %></span>
+                  <form method="post" action="/caserne/recruter" class="inline">
+                    <input type="hidden" name="_csrf" value="<%= it.csrf %>">
+                    <input type="hidden" name="type" value="<%= type %>">
+                    <button type="submit" class="buy"<%= st === 'ok' ? '' : ' disabled' %>>Recruter</button>
+                  </form>
+                </span>
+              </div>
+              <div class="spells"><% for (const [s, l] of d.forms[0].skills) { %><%~ include('./partials/spell', { id: s, L: it.L, level: l > 1 ? l : 0 }) %><% } %></div>
+              <%~ include('./partials/cost', { gold: r.gold, have: it.v.gold, ingredients: r.ingredients, owned: rv.owned, L: it.L }) %>
+            </li>
+          <% } %>
+          <li class="filter-empty" hidden>Aucune troupe ne correspond.</li>
+        </ul>
+      </div>
     </div>
 
-    <div class="card">
-      <h2>Vos troupes</h2>
-      <ul class="offers">
-        <% for (const t of it.v.troops.filter((x) => x.units.length)) { const d = c.troops[t.type]; const missing = d.units - t.units.length; const here = it.R.city.recruit.includes(t.type); const r = missing > 0 ? rv.recipes.get(t.type) : null; const cost = r ? it.scaled(r, missing / d.units) : null; const ok = !!cost && here && canPay(cost) %>
-          <li class="offer <%= missing > 0 && ok ? 'ok' : '' %>">
-            <div class="row">
-              <span><a href="/troupe/<%= t.id %>" class="title"><%= t.name %></a> <span class="meta">niv. <%= t.level %> · <%= t.units.length %>/<%= d.units %> unité<%= d.units > 1 ? 's' : '' %><%= t.loaned ? ' · prêtée par la garde' : '' %></span></span>
-              <span class="actions">
-                <span class="status <%= t.container === 'SQUAD' ? 'ok' : 'ko' %>"><%= t.container === 'SQUAD' ? 'en escouade' : 'en caserne' %></span>
-                <form method="post" action="/troupe/<%= t.id %>/<%= t.container === 'SQUAD' ? 'retirer' : 'engager' %>" class="inline">
-                  <input type="hidden" name="_csrf" value="<%= it.csrf %>">
-                  <input type="hidden" name="back" value="/caserne">
-                  <button type="submit"><%= t.container === 'SQUAD' ? 'Retirer' : 'Engager' %></button>
-                </form>
-              </span>
-            </div>
-            <% if (missing > 0) { %>
+    <div>
+      <%~ include('./partials/filterbar', {
+        for: '#my-troops',
+        placeholder: 'Chercher une de vos troupes…',
+        groups: [{ key: 'where', label: 'Où', options: [['*', 'Toutes'], ['squad', 'En escouade'], ['barracks', 'En caserne'], ['hurt', 'À compléter']] }],
+      }) %>
+      <div class="card">
+        <h2>Vos troupes <span class="count muted"><%= troops.length %></span></h2>
+        <ul class="offers" id="my-troops">
+          <% for (const t of troops) { const d = c.troops[t.type]; const missing = d.units - t.units.length; const here = it.R.city.recruit.includes(t.type); const r = missing > 0 ? rv.recipes.get(t.type) : null; const cost = r ? it.scaled(r, missing / d.units) : null; const st = cost && here ? it.L.recipeStatus(cost, have, it.v.gold) : null %>
+            <li class="offer <%= missing > 0 && st ? st : '' %>" data-text="<%= t.name %> <%= d.role ?? '' %>" data-where="<%= t.container === 'SQUAD' ? 'squad' : 'barracks' %><%= missing > 0 ? ' hurt' : '' %>">
               <div class="row">
-                <span class="meta"><%= missing %> unité<%= missing > 1 ? 's' : '' %> manquante<%= missing > 1 ? 's' : '' %><%= here ? '' : ' · se rachète dans sa ville de recrutement' %></span>
-                <% if (here && cost) { %>
-                  <form method="post" action="/troupe/<%= t.id %>/racheter" class="inline">
+                <span><a href="/troupe/<%= t.id %>" class="title"><%= t.name %></a> <span class="meta">niv. <%= t.level %> · <%= t.units.length %>/<%= d.units %> unité<%= d.units > 1 ? 's' : '' %><%= t.loaned ? ' · prêtée par la garde' : '' %></span></span>
+                <span class="actions">
+                  <span class="status <%= t.container === 'SQUAD' ? 'ok' : 'ko' %>"><%= t.container === 'SQUAD' ? 'en escouade' : 'en caserne' %></span>
+                  <form method="post" action="/troupe/<%= t.id %>/<%= t.container === 'SQUAD' ? 'retirer' : 'engager' %>" class="inline">
                     <input type="hidden" name="_csrf" value="<%= it.csrf %>">
                     <input type="hidden" name="back" value="/caserne">
-                    <button type="submit" class="buy"<%= ok ? '' : ' disabled' %>>Racheter</button>
+                    <button type="submit"><%= t.container === 'SQUAD' ? 'Retirer' : 'Engager' %></button>
                   </form>
-                <% } %>
+                </span>
               </div>
-              <% if (cost) { %><%~ include('./partials/cost', { gold: cost.gold, have: it.v.gold, ingredients: cost.ingredients, owned: rv.owned, L: it.L }) %><% } %>
-            <% } %>
-          </li>
-        <% } %>
-      </ul>
+              <% if (missing > 0) { %>
+                <div class="row">
+                  <span class="meta"><%= missing %> unité<%= missing > 1 ? 's' : '' %> manquante<%= missing > 1 ? 's' : '' %><%= here ? '' : ' · se rachète dans sa ville de recrutement' %></span>
+                  <% if (here && cost) { %>
+                    <form method="post" action="/troupe/<%= t.id %>/racheter" class="inline">
+                      <input type="hidden" name="_csrf" value="<%= it.csrf %>">
+                      <input type="hidden" name="back" value="/caserne">
+                      <button type="submit" class="buy"<%= st === 'ok' ? '' : ' disabled' %>>Racheter</button>
+                    </form>
+                  <% } %>
+                </div>
+                <% if (cost) { %><%~ include('./partials/cost', { gold: cost.gold, have: it.v.gold, ingredients: cost.ingredients, owned: rv.owned, L: it.L }) %><% } %>
+              <% } %>
+            </li>
+          <% } %>
+          <li class="filter-empty" hidden>Aucune troupe ne correspond.</li>
+        </ul>
+      </div>
     </div>
   </div>
   <p><a href="/ville">Retour à la ville</a></p>

@@ -173,13 +173,13 @@ describe('messages privés', () => {
     expect(list.body).toContain('Hugo');
     expect(list.body).toContain('class="badge"');
     const nav = await b.req('GET', '/ville');
-    expect(nav.body).toContain('✉ 1'); // notification persistante : destinataire hors ligne
+    expect(nav.body).toContain('<span class="badge">1</span>'); // notification persistante : destinataire hors ligne
 
     const thread = await b.req('GET', '/messages/Hugo');
     expect(thread.statusCode).toBe(200);
     expect(thread.body).toContain('psst &lt;b&gt;toi&lt;/b&gt;');
     expect((await b.req('GET', '/messages')).body).not.toContain('class="badge"');
-    expect((await b.req('GET', '/ville')).body).not.toContain('✉');
+    expect((await b.req('GET', '/ville')).body).not.toContain('class="bell"');
 
     const fil = await b.req('GET', '/messages/Hugo/fil', undefined, { 'hx-request': 'true' });
     expect(fil.body).toContain('psst');
