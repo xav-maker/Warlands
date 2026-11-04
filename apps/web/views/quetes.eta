@@ -4,7 +4,7 @@
 <% const reward = (rw) => rw.kind === 'equip' ? it.L.item(rw.base) + ' (qualité ' + it.L.quality(rw.roll) + ')' : rw.kind === 'troop' ? it.L.troop(rw.type) + ' niveau ' + rw.level : rw.items.map(([i, k]) => it.L.item(i) + ' × ' + k).join(', ') %>
 <section>
   <h1>Quêtes</h1>
-  <p class="muted">Chaque ville propose 5 quêtes : rapporter des trophées de monstres rares. Les monstres rares apparaissent une fois 10 victoires remportées. Une quête se rend dans sa ville ; renoncer coûte 10 or × palier de la ville.</p>
+  <p class="muted">Chaque ville propose 5 quêtes : rapporter des trophées de monstres rares (ils apparaissent une fois 10 victoires remportées), ou, près d’une route à donjon, le trophée d’un de ses boss. Une quête se rend dans sa ville ; renoncer coûte 10 or × palier de la ville.</p>
   <% for (const rid of order) { const R = it.L.region(rid); const list = qv.quests.filter((x) => x.region === rid) %>
     <div class="card">
       <h2><%= R.city.name %><%= rid === it.here ? ' (vous y êtes)' : '' %></h2>

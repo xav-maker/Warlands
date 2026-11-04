@@ -133,3 +133,37 @@ describe('quêtes (README 9.2, 9.3)', () => {
     expect(await offered(pid, 'ronces')).toHaveLength(5);
   });
 });
+
+describe('quêtes de donjon (README 23.7)', () => {
+  it('une quête de Havre-Gris demande un trophée de boss, et se rend comme les autres, prime doublée', async () => {
+    const { pid, seed } = await newPlayer();
+    const qs = await offered(pid, 'ronces');
+    // Havre-Gris touche les Prés de Brande (Terriers du Roi Kobold) : on cherche une quête de donjon parmi les suivantes.
+    let found = qs.map((x) => ({ id: x.id, q: x.data as Quest })).find((x) => x.q.dungeon);
+    for (let k = qs.length; !found && k < 200; k++) {
+      const g = genQuest(content.pack, seed, 0, k);
+      if (g.dungeon) {
+        // Remplace la première quête proposée par celle-ci, comme si elle venait d'être tirée.
+        await t.db
+          .updateTable('quest')
+          .set({ data: JSON.stringify(g) })
+          .where('id', '=', qs[0]!.id)
+          .execute();
+        found = { id: qs[0]!.id, q: g };
+      }
+    }
+    expect(found).toBeDefined();
+    const dq = found!.q;
+    expect(dq.dungeon).toBe('terriers_roi_kobold');
+    expect(dq.needs).toHaveLength(1);
+    expect(['trophee_taupe_reine', 'trophee_chef_gratte_gratte', 'trophee_roi_kobold']).toContain(dq.needs[0]![0]);
+    expect(['equip', 'troop']).toContain(dq.reward.kind);
+    expect(await run(pid, turnInQuest, { quest: found!.id }).catch((e: { code: string }) => e.code)).toBe('NOT_ENOUGH_ITEMS');
+    await give(pid, [[dq.needs[0]![0], 1]]);
+    const before = await gold(pid);
+    await run(pid, turnInQuest, { quest: found!.id });
+    expect(await gold(pid)).toBe(before + dq.gold);
+    const row = await t.db.selectFrom('quest').select('status').where('id', '=', found!.id).executeTakeFirstOrThrow();
+    expect(row.status).toBe('done');
+  });
+});

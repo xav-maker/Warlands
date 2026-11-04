@@ -14,7 +14,10 @@ import {
   doorAppears,
   dungeonById,
   dungeonOfRoute,
+  genDungeonQuest,
   genEquip,
+  genQuest,
+  routes,
   genMonsters,
   room,
   roomBoss,
@@ -172,5 +175,39 @@ describe('combats de salle joués par le moteur', () => {
         const res = simuler({ engineVersion: o.engineVersion, params: c.params, skills: c.skills, units }, 99).result;
         expect(res.time, `${d.id} salle ${n}`).toBeGreaterThan(0);
       }
+  });
+});
+
+describe('quêtes de donjon (README 23.7)', () => {
+  const R = c.regions;
+  const touches = (ri: number) =>
+    routes(c).some((x) => (x.from === R[ri]!.id || x.to === R[ri]!.id) && c.dungeons!.some((d) => d.route === x.id));
+
+  it('20 % des quêtes des villes reliées à une route à donjon, aucune ailleurs', () => {
+    for (let ri = 0; ri < R.length; ri++) {
+      let k = 0;
+      for (let n = 0; n < 500; n++) if (genDungeonQuest(c, 4242, ri, n)) k++;
+      if (touches(ri)) expect(k, R[ri]!.id).toBeGreaterThan(70);
+      if (touches(ri)) expect(k, R[ri]!.id).toBeLessThan(130);
+      else expect(k, R[ri]!.id).toBe(0);
+    }
+  });
+
+  it('demande 1 trophée d’un boss du donjon, récompense troupe ou équipement, prime d’or doublée', () => {
+    const ri = R.findIndex((x) => x.id === 'ronces');
+    const qs = Array.from({ length: 300 }, (_, n) => genQuest(c, 77, ri, n)).filter((x) => x.dungeon);
+    expect(qs.length).toBeGreaterThan(30);
+    for (const q of qs) {
+      const d = dungeonById(c, q.dungeon!);
+      expect(d.bosses.map((b) => bossTrophy(c, b))).toContain(q.needs[0]![0]);
+      expect(q.needs).toEqual([[q.needs[0]![0], 1]]);
+      expect(['equip', 'troop']).toContain(q.reward.kind);
+      const T = routes(c).find((x) => x.id === d.route)!.tier;
+      expect(q.gold % (10 * T * T)).toBe(0); // pts × 5 × T² × 2
+    }
+    expect(genQuest(c, 77, ri, 5)).toEqual(genQuest(c, 77, ri, 5));
+    // Les autres quêtes restent celles d'avant les donjons : rares seulement.
+    for (const q of Array.from({ length: 50 }, (_, n) => genQuest(c, 77, ri, n)).filter((x) => !x.dungeon))
+      for (const [t] of q.needs) expect(c.rares.some((r) => r.trophy === t)).toBe(true);
   });
 });
