@@ -1,5 +1,7 @@
-# Escouades de référence par palier (guide 5.3) : 8 unités et 11 de population au plus, sans équipement,
-# au niveau le plus haut des monstres de l’étape (+ offset). La simulation les oppose à chaque étape de chaque route du palier.
+# Escouades de référence par palier (guide 5.3) : 11 de population et 8 unités au plus, un tank, au moins un soigneur,
+# des dégâts au contact et à distance. Elles sont montées au niveau le plus haut des monstres de l’étape (+ offset),
+# dans la meilleure forme de ce niveau (les évolutions des niveaux 10 et 20 remplacent la forme de base) et, par défaut,
+# équipées au palier de la route. Le second nombre de chaque troupe est son rang (1 devant, 3 derrière).
 
 '1':
   offset: 0
@@ -15,4 +17,4 @@
   troops: [[garde_oasis, 1], [lanciers_cendres, 1], [pretresse_soleil, 3], [mage_cendre, 3], [nomade, 3], [acolyte, 3]]
 '5':
   offset: 0
-  troops: [[paladin, 1], [lames_jumelles, 1], [oracle, 3], [invocatrice, 3], [tireur_astral, 3]]
+  troops: [[paladin, 1], [lames_jumelles, 1], [archonte_aube, 3], [tireur_astral, 3], [acolyte, 3]]

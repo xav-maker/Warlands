@@ -2,14 +2,18 @@
  * Simulation d'équilibrage (guide 5.3) : N combats par étape de chaque route, gardiens compris, contre
  * l'escouade de référence du palier de la route (balance/squads.yaml). Les rencontres sont tirées comme en
  * ligne (population × popMult, emplacements), le combat joué par le moteur de la version en ligne.
+ *
+ * Les escouades prennent la meilleure forme de leur niveau (donc les évolutions) et, par défaut, sont équipées
+ * au palier de la route (un exemplaire moyen par emplacement). Cibles : voir `tierTarget`.
  * Rapport : taux de victoire, durée moyenne, unités perdues, or de l'étape et XP de base par combat.
  */
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
-import YAML from 'yaml';
 import { simuler } from '@cr/engine';
-import { battleUnits, bestForm, computeStats, genMonsters, routes, stepSpec } from '@cr/gen';
-import type { GenContent, PlayerTroop } from '@cr/gen';
+import { Rng, hash } from '@cr/rng';
+import { battleUnits, bestForm, canWear, genEquip, genMonsters, routes, stepSpec, unitStats } from '@cr/gen';
+import type { EquipInstance, GenContent, PlayerTroop, PlayerUnit } from '@cr/gen';
+import YAML from 'yaml';
 
 export interface Squad {
   /** Écart de niveau avec le niveau le plus haut des monstres de l'étape (0 : même niveau). */
@@ -31,12 +35,43 @@ export interface StepReport {
   gold: number;
   xp: number;
 }
+export interface SimOptions {
+  /** Combats par étape. */
+  fights?: number;
+  /** Escouades équipées au palier de la route (défaut) ; false : sans équipement. */
+  gear?: boolean;
+}
 
 export const loadSquads = (file: string): Record<string, Squad> => YAML.parse(readFileSync(file, 'utf8')) as Record<string, Squad>;
 export const SQUADS_FILE = join(import.meta.dirname, '../balance/squads.yaml');
 
-/** Escouade de joueur à pleine santé, meilleure forme du niveau, sans équipement. */
-export function squadOf(c: GenContent, s: Squad, level: number): PlayerTroop[] {
+/**
+ * Taux de victoire visé par palier, escouade équipée au palier : 50 % au palier 1, 10 % au palier 5 (−10 points
+ * par palier) ; les gardiens 5 points plus bas (45 % au palier 1, 5 % au palier 5).
+ */
+export const tierTarget = (tier: number, guardian: boolean): number => 0.5 - 0.1 * (tier - 1) - (guardian ? 0.05 : 0);
+/** Écart toléré entre la moyenne simulée d'un palier et sa cible, en points de victoire (0,05 = 5 points). */
+export const TOLERANCE = 0.05;
+
+/**
+ * Équipement d'une unité : pour chaque emplacement que sa troupe accepte, la base non signature la plus chère
+ * du palier visé (ou du plus haut palier en dessous) que le niveau permet de porter, en exemplaire moyen (qualité 1 000).
+ */
+export function gearOf(c: GenContent, type: string, level: number, tier: number, rng: Rng): Record<string, EquipInstance> {
+  const out: Record<string, EquipInstance> = {};
+  for (const [slot, cats] of Object.entries(c.troopSlots[type] ?? {})) {
+    for (let t = tier; t >= 1 && !out[slot]; t--) {
+      const base = Object.values(c.equip)
+        .filter((b) => b.slot === slot && b.tier === t && !b.region && cats.includes(b.cat) && canWear(c, type, level, b.id) === null)
+        .sort((a, b) => b.value - a.value || a.id.localeCompare(b.id))[0];
+      if (base) out[slot] = genEquip(c, base.id, rng, 1000);
+    }
+  }
+  return out;
+}
+
+/** Escouade de joueur à pleine santé, meilleure forme du niveau (évolutions comprises), équipée ou non. */
+export function squadOf(c: GenContent, s: Squad, level: number, gearTier?: number): PlayerTroop[] {
   const o = c.online!;
   let units = 0;
   let pop = 0;
@@ -46,14 +81,24 @@ export function squadOf(c: GenContent, s: Squad, level: number): PlayerTroop[] {
     units += t.units;
     pop += t.pop;
     const form = bestForm(t, level);
-    const st = computeStats(c, t, form, level);
-    return {
+    const rng = new Rng(hash(level, type, gearTier ?? 0));
+    const troop: PlayerTroop = {
       type,
-      level: level,
+      level,
       form,
       rank,
-      units: Array.from({ length: t.units }, () => ({ hp: st.hpMax, mana: st.manaMax, equip: {} })),
+      units: Array.from({ length: t.units }, (): PlayerUnit => ({
+        hp: 0,
+        mana: 0,
+        equip: gearTier ? gearOf(c, type, level, gearTier, rng) : {},
+      })),
     };
+    for (const u of troop.units) {
+      const st = unitStats(c, troop, u);
+      u.hp = st.hpMax;
+      u.mana = st.manaMax;
+    }
+    return troop;
   });
   if (units > o.squad.maxUnits || pop > o.squad.maxPop)
     throw new Error(
@@ -62,7 +107,8 @@ export function squadOf(c: GenContent, s: Squad, level: number): PlayerTroop[] {
   return out;
 }
 
-export function simulate(c: GenContent, squads: Record<string, Squad>, fights = 20): StepReport[] {
+export function simulate(c: GenContent, squads: Record<string, Squad>, opt: SimOptions | number = {}): StepReport[] {
+  const { fights = 20, gear = true } = typeof opt === 'number' ? { fights: opt } : opt;
   const o = c.online!;
   const eco = c.eco as unknown as { xpPerMonsterLevelPop: number };
   const scale = (v: number): number => Math.max(1, Math.round(v * o.encounters.popMult));
@@ -70,7 +116,7 @@ export function simulate(c: GenContent, squads: Record<string, Squad>, fights = 
   for (const R of routes(c)) {
     const sq = squads[String(R.tier)]!;
     R.steps.forEach((st, si) => {
-      const squad = squadOf(c, sq, Math.min(30, Math.max(1, st.level[1] + sq.offset)));
+      const squad = squadOf(c, sq, Math.min(30, Math.max(1, st.level[1] + sq.offset)), gear ? R.tier : undefined);
       const spec = stepSpec(st);
       let wins = 0;
       let time = 0;
@@ -107,11 +153,42 @@ export function simulate(c: GenContent, squads: Record<string, Squad>, fights = 
 }
 
 const pct = (x: number): string => `${Math.round(x * 100)} %`;
+const mean = (rows: StepReport[]): number => (rows.length ? rows.reduce((a, r) => a + r.winRate, 0) / rows.length : NaN);
 
-/** Rapport Markdown : une table par palier, puis les étapes hors de la fourchette visée. */
-export function report(rows: StepReport[], squads: Record<string, Squad>, target = { min: 0.5, guardianMin: 0.3 }): string {
-  const lines: string[] = ['# Simulation d’équilibrage', ''];
-  for (const tier of [...new Set(rows.map((r) => r.tier))].sort()) {
+export interface TierVerdict {
+  tier: number;
+  /** Moyenne des étapes (gardiens exclus) et des gardiens. */
+  steps: number;
+  guardians: number;
+  stepsTarget: number;
+  guardiansTarget: number;
+  ok: boolean;
+}
+
+/** Moyenne simulée de chaque palier comparée à sa cible, à `TOLERANCE` près. */
+export function verdicts(rows: StepReport[]): TierVerdict[] {
+  return [...new Set(rows.map((r) => r.tier))]
+    .sort((a, b) => a - b)
+    .map((tier) => {
+      const of = rows.filter((r) => r.tier === tier);
+      const steps = mean(of.filter((r) => !r.guardian));
+      const guardians = mean(of.filter((r) => r.guardian));
+      const stepsTarget = tierTarget(tier, false);
+      const guardiansTarget = tierTarget(tier, true);
+      const near = (x: number, t: number): boolean => Number.isNaN(x) || Math.abs(x - t) <= TOLERANCE + 1e-9;
+      return { tier, steps, guardians, stepsTarget, guardiansTarget, ok: near(steps, stepsTarget) && near(guardians, guardiansTarget) };
+    });
+}
+
+/** Rapport Markdown : une table par palier, puis la comparaison de chaque palier à sa cible. */
+export function report(rows: StepReport[], squads: Record<string, Squad>, opt: { gear?: boolean } = {}): string {
+  const lines: string[] = [
+    '# Simulation d’équilibrage',
+    '',
+    opt.gear === false ? 'Escouades sans équipement.' : 'Escouades équipées au palier de la route.',
+    '',
+  ];
+  for (const tier of [...new Set(rows.map((r) => r.tier))].sort((a, b) => a - b)) {
     const s = squads[String(tier)]!;
     lines.push(
       `## Palier ${tier} — escouade au niveau des monstres${s.offset ? ` ${s.offset > 0 ? '+' : ''}${s.offset}` : ''} : ${s.troops.map(([t]) => t).join(', ')}`,
@@ -122,15 +199,19 @@ export function report(rows: StepReport[], squads: Record<string, Squad>, target
       lines.push(
         `| ${r.routeName} | ${r.step}. ${r.stepName}${r.guardian ? ' (gardien)' : ''} | ${r.level[0]}-${r.level[1]} | ${pct(r.winRate)} | ${r.avgTime} | ${r.avgLosses} | ${r.gold} | ${r.xp} |`,
       );
-    const all = rows.filter((x) => x.tier === tier);
-    lines.push('', `Victoires sur le palier : ${pct(all.reduce((a, r) => a + r.winRate, 0) / all.length)}.`, '');
+    lines.push('');
   }
-  const off = rows.filter((r) => r.winRate < (r.guardian ? target.guardianMin : target.min));
-  lines.push('## Hors de la fourchette visée', '');
   lines.push(
-    off.length
-      ? off.map((r) => `- ${r.routeName}, étape ${r.step}${r.guardian ? ' (gardien)' : ''} : ${pct(r.winRate)} de victoires`).join('\n')
-      : 'Aucune étape.',
+    '## Moyennes par palier et cibles',
+    '',
+    `Cible : 50 % au palier 1, −10 points par palier ; gardiens 5 points plus bas ; tolérance ${Math.round(TOLERANCE * 100)} points.`,
+    '',
+    '| Palier | Étapes | Cible | Gardiens | Cible | Verdict |',
+    '|---|---|---|---|---|---|',
   );
+  for (const v of verdicts(rows))
+    lines.push(
+      `| ${v.tier} | ${pct(v.steps)} | ${pct(v.stepsTarget)} | ${pct(v.guardians)} | ${pct(v.guardiansTarget)} | ${v.ok ? 'dans la cible' : 'hors cible'} |`,
+    );
   return lines.join('\n') + '\n';
 }

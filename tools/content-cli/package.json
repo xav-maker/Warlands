@@ -13,6 +13,7 @@
     "@cr/content": "workspace:*",
     "@cr/engine": "workspace:*",
     "@cr/gen": "workspace:*",
+    "@cr/rng": "workspace:*",
     "yaml": "2.9.1"
   }
 }
