@@ -23,8 +23,8 @@ engine:
   hotCooldown: 100
 eco:
   startGold: 200
-  # Deux milicien et deux chasseur de niveau 1 (le prototype en donnait un de chaque : trop peu pour la première route).
-  startTroops: [[milicien, 1], [milicien, 1], [chasseur, 1], [chasseur, 1]]
+  # Deux milicien, deux chasseur et deux herboriste de niveau 1 (le prototype donnait un milicien et un chasseur : trop peu pour la première route).
+  startTroops: [[milicien, 1], [milicien, 1], [chasseur, 1], [chasseur, 1], [herboriste, 1], [herboriste, 1]]
   startItems: { bandage: 3 }
   startRecipe: acolyte
   manaRegenEnd: 25

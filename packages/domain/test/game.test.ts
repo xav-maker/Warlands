@@ -116,6 +116,8 @@ describe('kit de départ (README 8.1)', () => {
       ['milicien', 1, 'SQUAD'],
       ['chasseur', 1, 'SQUAD'],
       ['chasseur', 1, 'SQUAD'],
+      ['herboriste', 1, 'SQUAD'],
+      ['herboriste', 1, 'SQUAD'],
     ]);
     for (const x of troops) for (const u of x.units) expect(u.hp).toBe(statsOf(content, x, u).hpMax);
     expect(await t.db.transaction().execute((tx) => balance(tx, pid))).toBe(200);

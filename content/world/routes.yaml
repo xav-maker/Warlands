@@ -25,7 +25,7 @@
       level: [4, 5]
       pop: [2, 3]
       draws: [1, 2]
-      mult: 1573
+      mult: 1700
     - id: nids
       pool: [araignee, loup_gris, frondeurs_gob, loup_alpha]
       mats: [resine, fil_araignee, champignon_pale]
@@ -34,7 +34,7 @@
       level: [5, 6]
       pop: [3, 5]
       draws: [2, 2]
-      mult: 2063
+      mult: 2400
     - id: camp
       pool: [gobelins, frondeurs_gob, chaman, troll]
       mats: [ferraille, fer_noir, plume_corbeau]
@@ -300,7 +300,7 @@
       level: [4, 5]
       pop: [2, 3]
       draws: [1, 2]
-      mult: 1080
+      mult: 1250
     - id: pres_brande_3
       pool:
         [araignee, loup_gris, frondeurs_gob, loup_alpha, gobelins, chaman, troll, epouvantail, ours_brun, brigands_haies, sorciere_haies]
@@ -310,7 +310,7 @@
       level: [5, 6]
       pop: [3, 5]
       draws: [2, 2]
-      mult: 1329
+      mult: 1550
     - id: pres_brande_4
       pool:
         [araignee, loup_gris, frondeurs_gob, loup_alpha, gobelins, chaman, troll, epouvantail, ours_brun, brigands_haies, sorciere_haies]
@@ -358,7 +358,7 @@
       level: [4, 5]
       pop: [2, 3]
       draws: [1, 2]
-      mult: 1484
+      mult: 1650
     - id: gue_lavandieres_3
       pool: [araignee, loup_gris, frondeurs_gob, loup_alpha, gobelins, chaman, troll, ondine, brochet, nymphe, troll_pont]
       mats: [resine, roseau_tresse, plume_corbeau]
@@ -367,7 +367,7 @@
       level: [5, 6]
       pop: [3, 5]
       draws: [2, 2]
-      mult: 1512
+      mult: 1650
     - id: gue_lavandieres_4
       pool: [araignee, loup_gris, frondeurs_gob, loup_alpha, gobelins, chaman, troll, ondine, brochet, nymphe, troll_pont]
       mats: [fil_araignee, ferraille, bois_tordu]
@@ -413,7 +413,7 @@
       level: [4, 5]
       pop: [2, 3]
       draws: [1, 2]
-      mult: 856
+      mult: 950
     - id: collines_menhirs_3
       pool: [epouvantail, ours_brun, brigands_haies, sorciere_haies, esprit_menhir, chef_bande, rebouteuse, belier]
       mats: [defense_sanglier, plume_corneille, laine_grasse]
@@ -422,7 +422,7 @@
       level: [5, 6]
       pop: [3, 5]
       draws: [2, 2]
-      mult: 1230
+      mult: 1350
     - id: collines_menhirs_4
       pool: [epouvantail, ours_brun, brigands_haies, sorciere_haies, esprit_menhir, chef_bande, rebouteuse, belier]
       mats: [bruyere_seche, ble_noir, cuir_bandit]
@@ -468,7 +468,7 @@
       level: [4, 5]
       pop: [2, 3]
       draws: [1, 2]
-      mult: 988
+      mult: 1150
     - id: tourbieres_bruyere_3
       pool: [ondine, brochet, nymphe, troll_pont, esprit_menhir, chef_bande, rebouteuse, belier]
       mats: [roseau_tresse, plume_corneille, ecorce_saule]
@@ -477,7 +477,7 @@
       level: [5, 6]
       pop: [3, 5]
       draws: [2, 2]
-      mult: 1364
+      mult: 1550
     - id: tourbieres_bruyere_4
       pool: [ondine, brochet, nymphe, troll_pont, esprit_menhir, chef_bande, rebouteuse, belier]
       mats: [bruyere_seche, ecaille_brochet, cuir_bandit]
@@ -523,7 +523,7 @@
       level: [4, 5]
       pop: [2, 3]
       draws: [1, 2]
-      mult: 1000
+      mult: 1200
     - id: chemin_pendus_3
       pool: [epouvantail, ours_brun, brigands_haies, sorciere_haies, necromant, vampire, fossoyeur, banshee]
       mats: [defense_sanglier, clou_cercueil, laine_grasse]
@@ -532,7 +532,7 @@
       level: [5, 6]
       pop: [3, 5]
       draws: [2, 2]
-      mult: 1160
+      mult: 1250
     - id: chemin_pendus_4
       pool: [epouvantail, ours_brun, brigands_haies, sorciere_haies, necromant, vampire, fossoyeur, banshee]
       mats: [os_poli, ble_noir, linceul]
@@ -578,7 +578,7 @@
       level: [4, 5]
       pop: [2, 3]
       draws: [1, 2]
-      mult: 1109
+      mult: 1300
     - id: combe_brumes_3
       pool: [ondine, brochet, nymphe, troll_pont, loup_garou, sorciere_brumes_m, ours_brumes, brumeux]
       mats: [roseau_tresse, croc_lunaire, ecorce_saule]
@@ -587,7 +587,7 @@
       level: [5, 6]
       pop: [3, 5]
       draws: [2, 2]
-      mult: 1286
+      mult: 1350
     - id: combe_brumes_4
       pool: [ondine, brochet, nymphe, troll_pont, loup_garou, sorciere_brumes_m, ours_brumes, brumeux]
       mats: [fourrure_loup_garou, ecaille_brochet, brume_condensee]
@@ -633,7 +633,7 @@
       level: [4, 5]
       pop: [2, 3]
       draws: [1, 2]
-      mult: 1027
+      mult: 1200
     - id: lisiere_ambre_3
       pool: [esprit_menhir, chef_bande, rebouteuse, belier, ours_chene, dryade_corrompue, druide_noir, treant]
       mats: [plume_corneille, cire_guepe, bruyere_seche]
@@ -642,7 +642,7 @@
       level: [5, 6]
       pop: [3, 5]
       draws: [2, 2]
-      mult: 1473
+      mult: 1550
     - id: lisiere_ambre_4
       pool: [esprit_menhir, chef_bande, rebouteuse, belier, ours_chene, dryade_corrompue, druide_noir, treant]
       mats: [ambre_brut, cuir_bandit, ecorce_rousse]

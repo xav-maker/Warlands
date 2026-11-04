@@ -530,7 +530,7 @@ Utilisables partout entre deux combats, sur une unité précise ; en ville pris 
 ### 8.1 Départ d'une partie [H]
 
 - 200 or.
-- Deux Miliciens niveau 1 et deux Chasseurs niveau 1, engagés (un de chaque dans le prototype : trop peu pour la première route en ligne).
+- Deux Miliciens, deux Chasseurs et deux Herboristes niveau 1, engagés (un Milicien et un Chasseur dans le prototype : trop peu pour la première route en ligne).
 - En banque : 3 bandages et les ingrédients de **sa propre** recette de recrutement de l'Acolyte (donc un premier recrutement possible, l'Acolyte coûtant 40 or).
 - 5 quêtes générées dans chacune des 5 villes.
 - Position : Havre-Gris.

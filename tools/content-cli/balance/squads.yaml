@@ -5,7 +5,7 @@
 #
 # `steps` règle une étape seule (1 à 5) : au tout début de la partie, l’escouade n’est pas pleine et son niveau est en
 # retard sur celui des monstres, donc les premières étapes du palier 1 sont jouées avec l’escouade de départ
-# (2 Miliciens, 2 Chasseurs, puis l’Acolyte recruté) qui se remplit peu à peu.
+# (2 Miliciens, 2 Chasseurs, 2 Herboristes, puis l’Acolyte recruté) qui se remplit peu à peu.
 
 '1':
   offset: 0
@@ -14,13 +14,13 @@
     '1':
       offset: -3
       gear: false
-      troops: [[milicien, 1], [milicien, 1], [chasseur, 3], [chasseur, 3], [acolyte, 3]]
+      troops: [[milicien, 1], [milicien, 1], [chasseur, 3], [chasseur, 3], [herboriste, 3], [herboriste, 3], [acolyte, 3]]
     '2':
       offset: -2
-      troops: [[milicien, 1], [milicien, 1], [ecuyer, 1], [chasseur, 3], [chasseur, 3], [acolyte, 3]]
+      troops: [[milicien, 1], [milicien, 1], [ecuyer, 1], [chasseur, 3], [chasseur, 3], [herboriste, 3], [herboriste, 3], [acolyte, 3]]
     '3':
       offset: -1
-      troops: [[milicien, 1], [ecuyer, 1], [moine, 1], [chasseur, 3], [chasseur, 3], [acolyte, 3], [herboriste, 3]]
+      troops: [[milicien, 1], [ecuyer, 1], [moine, 1], [chasseur, 3], [chasseur, 3], [acolyte, 3], [herboriste, 3], [herboriste, 3]]
 '2':
   offset: 0
   troops: [[milicien, 1], [gardes_maree, 1], [berserker, 1], [acolyte, 3], [pyromancien, 3], [chasseur, 3]]
