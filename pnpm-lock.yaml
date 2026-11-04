@@ -273,6 +273,9 @@ importers:
       '@cr/gen':
         specifier: workspace:*
         version: link:../../packages/gen
+      yaml:
+        specifier: 2.9.1
+        version: 2.9.1
 
   tools/extract-prototype:
     devDependencies:
