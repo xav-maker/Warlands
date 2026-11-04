@@ -88,6 +88,10 @@ export const ERROR_CODES = [
   'TOTP_INVALID',
   'TOTP_ALREADY_ON',
   'STAFF_2FA_REQUIRED',
+  // Donjons (J7)
+  'DOOR_NOT_FOUND',
+  'NOT_IN_DUNGEON',
+  'DUNGEON_STALE',
 ] as const;
 
 export type ErrorCode = (typeof ERROR_CODES)[number];

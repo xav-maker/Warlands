@@ -16,6 +16,7 @@ type Tx = Transaction<Database>;
 export function capacity(c: GameContent, container: StackContainer): number {
   if (container === 'BAG') return Number(c.pack.eco.bagSlots);
   if (container === 'BANK') return Number(c.pack.eco.bankSlots);
+  // Butin au sol et coffre du donjon : illimités.
   return Infinity;
 }
 
@@ -152,7 +153,7 @@ export async function addInstance(
   playerId: number,
   container: StackContainer,
   it: EquipInstance,
-  origin: 'loot' | 'merchant' | 'quest' | 'craft' | 'start',
+  origin: 'loot' | 'merchant' | 'quest' | 'craft' | 'start' | 'dungeon',
   reason: string,
 ): Promise<number | null> {
   if (slotsUsed(c, await contents(tx, playerId, container)) >= capacity(c, container)) return null;
@@ -203,6 +204,49 @@ export async function moveInstance(
     .where('id', '=', id)
     .execute();
   await log(tx, playerId, { kind: 'instance', item: row.base, instanceId: id, from, to, reason });
+}
+
+/**
+ * Vide un conteneur (coffre du donjon) vers la banque, sans limite d'emplacements (README 23.6 [H] : le coffre est
+ * livré en banque même pleine), ou vers le puits (défaite : le coffre est perdu).
+ */
+export async function emptyContainer(tx: Tx, playerId: number, from: StackContainer, to: 'BANK' | 'SYSTEM', reason: string): Promise<void> {
+  const stacks = await tx
+    .selectFrom('item_stack')
+    .select(['id', 'item', 'qty'])
+    .where('player_id', '=', playerId)
+    .where('container', '=', from)
+    .forUpdate()
+    .execute();
+  for (const s of stacks) {
+    await tx.deleteFrom('item_stack').where('id', '=', s.id).execute();
+    if (to === 'BANK')
+      await tx
+        .insertInto('item_stack')
+        .values({ player_id: playerId, container: 'BANK', item: s.item, qty: s.qty })
+        .onConflict((oc) =>
+          oc
+            .columns(['player_id', 'container', 'item'])
+            .doUpdateSet((eb) => ({ qty: eb('item_stack.qty', '+', s.qty), updated_at: new Date() })),
+        )
+        .execute();
+    await log(tx, playerId, { kind: 'stack', item: s.item, qty: s.qty, from, to, reason });
+  }
+  const inst = await tx
+    .selectFrom('item_instance')
+    .select(['id', 'base'])
+    .where('player_id', '=', playerId)
+    .where('container', '=', from)
+    .forUpdate()
+    .execute();
+  for (const i of inst) {
+    await tx
+      .updateTable('item_instance')
+      .set({ container: to, ...(to === 'SYSTEM' ? { player_id: null } : {}), updated_at: new Date() })
+      .where('id', '=', i.id)
+      .execute();
+    await log(tx, playerId, { kind: 'instance', item: i.base, instanceId: i.id, from, to, reason });
+  }
 }
 
 /** Le butin au sol est perdu dès qu'on quitte l'étape (README 7.2). */

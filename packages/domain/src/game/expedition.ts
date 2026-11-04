@@ -6,7 +6,7 @@
 import { z } from 'zod';
 import { GameError } from '@cr/shared';
 import { hash } from '@cr/rng';
-import { genMonsters, stepSpec } from '@cr/gen';
+import { dungeonOfRoute, dungeonParams, genMonsters, stepSpec } from '@cr/gen';
 import { command } from '../command.ts';
 import type { CommandContext } from '../command.ts';
 import { departures, destination, online, regionIndex, stepCount, stepOf } from './content.ts';
@@ -51,7 +51,28 @@ export async function newEncounter(ctx: CommandContext, route: string, step: num
     .execute();
 }
 
-async function setPosition(
+/** La porte de donjon visible disparaît (le joueur quitte son étape, README 23.1). */
+export async function clearDoor(ctx: CommandContext): Promise<void> {
+  await ctx.tx
+    .updateTable('dungeon_door')
+    .set({ status: 'gone' })
+    .where('player_id', '=', ctx.player.id)
+    .where('status', '=', 'visible')
+    .execute();
+}
+
+/**
+ * Porte de donjon (README 23.1) : sur une route à donjon, chaque changement d'étape (et la première étape au départ) a
+ * doorChance ‰ de faire apparaître une porte sur l'étape d'arrivée. Tirage serveur ; aucun tirage ailleurs.
+ */
+export async function rollDoor(ctx: CommandContext, route: string, step: number): Promise<void> {
+  await clearDoor(ctx);
+  const d = dungeonOfRoute(ctx.content.pack, route);
+  if (!d || ctx.random(1000) >= dungeonParams(ctx.content.pack).doorChance) return;
+  await ctx.tx.insertInto('dungeon_door').values({ player_id: ctx.player.id, dungeon: d.id, route, step, status: 'visible' }).execute();
+}
+
+export async function setPosition(
   ctx: CommandContext,
   pos: { kind: 'city'; region: string } | { kind: 'route'; route: string; direction: number; step: number },
 ): Promise<void> {
@@ -65,6 +86,7 @@ async function setPosition(
             pos_route: null,
             pos_direction: null,
             pos_step: null,
+            pos_dungeon_run: null,
             lock_version: ctx.player.lock_version + 1,
             updated_at: ctx.now,
           }
@@ -73,6 +95,7 @@ async function setPosition(
             pos_route: pos.route,
             pos_direction: pos.direction,
             pos_step: pos.step,
+            pos_dungeon_run: null,
             lock_version: ctx.player.lock_version + 1,
             updated_at: ctx.now,
           },
@@ -93,6 +116,7 @@ export async function enterCity(ctx: CommandContext, regionId: string, reason: s
     .where('status', '=', 'visible')
     .execute();
   await ctx.tx.deleteFrom('expedition').where('player_id', '=', ctx.player.id).execute();
+  await clearDoor(ctx);
   await dropPendingLoot(ctx.tx, ctx.player.id, reason);
   await setPosition(ctx, { kind: 'city', region: regionId });
   await loanIfNoTroops(ctx.tx, ctx.content, ctx.player.id);
@@ -134,6 +158,7 @@ export const depart = command({
       .execute();
     await setPosition(ctx, { kind: 'route', route: d.route, direction: d.direction, step: 0 });
     await newEncounter(ctx, d.route, 0);
+    await rollDoor(ctx, d.route, 0);
     emitMoved(ctx);
     return { route: d.route, to: d.to };
   },
@@ -151,6 +176,7 @@ export const advance = command({
     await dropPendingLoot(ctx.tx, ctx.player.id, 'avance');
     await setPosition(ctx, { kind: 'route', route: e.route, direction: e.direction, step: e.step + 1 });
     await newEncounter(ctx, e.route, e.step + 1);
+    await rollDoor(ctx, e.route, e.step + 1);
     emitMoved(ctx);
     return { step: e.step + 1 };
   },
@@ -167,6 +193,7 @@ export const back = command({
     await dropPendingLoot(ctx.tx, ctx.player.id, 'rebrousse');
     await setPosition(ctx, { kind: 'route', route: e.route, direction: e.direction, step: e.step - 1 });
     await newEncounter(ctx, e.route, e.step - 1);
+    await rollDoor(ctx, e.route, e.step - 1);
     emitMoved(ctx);
     return { step: e.step - 1 };
   },

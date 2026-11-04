@@ -8,6 +8,7 @@ import * as m0006 from './0006_remise_a_zero.ts';
 import * as m0007 from './0007_social.ts';
 import * as m0008 from './0008_liens_chat.ts';
 import * as m0009 from './0009_pseudo_2fa.ts';
+import * as m0010 from './0010_donjons.ts';
 
 /**
  * Liste explicite des migrations, dans l'ordre. On évite `FileMigrationProvider`, qui charge
@@ -23,4 +24,5 @@ export const migrations: Record<string, Migration> = {
   '0007_social': m0007,
   '0008_liens_chat': m0008,
   '0009_pseudo_2fa': m0009,
+  '0010_donjons': m0010,
 };

@@ -1,0 +1,42 @@
+<% layout('./layout', { title: it.dv.name, v: it.v, error: it.error }) %>
+<% const dv = it.dv; const nx = dv.next %>
+<section class="route dungeon">
+  <p class="eyebrow"><%= it.R.name %> · donjon<%= dv.mode === 'duo' ? ' à deux' : '' %></p>
+  <h1><%= dv.name %></h1>
+  <p class="muted"><%= it.D.desc %></p>
+
+  <div class="grid">
+    <div class="card">
+      <h2>Salle <%= nx.n %><%= nx.boss ? ' · boss' : '' %></h2>
+      <p><%= dv.room ? 'Salles gagnées : ' + dv.room + '.' : 'Première salle.' %></p>
+      <p>Monstres de niveau <%= nx.level %>, population <%= nx.pop %><%= nx.boss ? ', dont ' + it.L.troop(nx.boss) : '' %>.</p>
+      <form method="post" action="/donjon/combat">
+        <input type="hidden" name="_csrf" value="<%= it.csrf %>">
+        <input type="hidden" name="version" value="<%= dv.version %>">
+        <button type="submit" class="primary">Combattre la salle <%= nx.n %></button>
+      </form>
+      <p class="muted">Pas de soin entre deux salles : les consommables du sac s’utilisent ci-dessous.</p>
+    </div>
+
+    <div class="card">
+      <h2>Coffre du donjon</h2>
+      <p><b><%= dv.chestGold %> or</b></p>
+      <ul class="items">
+        <% for (const s of dv.chest.stacks) { %><li><%= it.L.item(s.item) %> × <%= s.qty %></li><% } %>
+        <% for (const i of dv.chest.instances) { %><li><%= it.L.item(i.base) %> <span class="muted">(<%= it.L.quality(i.roll) %>)</span></li><% } %>
+        <% if (!dv.chest.stacks.length && !dv.chest.instances.length) { %><li class="muted">Vide pour l’instant.</li><% } %>
+      </ul>
+      <form method="post" action="/donjon/quitter">
+        <input type="hidden" name="_csrf" value="<%= it.csrf %>">
+        <input type="hidden" name="version" value="<%= dv.version %>">
+        <button type="submit">Quitter le donjon avec le coffre</button>
+      </form>
+      <p class="muted">En sortant, le coffre est livré dans votre banque et vous retrouvez votre étape. Vaincu, vous perdez tout le coffre.</p>
+    </div>
+
+    <div class="card">
+      <h2>Escouade</h2>
+      <%~ include('./partials/squad', { v: it.v, L: it.L, csrf: it.csrf, back: '/donjon', consumables: true }) %>
+    </div>
+  </div>
+</section>

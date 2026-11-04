@@ -15,6 +15,12 @@ import { transferGold } from './gold.ts';
 import { addInstance, addStack } from './inventory.ts';
 import { xpFor, xpToNext } from './rules.ts';
 import { asPlayerTroop, loadTroops, setUnit, statsOf } from './troops.ts';
+import type { LoadedTroop } from './troops.ts';
+import type { GameContent } from './content.ts';
+import type { Database, Transaction } from '@cr/db';
+import type { UnitResult } from '@cr/engine';
+
+type Tx = Transaction<Database>;
 
 export interface BattleRewards {
   won: boolean;
@@ -30,6 +36,87 @@ export interface BattleRewards {
   retreat: boolean;
 }
 
+/** Identifiants moteur (A1, A2…) des unités d'une escouade placée à partir de l'emplacement `first`. */
+export function unitIds(squad: LoadedTroop[], first: number): string[] {
+  let k = first;
+  return squad.flatMap((t) => t.units.map(() => `A${++k}`));
+}
+
+export type SquadOutcome = Pick<BattleRewards, 'xp' | 'xpBy' | 'levelUps' | 'deaths'>;
+
+/**
+ * Applique un combat à l'escouade d'un joueur (guide 8.2, point 4) : unités mortes (équipement détruit), survivantes
+ * à au moins 1 PV et +25 % de mana, troupes sans unité en tombe ; en cas de victoire, XP partagée entre les troupes
+ * qui ont combattu jusqu'au bout. En duo, chaque joueur l'applique à sa propre escouade (README 23.3).
+ */
+export async function settleSquad(
+  tx: Tx,
+  c: GameContent,
+  now: Date,
+  squad: LoadedTroop[],
+  ids: string[],
+  results: UnitResult[],
+  won: boolean,
+  side: MonsterGroup,
+): Promise<SquadOutcome> {
+  const eco = c.pack.eco as unknown as { manaRegenEnd: number; xpPerMonsterLevelPop: number; maxLevel: number };
+  const byId = new Map(results.map((u) => [u.id, u]));
+  const r: SquadOutcome = { xp: 0, xpBy: [], levelUps: [], deaths: [] };
+  const earners = new Set<number>();
+  let k = 0;
+  for (const t of squad) {
+    for (const u of t.units) {
+      const ur = byId.get(ids[k++]!)!;
+      if (ur.dead) {
+        await setUnit(tx, t.id, u.n, { hp: 0, mana: 0, dead: true });
+        await tx
+          .updateTable('item_instance')
+          .set({ container: 'GRAVE', troop_id: null, unit_n: null, slot: null, updated_at: now })
+          .where('container', '=', 'EQUIPPED')
+          .where('troop_id', '=', t.id)
+          .where('unit_n', '=', u.n)
+          .execute();
+        r.deaths.push({ troop: t.id, type: t.type, unit: u.n });
+        continue;
+      }
+      const mx = statsOf(c, t, u).manaMax;
+      u.hp = Math.max(1, ur.hp);
+      u.mana = Math.min(mx, ur.mana + Math.floor((mx * eco.manaRegenEnd) / 100));
+      await setUnit(tx, t.id, u.n, { hp: u.hp, mana: u.mana });
+      if (!ur.fled) earners.add(t.id);
+    }
+    t.units = t.units.filter((u) => !r.deaths.some((d) => d.troop === t.id && d.unit === u.n));
+    if (!t.units.length)
+      await tx.updateTable('troop').set({ container: 'GRAVE', died_at: now, updated_at: now }).where('id', '=', t.id).execute();
+  }
+  if (!won) return r;
+  // XP partagée à parts égales entre les troupes gagnantes [Xavier, 3 novembre 2026], puis réduite pour une troupe
+  // trop forte (README 4.4).
+  r.xp = side.troops.reduce((a, t) => a + t.level * c.pack.troops[t.type]!.pop * eco.xpPerMonsterLevelPop, 0);
+  const avg = side.troops.reduce((a, t) => a + t.level, 0) / side.troops.length;
+  const winners = squad.filter((t) => earners.has(t.id) && t.units.length);
+  const share = winners.length ? Math.floor(r.xp / winners.length) : 0;
+  for (const t of winners) {
+    const gain = xpFor(share, t.level, avg);
+    r.xpBy.push({ troop: t.id, type: t.type, gain });
+    let xp = t.xp + gain;
+    while (t.level < eco.maxLevel && xp >= xpToNext(t.level)) {
+      const before = t.units.map((u) => statsOf(c, t, u));
+      xp -= xpToNext(t.level);
+      t.level++;
+      for (const [i, u] of t.units.entries()) {
+        const after = statsOf(c, t, u);
+        u.hp = Math.max(1, Math.min(after.hpMax, u.hp + after.hpMax - before[i]!.hpMax));
+        u.mana = Math.max(0, Math.min(after.manaMax, u.mana + after.manaMax - before[i]!.manaMax));
+        await setUnit(tx, t.id, u.n, { hp: u.hp, mana: u.mana });
+      }
+      r.levelUps.push({ troop: t.id, type: t.type, level: t.level });
+    }
+    await tx.updateTable('troop').set({ xp, level: t.level, updated_at: now }).where('id', '=', t.id).execute();
+  }
+  return r;
+}
+
 export const fight = command({
   name: 'battle.fight',
   input: z.object({}),
@@ -38,7 +125,6 @@ export const fight = command({
   async run(ctx) {
     const c = ctx.content;
     const o = online(c);
-    const eco = c.pack.eco as unknown as { manaRegenEnd: number; xpPerMonsterLevelPop: number; maxLevel: number };
     const pid = ctx.player.id;
     const route = ctx.player.pos_route!;
     const step = ctx.player.pos_step!;
@@ -67,68 +153,13 @@ export const fight = command({
     const input = { engineVersion: o.engineVersion, params: c.pack.params, skills: c.pack.skills, units };
     const { log, result } = simuler(input, seed);
     const won = result.winner === 0;
-    const byId = new Map(result.units.map((u) => [u.id, u]));
     const r: BattleRewards = { won, gold: 0, xp: 0, xpBy: [], levelUps: [], deaths: [], loot: [], left: [], retreat: false };
 
-    // 4. Unités : mortes (équipement détruit) ou survivantes (au moins 1 PV, +25 % de mana).
-    const earners = new Set<number>();
-    let k = 0;
-    for (const t of squad) {
-      for (const u of t.units) {
-        const ur = byId.get(`A${++k}`)!;
-        if (ur.dead) {
-          await setUnit(ctx.tx, t.id, u.n, { hp: 0, mana: 0, dead: true });
-          await ctx.tx
-            .updateTable('item_instance')
-            .set({ container: 'GRAVE', troop_id: null, unit_n: null, slot: null, updated_at: ctx.now })
-            .where('container', '=', 'EQUIPPED')
-            .where('troop_id', '=', t.id)
-            .where('unit_n', '=', u.n)
-            .execute();
-          r.deaths.push({ troop: t.id, type: t.type, unit: u.n });
-          continue;
-        }
-        const mx = statsOf(c, t, u).manaMax;
-        u.hp = Math.max(1, ur.hp);
-        u.mana = Math.min(mx, ur.mana + Math.floor((mx * eco.manaRegenEnd) / 100));
-        await setUnit(ctx.tx, t.id, u.n, { hp: u.hp, mana: u.mana });
-        if (!ur.fled) earners.add(t.id);
-      }
-      t.units = t.units.filter((u) => !r.deaths.some((d) => d.troop === t.id && d.unit === u.n));
-      if (!t.units.length)
-        await ctx.tx
-          .updateTable('troop')
-          .set({ container: 'GRAVE', died_at: ctx.now, updated_at: ctx.now })
-          .where('id', '=', t.id)
-          .execute();
-    }
+    // 4. Unités (morts, PV, mana) et XP.
+    const out = await settleSquad(ctx.tx, c, ctx.now, squad, unitIds(squad, 0), result.units, won, side);
+    Object.assign(r, out);
 
     if (won) {
-      // XP partagée à parts égales entre les troupes gagnantes [Xavier, 3 novembre 2026], puis réduite pour
-      // une troupe trop forte (README 4.4).
-      r.xp = side.troops.reduce((a, t) => a + t.level * c.pack.troops[t.type]!.pop * eco.xpPerMonsterLevelPop, 0);
-      const avg = side.troops.reduce((a, t) => a + t.level, 0) / side.troops.length;
-      const winners = squad.filter((t) => earners.has(t.id) && t.units.length);
-      const share = winners.length ? Math.floor(r.xp / winners.length) : 0;
-      for (const t of winners) {
-        const gain = xpFor(share, t.level, avg);
-        r.xpBy.push({ troop: t.id, type: t.type, gain });
-        let xp = t.xp + gain;
-        while (t.level < eco.maxLevel && xp >= xpToNext(t.level)) {
-          const before = t.units.map((u) => statsOf(c, t, u));
-          xp -= xpToNext(t.level);
-          t.level++;
-          for (const [i, u] of t.units.entries()) {
-            const after = statsOf(c, t, u);
-            u.hp = Math.max(1, Math.min(after.hpMax, u.hp + after.hpMax - before[i]!.hpMax));
-            u.mana = Math.max(0, Math.min(after.manaMax, u.mana + after.manaMax - before[i]!.manaMax));
-            await setUnit(ctx.tx, t.id, u.n, { hp: u.hp, mana: u.mana });
-          }
-          r.levelUps.push({ troop: t.id, type: t.type, level: t.level });
-        }
-        await ctx.tx.updateTable('troop').set({ xp, level: t.level, updated_at: ctx.now }).where('id', '=', t.id).execute();
-      }
-
       // Butin (README 8.6) : or, trophée du rare, objets vers le sac puis au sol.
       const R = routeOf(c, route);
       const first = !!st.guardian && !ctx.player.guardians.includes(route);

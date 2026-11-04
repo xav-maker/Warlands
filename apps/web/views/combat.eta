@@ -1,9 +1,13 @@
 <% const waitS = Math.ceil(it.waitMs / 1000) %>
 <% layout('./layout', { title: 'Combat', refresh: waitS > 0 ? waitS : undefined, css: '/static/combat.css', script: '/static/combat.js' }) %>
-<% const r = it.r; const res = it.b.result; const st = it.R.steps[it.b.step] %>
+<% const r = it.r; const res = it.b.result; const st = it.R.steps[it.b.step]; const dungeon = it.b.kind === 'dungeon' ? it.b.input.dungeon : null %>
 <% const after = new Map(res.units.map((u) => [u.id, u])) %>
 <section class="battle">
-  <p class="eyebrow"><%= it.R.name %> · <%= st.name %><%= it.b.kind === 'guardian' ? ' · gardien' : '' %></p>
+  <% if (dungeon) { %>
+    <p class="eyebrow"><%= it.L.dungeon(dungeon.id) %> · salle <%= dungeon.room %></p>
+  <% } else { %>
+    <p class="eyebrow"><%= it.R.name %> · <%= st.name %><%= it.b.kind === 'guardian' ? ' · gardien' : '' %></p>
+  <% } %>
   <h1 data-after-replay><%= it.b.won ? 'Victoire' : 'Défaite' %></h1>
   <p class="muted" data-after-replay>Combat de <%= it.b.duration %> instants<%= res.reason === 'timeout' ? ', arrêté à la durée limite' : '' %>.</p>
 
@@ -32,13 +36,14 @@
     <div class="card">
       <h2>Bilan</h2>
       <ul class="links">
-        <% if (r.won) { %><li><b>+<%= r.gold %> or</b>, <%= r.xp %> XP à partager</li><% } %>
+        <% if (r.won) { %><li><b>+<%= r.gold %> or</b><%= dungeon ? ' dans le coffre' : '' %>, <%= r.xp %> XP à partager</li><% } %>
+        <% if (dungeon && r.loot.length) { %><li class="muted">Butin gardé dans le coffre du donjon : livré en banque à la sortie, perdu en cas de défaite.</li><% } %>
         <% for (const x of r.xpBy) { %><li><%= it.L.troop(x.type) %> : +<%= x.gain %> XP</li><% } %>
         <% for (const x of r.levelUps) { %><li class="good"><%= it.L.troop(x.type) %> passe niveau <%= x.level %></li><% } %>
         <% for (const x of r.deaths) { %><li class="bad"><%= it.L.troop(x.type) %> : une unité est morte</li><% } %>
         <% for (const x of r.loot) { %><li><%= 'item' in x ? it.L.item(x.item) + ' × ' + x.qty : it.L.item(x.base) + ' (' + it.L.quality(x.roll) + ')' %></li><% } %>
         <% if (r.left.length) { %><li class="bad">Le sac est plein : <%= r.left.length %> objet(s) au sol, à ramasser avant de quitter l’étape.</li><% } %>
-        <% if (r.retreat) { %><li class="bad">Repli forcé vers la ville : vos troupes y sont soignées.</li><% } %>
+        <% if (r.retreat) { %><li class="bad"><%= dungeon ? 'Défaite dans le donjon : le coffre est perdu. Retour en ville, où vos troupes sont soignées.' : 'Repli forcé vers la ville : vos troupes y sont soignées.' %></li><% } %>
       </ul>
     </div>
   </div>

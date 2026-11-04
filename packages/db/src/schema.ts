@@ -80,7 +80,7 @@ export interface PlayerTable {
 }
 
 export type TroopContainer = 'BARRACKS' | 'SQUAD' | 'GRAVE' | 'ESCROW';
-export type StackContainer = 'BAG' | 'BANK' | 'PENDING_LOOT';
+export type StackContainer = 'BAG' | 'BANK' | 'PENDING_LOOT' | 'DUNGEON_CHEST';
 export type InstanceContainer = StackContainer | 'EQUIPPED' | 'GRAVE' | 'SYSTEM' | 'ESCROW';
 
 export interface TroopTable {
@@ -384,6 +384,52 @@ export interface AdminActionTable {
   created_at: CreatedAt;
 }
 
+export type DungeonDoorStatus = 'visible' | 'opened' | 'gone';
+export interface DungeonDoorTable {
+  id: Generated<number>;
+  player_id: number;
+  dungeon: string;
+  route: string;
+  step: number;
+  status: DungeonDoorStatus;
+  created_at: CreatedAt;
+}
+
+export type DungeonRunStatus = 'lobby' | 'between_rooms' | 'closed';
+export interface DungeonRunTable {
+  id: Generated<number>;
+  dungeon: string;
+  route: string;
+  step: number;
+  opener_id: number;
+  mode: 'solo' | 'duo';
+  /** Dernière salle gagnée (0 au départ). */
+  room: ColumnType<number, number | undefined, number>;
+  status: DungeonRunStatus;
+  invite_kind: ColumnType<'friend' | 'random' | null, 'friend' | 'random' | null | undefined, 'friend' | 'random' | null>;
+  invite_to: ColumnType<number | null, number | null | undefined, number | null>;
+  invite_expires_at: ColumnType<Date | null, Date | null | undefined, Date | null>;
+  /** Joueurs qui ont voté « salle suivante » (duo). */
+  votes: ColumnType<number[], string | undefined, string>;
+  lock_version: ColumnType<number, number | undefined, number>;
+  created_at: CreatedAt;
+  updated_at: UpdatedAt;
+  closed_at: ColumnType<Date | null, Date | null | undefined, Date | null>;
+}
+
+export type DungeonMemberStatus = 'active' | 'left' | 'defeated';
+export interface DungeonMemberTable {
+  run_id: number;
+  player_id: number;
+  role: 'opener' | 'guest';
+  back_kind: 'city' | 'route';
+  status: DungeonMemberStatus;
+  /** Or gagné dans le donjon, versé à la sortie (perdu en cas de défaite). */
+  chest_gold: ColumnType<number, number | undefined, number>;
+  last_active_at: ColumnType<Date, Date | undefined, Date>;
+  left_at: ColumnType<Date | null, Date | null | undefined, Date | null>;
+}
+
 export interface IdempotencyKeyTable {
   player_id: number;
   key: string;
@@ -410,6 +456,9 @@ export interface Database {
   encounter: EncounterTable;
   battle: BattleTable;
   battle_participant: BattleParticipantTable;
+  dungeon_door: DungeonDoorTable;
+  dungeon_run: DungeonRunTable;
+  dungeon_member: DungeonMemberTable;
   player_recipe: PlayerRecipeTable;
   player_reserved_material: PlayerReservedMaterialTable;
   quest: QuestTable;
@@ -436,3 +485,5 @@ export type Troop = Selectable<TroopTable>;
 export type TroopUnit = Selectable<TroopUnitTable>;
 export type Encounter = Selectable<EncounterTable>;
 export type Expedition = Selectable<ExpeditionTable>;
+export type DungeonRun = Selectable<DungeonRunTable>;
+export type DungeonMember = Selectable<DungeonMemberTable>;

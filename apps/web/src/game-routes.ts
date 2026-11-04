@@ -58,6 +58,11 @@ import {
   withdrawListing,
   scaled,
   setDisabledSkills,
+  doorView,
+  dungeonView,
+  fightRoom,
+  leaveDungeon,
+  openDungeon,
   choosePseudo,
   confirmTotp,
   disableTotp,
@@ -92,6 +97,7 @@ export function labels(c: GameContent) {
   const p = c.pack;
   return {
     item: (id: string): string => p.items[id]?.name ?? p.equip[id]?.name ?? id,
+    dungeon: (id: string): string => p.dungeons?.find((x) => x.id === id)?.name ?? id,
     troop: (id: string): string => p.troops[id]?.name ?? id,
     skill: (id: string): string => p.skills[id]?.name ?? id,
     /** Immunités d'un monstre (README 19.4), en clair ; vide sans immunité. */
@@ -116,7 +122,7 @@ export function labels(c: GameContent) {
 }
 
 /** Chemins de retour autorisés après une action (jamais une URL fournie telle quelle). */
-const BACK = new Set(['/ville', '/route', '/sac', '/marchand', '/caserne', '/atelier', '/quetes', '/boutique']);
+const BACK = new Set(['/ville', '/route', '/donjon', '/sac', '/marchand', '/caserne', '/atelier', '/quetes', '/boutique']);
 const backOf = (b: Record<string, string>, fallback: string): string => (BACK.has(b.back ?? '') ? b.back! : fallback);
 const errorOf = (q: unknown): string | undefined => {
   const e = (q as Record<string, string | undefined>).e;
@@ -150,16 +156,19 @@ export function registerGameRoutes(app: FastifyInstance, d: GameRouteDeps): void
   const body = (req: FastifyRequest): Record<string, string> => (req.body ?? {}) as Record<string, string>;
   const goods = (b: Record<string, string>) => (b.instance ? { instance: int(b.instance) } : { item: b.item, qty: int(b.qty) || 1 });
 
+  /** Page de la position du joueur. */
+  const home = (v: GameView): string => (v.kind === 'route' ? '/route' : v.kind === 'dungeon' ? '/donjon' : '/ville');
+
   app.get('/jeu', async (req, reply) => {
     const v = await view(req);
     if (v.watchUntil && v.watchUntil > new Date() && v.lastBattle) return reply.redirect(`/combat/${v.lastBattle.id}`);
-    return reply.redirect(v.kind === 'route' ? '/route' : '/ville');
+    return reply.redirect(home(v));
   });
 
   // ---------- Ville ----------
   app.get('/ville', async (req, reply) => {
     const v = await view(req);
-    if (v.kind === 'route') return reply.redirect('/route');
+    if (v.kind !== 'city') return reply.redirect(home(v));
     return d.page(req, reply, 'ville', { v, L, R: region(d.content, v.region), error: errorOf(req.query) });
   });
   app.post('/depart', (req, reply) =>
@@ -173,10 +182,39 @@ export function registerGameRoutes(app: FastifyInstance, d: GameRouteDeps): void
   // ---------- Route ----------
   app.get('/route', async (req, reply) => {
     const v = await view(req);
-    if (v.kind !== 'route' || !v.route) return reply.redirect('/ville');
+    if (v.kind !== 'route' || !v.route) return reply.redirect(home(v));
     const R = route(d.content, v.route.id);
-    return d.page(req, reply, 'route', { v, L, R, home: region(d.content, v.region), error: errorOf(req.query) });
+    const door = await doorView(d.db, d.content, d.requireAuth(req).player.id);
+    return d.page(req, reply, 'route', { v, L, R, door, home: region(d.content, v.region), error: errorOf(req.query) });
   });
+
+  // ---------- Donjon (README 23) ----------
+  app.get('/donjon', async (req, reply) => {
+    const v = await view(req);
+    const dv = await dungeonView(d.db, d.content, d.requireAuth(req).player.id);
+    if (v.kind !== 'dungeon' || !dv) return reply.redirect(home(v));
+    const D = d.content.pack.dungeons!.find((x) => x.id === dv.dungeon)!;
+    return d.page(req, reply, 'donjon', { v, L, dv, D, R: route(d.content, D.route), error: errorOf(req.query) });
+  });
+  app.post('/donjon/ouvrir', (req, reply) =>
+    act(req, reply, '/route', async () => {
+      await d.run(req, openDungeon, { mode: 'solo' });
+      return '/donjon';
+    }),
+  );
+  const version = (b: Record<string, string>) => (b.version ? { version: int(b.version) } : {});
+  app.post('/donjon/combat', (req, reply) =>
+    act(req, reply, '/donjon', async () => {
+      const r = await d.run(req, fightRoom, version(body(req)));
+      return `/combat/${r.battle}`;
+    }),
+  );
+  app.post('/donjon/quitter', (req, reply) =>
+    act(req, reply, '/donjon', async () => {
+      await d.run(req, leaveDungeon, version(body(req)));
+      return '/jeu';
+    }),
+  );
   const moves: Record<string, CommandDef<z.ZodType, unknown>> = {
     avancer: advance,
     rebrousser: back,
@@ -227,7 +265,7 @@ export function registerGameRoutes(app: FastifyInstance, d: GameRouteDeps): void
       journal: `/combat/${b.id}/journal.json`,
       theme: routeTierIndex(d.content, b.route),
       waitMs,
-      next: v.kind === 'route' ? '/route' : '/ville',
+      next: home(v),
       timeLimit: p.params.timeLimit,
       result: b.result,
       skillNames,
@@ -242,7 +280,7 @@ export function registerGameRoutes(app: FastifyInstance, d: GameRouteDeps): void
       r: b.rewards,
       R: route(d.content, b.route),
       waitMs,
-      next: v.kind === 'route' ? '/route' : '/ville',
+      next: home(v),
       // JSON dans un <script type="application/json"> : « < » échappé, rien ne peut fermer la balise.
       replayJson: JSON.stringify(replay).replace(/</g, '\\u003c'),
       error: errorOf(req.query),

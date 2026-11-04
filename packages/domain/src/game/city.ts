@@ -127,7 +127,8 @@ export const useConsumable = command({
   name: 'consumable.use',
   input: z.object({ item: z.string().min(1), troop: z.number().int().positive(), unit: z.number().int().min(1).max(3) }),
   rate: { perMinute: 60 },
-  where: ['city', 'route'],
+  // Entre deux salles de donjon aussi (README 23.4).
+  where: ['city', 'route', 'dungeon'],
   async run(ctx, input) {
     const c = ctx.content;
     const pid = ctx.player.id;

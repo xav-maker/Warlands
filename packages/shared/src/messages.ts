@@ -81,6 +81,9 @@ const FR: Record<ErrorCode, string> = {
   TOTP_REQUIRED: 'Saisissez le code à 6 chiffres de votre application d’authentification.',
   TOTP_INVALID: 'Code de vérification incorrect ou déjà utilisé.',
   TOTP_ALREADY_ON: 'La double authentification est déjà active.',
+  DOOR_NOT_FOUND: 'Aucune porte de donjon sur cette étape.',
+  NOT_IN_DUNGEON: 'Vous n’êtes pas dans un donjon.',
+  DUNGEON_STALE: 'Le donjon a changé entre-temps : la page est à jour, recommencez.',
   STAFF_2FA_REQUIRED: 'La modération exige la double authentification : activez-la depuis la page Compte.',
 };
 

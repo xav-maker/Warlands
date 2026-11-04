@@ -29,6 +29,18 @@
       <% } %>
     </div>
 
+    <% if (it.door) { %>
+      <div class="card door">
+        <h2>Une porte de donjon</h2>
+        <p><b><%= it.door.name %></b>. Elle reste là tant que vous êtes sur cette étape.</p>
+        <p class="muted">Salles sans fin, un boss toutes les 4 salles. Les PV ne remontent pas entre deux salles ; le butin va dans un coffre, livré en banque si vous sortez, perdu si vous êtes vaincu.</p>
+        <form method="post" action="/donjon/ouvrir">
+          <input type="hidden" name="_csrf" value="<%= it.csrf %>">
+          <button type="submit" class="primary">Entrer seul</button>
+        </form>
+      </div>
+    <% } %>
+
     <div class="card">
       <h2>Avancer</h2>
       <div class="actions">

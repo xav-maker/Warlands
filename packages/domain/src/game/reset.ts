@@ -95,6 +95,28 @@ export const resetGame = command({
     // Expédition, rencontres, quêtes, recettes personnelles.
     await tx.deleteFrom('expedition').where('player_id', '=', pid).execute();
     await tx.updateTable('encounter').set({ status: 'gone' }).where('player_id', '=', pid).where('status', '=', 'visible').execute();
+    // Donjon : porte effacée, participation close (le coffre est parti avec les autres biens), partie close si vide.
+    await tx.updateTable('dungeon_door').set({ status: 'gone' }).where('player_id', '=', pid).where('status', '=', 'visible').execute();
+    const runs = await tx
+      .updateTable('dungeon_member')
+      .set({ status: 'left', chest_gold: 0, left_at: ctx.now })
+      .where('player_id', '=', pid)
+      .where('status', '=', 'active')
+      .returning('run_id')
+      .execute();
+    for (const { run_id } of runs)
+      await tx
+        .updateTable('dungeon_run')
+        .set({ status: 'closed', closed_at: ctx.now, updated_at: ctx.now, lock_version: (eb) => eb('lock_version', '+', 1) })
+        .where('id', '=', run_id)
+        .where((eb) =>
+          eb.not(
+            eb.exists(
+              eb.selectFrom('dungeon_member').select('player_id').whereRef('run_id', '=', 'dungeon_run.id').where('status', '=', 'active'),
+            ),
+          ),
+        )
+        .execute();
     await tx.deleteFrom('quest').where('player_id', '=', pid).execute();
     await tx.deleteFrom('player_recipe').where('player_id', '=', pid).execute();
     await tx.deleteFrom('player_reserved_material').where('player_id', '=', pid).execute();
@@ -108,6 +130,7 @@ export const resetGame = command({
         pos_route: null,
         pos_direction: null,
         pos_step: null,
+        pos_dungeon_run: null,
         watch_until: null,
         started_at: null,
         content_version: null,
