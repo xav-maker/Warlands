@@ -126,6 +126,8 @@ export const EquipBase = z.strictObject({
   weapon: Weapon.optional(),
   nStats: int.optional(),
   workshop: z.boolean().optional(),
+  /** Base signature : fabricable dans l'atelier de cette région seulement (contenu-cible-unites.md 9.2). */
+  region: id.optional(),
   craft: z.boolean().optional(),
 });
 

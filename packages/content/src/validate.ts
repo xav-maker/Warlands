@@ -125,6 +125,8 @@ export function checkReferences(raw: RawContent): Issue[] {
     const sum = Object.values(raw.params.eco[k]).reduce((a, b) => a + b, 0);
     if (Math.abs(sum - 100) > 1e-9) err('params.yaml', `eco.${k} totalise ${sum} %, 100 attendus`);
   }
+  for (const [id, b] of Object.entries(raw.equip))
+    if (b.region && !regionIds.has(b.region)) err(at('equip', id), `${id} : région inconnue ${b.region}`);
   for (const id of raw.params.recipes.craftConsumables) if (!isItem(id)) err('params.yaml', `consommable fabricable inconnu ${id}`);
   return issues;
 }

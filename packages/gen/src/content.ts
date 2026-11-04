@@ -74,6 +74,9 @@ export interface EquipBase {
   pool: PoolEntry[];
   nStats?: number;
   craft?: boolean;
+  workshop?: boolean;
+  /** Base signature : atelier de cette région seulement. */
+  region?: string;
   weapon?: Weapon;
 }
 

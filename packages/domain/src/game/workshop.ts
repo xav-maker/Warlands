@@ -23,9 +23,10 @@ import { addInstance, addStack, capacity, contents, slotsUsed } from './inventor
 import { payRecipe, recipes } from './recipes.ts';
 import { loadTroops, setUnit, statsOf } from './troops.ts';
 
-/** Ville dont l'atelier seul sait fabriquer cette base (README 3.4) ; null : partout. */
+/** Ville dont l'atelier seul sait fabriquer cette base (README 3.4, bases signatures 9.2) ; null : partout. */
 export function workshopOf(c: GameContent, out: string): string | null {
-  const b = c.pack.equip[out] as { tier: number; workshop?: boolean } | undefined;
+  const b = c.pack.equip[out];
+  if (b?.region) return b.region;
   return b?.workshop ? (c.pack.regions[b.tier - 1]?.id ?? null) : null;
 }
 

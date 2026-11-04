@@ -139,9 +139,9 @@ apicultrice:
       res: { maladie: 20 }
       skills: [[nuee_ombres, 20], [peste, 24]]
   slots:
-    arme: [une_main, baton]
+    arme: [une_main, baton, orbe]
     armure: [robe, legere]
-    accessoire: [anneau]
+    accessoire: [anneau, talisman]
 meunier:
   units: 1
   pop: 2
@@ -215,9 +215,9 @@ guerisseuse_bourg:
       res: { sacre: 20 }
       skills: [[rayon_sacre, 20], [jugement, 25]]
   slots:
-    arme: [une_main, baton]
+    arme: [une_main, baton, sceptre]
     armure: [robe, legere]
-    accessoire: [anneau]
+    accessoire: [anneau, talisman]
 ondine_apprivoisee:
   units: 1
   pop: 1
@@ -257,9 +257,9 @@ ondine_apprivoisee:
       res: { glace: 30, feu: -20 }
       skills: [[blizzard, 20], [maitrise_elem, 24]]
   slots:
-    arme: [baton]
+    arme: [baton, orbe]
     armure: [robe]
-    accessoire: [anneau]
+    accessoire: [anneau, talisman]
 passeurs:
   units: 2
   pop: 2
@@ -367,9 +367,9 @@ farfadet:
       res: { psychique: 30 }
       skills: [[clarte, 20], [lien_esprits, 24]]
   slots:
-    arme: [une_main]
+    arme: [une_main, orbe]
     armure: [legere]
-    accessoire: [bottes, anneau]
+    accessoire: [bottes, anneau, talisman]
 loutres:
   units: 2
   pop: 2
@@ -543,9 +543,9 @@ druide_menhirs:
       res: { psychique: 20 }
       skills: [[silence_tombe, 20], [malefice, 22]]
   slots:
-    arme: [une_main, baton]
+    arme: [une_main, baton, sceptre]
     armure: [robe, legere]
-    accessoire: [anneau]
+    accessoire: [anneau, talisman]
 chevaucheur:
   units: 1
   pop: 2
@@ -611,9 +611,9 @@ pleureuse:
       res: { tenebres: 20, sacre: -20 }
       skills: [[nuee_ombres, 20], [silence_tombe, 24]]
   slots:
-    arme: [baton]
+    arme: [baton, orbe]
     armure: [robe]
-    accessoire: [anneau]
+    accessoire: [anneau, talisman]
 molosses:
   units: 2
   pop: 2
@@ -727,9 +727,9 @@ sorciere_brumes:
       res: { psychique: 30 }
       skills: [[lien_esprits, 20], [clarte, 22]]
   slots:
-    arme: [baton]
+    arme: [baton, orbe]
     armure: [robe]
-    accessoire: [anneau]
+    accessoire: [anneau, talisman]
 garou:
   units: 1
   pop: 2
@@ -835,9 +835,9 @@ moine_brume:
       res: { psychique: 30 }
       skills: [[enchainement, 20], [domination, 24]]
   slots:
-    arme: [gantelets]
+    arme: [gantelets, orbe]
     armure: [robe, legere]
-    accessoire: [bottes, anneau]
+    accessoire: [bottes, anneau, talisman]
 corbeautiere:
   units: 1
   pop: 1
@@ -869,9 +869,9 @@ corbeautiere:
       res: { tenebres: 20 }
       skills: [[silence_tombe, 20], [drain_ame, 22]]
   slots:
-    arme: [baton]
+    arme: [baton, orbe]
     armure: [robe]
-    accessoire: [anneau]
+    accessoire: [anneau, talisman]
 fossoyeurs:
   units: 2
   pop: 2
@@ -945,9 +945,9 @@ exorciste:
       res: { sacre: 30, tenebres: 15 }
       skills: [[egide, 20], [onde_soin, 22]]
   slots:
-    arme: [une_main, baton]
+    arme: [une_main, baton, sceptre]
     armure: [robe, legere]
-    accessoire: [anneau]
+    accessoire: [anneau, talisman]
 squelettes_lies:
   units: 3
   pop: 2
@@ -1019,9 +1019,9 @@ necrophage:
       res: { maladie: 30 }
       skills: [[silence_tombe, 20], [malefice, 22]]
   slots:
-    arme: [baton]
+    arme: [baton, orbe]
     armure: [robe]
-    accessoire: [anneau]
+    accessoire: [anneau, talisman]
 penitent:
   units: 1
   pop: 1
@@ -1169,9 +1169,9 @@ dryade:
       res: { maladie: 30, feu: -30 }
       skills: [[carapace_epines, 20], [peste, 24]]
   slots:
-    arme: [baton]
+    arme: [baton, sceptre]
     armure: [robe]
-    accessoire: [anneau]
+    accessoire: [anneau, talisman]
 ours_ambre:
   units: 1
   pop: 2
@@ -1243,9 +1243,9 @@ cueilleuse:
       res: { maladie: 30 }
       skills: [[nuee_ombres, 20], [peste, 22]]
   slots:
-    arme: [une_main, baton]
+    arme: [une_main, baton, orbe]
     armure: [robe, legere]
-    accessoire: [anneau]
+    accessoire: [anneau, talisman]
 cerfs:
   units: 2
   pop: 2
@@ -1393,9 +1393,9 @@ chamane_blizzard:
       res: { glace: 40, feu: -20 }
       skills: [[egide, 20], [mains_lumiere, 22]]
   slots:
-    arme: [baton]
+    arme: [baton, orbe]
     armure: [robe]
-    accessoire: [anneau]
+    accessoire: [anneau, talisman]
 yeti:
   units: 1
   pop: 3
@@ -1501,9 +1501,9 @@ ermite:
       res: { psychique: 30, glace: 20 }
       skills: [[hurlement_mental, 20], [lame_psychique, 22]]
   slots:
-    arme: [gantelets]
+    arme: [gantelets, orbe]
     armure: [robe, legere]
-    accessoire: [bottes, anneau]
+    accessoire: [bottes, anneau, talisman]
 ours_polaires:
   units: 2
   pop: 3
@@ -1609,9 +1609,9 @@ tisseuse:
       res: { tenebres: 30, maladie: 20 }
       skills: [[malediction, 20], [sommeil, 22]]
   slots:
-    arme: [baton]
+    arme: [baton, orbe]
     armure: [robe]
-    accessoire: [anneau]
+    accessoire: [anneau, talisman]
 araignees_dressees:
   units: 2
   pop: 2
@@ -1683,9 +1683,9 @@ porte_lanterne:
       res: { tenebres: 30, sacre: 20 }
       skills: [[jugement, 20], [rayon_sacre, 22]]
   slots:
-    arme: [une_main, baton]
+    arme: [une_main, baton, sceptre]
     armure: [robe, legere]
-    accessoire: [anneau]
+    accessoire: [anneau, talisman]
 arbaletrieres_drows:
   units: 2
   pop: 2
@@ -1825,9 +1825,9 @@ pyro_caldeira:
       res: { feu: 50, glace: -25 }
       skills: [[maitrise_elem, 20], [pluie_feu, 22]]
   slots:
-    arme: [baton]
+    arme: [baton, orbe]
     armure: [robe]
-    accessoire: [anneau]
+    accessoire: [anneau, talisman]
 salamandres:
   units: 2
   pop: 2
@@ -1925,9 +1925,9 @@ pretresse_cendres:
       res: { feu: 30 }
       skills: [[ferveur, 20], [purification_masse, 24]]
   slots:
-    arme: [une_main, baton]
+    arme: [une_main, baton, sceptre]
     armure: [robe, legere]
-    accessoire: [anneau]
+    accessoire: [anneau, talisman]
 briseurs_obsidienne:
   units: 2
   pop: 2
@@ -2069,9 +2069,9 @@ naga:
       res: { glace: 40, feu: -20 }
       skills: [[clarte, 20], [onde_soin, 22]]
   slots:
-    arme: [baton]
+    arme: [baton, orbe]
     armure: [robe]
-    accessoire: [anneau]
+    accessoire: [anneau, talisman]
 sirene:
   units: 1
   pop: 1
@@ -2103,9 +2103,9 @@ sirene:
       res: { psychique: 40 }
       skills: [[terreur_masse, 20], [vision_terreur, 22]]
   slots:
-    arme: [une_main]
+    arme: [une_main, orbe]
     armure: [legere]
-    accessoire: [bottes, anneau]
+    accessoire: [bottes, anneau, talisman]
 crabes:
   units: 2
   pop: 2
@@ -2169,9 +2169,9 @@ aumonier:
       res: { sacre: 20, glace: 15 }
       skills: [[purification_masse, 20], [ferveur, 22]]
   slots:
-    arme: [une_main, baton]
+    arme: [une_main, baton, sceptre]
     armure: [robe, legere]
-    accessoire: [anneau]
+    accessoire: [anneau, talisman]
 homme_fauve:
   units: 1
   pop: 2
@@ -2277,9 +2277,9 @@ chamane_crapaud:
       res: { maladie: 50 }
       skills: [[nuee_ombres, 20], [silence_tombe, 22]]
   slots:
-    arme: [baton]
+    arme: [baton, orbe]
     armure: [robe]
-    accessoire: [anneau]
+    accessoire: [anneau, talisman]
 gorille:
   units: 1
   pop: 3
@@ -2343,9 +2343,9 @@ pretresse_jade:
       res: { psychique: 20, maladie: 20 }
       skills: [[ferveur, 20], [cercle_soins, 22]]
   slots:
-    arme: [une_main, baton]
+    arme: [une_main, baton, sceptre]
     armure: [robe, legere]
-    accessoire: [anneau]
+    accessoire: [anneau, talisman]
 serpents_temple:
   units: 2
   pop: 2
@@ -2485,9 +2485,9 @@ chamane_tempetes:
       res: { glace: 20, psychique: 20 }
       skills: [[lien_esprits, 20], [armure_givre, 22]]
   slots:
-    arme: [baton]
+    arme: [baton, orbe]
     armure: [robe]
-    accessoire: [anneau]
+    accessoire: [anneau, talisman]
 hyenes:
   units: 3
   pop: 2
@@ -2659,9 +2659,9 @@ oracle_noyee:
       res: { psychique: 40, glace: 30 }
       skills: [[terreur_masse, 25], [vision_terreur, 27]]
   slots:
-    arme: [baton]
+    arme: [baton, orbe]
     armure: [robe]
-    accessoire: [anneau]
+    accessoire: [anneau, talisman]
 meduses:
   units: 3
   pop: 2
@@ -2693,7 +2693,7 @@ meduses:
       res: { glace: 30, psychique: 20 }
       skills: [[nuee_ombres, 25], [peste, 27]]
   slots:
-    accessoire: [collier]
+    accessoire: [collier, talisman]
 pretre_marees:
   units: 1
   pop: 2
@@ -2725,9 +2725,9 @@ pretre_marees:
       res: { glace: 30, sacre: 20 }
       skills: [[ferveur, 25], [aura_protection, 27]]
   slots:
-    arme: [une_main, baton]
+    arme: [une_main, baton, sceptre]
     armure: [robe, legere]
-    accessoire: [anneau]
+    accessoire: [anneau, talisman]
 requin_garou:
   units: 1
   pop: 3
@@ -2833,9 +2833,9 @@ demoniste:
       res: { feu: 30, tenebres: 30, sacre: -30 }
       skills: [[marque_mort, 25], [lien_vital, 27]]
   slots:
-    arme: [baton]
+    arme: [baton, orbe]
     armure: [robe]
-    accessoire: [anneau]
+    accessoire: [anneau, talisman]
 chevalier_obsidienne:
   units: 1
   pop: 3
@@ -2909,9 +2909,9 @@ succube:
       res: { feu: 40, sacre: -30 }
       skills: [[hurlement_mental, 25], [terreur_masse, 27]]
   slots:
-    arme: [une_main]
+    arme: [une_main, orbe]
     armure: [legere]
-    accessoire: [bottes, anneau]
+    accessoire: [bottes, anneau, talisman]
 molosses_verre:
   units: 2
   pop: 2
@@ -2983,9 +2983,9 @@ inquisitrice:
       res: { sacre: 40, tenebres: 30, feu: 20 }
       skills: [[onde_soin, 25], [ferveur, 27]]
   slots:
-    arme: [une_main, baton]
+    arme: [une_main, baton, sceptre]
     armure: [robe, legere]
-    accessoire: [anneau]
+    accessoire: [anneau, talisman]
 arbaletriers_verre:
   units: 2
   pop: 2
@@ -3093,9 +3093,9 @@ fee_songes:
       res: { psychique: 50 }
       skills: [[vision_terreur, 25], [terreur_masse, 27]]
   slots:
-    arme: [baton]
+    arme: [baton, orbe]
     armure: [robe]
-    accessoire: [anneau]
+    accessoire: [anneau, talisman]
 licorne:
   units: 1
   pop: 3
@@ -3127,7 +3127,7 @@ licorne:
       res: { sacre: 40, tenebres: 30 }
       skills: [[purification_masse, 25], [ferveur, 27]]
   slots:
-    accessoire: [collier]
+    accessoire: [collier, talisman]
 archeres_rosee:
   units: 2
   pop: 2
@@ -3227,6 +3227,6 @@ tisseur_reves:
       res: { psychique: 40 }
       skills: [[hurlement_mental, 25], [vision_terreur, 27]]
   slots:
-    arme: [baton]
+    arme: [baton, orbe]
     armure: [robe]
-    accessoire: [anneau]
+    accessoire: [anneau, talisman]

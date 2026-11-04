@@ -38,6 +38,15 @@ describe('contenu cible', () => {
     expect(from('monsters/gardiens-cible.yaml')).toHaveLength(24);
   });
 
+  it('équipement : orbe, sceptre et talisman sur 5 paliers, 15 bases signatures dans l’atelier de leur ville', () => {
+    const ids = from('items/bases/cible.yaml').map((k) => k.split('.')[1]!);
+    for (const cat of ['orbe', 'sceptre', 'talisman'])
+      expect(ids.filter((id) => raw.equip[id]!.cat === cat && !raw.equip[id]!.region)).toHaveLength(5);
+    const sig = ids.filter((id) => raw.equip[id]!.region);
+    expect(sig).toHaveLength(15);
+    expect(new Set(sig.map((id) => raw.equip[id]!.region)).size).toBe(15);
+  });
+
   it('60 capacités nouvelles : 54 actives et 6 passifs', () => {
     const ids = from('skills/cible.yaml').map((k) => k.split('.')[1]!);
     expect(ids.filter((id) => raw.skills[id]!.kind === 'active')).toHaveLength(54);

@@ -46,3 +46,4 @@ files:
     - items/bases/armures.yaml
     - items/bases/accessoires.yaml
     - items/bases/gardiens.yaml
+    - items/bases/cible.yaml

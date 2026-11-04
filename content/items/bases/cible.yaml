@@ -1,0 +1,250 @@
+# Équipement du contenu cible (contenu-cible-unites.md 9) : orbe, sceptre, talisman, bases signatures des régions.
+
+orbe_1:
+  tier: 1
+  slot: arme
+  cat: orbe
+  value: 30
+  tags: [pierre, essence]
+  pool: [[ele, 2], [omb, 2], [esp, 2], [mana, 3], [will, 1]]
+  weapon: { type: psychique, dmg: 6, speed: 22, cost: 6 }
+orbe_2:
+  tier: 2
+  slot: arme
+  cat: orbe
+  value: 70
+  tags: [pierre, essence]
+  pool: [[ele, 2], [omb, 2], [esp, 2], [mana, 3], [will, 1]]
+  weapon: { type: psychique, dmg: 8, speed: 22, cost: 6 }
+orbe_3:
+  tier: 3
+  slot: arme
+  cat: orbe
+  value: 140
+  tags: [pierre, essence]
+  pool: [[ele, 2], [omb, 2], [esp, 2], [mana, 3], [will, 1]]
+  weapon: { type: psychique, dmg: 9, speed: 22, cost: 6 }
+orbe_4:
+  tier: 4
+  slot: arme
+  cat: orbe
+  value: 260
+  tags: [pierre, essence]
+  pool: [[ele, 2], [omb, 2], [esp, 2], [mana, 3], [will, 1]]
+  weapon: { type: psychique, dmg: 11, speed: 22, cost: 6 }
+  workshop: true
+orbe_5:
+  tier: 5
+  slot: arme
+  cat: orbe
+  value: 450
+  tags: [pierre, essence]
+  pool: [[ele, 2], [omb, 2], [esp, 2], [mana, 3], [will, 1]]
+  weapon: { type: psychique, dmg: 14, speed: 22, cost: 6 }
+  workshop: true
+sceptre_1:
+  tier: 1
+  slot: arme
+  cat: sceptre
+  value: 30
+  tags: [bois, metal, essence]
+  pool: [[foi, 3], [mana, 2], [will, 2], [res, 1]]
+  weapon: { type: sacre, dmg: 7, speed: 22, cost: 6 }
+sceptre_2:
+  tier: 2
+  slot: arme
+  cat: sceptre
+  value: 70
+  tags: [bois, metal, essence]
+  pool: [[foi, 3], [mana, 2], [will, 2], [res, 1]]
+  weapon: { type: sacre, dmg: 9, speed: 22, cost: 6 }
+sceptre_3:
+  tier: 3
+  slot: arme
+  cat: sceptre
+  value: 140
+  tags: [bois, metal, essence]
+  pool: [[foi, 3], [mana, 2], [will, 2], [res, 1]]
+  weapon: { type: sacre, dmg: 11, speed: 22, cost: 6 }
+sceptre_4:
+  tier: 4
+  slot: arme
+  cat: sceptre
+  value: 260
+  tags: [bois, metal, essence]
+  pool: [[foi, 3], [mana, 2], [will, 2], [res, 1]]
+  weapon: { type: sacre, dmg: 13, speed: 22, cost: 6 }
+  workshop: true
+sceptre_5:
+  tier: 5
+  slot: arme
+  cat: sceptre
+  value: 450
+  tags: [bois, metal, essence]
+  pool: [[foi, 3], [mana, 2], [will, 2], [res, 1]]
+  weapon: { type: sacre, dmg: 16, speed: 22, cost: 6 }
+  workshop: true
+talisman_1:
+  tier: 1
+  slot: accessoire
+  cat: talisman
+  value: 26
+  tags: [os, essence, bois]
+  pool: [[foi, 3], [esp, 2], [will, 2], [mana, 1], [res, 1]]
+talisman_2:
+  tier: 2
+  slot: accessoire
+  cat: talisman
+  value: 60
+  tags: [os, essence, bois]
+  pool: [[foi, 3], [esp, 2], [will, 2], [mana, 1], [res, 1]]
+talisman_3:
+  tier: 3
+  slot: accessoire
+  cat: talisman
+  value: 119
+  tags: [os, essence, bois]
+  pool: [[foi, 3], [esp, 2], [will, 2], [mana, 1], [res, 1]]
+talisman_4:
+  tier: 4
+  slot: accessoire
+  cat: talisman
+  value: 221
+  tags: [os, essence, bois]
+  pool: [[foi, 3], [esp, 2], [will, 2], [mana, 1], [res, 1]]
+  workshop: true
+talisman_5:
+  tier: 5
+  slot: accessoire
+  cat: talisman
+  value: 383
+  tags: [os, essence, bois]
+  pool: [[foi, 3], [esp, 2], [will, 2], [mana, 1], [res, 1]]
+  workshop: true
+fourche_meunier:
+  tier: 1
+  slot: arme
+  cat: deux_mains
+  value: 30
+  tags: [metal, bois]
+  pool: [[for, 3], [hp, 3], [wdmg, 3], [wspeed, 1], [wcost, 1], [energy, 1]]
+  weapon: { type: tranchant, dmg: 16, speed: 24, cost: 14 }
+  region: val_moussu
+collier_galets_chantants:
+  tier: 1
+  slot: accessoire
+  cat: collier
+  value: 26
+  tags: [cuir, metal, os]
+  pool: [[esp, 3], [will, 2], [res, 3, glace], [for, 1], [hp, 1], [energy, 1], [res, 1]]
+  region: saulnes
+brigandine_bruyere:
+  tier: 1
+  slot: armure
+  cat: moyenne
+  value: 30
+  tags: [metal, cuir]
+  pool: [[hp, 3], [res, 3, tranchant], [energy, 2], [res, 2, contondant], [will, 1], [res, 1]]
+  region: fort_bruyere
+cape_brume:
+  tier: 2
+  slot: armure
+  cat: legere
+  value: 70
+  tags: [cuir, fil]
+  pool: [[esp, 3], [res, 3, psychique], [energy, 2], [hp, 1], [res, 2, tranchant], [res, 1, contondant], [res, 1]]
+  region: brumefosse
+linceul_consacre:
+  tier: 2
+  slot: armure
+  cat: robe
+  value: 70
+  tags: [fil, herbe, plume]
+  pool: [[foi, 3], [res, 3, tenebres], [mana, 3], [will, 1], [ele, 1], [omb, 1], [hp, 1], [res, 1]]
+  region: corbeval
+arc_ambre:
+  tier: 2
+  slot: arme
+  cat: arc
+  value: 70
+  tags: [bois, fil, plume]
+  pool: [[for, 3], [wdmg, 3], [res, 3, maladie], [wspeed, 1], [wcost, 1], [energy, 1]]
+  weapon: { type: tranchant, dmg: 13, speed: 18, cost: 10 }
+  region: ambrerive
+hache_givre:
+  tier: 3
+  slot: arme
+  cat: deux_mains
+  value: 140
+  tags: [metal, bois]
+  pool: [[for, 3], [wdmg, 3], [res, 3, glace], [wspeed, 1], [wcost, 1], [energy, 1], [hp, 1]]
+  weapon: { type: glace, dmg: 25, speed: 24, cost: 14 }
+  region: givrecime
+dague_nuit:
+  tier: 3
+  slot: arme
+  cat: une_main
+  value: 140
+  tags: [metal, cuir]
+  pool: [[for, 3], [omb, 3], [wspeed, 2], [wdmg, 1], [wcost, 1], [energy, 1]]
+  weapon: { type: tenebres, dmg: 19, speed: 20, cost: 10 }
+  region: lanterne_noire
+marteau_lave:
+  tier: 3
+  slot: arme
+  cat: une_main
+  value: 140
+  tags: [metal, bois]
+  pool: [[for, 3], [ele, 3], [res, 3, feu], [foi, 1], [wdmg, 1], [wspeed, 1], [wcost, 1], [will, 1]]
+  weapon: { type: feu, dmg: 16, speed: 21, cost: 8 }
+  region: braise_haute
+tricorne_capitaine:
+  tier: 4
+  slot: accessoire
+  cat: anneau
+  value: 221
+  tags: [essence, pierre, metal]
+  pool: [[for, 3], [will, 2], [esp, 3], [mana, 1], [ele, 1], [omb, 1], [res, 1]]
+  region: port_corsaire
+masque_chamane:
+  tier: 4
+  slot: accessoire
+  cat: talisman
+  value: 221
+  tags: [os, essence, bois]
+  pool: [[omb, 3], [foi, 3], [res, 3, maladie], [esp, 1], [will, 1], [mana, 1], [res, 1]]
+  region: verdeloin
+arc_steppes:
+  tier: 4
+  slot: arme
+  cat: arc
+  value: 260
+  tags: [bois, fil, plume]
+  pool: [[for, 3], [wspeed, 2], [energy, 2], [wdmg, 1], [wcost, 1]]
+  weapon: { type: tranchant, dmg: 19, speed: 18, cost: 10 }
+  region: kharak
+orbe_abysses:
+  tier: 5
+  slot: arme
+  cat: orbe
+  value: 450
+  tags: [pierre, essence]
+  pool: [[esp, 3], [omb, 3], [res, 3, glace], [ele, 1], [mana, 1], [will, 1]]
+  weapon: { type: psychique, dmg: 14, speed: 22, cost: 6 }
+  region: ys_profonde
+armure_obsidienne:
+  tier: 5
+  slot: armure
+  cat: lourde
+  value: 450
+  tags: [metal, pierre]
+  pool: [[hp, 3], [res, 3, feu], [res, 3, tranchant], [res, 3, contondant], [res, 1]]
+  region: citadelle_obsidienne
+talisman_lune:
+  tier: 5
+  slot: accessoire
+  cat: talisman
+  value: 383
+  tags: [os, essence, bois]
+  pool: [[esp, 3], [foi, 3], [will, 2], [mana, 1], [res, 1]]
+  region: lune_dormante

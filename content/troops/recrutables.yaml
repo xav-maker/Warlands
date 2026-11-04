@@ -115,9 +115,9 @@ acolyte:
       res: { sacre: 40, tenebres: 10 }
       skills: [[trait_sacre_renforce, 20], [confusion, 24]]
   slots:
-    arme: [une_main, baton]
+    arme: [une_main, baton, sceptre]
     armure: [robe, legere]
-    accessoire: [bottes, anneau]
+    accessoire: [bottes, anneau, talisman]
 pyromancien:
   units: 1
   pop: 2
@@ -157,9 +157,9 @@ pyromancien:
       res: { feu: 50, glace: -25 }
       skills: [[lance_feu, 20], [meteore, 25]]
   slots:
-    arme: [baton]
+    arme: [baton, orbe]
     armure: [robe]
-    accessoire: [bottes, anneau]
+    accessoire: [bottes, anneau, talisman]
 chasseur:
   units: 1
   pop: 1
@@ -300,9 +300,9 @@ adepte:
       res: { tenebres: 40, maladie: 60, sacre: -30 }
       skills: [[contagion, 20], [nuage_renforce, 24]]
   slots:
-    arme: [baton]
+    arme: [baton, orbe]
     armure: [robe]
-    accessoire: [bottes, anneau]
+    accessoire: [bottes, anneau, talisman]
 moine:
   units: 1
   pop: 1
@@ -460,9 +460,9 @@ herboriste:
       res: { maladie: 25 }
       skills: [[peste, 20], [carapace_epines, 24]]
   slots:
-    arme: [une_main, baton]
+    arme: [une_main, baton, sceptre]
     armure: [robe, legere]
-    accessoire: [bottes, anneau]
+    accessoire: [bottes, anneau, talisman]
 braconniers:
   units: 2
   pop: 2
@@ -569,10 +569,10 @@ sorciere_marais:
       speed: 21
       res: { maladie: 40, feu: -20 }
       skills: [[drain_ame, 20], [trait_ombre, 22]]
-  slots: &a3
-    arme: [baton]
+  slots:
+    arme: [baton, orbe]
     armure: [robe]
-    accessoire: [bottes, anneau]
+    accessoire: [bottes, anneau, talisman]
 gardes_maree:
   units: 2
   pop: 2
@@ -673,7 +673,10 @@ chamane_crues:
       speed: 20
       res: { glace: 30, feu: -15 }
       skills: [[blizzard, 20], [prison_glace, 25]]
-  slots: *a3
+  slots:
+    arme: [baton, orbe]
+    armure: [robe]
+    accessoire: [bottes, anneau, talisman]
 mineurs:
   units: 3
   pop: 2
@@ -743,7 +746,10 @@ forgeron_runes:
       speed: 20
       res: { feu: 30, contondant: 10 }
       skills: [[frappe_brutale, 20], [coup_assommant, 22]]
-  slots: *a1
+  slots:
+    arme: [une_main, orbe]
+    armure: [legere, moyenne, lourde]
+    accessoire: [bottes, anneau, talisman]
 eclaireuse:
   units: 1
   pop: 1
@@ -809,9 +815,9 @@ alchimiste:
       res: { feu: 20, maladie: 20 }
       skills: [[meteore, 20], [peste, 24]]
   slots:
-    arme: [fronde]
+    arme: [fronde, orbe]
     armure: [robe, legere]
-    accessoire: [bottes, anneau]
+    accessoire: [bottes, anneau, talisman]
 gardien_pierre:
   units: 1
   pop: 3
@@ -884,7 +890,10 @@ mage_cristal:
       speed: 22
       res: { glace: 35, contondant: -15 }
       skills: [[armure_givre, 20], [egide, 24]]
-  slots: *a3
+  slots:
+    arme: [baton, orbe]
+    armure: [robe]
+    accessoire: [bottes, anneau, talisman]
 lanciers_cendres:
   units: 2
   pop: 2
@@ -1030,7 +1039,10 @@ pretresse_soleil:
       speed: 19
       res: { sacre: 40, feu: 20, tenebres: -20 }
       skills: [[jugement, 20], [consecration, 24]]
-  slots: *a3
+  slots:
+    arme: [baton, sceptre]
+    armure: [robe]
+    accessoire: [bottes, anneau, talisman]
 scorpions:
   units: 2
   pop: 2
@@ -1101,7 +1113,10 @@ mage_cendre:
       speed: 22
       res: { feu: 50, glace: -25 }
       skills: [[bouclier_flammes, 20], [nova_flammes, 22]]
-  slots: *a3
+  slots:
+    arme: [baton, orbe]
+    armure: [robe]
+    accessoire: [bottes, anneau, talisman]
 garde_oasis:
   units: 1
   pop: 2
@@ -1172,9 +1187,9 @@ barde:
       res: { psychique: 30 }
       skills: [[hurlement_mental, 20], [domination, 24]]
   slots:
-    arme: [une_main]
+    arme: [une_main, orbe]
     armure: [legere, robe]
-    accessoire: [bottes, anneau]
+    accessoire: [bottes, anneau, talisman]
 paladin:
   units: 1
   pop: 3
@@ -1213,7 +1228,10 @@ paladin:
       speed: 19
       res: { sacre: 40, tenebres: 20, tranchant: 15 }
       skills: [[jugement, 25], [consecration, 27]]
-  slots: *a1
+  slots:
+    arme: [une_main, orbe]
+    armure: [legere, moyenne, lourde]
+    accessoire: [bottes, anneau, talisman]
 archonte_aube:
   units: 1
   pop: 3
@@ -1244,7 +1262,10 @@ archonte_aube:
       speed: 20
       res: { sacre: 50, psychique: 30 }
       skills: [[purification_masse, 25], [ferveur, 27]]
-  slots: *a3
+  slots:
+    arme: [baton, sceptre]
+    armure: [robe]
+    accessoire: [bottes, anneau, talisman]
 lames_jumelles:
   units: 2
   pop: 2
@@ -1340,7 +1361,10 @@ oracle:
       speed: 21
       res: { psychique: 40 }
       skills: [[sommeil, 25], [hurlement_mental, 27]]
-  slots: *a3
+  slots:
+    arme: [baton, orbe]
+    armure: [robe]
+    accessoire: [bottes, anneau, talisman]
 chevalier_griffon:
   units: 1
   pop: 3
@@ -1405,7 +1429,10 @@ invocatrice:
       speed: 21
       res: { glace: 30, feu: 30 }
       skills: [[meteore, 25], [maitrise_elem, 27]]
-  slots: *a3
+  slots:
+    arme: [baton, orbe]
+    armure: [robe]
+    accessoire: [bottes, anneau, talisman]
 gardiens_celestes:
   units: 3
   pop: 3
