@@ -2509,3 +2509,317 @@ equip.arc_steppes.name: 'Arc des steppes'
 equip.orbe_abysses.name: 'Orbe des abysses'
 equip.armure_obsidienne.name: "Armure d'obsidienne"
 equip.talisman_lune.name: 'Talisman de lune'
+
+# Donjons.
+item.pepite_terriers.name: Pépite des terriers
+item.pepite_terriers.desc: Matériau propre au donjon Terriers du Roi Kobold.
+troop.kobolds_terrassiers.name: Kobolds terrassiers
+troop.kobolds_terrassiers.forms.kobolds_terrassiers.name: Kobolds terrassiers
+troop.kobolds_lance_pierres.name: Kobolds lance-pierres
+troop.kobolds_lance_pierres.forms.kobolds_lance_pierres.name: Kobolds lance-pierres
+troop.taupes_geantes.name: Taupes géantes
+troop.taupes_geantes.forms.taupes_geantes.name: Taupes géantes
+troop.kobold_geomancien.name: Kobold géomancien
+troop.kobold_geomancien.forms.kobold_geomancien.name: Kobold géomancien
+item.trophee_taupe_reine.name: 'Trophée de boss : Taupe-Reine'
+item.trophee_taupe_reine.desc: Preuve de la victoire sur Taupe-Reine, boss du donjon Terriers du Roi Kobold.
+troop.taupe_reine.name: Taupe-Reine
+troop.taupe_reine.forms.taupe_reine.name: Taupe-Reine
+item.trophee_chef_gratte_gratte.name: 'Trophée de boss : Chef terrassier Gratte-Gratte'
+item.trophee_chef_gratte_gratte.desc: Preuve de la victoire sur Chef terrassier Gratte-Gratte, boss du donjon Terriers du Roi Kobold.
+troop.chef_gratte_gratte.name: Chef terrassier Gratte-Gratte
+troop.chef_gratte_gratte.forms.chef_gratte_gratte.name: Chef terrassier Gratte-Gratte
+item.trophee_roi_kobold.name: 'Trophée de boss : Roi Kobold Mille-Galeries'
+item.trophee_roi_kobold.desc: Preuve de la victoire sur Roi Kobold Mille-Galeries, boss du donjon Terriers du Roi Kobold.
+troop.roi_kobold.name: Roi Kobold Mille-Galeries
+troop.roi_kobold.forms.roi_kobold.name: Roi Kobold Mille-Galeries
+equip.pioche_roi_kobold.name: Pioche du Roi Kobold
+equip.casque_lanterne.name: Casque-lanterne
+dungeon.terriers_roi_kobold.name: Terriers du Roi Kobold
+dungeon.terriers_roi_kobold.desc: Un dédale de galeries creusées sous les prés, où les kobolds entassent ce qu’ils volent aux fermes.
+item.poussiere_fee.name: Poussière de fée
+item.poussiere_fee.desc: Matériau propre au donjon Tertre des Fées.
+troop.farfadets_voleurs.name: Farfadets voleurs
+troop.farfadets_voleurs.forms.farfadets_voleurs.name: Farfadets voleurs
+troop.lutins_tourbe.name: Lutins de tourbe
+troop.lutins_tourbe.forms.lutins_tourbe.name: Lutins de tourbe
+troop.feux_follets.name: Feux follets dansants
+troop.feux_follets.forms.feux_follets.name: Feux follets dansants
+troop.champignons_fees.name: Champignons-fées
+troop.champignons_fees.forms.champignons_fees.name: Champignons-fées
+item.trophee_lutin_grand_chapeau.name: 'Trophée de boss : Lutin Grand-Chapeau'
+item.trophee_lutin_grand_chapeau.desc: Preuve de la victoire sur Lutin Grand-Chapeau, boss du donjon Tertre des Fées.
+troop.lutin_grand_chapeau.name: Lutin Grand-Chapeau
+troop.lutin_grand_chapeau.forms.lutin_grand_chapeau.name: Lutin Grand-Chapeau
+item.trophee_fee_melancolie.name: 'Trophée de boss : Fée Mélancolie'
+item.trophee_fee_melancolie.desc: Preuve de la victoire sur Fée Mélancolie, boss du donjon Tertre des Fées.
+troop.fee_melancolie.name: Fée Mélancolie
+troop.fee_melancolie.forms.fee_melancolie.name: Fée Mélancolie
+item.trophee_roi_elfes_tertre.name: 'Trophée de boss : Roi des Elfes du Tertre'
+item.trophee_roi_elfes_tertre.desc: Preuve de la victoire sur Roi des Elfes du Tertre, boss du donjon Tertre des Fées.
+troop.roi_elfes_tertre.name: Roi des Elfes du Tertre
+troop.roi_elfes_tertre.forms.roi_elfes_tertre.name: Roi des Elfes du Tertre
+equip.robe_petales.name: Robe de pétales
+equip.baguette_saule.name: Baguette de saule
+dungeon.tertre_fees.name: Tertre des Fées
+dungeon.tertre_fees.desc: Sous la colline aux fées, le temps passe autrement et les invités ne repartent pas toujours.
+item.rhum_noir.name: Rhum noir
+item.rhum_noir.desc: Matériau propre au donjon Grotte des Contrebandiers.
+troop.contrebandiers.name: Contrebandiers
+troop.contrebandiers.forms.contrebandiers.name: Contrebandiers
+troop.chiens_garde.name: Chiens de garde
+troop.chiens_garde.forms.chiens_garde.name: Chiens de garde
+troop.noyes_port.name: Noyés du port
+troop.noyes_port.forms.noyes_port.name: Noyés du port
+troop.sorciere_quais.name: Sorcière des quais
+troop.sorciere_quais.forms.sorciere_quais.name: Sorcière des quais
+item.trophee_borgne_main_leste.name: 'Trophée de boss : Le Borgne Main-Leste'
+item.trophee_borgne_main_leste.desc: Preuve de la victoire sur Le Borgne Main-Leste, boss du donjon Grotte des Contrebandiers.
+troop.borgne_main_leste.name: Le Borgne Main-Leste
+troop.borgne_main_leste.forms.borgne_main_leste.name: Le Borgne Main-Leste
+item.trophee_grosse_berthe.name: 'Trophée de boss : Grosse Berthe la Cantinière'
+item.trophee_grosse_berthe.desc: Preuve de la victoire sur Grosse Berthe la Cantinière, boss du donjon Grotte des Contrebandiers.
+troop.grosse_berthe.name: Grosse Berthe la Cantinière
+troop.grosse_berthe.forms.grosse_berthe.name: Grosse Berthe la Cantinière
+item.trophee_capitaine_corbac.name: 'Trophée de boss : Capitaine Corbac'
+item.trophee_capitaine_corbac.desc: Preuve de la victoire sur Capitaine Corbac, boss du donjon Grotte des Contrebandiers.
+troop.capitaine_corbac.name: Capitaine Corbac
+troop.capitaine_corbac.forms.capitaine_corbac.name: Capitaine Corbac
+equip.sabre_capitaine.name: Sabre du Capitaine
+equip.longue_vue_corbac.name: Longue-vue de Corbac
+dungeon.grotte_contrebandiers.name: Grotte des Contrebandiers
+dungeon.grotte_contrebandiers.desc: Une grotte marine sous les falaises, pleine de tonneaux sans marque et de marins sans scrupules.
+item.plume_ossuaire.name: Plume d’ossuaire
+item.plume_ossuaire.desc: Matériau propre au donjon Crypte des Corbeaux.
+troop.squelettes_corbeaux.name: Squelettes corbeaux
+troop.squelettes_corbeaux.forms.squelettes_corbeaux.name: Squelettes corbeaux
+troop.goules_crypte.name: Goules de crypte
+troop.goules_crypte.forms.goules_crypte.name: Goules de crypte
+troop.pretres_cadaveriques.name: Prêtres cadavériques
+troop.pretres_cadaveriques.forms.pretres_cadaveriques.name: Prêtres cadavériques
+troop.nuee_corbeaux_morts.name: Nuée de corbeaux morts
+troop.nuee_corbeaux_morts.forms.nuee_corbeaux_morts.name: Nuée de corbeaux morts
+item.trophee_gardien_os.name: 'Trophée de boss : Gardien des os'
+item.trophee_gardien_os.desc: Preuve de la victoire sur Gardien des os, boss du donjon Crypte des Corbeaux.
+troop.gardien_os.name: Gardien des os
+troop.gardien_os.forms.gardien_os.name: Gardien des os
+item.trophee_abbesse_plume_noire.name: 'Trophée de boss : Abbesse Plume-Noire'
+item.trophee_abbesse_plume_noire.desc: Preuve de la victoire sur Abbesse Plume-Noire, boss du donjon Crypte des Corbeaux.
+troop.abbesse_plume_noire.name: Abbesse Plume-Noire
+troop.abbesse_plume_noire.forms.abbesse_plume_noire.name: Abbesse Plume-Noire
+item.trophee_roi_corbeau.name: 'Trophée de boss : Roi Corbeau'
+item.trophee_roi_corbeau.desc: Preuve de la victoire sur Roi Corbeau, boss du donjon Crypte des Corbeaux.
+troop.roi_corbeau.name: Roi Corbeau
+troop.roi_corbeau.forms.roi_corbeau.name: Roi Corbeau
+equip.masque_corbeau.name: Masque de corbeau
+equip.faux_roi_corbeau.name: Faux du Roi Corbeau
+dungeon.crypte_corbeaux.name: Crypte des Corbeaux
+dungeon.crypte_corbeaux.desc: Sous le vieux cimetière, une crypte où les corbeaux gardent les morts qui ne dorment plus.
+item.fer_profondeurs.name: Fer des profondeurs
+item.fer_profondeurs.desc: Matériau propre au donjon Puits sans fond.
+troop.nains_revenants.name: Nains revenants
+troop.nains_revenants.forms.nains_revenants.name: Nains revenants
+troop.golems_fer_rouille.name: Golems de fer rouillé
+troop.golems_fer_rouille.forms.golems_fer_rouille.name: Golems de fer rouillé
+troop.vers_aveugles.name: Vers aveugles
+troop.vers_aveugles.forms.vers_aveugles.name: Vers aveugles
+troop.kobolds_fous.name: Kobolds fous
+troop.kobolds_fous.forms.kobolds_fous.name: Kobolds fous
+item.trophee_contremaitre_eternel.name: 'Trophée de boss : Contremaître éternel'
+item.trophee_contremaitre_eternel.desc: Preuve de la victoire sur Contremaître éternel, boss du donjon Puits sans fond.
+troop.contremaitre_eternel.name: Contremaître éternel
+troop.contremaitre_eternel.forms.contremaitre_eternel.name: Contremaître éternel
+item.trophee_golem_forge_primitif.name: 'Trophée de boss : Golem-Forge primitif'
+item.trophee_golem_forge_primitif.desc: Preuve de la victoire sur Golem-Forge primitif, boss du donjon Puits sans fond.
+troop.golem_forge_primitif.name: Golem-Forge primitif
+troop.golem_forge_primitif.forms.golem_forge_primitif.name: Golem-Forge primitif
+item.trophee_ombre_puits.name: 'Trophée de boss : L’Ombre du Puits'
+item.trophee_ombre_puits.desc: Preuve de la victoire sur L’Ombre du Puits, boss du donjon Puits sans fond.
+troop.ombre_puits.name: L’Ombre du Puits
+troop.ombre_puits.forms.ombre_puits.name: L’Ombre du Puits
+equip.marteau_puits.name: Marteau du Puits
+equip.plastron_sans_fond.name: Plastron sans fond
+dungeon.puits_sans_fond.name: Puits sans fond
+dungeon.puits_sans_fond.desc: Le plus vieux puits des mines, que les nains ont muré. Quelque chose l’a rouvert d’en bas.
+item.gelee_cristal.name: Gelée de cristal
+item.gelee_cristal.desc: Matériau propre au donjon Ruche de cristal.
+troop.guepes_cristal.name: Guêpes de cristal
+troop.guepes_cristal.forms.guepes_cristal.name: Guêpes de cristal
+troop.larves_luisantes.name: Larves luisantes
+troop.larves_luisantes.forms.larves_luisantes.name: Larves luisantes
+troop.ouvrieres_quartz.name: Ouvrières de quartz
+troop.ouvrieres_quartz.forms.ouvrieres_quartz.name: Ouvrières de quartz
+troop.sentinelles_prismatiques.name: Sentinelles prismatiques
+troop.sentinelles_prismatiques.forms.sentinelles_prismatiques.name: Sentinelles prismatiques
+item.trophee_bourdon_quartz.name: 'Trophée de boss : Bourdon de quartz'
+item.trophee_bourdon_quartz.desc: Preuve de la victoire sur Bourdon de quartz, boss du donjon Ruche de cristal.
+troop.bourdon_quartz.name: Bourdon de quartz
+troop.bourdon_quartz.forms.bourdon_quartz.name: Bourdon de quartz
+item.trophee_princesse_prisme.name: 'Trophée de boss : Princesse-Prisme'
+item.trophee_princesse_prisme.desc: Preuve de la victoire sur Princesse-Prisme, boss du donjon Ruche de cristal.
+troop.princesse_prisme.name: Princesse-Prisme
+troop.princesse_prisme.forms.princesse_prisme.name: Princesse-Prisme
+item.trophee_reine_cristal.name: 'Trophée de boss : Reine de cristal'
+item.trophee_reine_cristal.desc: Preuve de la victoire sur Reine de cristal, boss du donjon Ruche de cristal.
+troop.reine_cristal.name: Reine de cristal
+troop.reine_cristal.forms.reine_cristal.name: Reine de cristal
+equip.aiguillon_cristal.name: Aiguillon de cristal
+equip.carapace_prismatique.name: Carapace prismatique
+dungeon.ruche_cristal.name: Ruche de cristal
+dungeon.ruche_cristal.desc: Au cœur des grottes, une ruche de quartz où bourdonne une colonie d’insectes de verre.
+item.glace_eternelle.name: Glace éternelle
+item.glace_eternelle.desc: Matériau propre au donjon Tombeau du Roi des Glaces.
+troop.guerriers_geles.name: Guerriers gelés
+troop.guerriers_geles.forms.guerriers_geles.name: Guerriers gelés
+troop.spectres_givre.name: Spectres de givre
+troop.spectres_givre.forms.spectres_givre.name: Spectres de givre
+troop.loups_glace.name: Loups de glace
+troop.loups_glace.forms.loups_glace.name: Loups de glace
+troop.pretresses_hiver.name: Prêtresses de l’hiver
+troop.pretresses_hiver.forms.pretresses_hiver.name: Prêtresses de l’hiver
+item.trophee_chancelier_givre.name: 'Trophée de boss : Chancelier de Givre'
+item.trophee_chancelier_givre.desc: Preuve de la victoire sur Chancelier de Givre, boss du donjon Tombeau du Roi des Glaces.
+troop.chancelier_givre.name: Chancelier de Givre
+troop.chancelier_givre.forms.chancelier_givre.name: Chancelier de Givre
+item.trophee_reine_hiver_pale.name: 'Trophée de boss : Reine Hiver-Pâle'
+item.trophee_reine_hiver_pale.desc: Preuve de la victoire sur Reine Hiver-Pâle, boss du donjon Tombeau du Roi des Glaces.
+troop.reine_hiver_pale.name: Reine Hiver-Pâle
+troop.reine_hiver_pale.forms.reine_hiver_pale.name: Reine Hiver-Pâle
+item.trophee_roi_glaces.name: 'Trophée de boss : Roi des Glaces'
+item.trophee_roi_glaces.desc: Preuve de la victoire sur Roi des Glaces, boss du donjon Tombeau du Roi des Glaces.
+troop.roi_glaces.name: Roi des Glaces
+troop.roi_glaces.forms.roi_glaces.name: Roi des Glaces
+equip.couronne_givre.name: Couronne de givre
+equip.lame_hiver.name: Lame-Hiver
+dungeon.tombeau_roi_glaces.name: Tombeau du Roi des Glaces
+dungeon.tombeau_roi_glaces.desc: Pris dans le glacier, le tombeau d’un roi oublié et de sa cour, figés mais pas endormis.
+item.ecaille_leviathan.name: Écaille de léviathan
+item.ecaille_leviathan.desc: Matériau propre au donjon Épave du Léviathan.
+troop.marins_maudits.name: Marins maudits
+troop.marins_maudits.forms.marins_maudits.name: Marins maudits
+troop.crabes_abysse.name: Crabes d’abysse
+troop.crabes_abysse.forms.crabes_abysse.name: Crabes d’abysse
+troop.murenes_geantes.name: Murènes géantes
+troop.murenes_geantes.forms.murenes_geantes.name: Murènes géantes
+troop.sorciers_marees.name: Sorciers des marées
+troop.sorciers_marees.forms.sorciers_marees.name: Sorciers des marées
+item.trophee_bosco_noye.name: 'Trophée de boss : Bosco Noyé'
+item.trophee_bosco_noye.desc: Preuve de la victoire sur Bosco Noyé, boss du donjon Épave du Léviathan.
+troop.bosco_noye.name: Bosco Noyé
+troop.bosco_noye.forms.bosco_noye.name: Bosco Noyé
+item.trophee_sorciere_mare_noire.name: 'Trophée de boss : Sorcière Mare-Noire'
+item.trophee_sorciere_mare_noire.desc: Preuve de la victoire sur Sorcière Mare-Noire, boss du donjon Épave du Léviathan.
+troop.sorciere_mare_noire.name: Sorcière Mare-Noire
+troop.sorciere_mare_noire.forms.sorciere_mare_noire.name: Sorcière Mare-Noire
+item.trophee_coeur_leviathan.name: 'Trophée de boss : Cœur du Léviathan'
+item.trophee_coeur_leviathan.desc: Preuve de la victoire sur Cœur du Léviathan, boss du donjon Épave du Léviathan.
+troop.coeur_leviathan.name: Cœur du Léviathan
+troop.coeur_leviathan.forms.coeur_leviathan.name: Cœur du Léviathan
+equip.harpon_leviathan.name: Harpon du Léviathan
+equip.cape_ecume.name: Cape d’écume
+dungeon.epave_leviathan.name: Épave du Léviathan
+dungeon.epave_leviathan.desc: Le squelette d’un monstre marin échoué sert de coque à un navire fantôme et à son équipage.
+item.jade_ancien.name: Jade ancien
+item.jade_ancien.desc: Matériau propre au donjon Pyramide de Jade.
+troop.momies_jade.name: Momies de jade
+troop.momies_jade.forms.momies_jade.name: Momies de jade
+troop.serpents_sacres.name: Serpents sacrés
+troop.serpents_sacres.forms.serpents_sacres.name: Serpents sacrés
+troop.pretres_jaguars.name: Prêtres-jaguars
+troop.pretres_jaguars.forms.pretres_jaguars.name: Prêtres-jaguars
+troop.gardiens_pierre_jade.name: Gardiens de pierre
+troop.gardiens_pierre_jade.forms.gardiens_pierre_jade.name: Gardiens de pierre
+item.trophee_grand_jaguar.name: 'Trophée de boss : Grand Jaguar'
+item.trophee_grand_jaguar.desc: Preuve de la victoire sur Grand Jaguar, boss du donjon Pyramide de Jade.
+troop.grand_jaguar.name: Grand Jaguar
+troop.grand_jaguar.forms.grand_jaguar.name: Grand Jaguar
+item.trophee_pretresse_jade_mort.name: 'Trophée de boss : Prêtresse Jade-Mort'
+item.trophee_pretresse_jade_mort.desc: Preuve de la victoire sur Prêtresse Jade-Mort, boss du donjon Pyramide de Jade.
+troop.pretresse_jade_mort.name: Prêtresse Jade-Mort
+troop.pretresse_jade_mort.forms.pretresse_jade_mort.name: Prêtresse Jade-Mort
+item.trophee_dieu_serpent.name: 'Trophée de boss : Dieu-Serpent endormi'
+item.trophee_dieu_serpent.desc: Preuve de la victoire sur Dieu-Serpent endormi, boss du donjon Pyramide de Jade.
+troop.dieu_serpent.name: Dieu-Serpent endormi
+troop.dieu_serpent.forms.dieu_serpent.name: Dieu-Serpent endormi
+equip.masque_jade.name: Masque de jade
+equip.sceptre_serpent.name: Sceptre du Serpent
+dungeon.pyramide_jade.name: Pyramide de Jade
+dungeon.pyramide_jade.desc: Au fond de la jungle, une pyramide de jade où un culte veille sur un dieu-serpent endormi.
+item.plume_tempete.name: Plume de tempête
+item.plume_tempete.desc: Matériau propre au donjon Tour des Vents.
+troop.elementaires_air.name: Élémentaires d’air
+troop.elementaires_air.forms.elementaires_air.name: Élémentaires d’air
+troop.harpies_tour.name: Harpies de la tour
+troop.harpies_tour.forms.harpies_tour.name: Harpies de la tour
+troop.moines_vent.name: Moines du vent
+troop.moines_vent.forms.moines_vent.name: Moines du vent
+troop.gargouilles_bronze.name: Gargouilles de bronze
+troop.gargouilles_bronze.forms.gargouilles_bronze.name: Gargouilles de bronze
+item.trophee_maitre_courants.name: 'Trophée de boss : Maître des Courants'
+item.trophee_maitre_courants.desc: Preuve de la victoire sur Maître des Courants, boss du donjon Tour des Vents.
+troop.maitre_courants.name: Maître des Courants
+troop.maitre_courants.forms.maitre_courants.name: Maître des Courants
+item.trophee_gargouille_airain.name: 'Trophée de boss : Gargouille d’airain'
+item.trophee_gargouille_airain.desc: Preuve de la victoire sur Gargouille d’airain, boss du donjon Tour des Vents.
+troop.gargouille_airain.name: Gargouille d’airain
+troop.gargouille_airain.forms.gargouille_airain.name: Gargouille d’airain
+item.trophee_seigneur_vents.name: 'Trophée de boss : Seigneur des Vents'
+item.trophee_seigneur_vents.desc: Preuve de la victoire sur Seigneur des Vents, boss du donjon Tour des Vents.
+troop.seigneur_vents.name: Seigneur des Vents
+troop.seigneur_vents.forms.seigneur_vents.name: Seigneur des Vents
+equip.bottes_tempete.name: Bottes de tempête
+equip.arc_quatre_vents.name: Arc des Quatre Vents
+dungeon.tour_vents.name: Tour des Vents
+dungeon.tour_vents.desc: Une tour plantée dans la steppe, ouverte aux quatre vents, que l’orage ne quitte jamais.
+item.fragment_etoile_noire.name: Fragment d’étoile noire
+item.fragment_etoile_noire.desc: Matériau propre au donjon Observatoire inversé.
+troop.astromanciens_dements.name: Astromanciens déments
+troop.astromanciens_dements.forms.astromanciens_dements.name: Astromanciens déments
+troop.etoiles_dechues.name: Étoiles déchues
+troop.etoiles_dechues.forms.etoiles_dechues.name: Étoiles déchues
+troop.golems_orrery.name: Golems d’orrery
+troop.golems_orrery.forms.golems_orrery.name: Golems d’orrery
+troop.anges_sans_visage.name: Anges sans visage
+troop.anges_sans_visage.forms.anges_sans_visage.name: Anges sans visage
+item.trophee_gardien_orrery.name: 'Trophée de boss : Gardien de l’Orrery'
+item.trophee_gardien_orrery.desc: Preuve de la victoire sur Gardien de l’Orrery, boss du donjon Observatoire inversé.
+troop.gardien_orrery.name: Gardien de l’Orrery
+troop.gardien_orrery.forms.gardien_orrery.name: Gardien de l’Orrery
+item.trophee_astronome_vide.name: 'Trophée de boss : Astronome Vide-d’Yeux'
+item.trophee_astronome_vide.desc: Preuve de la victoire sur Astronome Vide-d’Yeux, boss du donjon Observatoire inversé.
+troop.astronome_vide.name: Astronome Vide-d’Yeux
+troop.astronome_vide.forms.astronome_vide.name: Astronome Vide-d’Yeux
+item.trophee_etoile_noire.name: 'Trophée de boss : L’Étoile Noire'
+item.trophee_etoile_noire.desc: Preuve de la victoire sur L’Étoile Noire, boss du donjon Observatoire inversé.
+troop.etoile_noire.name: L’Étoile Noire
+troop.etoile_noire.forms.etoile_noire.name: L’Étoile Noire
+equip.robe_nuit_etoilee.name: Robe de nuit étoilée
+equip.orbe_astre_mort.name: Orbe d’astre mort
+dungeon.observatoire_inverse.name: Observatoire inversé
+dungeon.observatoire_inverse.desc: Un observatoire suspendu à l’envers sous les ruines célestes, d’où l’on regarde les étoiles tomber.
+item.obsidienne_vivante.name: Obsidienne vivante
+item.obsidienne_vivante.desc: Matériau propre au donjon Abîme d’Obsidienne.
+troop.demons_verre.name: Démons du verre
+troop.demons_verre.forms.demons_verre.name: Démons du verre
+troop.ames_captives.name: Âmes captives
+troop.ames_captives.forms.ames_captives.name: Âmes captives
+troop.molosses_obsidienne.name: Molosses d’obsidienne
+troop.molosses_obsidienne.forms.molosses_obsidienne.name: Molosses d’obsidienne
+troop.sorciers_gouffre.name: Sorciers du gouffre
+troop.sorciers_gouffre.forms.sorciers_gouffre.name: Sorciers du gouffre
+item.trophee_geolier_ames.name: 'Trophée de boss : Geôlier des Âmes'
+item.trophee_geolier_ames.desc: Preuve de la victoire sur Geôlier des Âmes, boss du donjon Abîme d’Obsidienne.
+troop.geolier_ames.name: Geôlier des Âmes
+troop.geolier_ames.forms.geolier_ames.name: Geôlier des Âmes
+item.trophee_duchesse_verre.name: 'Trophée de boss : Duchesse de Verre'
+item.trophee_duchesse_verre.desc: Preuve de la victoire sur Duchesse de Verre, boss du donjon Abîme d’Obsidienne.
+troop.duchesse_verre.name: Duchesse de Verre
+troop.duchesse_verre.forms.duchesse_verre.name: Duchesse de Verre
+item.trophee_prince_abime.name: 'Trophée de boss : Prince de l’Abîme'
+item.trophee_prince_abime.desc: Preuve de la victoire sur Prince de l’Abîme, boss du donjon Abîme d’Obsidienne.
+troop.prince_abime.name: Prince de l’Abîme
+troop.prince_abime.forms.prince_abime.name: Prince de l’Abîme
+equip.lame_ames.name: Lame d’âmes
+equip.armure_prince.name: Armure du Prince
+dungeon.abime_obsidienne.name: Abîme d’Obsidienne
+dungeon.abime_obsidienne.desc: Sous le Pont des Âmes, un gouffre de verre noir où les démons gardent les âmes qu’ils ont prises.

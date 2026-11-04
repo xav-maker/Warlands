@@ -89,6 +89,8 @@ export function compile(raw: RawContent): Compiled {
           })),
         }
       : {}),
+    ...(raw.dungeons ? { dungeons: raw.dungeons.map((d) => withTexts(d, `dungeon.${d.id}`, ['name', 'desc'])) } : {}),
+    ...(P.dungeons ? { dungeonParams: P.dungeons } : {}),
     // Graphe : la route d'un rare devient son index, comme le territoire du prototype (Rare.region).
     rares: raw.rares.map(({ route, ...x }) =>
       withTexts(route !== undefined ? { ...x, region: raw.routes?.findIndex((y) => y.id === route) ?? -1 } : x, `rare.${x.id}`, ['name']),

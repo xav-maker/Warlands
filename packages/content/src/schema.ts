@@ -129,6 +129,8 @@ export const EquipBase = z.strictObject({
   /** Base signature : fabricable dans l'atelier de cette région seulement (contenu-cible-unites.md 9.2). */
   region: id.optional(),
   craft: z.boolean().optional(),
+  /** Budget de stats en ‰ de celui du palier (objets uniques de donjon : 1 250, contenu-cible-unites.md 9.3). */
+  budget: int.min(1).optional(),
 });
 
 export const Step = z.strictObject({
@@ -172,6 +174,20 @@ export const Route = z.strictObject({
 /** Rare : index du territoire (prototype, `region`) ou identifiant de route (graphe, `route`). */
 export const Rare = z.strictObject({ id, region: int.optional(), route: id.optional(), step: id, base: id, trophy: id });
 
+/** Donjon d'une route (README 23) : pool des salles, 3 boss qui se succèdent, matériau propre, objets uniques. */
+export const Dungeon = z.strictObject({
+  id,
+  route: id,
+  pool: z.array(id).min(1),
+  bosses: z.array(id).min(1),
+  material: id,
+  uniques: z.array(id),
+  /** Réglage fin de la difficulté du donjon, en ‰ (défaut 1 000). */
+  mult: int.min(1).optional(),
+});
+
+const popRule = z.tuple([int.min(1), int.min(0), int.min(1)]);
+
 export const Params = z.strictObject({
   engine: z.record(z.string(), num),
   eco: z.looseObject({
@@ -209,6 +225,28 @@ export const Params = z.strictObject({
     // Chat et messages privés (README 25) : longueur maximale et mots masqués par le filtre.
     chat: z.strictObject({ maxLength: int.min(1).max(300), bannedWords: z.array(z.string().min(2)) }),
   }),
+  // Donjons (README 23, guide 9) ; facultatif tant que le monde n'a pas de donjon.
+  dungeons: z
+    .strictObject({
+      doorChance: int.min(0).max(1000),
+      bossEvery: int.min(1),
+      levelBonus: int,
+      levelCap: int.min(1),
+      overpower: int.min(0),
+      pop: z.strictObject({ solo: popRule, duo: popRule }),
+      slots: z.strictObject({ solo: int.min(1), duo: int.min(1) }),
+      goldBase: int.min(0),
+      draws: int.min(0),
+      table: z.record(z.string(), num),
+      equipRollPerRoom: int.min(0),
+      equipRollCap: int.min(600),
+      uniqueChance: int.min(0).max(100),
+      mult: int.min(1),
+      inviteSeconds: int.min(1),
+      idleMinutes: int.min(1),
+      randomInvites: int.min(1),
+    })
+    .optional(),
 });
 
 export const PackFile = z.strictObject({
@@ -223,7 +261,7 @@ export const PackFile = z.strictObject({
 });
 
 /** Fichiers à nom fixe qui peuvent manquer (le prototype n'a pas de routes). */
-export const OPTIONAL_FILES = new Set(['world/routes.yaml']);
+export const OPTIONAL_FILES = new Set(['world/routes.yaml', 'world/dungeons.yaml']);
 
 /** Schéma de chaque fichier à nom fixe, et des fichiers listés dans pack.yaml par collection. */
 export const FIXED = {
@@ -235,6 +273,7 @@ export const FIXED = {
   'world/regions.yaml': z.array(Region).min(1),
   'world/rares.yaml': z.array(Rare),
   'world/routes.yaml': z.array(Route),
+  'world/dungeons.yaml': z.array(Dungeon),
   'quests.yaml': z.strictObject({ givers: z.array(z.array(z.string())) }),
   'texts/fr.yaml': z.record(z.string(), z.string()),
 } as const;
@@ -254,5 +293,6 @@ export type EquipBaseT = z.infer<typeof EquipBase>;
 export type RegionT = z.infer<typeof Region>;
 export type RareT = z.infer<typeof Rare>;
 export type RouteT = z.infer<typeof Route>;
+export type DungeonT = z.infer<typeof Dungeon>;
 export type ParamsT = z.infer<typeof Params>;
 export type PackFileT = z.infer<typeof PackFile>;

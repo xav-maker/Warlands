@@ -127,6 +127,47 @@ export function checkReferences(raw: RawContent): Issue[] {
   }
   for (const [id, b] of Object.entries(raw.equip))
     if (b.region && !regionIds.has(b.region)) err(at('equip', id), `${id} : région inconnue ${b.region}`);
+
+  // Donjons (README 23) : une route au plus par donjon, monstres de pool et boss connus, butin propre.
+  if (raw.dungeons) {
+    const P = raw.params.dungeons;
+    if (!P) err('params.yaml', 'dungeons manquant (world/dungeons.yaml existe)');
+    else {
+      const sum = Object.values(P.table).reduce((a, b) => a + b, 0);
+      if (Math.abs(sum - 100) > 1e-9) err('params.yaml', `dungeons.table totalise ${sum} %, 100 attendus`);
+      for (const k of Object.keys(P.table))
+        if (!['materiau', 'composant', 'consommable', 'equipement'].includes(k)) err('params.yaml', `dungeons.table : sorte inconnue ${k}`);
+    }
+    const ids = new Set<string>();
+    const onRoute = new Set<string>();
+    for (const d of raw.dungeons) {
+      const where = `world/dungeons.yaml › ${d.id}`;
+      if (ids.has(d.id)) err(where, `donjon en double ${d.id}`);
+      ids.add(d.id);
+      const route = raw.routes?.find((x) => x.id === d.route);
+      if (!route) err(where, `route inconnue ${d.route}`);
+      if (onRoute.has(d.route)) err(where, `la route ${d.route} a déjà un donjon`);
+      onRoute.add(d.route);
+      for (const m of d.pool) {
+        const t = raw.troops[m];
+        if (!t || t.region === undefined) err(where, `monstre inconnu ${m}`);
+        else if (t.boss) err(where, `${m} est un boss : il va dans bosses`);
+      }
+      for (const m of d.bosses) {
+        const t = raw.troops[m];
+        if (!t || t.region === undefined) err(where, `boss inconnu ${m}`);
+        else if (!t.boss) err(where, `${m} n'est pas un boss`);
+        else if (!(t.drops ?? []).some((x) => raw.items[x]?.kind === 'trophee')) err(where, `${m} : trophée de boss manquant`);
+      }
+      if (raw.items[d.material]?.kind !== 'materiau') err(where, `matériau inconnu ${d.material}`);
+      for (const u of d.uniques) {
+        const b = raw.equip[u];
+        if (!b) err(where, `objet unique inconnu ${u}`);
+        else if (b.craft !== false) err(where, `${u} : un objet unique n'est pas fabricable (craft: false)`);
+        else if (route && b.tier !== route.tier) err(where, `${u} : palier ${b.tier}, ${route.tier} attendu`);
+      }
+    }
+  }
   for (const id of raw.params.recipes.craftConsumables) if (!isItem(id)) err('params.yaml', `consommable fabricable inconnu ${id}`);
   return issues;
 }

@@ -20,6 +20,36 @@ export interface Loot {
   items: LootItem[];
 }
 
+/** Consommable du butin d'un combat de palier T (prototype gen.ts). */
+export function rollConsumable(r: Rng, T: number): string {
+  return weighted<string>(r, [
+    ['bandage', T <= 2 ? 3 : 1],
+    ['potion_mineure', T <= 2 ? 3 : 1],
+    ['potion_mana', 2],
+    ['potion_soin', T >= 2 ? 2 : 0.5],
+    ['potion_mana_normale', T >= 2 ? 1.5 : 0],
+    ['potion_majeure', T >= 3 ? 2 : 0],
+    ['tonique', T >= 3 ? 1.5 : 0],
+    ['onguent', T >= 5 ? 0.5 : 0],
+  ])!;
+}
+
+/** Fusionne les piles d'un même objet. */
+export function mergeLoot(items: LootItem[]): LootItem[] {
+  const merged: LootItem[] = [];
+  for (const it of items) {
+    if ('id' in it) {
+      const m = merged.find((x): x is { id: string; qty: number } => 'id' in x && x.id === it.id);
+      if (m) {
+        m.qty += it.qty;
+        continue;
+      }
+    }
+    merged.push(it);
+  }
+  return merged;
+}
+
 export function rollLoot(c: GenContent, step: Step, monsterTypes: string[], seed: number, guardian: GuardianLoot | null): Loot {
   const r = new Rng(hash(seed, 'butin'));
   const gold = Math.round((step.gold * (80 + r.int(41))) / 100);
@@ -53,19 +83,7 @@ export function rollLoot(c: GenContent, step: Step, monsterTypes: string[], seed
     if (comps.length) items.push({ id: comps[r.int(comps.length)]!, qty: 1 });
     else mat2(true);
   };
-  const cons = (): void => {
-    const id = weighted<string>(r, [
-      ['bandage', T <= 2 ? 3 : 1],
-      ['potion_mineure', T <= 2 ? 3 : 1],
-      ['potion_mana', 2],
-      ['potion_soin', T >= 2 ? 2 : 0.5],
-      ['potion_mana_normale', T >= 2 ? 1.5 : 0],
-      ['potion_majeure', T >= 3 ? 2 : 0],
-      ['tonique', T >= 3 ? 1.5 : 0],
-      ['onguent', T >= 5 ? 0.5 : 0],
-    ])!;
-    items.push({ id, qty: 1 });
-  };
+  const cons = (): void => void items.push({ id: rollConsumable(r, T), qty: 1 });
   const draws = between(r, step.draws[0], step.draws[1]);
   for (let i = 0; i < draws; i++) {
     const k = weighted(r, Object.entries(c.eco.table));
@@ -81,16 +99,5 @@ export function rollLoot(c: GenContent, step: Step, monsterTypes: string[], seed
     else mat2(true);
     if (guardian.first) items.push({ id: guardian.firstItem, qty: 1 });
   }
-  const merged: LootItem[] = [];
-  for (const it of items) {
-    if ('id' in it) {
-      const m = merged.find((x): x is { id: string; qty: number } => 'id' in x && x.id === it.id);
-      if (m) {
-        m.qty += it.qty;
-        continue;
-      }
-    }
-    merged.push(it);
-  }
-  return { gold, items: merged };
+  return { gold, items: mergeLoot(items) };
 }

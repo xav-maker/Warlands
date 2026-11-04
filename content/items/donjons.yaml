@@ -1,0 +1,242 @@
+# Matériaux des donjons et trophées de leurs boss (contenu-cible-monde.md 3).
+
+pepite_terriers:
+  kind: materiau
+  tier: 1
+  value: 5
+  tags: [metal, pierre]
+trophee_taupe_reine:
+  kind: trophee
+  tier: 1
+  value: 40
+  tags: []
+trophee_chef_gratte_gratte:
+  kind: trophee
+  tier: 1
+  value: 40
+  tags: []
+trophee_roi_kobold:
+  kind: trophee
+  tier: 1
+  value: 40
+  tags: []
+poussiere_fee:
+  kind: materiau
+  tier: 1
+  value: 5
+  tags: [essence, herbe]
+trophee_lutin_grand_chapeau:
+  kind: trophee
+  tier: 1
+  value: 40
+  tags: []
+trophee_fee_melancolie:
+  kind: trophee
+  tier: 1
+  value: 40
+  tags: []
+trophee_roi_elfes_tertre:
+  kind: trophee
+  tier: 1
+  value: 40
+  tags: []
+rhum_noir:
+  kind: materiau
+  tier: 2
+  value: 12
+  tags: [essence]
+trophee_borgne_main_leste:
+  kind: trophee
+  tier: 2
+  value: 160
+  tags: []
+trophee_grosse_berthe:
+  kind: trophee
+  tier: 2
+  value: 160
+  tags: []
+trophee_capitaine_corbac:
+  kind: trophee
+  tier: 2
+  value: 160
+  tags: []
+plume_ossuaire:
+  kind: materiau
+  tier: 2
+  value: 12
+  tags: [plume, os]
+trophee_gardien_os:
+  kind: trophee
+  tier: 2
+  value: 160
+  tags: []
+trophee_abbesse_plume_noire:
+  kind: trophee
+  tier: 2
+  value: 160
+  tags: []
+trophee_roi_corbeau:
+  kind: trophee
+  tier: 2
+  value: 160
+  tags: []
+fer_profondeurs:
+  kind: materiau
+  tier: 3
+  value: 27
+  tags: [metal]
+trophee_contremaitre_eternel:
+  kind: trophee
+  tier: 3
+  value: 360
+  tags: []
+trophee_golem_forge_primitif:
+  kind: trophee
+  tier: 3
+  value: 360
+  tags: []
+trophee_ombre_puits:
+  kind: trophee
+  tier: 3
+  value: 360
+  tags: []
+gelee_cristal:
+  kind: materiau
+  tier: 3
+  value: 27
+  tags: [essence, pierre]
+trophee_bourdon_quartz:
+  kind: trophee
+  tier: 3
+  value: 360
+  tags: []
+trophee_princesse_prisme:
+  kind: trophee
+  tier: 3
+  value: 360
+  tags: []
+trophee_reine_cristal:
+  kind: trophee
+  tier: 3
+  value: 360
+  tags: []
+glace_eternelle:
+  kind: materiau
+  tier: 3
+  value: 27
+  tags: [pierre, essence]
+trophee_chancelier_givre:
+  kind: trophee
+  tier: 3
+  value: 360
+  tags: []
+trophee_reine_hiver_pale:
+  kind: trophee
+  tier: 3
+  value: 360
+  tags: []
+trophee_roi_glaces:
+  kind: trophee
+  tier: 3
+  value: 360
+  tags: []
+ecaille_leviathan:
+  kind: materiau
+  tier: 4
+  value: 50
+  tags: [cuir, bete]
+trophee_bosco_noye:
+  kind: trophee
+  tier: 4
+  value: 640
+  tags: []
+trophee_sorciere_mare_noire:
+  kind: trophee
+  tier: 4
+  value: 640
+  tags: []
+trophee_coeur_leviathan:
+  kind: trophee
+  tier: 4
+  value: 640
+  tags: []
+jade_ancien:
+  kind: materiau
+  tier: 4
+  value: 50
+  tags: [pierre]
+trophee_grand_jaguar:
+  kind: trophee
+  tier: 4
+  value: 640
+  tags: []
+trophee_pretresse_jade_mort:
+  kind: trophee
+  tier: 4
+  value: 640
+  tags: []
+trophee_dieu_serpent:
+  kind: trophee
+  tier: 4
+  value: 640
+  tags: []
+plume_tempete:
+  kind: materiau
+  tier: 4
+  value: 50
+  tags: [plume, essence]
+trophee_maitre_courants:
+  kind: trophee
+  tier: 4
+  value: 640
+  tags: []
+trophee_gargouille_airain:
+  kind: trophee
+  tier: 4
+  value: 640
+  tags: []
+trophee_seigneur_vents:
+  kind: trophee
+  tier: 4
+  value: 640
+  tags: []
+fragment_etoile_noire:
+  kind: materiau
+  tier: 5
+  value: 90
+  tags: [pierre, essence]
+trophee_gardien_orrery:
+  kind: trophee
+  tier: 5
+  value: 1000
+  tags: []
+trophee_astronome_vide:
+  kind: trophee
+  tier: 5
+  value: 1000
+  tags: []
+trophee_etoile_noire:
+  kind: trophee
+  tier: 5
+  value: 1000
+  tags: []
+obsidienne_vivante:
+  kind: materiau
+  tier: 5
+  value: 90
+  tags: [pierre, metal]
+trophee_geolier_ames:
+  kind: trophee
+  tier: 5
+  value: 1000
+  tags: []
+trophee_duchesse_verre:
+  kind: trophee
+  tier: 5
+  value: 1000
+  tags: []
+trophee_prince_abime:
+  kind: trophee
+  tier: 5
+  value: 1000
+  tags: []

@@ -1,0 +1,381 @@
+# Objets uniques des donjons (contenu-cible-unites.md 9.3) : non fabricables, une stat de plus, budget × 1,25.
+# La propriété fixe de chaque objet reste à écrire avec Xavier.
+
+pioche_roi_kobold:
+  tier: 1
+  slot: arme
+  cat: deux_mains
+  value: 38
+  tags: [metal, bois]
+  pool:
+    - [for, 3]
+    - [wdmg, 3]
+    - [wspeed, 1]
+    - [wcost, 2]
+    - [energy, 1]
+    - [hp, 1]
+  weapon: { type: tranchant, dmg: 16, speed: 24, cost: 14 }
+  nStats: 3
+  budget: 1250
+  craft: false
+casque_lanterne:
+  tier: 1
+  slot: accessoire
+  cat: collier
+  value: 33
+  tags: [cuir, metal, os]
+  pool:
+    - [for, 2]
+    - [hp, 2]
+    - [energy, 1]
+    - [res, 1]
+  nStats: 3
+  budget: 1250
+  craft: false
+robe_petales:
+  tier: 1
+  slot: armure
+  cat: robe
+  value: 38
+  tags: [fil, herbe, plume]
+  pool:
+    - [mana, 3]
+    - [will, 2]
+    - [ele, 1]
+    - [omb, 1]
+    - [foi, 1]
+    - [hp, 1]
+    - [res, 1]
+  nStats: 3
+  budget: 1250
+  craft: false
+baguette_saule:
+  tier: 1
+  slot: arme
+  cat: orbe
+  value: 38
+  tags: [pierre, essence]
+  pool:
+    - [ele, 2]
+    - [omb, 2]
+    - [esp, 2]
+    - [mana, 3]
+    - [will, 1]
+  weapon: { type: psychique, dmg: 6, speed: 22, cost: 6 }
+  nStats: 3
+  budget: 1250
+  craft: false
+sabre_capitaine:
+  tier: 2
+  slot: arme
+  cat: une_main
+  value: 88
+  tags: [metal, cuir]
+  pool:
+    - [for, 3]
+    - [wdmg, 3]
+    - [wspeed, 1]
+    - [wcost, 2]
+    - [energy, 1]
+  weapon: { type: tranchant, dmg: 15, speed: 20, cost: 10 }
+  nStats: 3
+  budget: 1250
+  craft: false
+longue_vue_corbac:
+  tier: 2
+  slot: accessoire
+  cat: anneau
+  value: 75
+  tags: [essence, pierre, metal]
+  pool:
+    - [mana, 2]
+    - [will, 2]
+    - [for, 1]
+    - [ele, 1]
+    - [omb, 1]
+    - [res, 2]
+  nStats: 3
+  budget: 1250
+  craft: false
+masque_corbeau:
+  tier: 2
+  slot: accessoire
+  cat: talisman
+  value: 75
+  tags: [os, essence, bois]
+  pool:
+    - [foi, 3]
+    - [esp, 2]
+    - [will, 2]
+    - [mana, 1]
+    - [res, 1]
+  nStats: 3
+  budget: 1250
+  craft: false
+faux_roi_corbeau:
+  tier: 2
+  slot: arme
+  cat: deux_mains
+  value: 88
+  tags: [metal, bois]
+  pool:
+    - [for, 3]
+    - [wdmg, 3]
+    - [wspeed, 1]
+    - [wcost, 2]
+    - [energy, 1]
+    - [hp, 1]
+  weapon: { type: tranchant, dmg: 20, speed: 24, cost: 14 }
+  nStats: 3
+  budget: 1250
+  craft: false
+marteau_puits:
+  tier: 3
+  slot: arme
+  cat: une_main
+  value: 175
+  tags: [metal, bois]
+  pool:
+    - [for, 2]
+    - [foi, 1]
+    - [wdmg, 2]
+    - [wspeed, 1]
+    - [wcost, 2]
+    - [will, 1]
+  weapon: { type: contondant, dmg: 16, speed: 21, cost: 8 }
+  nStats: 4
+  budget: 1250
+  craft: false
+plastron_sans_fond:
+  tier: 3
+  slot: armure
+  cat: lourde
+  value: 175
+  tags: [metal, pierre]
+  pool:
+    - [hp, 4]
+    - [res, 3, tranchant]
+    - [res, 3, contondant]
+    - [res, 1]
+  nStats: 4
+  budget: 1250
+  craft: false
+aiguillon_cristal:
+  tier: 3
+  slot: arme
+  cat: arc
+  value: 175
+  tags: [bois, fil, plume]
+  pool:
+    - [for, 3]
+    - [wdmg, 3]
+    - [wspeed, 1]
+    - [wcost, 2]
+    - [energy, 1]
+  weapon: { type: tranchant, dmg: 16, speed: 18, cost: 10 }
+  nStats: 4
+  budget: 1250
+  craft: false
+carapace_prismatique:
+  tier: 3
+  slot: armure
+  cat: moyenne
+  value: 175
+  tags: [metal, cuir]
+  pool:
+    - [hp, 3]
+    - [res, 3, tranchant]
+    - [res, 2, contondant]
+    - [will, 1]
+    - [res, 1]
+  nStats: 4
+  budget: 1250
+  craft: false
+couronne_givre:
+  tier: 3
+  slot: accessoire
+  cat: anneau
+  value: 149
+  tags: [essence, pierre, metal]
+  pool:
+    - [mana, 2]
+    - [will, 2]
+    - [for, 1]
+    - [ele, 1]
+    - [omb, 1]
+    - [res, 2]
+  nStats: 4
+  budget: 1250
+  craft: false
+lame_hiver:
+  tier: 3
+  slot: arme
+  cat: une_main
+  value: 175
+  tags: [metal, cuir]
+  pool:
+    - [for, 3]
+    - [wdmg, 3]
+    - [wspeed, 1]
+    - [wcost, 2]
+    - [energy, 1]
+  weapon: { type: tranchant, dmg: 19, speed: 20, cost: 10 }
+  nStats: 4
+  budget: 1250
+  craft: false
+harpon_leviathan:
+  tier: 4
+  slot: arme
+  cat: deux_mains
+  value: 325
+  tags: [metal, bois]
+  pool:
+    - [for, 3]
+    - [wdmg, 3]
+    - [wspeed, 1]
+    - [wcost, 2]
+    - [energy, 1]
+    - [hp, 1]
+  weapon: { type: tranchant, dmg: 30, speed: 24, cost: 14 }
+  nStats: 4
+  budget: 1250
+  craft: false
+cape_ecume:
+  tier: 4
+  slot: armure
+  cat: legere
+  value: 325
+  tags: [cuir, fil]
+  pool:
+    - [hp, 3]
+    - [energy, 2]
+    - [res, 2, tranchant]
+    - [res, 1, contondant]
+    - [res, 1]
+  nStats: 4
+  budget: 1250
+  craft: false
+masque_jade:
+  tier: 4
+  slot: accessoire
+  cat: talisman
+  value: 276
+  tags: [os, essence, bois]
+  pool:
+    - [foi, 3]
+    - [esp, 2]
+    - [will, 2]
+    - [mana, 1]
+    - [res, 1]
+  nStats: 4
+  budget: 1250
+  craft: false
+sceptre_serpent:
+  tier: 4
+  slot: arme
+  cat: orbe
+  value: 325
+  tags: [pierre, essence]
+  pool:
+    - [ele, 2]
+    - [omb, 2]
+    - [esp, 2]
+    - [mana, 3]
+    - [will, 1]
+  weapon: { type: psychique, dmg: 11, speed: 22, cost: 6 }
+  nStats: 4
+  budget: 1250
+  craft: false
+bottes_tempete:
+  tier: 4
+  slot: accessoire
+  cat: bottes
+  value: 276
+  tags: [cuir, fil]
+  pool:
+    - [hp, 2]
+    - [energy, 2]
+    - [res, 1, contondant]
+    - [will, 1]
+  nStats: 4
+  budget: 1250
+  craft: false
+arc_quatre_vents:
+  tier: 4
+  slot: arme
+  cat: arc
+  value: 325
+  tags: [bois, fil, plume]
+  pool:
+    - [for, 3]
+    - [wdmg, 3]
+    - [wspeed, 1]
+    - [wcost, 2]
+    - [energy, 1]
+  weapon: { type: tranchant, dmg: 19, speed: 18, cost: 10 }
+  nStats: 4
+  budget: 1250
+  craft: false
+robe_nuit_etoilee:
+  tier: 5
+  slot: armure
+  cat: robe
+  value: 563
+  tags: [fil, herbe, plume]
+  pool:
+    - [mana, 3]
+    - [will, 2]
+    - [ele, 1]
+    - [omb, 1]
+    - [foi, 1]
+    - [hp, 1]
+    - [res, 1]
+  nStats: 5
+  budget: 1250
+  craft: false
+orbe_astre_mort:
+  tier: 5
+  slot: arme
+  cat: orbe
+  value: 563
+  tags: [pierre, essence]
+  pool:
+    - [ele, 2]
+    - [omb, 2]
+    - [esp, 2]
+    - [mana, 3]
+    - [will, 1]
+  weapon: { type: psychique, dmg: 14, speed: 22, cost: 6 }
+  nStats: 5
+  budget: 1250
+  craft: false
+lame_ames:
+  tier: 5
+  slot: arme
+  cat: une_main
+  value: 563
+  tags: [metal, cuir]
+  pool:
+    - [for, 3]
+    - [wdmg, 3]
+    - [wspeed, 1]
+    - [wcost, 2]
+    - [energy, 1]
+  weapon: { type: sacre, dmg: 28, speed: 20, cost: 10 }
+  nStats: 5
+  budget: 1250
+  craft: false
+armure_prince:
+  tier: 5
+  slot: armure
+  cat: lourde
+  value: 563
+  tags: [metal, pierre]
+  pool:
+    - [hp, 4]
+    - [res, 3, tranchant]
+    - [res, 3, contondant]
+    - [res, 1]
+  nStats: 4
+  budget: 1250
+  craft: false

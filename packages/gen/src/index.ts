@@ -13,3 +13,4 @@ export * from './loot.ts';
 export * from './recipes.ts';
 export * from './quests.ts';
 export * from './battle.ts';
+export * from './dungeon.ts';

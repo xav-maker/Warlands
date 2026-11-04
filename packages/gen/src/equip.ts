@@ -33,7 +33,8 @@ export function genEquip(c: GenContent, baseId: string, r: Rng, fixedRoll?: numb
     )!;
     chosen.push(i);
   }
-  const budget = Math.max(n, Math.floor((c.tierBudget[b.tier]! * roll) / 1e3));
+  // Budget du palier modulé par la qualité ; × budget ‰ pour un objet unique (sans budget : le calcul du prototype).
+  const budget = Math.max(n, Math.floor((c.tierBudget[b.tier]! * roll * (b.budget ?? 1e3)) / 1e6));
   const w = chosen.map(() => 1 + r.int(100));
   const wt = w.reduce((a, x) => a + x, 0);
   const free = 1e3 - 150 * n;
@@ -69,15 +70,25 @@ export const itemValue = (c: GenContent, i: EquipInstance): number => Math.round
 
 /**
  * Équipement complet d'une unité (simulation d'équilibrage, escouade de test) : pour chaque emplacement que sa troupe
- * accepte, la base non signature la plus chère du palier visé (ou du plus haut palier en dessous) que le niveau permet
+ * accepte, la base non signature (ni unique de donjon) la plus chère du palier visé (ou du plus haut palier en dessous) que le niveau permet
  * de porter, en exemplaire moyen (qualité 1 000).
  */
 export function bestGear(c: GenContent, type: string, level: number, tier: number, rng: Rng): Record<string, EquipInstance> {
   const out: Record<string, EquipInstance> = {};
+  // Les objets uniques de donjon ne font pas partie de l'équipement de référence.
+  const unique = new Set(c.dungeons?.flatMap((d) => d.uniques) ?? []);
   for (const [slot, cats] of Object.entries(c.troopSlots[type] ?? {})) {
     for (let t = tier; t >= 1 && !out[slot]; t--) {
       const base = Object.values(c.equip)
-        .filter((b) => b.slot === slot && b.tier === t && !b.region && cats.includes(b.cat) && canWear(c, type, level, b.id) === null)
+        .filter(
+          (b) =>
+            b.slot === slot &&
+            b.tier === t &&
+            !b.region &&
+            !unique.has(b.id) &&
+            cats.includes(b.cat) &&
+            canWear(c, type, level, b.id) === null,
+        )
         .sort((a, b) => b.value - a.value || a.id.localeCompare(b.id))[0];
       if (base) out[slot] = genEquip(c, base.id, rng, 1000);
     }

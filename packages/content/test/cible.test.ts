@@ -2,7 +2,7 @@
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { describe, expect, it } from 'vitest';
-import { loadContent, validateContent } from '../src/index.ts';
+import { checkReferences, loadContent, validateContent } from '../src/index.ts';
 
 const DIR = join(dirname(fileURLToPath(import.meta.url)), '../../../content');
 const v = validateContent(DIR);
@@ -51,5 +51,38 @@ describe('contenu cible', () => {
     const ids = from('skills/cible.yaml').map((k) => k.split('.')[1]!);
     expect(ids.filter((id) => raw.skills[id]!.kind === 'active')).toHaveLength(54);
     expect(ids.filter((id) => raw.skills[id]!.kind === 'passive')).toHaveLength(6);
+  });
+
+  it('12 donjons : 48 monstres spéciaux, 36 boss avec leur trophée, 12 matériaux, 24 objets uniques (README 23)', () => {
+    expect(raw.dungeons).toHaveLength(12);
+    const ids = from('monsters/donjons.yaml').map((k) => k.split('.')[1]!);
+    expect(ids.filter((id) => !raw.troops[id]!.boss)).toHaveLength(48);
+    expect(ids.filter((id) => raw.troops[id]!.boss)).toHaveLength(36);
+    expect(from('items/donjons.yaml')).toHaveLength(48);
+    expect(from('items/bases/donjons.yaml')).toHaveLength(24);
+    for (const id of from('items/bases/donjons.yaml').map((k) => k.split('.')[1]!))
+      expect(raw.equip[id]).toMatchObject({ craft: false, budget: 1250 });
+  });
+
+  it('refuse un donjon mal formé', () => {
+    const d = raw.dungeons![0]!;
+    const bad = {
+      ...raw,
+      dungeons: [
+        { ...d, pool: ['inconnu', d.bosses[0]!], bosses: [d.pool[0]!], material: 'epee', uniques: ['lame_1'] },
+        { ...d, id: 'double', route: d.route },
+      ],
+    };
+    const msgs = checkReferences(bad).map((i) => i.message);
+    expect(msgs).toEqual(
+      expect.arrayContaining([
+        'monstre inconnu inconnu',
+        `${d.bosses[0]} est un boss : il va dans bosses`,
+        `${d.pool[0]} n'est pas un boss`,
+        'matériau inconnu epee',
+        "lame_1 : un objet unique n'est pas fabricable (craft: false)",
+        `la route ${d.route} a déjà un donjon`,
+      ]),
+    );
   });
 });

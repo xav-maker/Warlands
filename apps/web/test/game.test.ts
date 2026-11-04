@@ -269,5 +269,8 @@ describe('parcours de jeu (J2)', () => {
       expect(r.statusCode).toBe(200);
       expect(r.body).toContain(text);
     }
+    // Donjons (README 23) : sur leur route, et leurs boss parmi les monstres.
+    expect((await req('GET', '/codex?p=regions')).body).toContain('Donjon : Terriers du Roi Kobold');
+    expect((await req('GET', '/codex?p=monstres')).body).toContain('Taupe-Reine</b> (boss de donjon)');
   });
 });

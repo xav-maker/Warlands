@@ -1,5 +1,5 @@
 <% layout('./layout', { title: 'Codex' }) %>
-<% const c = it.c; const L = it.L %>
+<% const c = it.c; const L = it.L; const dungeonBoss = new Set((c.dungeons ?? []).flatMap((d) => d.bosses)) %>
 <% const LABEL = { regions: 'Régions', troupes: 'Troupes', monstres: 'Monstres', capacites: 'Capacités', objets: 'Objets' } %>
 <section class="codex">
   <h1>Codex</h1>
@@ -26,6 +26,11 @@
             <li><b><%= s.name %></b> <span class="muted">— niveaux <%= s.level[0] %>-<%= s.level[1] %> ; <%= s.pool.map(L.troop).join(', ') %><%= s.forced?.length ? ' ; gardien : ' + s.forced.map(L.troop).join(', ') : '' %></span></li>
           <% } %>
         </ol>
+        <% const D = (c.dungeons ?? []).find((d) => d.route === T.id) %>
+        <% if (D) { %>
+          <p><b>Donjon : <%= D.name %></b> — <%= D.desc %></p>
+          <p class="muted">Monstres : <%= D.pool.map(L.troop).join(', ') %>. Boss (salles 4, 8, 12…) : <%= D.bosses.map(L.troop).join(', ') %>. Objets uniques : <%= D.uniques.map(L.item).join(', ') %>.</p>
+        <% } %>
       </div>
     <% }) %>
   <% } %>
@@ -37,7 +42,7 @@
       <tbody>
         <% for (const [id, t] of Object.entries(c.troops)) { if (!!c.monsters[id] !== monsters) continue; const m = c.monsters[id] %>
           <tr>
-            <td><b><%= t.name %></b><%= m?.boss ? ' (gardien)' : m?.rare ? ' (rare)' : '' %></td>
+            <td><b><%= t.name %></b><%= dungeonBoss.has(id) ? ' (boss de donjon)' : m?.boss ? ' (gardien)' : m?.rare ? ' (rare)' : '' %></td>
             <td><%= t.pop %></td><td><%= t.units %></td>
             <td><%= monsters ? (m.region + 1) : (c.regions.find((r) => r.city.recruit.includes(id))?.city.name ?? '—') %></td>
             <td><%= t.role %></td>

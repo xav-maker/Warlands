@@ -98,3 +98,23 @@ online:
   chat:
     maxLength: 300
     bannedWords: [connard, connasse, salope, enculé, pute, fdp, ntm, nazi, pédé, batard]
+
+# Donjons (README 23 [Xavier, formules H], guide 9).
+dungeons:
+  doorChance: 20 # ‰ à chaque changement d'étape d'une route à donjon (2 % [Xavier])
+  bossEvery: 4 # un boss toutes les 4 salles [Xavier]
+  levelBonus: 2 # niveau des monstres = min(levelCap, L + levelBonus + floor((n − 1) / 2))
+  levelCap: 30
+  overpower: 60 # au-delà du plafond : PV et puissances + 6 % par niveau
+  pop: { solo: [3, 1, 11], duo: [6, 2, 22] } # population du groupe : min(base + pas × n, plafond), boss compris
+  slots: { solo: 8, duo: 16 }
+  goldBase: 10 # or d'une salle : goldBase × T² × (1 + n / 4)
+  draws: 2 # tirages par salle gagnée
+  table: { materiau: 70, composant: 12, consommable: 10, equipement: 8 }
+  equipRollPerRoom: 10 # ‰ de jet de puissance en plus par salle
+  equipRollCap: 1400
+  uniqueChance: 25 # % : objet unique plutôt qu'un composant sur un boss
+  mult: 1000 # réglage global de la difficulté des salles, en ‰
+  inviteSeconds: 60
+  idleMinutes: 5 # absence en duo qui vaut « quitter » (README 26)
+  randomInvites: 20 # joueurs disponibles sollicités par une invitation au hasard (guide 9.1)

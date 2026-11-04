@@ -77,6 +77,8 @@ export interface EquipBase {
   workshop?: boolean;
   /** Base signature : atelier de cette région seulement. */
   region?: string;
+  /** Budget de stats en ‰ de celui du palier (objets uniques de donjon : 1 250). */
+  budget?: number;
   weapon?: Weapon;
 }
 
@@ -137,6 +139,47 @@ export interface Rare {
   trophy: string;
 }
 
+/** Donjon d'une route (README 23). */
+export interface Dungeon {
+  id: string;
+  name: string;
+  desc?: string;
+  route: string;
+  /** Monstres spéciaux des salles. */
+  pool: string[];
+  /** Boss des salles 4, 8, 12, puis de nouveau dans l'ordre. */
+  bosses: string[];
+  material: string;
+  /** Bases d'équipement non fabricables, butin de boss. */
+  uniques: string[];
+  /** Réglage fin de la difficulté, en ‰. */
+  mult?: number;
+}
+
+/** Paramètres des donjons (params.yaml › dungeons). */
+export interface DungeonParams {
+  /** ‰ à chaque changement d'étape d'une route à donjon. */
+  doorChance: number;
+  bossEvery: number;
+  levelBonus: number;
+  levelCap: number;
+  /** ‰ de PV et puissances par niveau au-delà du plafond. */
+  overpower: number;
+  /** [base, pas par salle, plafond] de la population du groupe. */
+  pop: { solo: [number, number, number]; duo: [number, number, number] };
+  slots: { solo: number; duo: number };
+  goldBase: number;
+  draws: number;
+  table: Record<string, number>;
+  equipRollPerRoom: number;
+  equipRollCap: number;
+  uniqueChance: number;
+  mult: number;
+  inviteSeconds: number;
+  idleMinutes: number;
+  randomInvites: number;
+}
+
 export interface Eco {
   maxLevel: number;
   monsterHp: number[];
@@ -161,6 +204,9 @@ export interface GenContent {
   /** Monde en graphe (README 18) ; absent du prototype, dont les territoires sont dans les régions. */
   routes?: Route[];
   rares: Rare[];
+  /** Donjons (README 23) ; absents du prototype. */
+  dungeons?: Dungeon[];
+  dungeonParams?: DungeonParams;
   eco: Eco;
   statCost: Record<string, { per: number; label: string; unit?: string }>;
   tierBudget: Record<number, number>;

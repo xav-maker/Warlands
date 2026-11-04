@@ -33,6 +33,7 @@ files:
     - monsters/r20-lune-dormante.yaml
     - monsters/gardiens-cible.yaml
     - monsters/rares-cible.yaml
+    - monsters/donjons.yaml
   items:
     - items/materials.yaml
     - items/components.yaml
@@ -41,9 +42,11 @@ files:
     - items/materials-cible.yaml
     - items/components-cible.yaml
     - items/trophies-cible.yaml
+    - items/donjons.yaml
   equip:
     - items/bases/armes.yaml
     - items/bases/armures.yaml
     - items/bases/accessoires.yaml
     - items/bases/gardiens.yaml
     - items/bases/cible.yaml
+    - items/bases/donjons.yaml
