@@ -1,0 +1,74 @@
+<% layout('./layout', { title: 'Guide des débutants', v: it.v, error: it.error }) %>
+<% const done = Object.fromEntries(it.tut.steps.map((s) => [s.id, s.done])) %>
+<% const badge = (id) => done[id] ? '<span class="status ok">fait</span>' : '<span class="status ko">à faire</span>' %>
+<section class="guide">
+  <p class="eyebrow">Premiers pas</p>
+  <h1>Guide des débutants</h1>
+  <p class="muted">Vous commandez une escouade : des troupes qui combattent seules, selon leurs capacités. Votre travail, c’est de les équiper, de les faire grandir, et de savoir quand rentrer. Ce guide suit votre progression : chaque étape se coche quand vous l’avez faite.</p>
+  <div class="progress" role="progressbar" aria-valuemin="0" aria-valuemax="<%= it.tut.steps.length %>" aria-valuenow="<%= it.tut.done %>"><i style="width: <%= Math.round((it.tut.done / it.tut.steps.length) * 100) %>%"></i></div>
+  <p class="meta"><%= it.tut.done %> étape<%= it.tut.done > 1 ? 's' : '' %> sur <%= it.tut.steps.length %>.
+    <% if (it.tut.hidden) { %>Le résumé est masqué dans la ville.<% } %></p>
+  <form method="post" action="/tutoriel" class="inline">
+    <input type="hidden" name="_csrf" value="<%= it.csrf %>">
+    <input type="hidden" name="hidden" value="<%= it.tut.hidden ? 'false' : 'true' %>">
+    <button type="submit"><%= it.tut.hidden ? 'Réafficher le résumé dans la ville' : 'Masquer le résumé dans la ville' %></button>
+  </form>
+
+  <div class="grid">
+    <article class="card" id="combat">
+      <h2>1. Combattre <%~ badge('combat') %></h2>
+      <p>Depuis la ville, <b>Partir</b> vous emmène sur une route de cinq étapes. Sur chaque étape, <b>Chercher un combat</b> fait venir un groupe de monstres : vous voyez qui ils sont avant de choisir de <b>Combattre</b>.</p>
+      <p>Le combat se joue tout seul : chaque troupe agit selon ses capacités, du premier rang (au contact) au troisième (à distance). Vous regardez la rediffusion jusqu’au bout avant de pouvoir continuer.</p>
+      <p>Une étape gagnée se franchit : <b>Avancer</b>. La cinquième étape est gardée par un <b>gardien</b>, plus fort ; le battre ouvre la ville suivante. Vous pouvez toujours <b>Rebrousser</b> ou <b>Rentrer</b>.</p>
+      <p class="meta">Conseil : sur la page d’une troupe, vous choisissez son rang et les capacités qu’elle n’utilise pas.</p>
+    </article>
+
+    <article class="card" id="butin">
+      <h2>2. Le butin <%~ badge('butin') %></h2>
+      <p>Une victoire rapporte de l’<b>or</b>, de l’<b>expérience</b> partagée entre les troupes, et des <b>objets</b> : matériaux, composants, consommables, parfois de l’équipement.</p>
+      <p>Les objets vont dans le <b>sac</b> (20 emplacements). Ce qui ne tient pas reste <b>au sol</b> : ramassez-le avant de quitter l’étape, sinon il est perdu.</p>
+      <p>En ville, la <b>banque</b> (100 emplacements, commune à toutes les villes) garde ce qui ne vous sert pas sur la route.</p>
+      <p><a href="/sac">Voir le sac et la banque</a></p>
+    </article>
+
+    <article class="card" id="acheter">
+      <h2>3. Acheter <%~ badge('acheter') %></h2>
+      <p>Le <b>marchand</b> de chaque ville vend l’équipement et les consommables de son palier, et rachète tout à bas prix. Ce que vous achetez arrive en <b>banque</b>.</p>
+      <p>La <b>boutique</b> de la ville est celle des joueurs : chacun y met en vente ce qu’il veut, à son prix. Chaque ville a ses propres annonces.</p>
+      <p>Partout, ce qui est <span class="good"><b>en vert</b></span> est à votre portée.</p>
+      <p><a href="/marchand">Aller au marchand</a> · <a href="/boutique">Aller à la boutique</a></p>
+    </article>
+
+    <article class="card" id="fabriquer">
+      <h2>4. Fabriquer <%~ badge('fabriquer') %></h2>
+      <p>À l’<b>atelier</b>, vous fabriquez de l’équipement et des consommables. Vos <b>recettes sont personnelles</b> : un autre joueur n’a pas les mêmes ingrédients pour le même objet.</p>
+      <p>Chaque ingrédient est une pastille « possédé / demandé » : <span class="chip ok">Bois tordu <span class="n">3/2</span></span> vous en avez assez, <span class="chip ko">Fer noir <span class="n">0/1</span></span> il vous en manque. Une recette <span class="good"><b>en vert</b></span> se fabrique tout de suite.</p>
+      <p>La qualité de l’équipement est tirée à la fabrication. Les matériaux viennent du butin des monstres de chaque région.</p>
+      <p><a href="/atelier">Aller à l’atelier</a></p>
+    </article>
+
+    <article class="card" id="recruter">
+      <h2>5. Recruter <%~ badge('recruter') %></h2>
+      <p>La <b>caserne</b> recrute les troupes de sa ville, contre de l’or et des ingrédients (des recettes personnelles, là aussi). Les troupes montent de niveau en combattant et <b>évoluent</b> aux niveaux 10 et 20.</p>
+      <p>L’<b>escouade</b> qui part en expédition compte <b>8 unités et 11 de population</b> au plus. Les autres troupes attendent en caserne ; on change l’escouade en ville seulement.</p>
+      <p><a href="/caserne">Aller à la caserne</a></p>
+    </article>
+
+    <article class="card" id="mort">
+      <h2>6. La mort <%~ badge('mort') %></h2>
+      <p><b>La mort est définitive.</b> Une unité tombée au combat est perdue, avec l’équipement qu’elle portait. Une troupe qui n’a plus aucune unité est perdue entière.</p>
+      <p>Les PV ne remontent pas d’un combat à l’autre sur la route : vos troupes sont soignées seulement en entrant en ville. Les consommables (potions, bandages) soignent entre deux combats.</p>
+      <p>Si toute l’escouade tombe, c’est la <b>défaite</b> : vous rentrez dans la ville de départ, où les survivants sont soignés, et le butin resté au sol est perdu. En donjon, une défaite fait perdre <b>tout le coffre</b>.</p>
+      <p>Une troupe qui a perdu des unités peut les <b>racheter</b> à la caserne de sa ville de recrutement. Si vous n’avez plus aucune troupe, la garde de la ville vous prête un Milicien pour repartir.</p>
+      <p class="meta">Le bon réflexe : rentrer en ville avant que l’escouade ne soit à bout.</p>
+      <% if (!done.mort) { %>
+        <form method="post" action="/tutoriel">
+          <input type="hidden" name="_csrf" value="<%= it.csrf %>">
+          <input type="hidden" name="read" value="mort">
+          <button type="submit" class="buy">J’ai compris</button>
+        </form>
+      <% } %>
+    </article>
+  </div>
+  <p><a href="/jeu">Retour au jeu</a></p>
+</section>

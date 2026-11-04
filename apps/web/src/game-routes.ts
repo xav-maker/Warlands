@@ -56,6 +56,8 @@ import {
   withdrawListing,
   scaled,
   setDisabledSkills,
+  tutorialView,
+  updateTutorial,
   battleLog,
   DELETE_WORD,
   deleteAccount,
@@ -178,7 +180,8 @@ export function registerGameRoutes(app: FastifyInstance, d: GameRouteDeps): void
   app.get('/ville', async (req, reply) => {
     const v = await view(req);
     if (v.kind !== 'city') return reply.redirect(home(v));
-    return d.page(req, reply, 'ville', { v, L, R: region(d.content, v.region), error: errorOf(req.query) });
+    const tut = await tutorialView(d.db, d.requireAuth(req).player.id);
+    return d.page(req, reply, 'ville', { v, L, R: region(d.content, v.region), tut, error: errorOf(req.query) });
   });
   app.post('/depart', (req, reply) =>
     act(req, reply, '/ville', async () => {
@@ -198,8 +201,32 @@ export function registerGameRoutes(app: FastifyInstance, d: GameRouteDeps): void
     // Amis à inviter : en ligne, dans la même région (README 23.2).
     const friends = door ? (await friendsView(d.db, me)).friends.filter((f) => f.online && f.region === v.region) : [];
     const testDoor = d.testTools && !door && !!d.content.pack.dungeons?.some((x) => x.route === R.id);
-    return d.page(req, reply, 'route', { v, L, R, door, friends, testDoor, home: region(d.content, v.region), error: errorOf(req.query) });
+    const tut = await tutorialView(d.db, me);
+    return d.page(req, reply, 'route', {
+      v,
+      L,
+      R,
+      door,
+      friends,
+      testDoor,
+      tut,
+      home: region(d.content, v.region),
+      error: errorOf(req.query),
+    });
   });
+
+  // ---------- Premiers pas (tutoriel) ----------
+  app.get('/tutoriel', async (req, reply) => {
+    const v = await view(req);
+    return d.page(req, reply, 'tutoriel', { v, L, tut: await tutorialView(d.db, d.requireAuth(req).player.id), error: errorOf(req.query) });
+  });
+  app.post('/tutoriel', (req, reply) =>
+    act(req, reply, '/tutoriel', async () => {
+      const b = body(req);
+      await d.run(req, updateTutorial, b.read === 'mort' ? { read: 'mort' } : { hidden: b.hidden === 'true' });
+      return b.read === 'mort' ? '/tutoriel#mort' : b.hidden === 'true' ? '/ville' : '/tutoriel';
+    }),
+  );
 
   // ---------- Donjon (README 23) ----------
   app.get('/donjon', async (req, reply) => {

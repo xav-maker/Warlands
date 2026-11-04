@@ -9,6 +9,7 @@
     <% }) %>
   </ol>
   <p class="muted"><%= st.desc %></p>
+  <% if (it.tut && !it.tut.hidden && !it.tut.finished) { %><%~ include('./partials/tutorial', { tut: it.tut, csrf: it.csrf, full: false }) %><% } %>
 
   <div class="grid">
     <div class="card">

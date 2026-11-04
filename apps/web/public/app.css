@@ -809,3 +809,72 @@ details.fold > summary h2 {
 details.fold > summary h2 .count {
   margin-left: auto;
 }
+
+/* Premiers pas (tutoriel) */
+.tutorial {
+  border-color: color-mix(in srgb, var(--a) 40%, var(--line));
+  background: color-mix(in srgb, var(--a-soft) 45%, var(--surface));
+}
+.progress {
+  height: 8px;
+  border-radius: 999px;
+  background: var(--sunk);
+  overflow: hidden;
+  margin: 4px 0 12px;
+}
+.progress i {
+  display: block;
+  height: 100%;
+  background: var(--good);
+  border-radius: 999px;
+}
+.tuto-steps {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 8px;
+  display: grid;
+  gap: 6px;
+}
+.tuto-steps li {
+  padding: 6px 10px;
+  border-radius: var(--r);
+  border: 1px solid transparent;
+}
+.tuto-steps li.next {
+  border-color: var(--good);
+  background: var(--good-soft);
+}
+.tuto-steps li.done b {
+  color: var(--muted);
+  font-weight: 600;
+}
+.tuto-steps .mark {
+  display: inline-grid;
+  place-items: center;
+  width: 1.3em;
+  height: 1.3em;
+  margin-right: 8px;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  font-size: 0.8em;
+  color: #fff;
+  vertical-align: -0.15em;
+}
+.tuto-steps li.done .mark {
+  background: var(--good);
+  border-color: var(--good);
+}
+.tuto-steps li.next .mark {
+  border-color: var(--good);
+}
+.guide article h2 .status {
+  font-family: var(--f-body);
+}
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}

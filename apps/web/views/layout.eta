@@ -23,6 +23,7 @@
           <a href="/jeu"<%~ play ? ' aria-current="page"' : '' %>>Jouer</a>
           <a href="/sac"<%~ here('/sac') %>>Sac</a>
           <a href="/codex"<%~ here('/codex') %>>Codex</a>
+          <a href="/tutoriel"<%~ here('/tutoriel') %>>Guide</a>
           <a href="/chat"<%~ here('/chat') %>>Discussion</a>
           <% if (it.auth.account.role !== 'player') { %><a href="/moderation"<%~ here('/moderation') %>>Modération</a><% } %>
           <a href="/compte"<%~ here('/compte') %>>Compte</a>

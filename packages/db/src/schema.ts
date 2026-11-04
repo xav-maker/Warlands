@@ -75,6 +75,8 @@ export interface PlayerTable {
   unlocked: ColumnType<number, number | undefined, number>;
   /** Pseudo remplacé par la modération : le joueur peut en choisir un nouveau, une fois. */
   rename_required: ColumnType<boolean, boolean | undefined, boolean>;
+  /** Tutoriel : étapes lues et tutoriel masqué (le reste se déduit de la partie). */
+  tutorial: ColumnType<unknown, string | undefined, string>;
   created_at: CreatedAt;
   updated_at: UpdatedAt;
 }

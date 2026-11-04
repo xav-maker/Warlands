@@ -1,0 +1,37 @@
+<%/* Premiers pas : la liste des étapes (it.full) ou seulement la prochaine. it.tut (TutorialView), it.csrf. */%>
+<% const S = {
+  combat: { t: 'Gagner un premier combat', d: 'Partez sur une route depuis la ville, cherchez un groupe et combattez. Le combat se joue tout seul : regardez la rediffusion, puis continuez.', href: '/tutoriel#combat', a: 'Comment combattre' },
+  butin: { t: 'Rapporter du butin', d: 'Une victoire donne de l’or et des objets, rangés dans le sac. Ce qui ne tient pas reste au sol : ramassez-le avant de quitter l’étape.', href: '/sac', a: 'Voir le sac' },
+  acheter: { t: 'Acheter au marchand', d: 'Le marchand de chaque ville vend l’équipement et les consommables de son palier. Ce que vous achetez arrive en banque.', href: '/marchand', a: 'Aller au marchand' },
+  fabriquer: { t: 'Fabriquer à l’atelier', d: 'Vos recettes sont personnelles. Une pastille verte : vous avez assez de cet ingrédient ; une recette en vert se fabrique tout de suite.', href: '/atelier', a: 'Aller à l’atelier' },
+  recruter: { t: 'Recruter une troupe', d: 'La caserne recrute contre des ingrédients et de l’or. L’escouade compte 8 unités et 11 de population au plus.', href: '/caserne', a: 'Aller à la caserne' },
+  mort: { t: 'Comprendre la mort', d: 'Une unité tombée au combat est perdue pour de bon, avec son équipement. Vaincu, vous rentrez en ville, mais le butin au sol est perdu.', href: '/tutoriel#mort', a: 'Lire' },
+} %>
+<% const tut = it.tut; const next = tut.next %>
+<section class="card tutorial" aria-labelledby="tuto-titre">
+  <h2 id="tuto-titre">Premiers pas <span class="count"><%= tut.done %> / <%= tut.steps.length %></span></h2>
+  <div class="progress" role="progressbar" aria-valuemin="0" aria-valuemax="<%= tut.steps.length %>" aria-valuenow="<%= tut.done %>"><i style="width: <%= Math.round((tut.done / tut.steps.length) * 100) %>%"></i></div>
+  <% if (it.full) { %>
+    <ol class="tuto-steps">
+      <% for (const s of tut.steps) { const x = S[s.id] %>
+        <li class="<%= s.done ? 'done' : s.id === next ? 'next' : '' %>">
+          <div class="row between">
+            <span><span class="mark" aria-hidden="true"><%= s.done ? '✓' : '' %></span><b><%= x.t %></b><span class="sr-only"><%= s.done ? ' (fait)' : ' (à faire)' %></span></span>
+            <% if (!s.done) { %><a class="btn<%= s.id === next ? ' buy' : '' %>" href="<%= x.href %>"><%= x.a %></a><% } %>
+          </div>
+          <% if (s.id === next) { %><p class="meta"><%= x.d %></p><% } %>
+        </li>
+      <% } %>
+    </ol>
+  <% } else if (next) { %>
+    <p><b>Prochaine étape : <%= S[next].t %>.</b> <span class="meta"><%= S[next].d %></span></p>
+  <% } %>
+  <div class="row">
+    <a href="/tutoriel">Tout le guide des débutants</a>
+    <form method="post" action="/tutoriel" class="inline">
+      <input type="hidden" name="_csrf" value="<%= it.csrf %>">
+      <input type="hidden" name="hidden" value="true">
+      <button type="submit" class="link">Masquer</button>
+    </form>
+  </div>
+</section>

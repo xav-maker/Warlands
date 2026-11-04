@@ -4,6 +4,7 @@
   <p class="eyebrow"><%= it.R.name %> · palier <%= it.R.tier %></p>
   <h1><%= it.R.city.name %></h1>
   <p class="muted"><%= it.R.city.desc %> Vos troupes sont soignées dès leur entrée en ville.</p>
+  <% if (!it.tut.hidden && !it.tut.finished) { %><%~ include('./partials/tutorial', { tut: it.tut, csrf: it.csrf, full: true }) %><% } %>
 
   <div class="grid">
     <div class="card">
