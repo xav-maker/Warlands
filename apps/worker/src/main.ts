@@ -8,6 +8,7 @@ import {
   checkInvariants,
   expireListings,
   liftExpiredSuspensions,
+  purgeBattleLogs,
   purgeExpiredSessions,
   purgeSocial,
   replayBattles,
@@ -52,6 +53,8 @@ const JOBS: Record<string, { cron: string; run: () => Promise<unknown> }> = {
   'sweep-dungeons': { cron: '* * * * *', run: () => sweepDungeons(db, { publish: (e) => bus.publish(e) }) },
   // Invariants (guide 19.3) toutes les 10 minutes ; la nuit, 100 combats de la veille rejoués. Une violation est une
   // alerte critique (guide 19.2) : journal au niveau « fatal », champ alert = invariant.
+  // Journaux de combat complets gardés 30 jours, puis effacés (le combat reste rejouable, guide 15.3).
+  'purge-battle-logs': { cron: '47 4 * * *', run: () => purgeBattleLogs(db) },
   invariants: { cron: '*/10 * * * *', run: async () => alert(await checkInvariants(db, content)) },
   'invariants-nightly': {
     cron: '30 3 * * *',

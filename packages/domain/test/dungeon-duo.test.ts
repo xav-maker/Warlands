@@ -256,7 +256,7 @@ describe('duo complet (guide 9.4)', () => {
         { engineVersion: o.engineVersion, params: content.pack.params, skills: content.pack.skills, units: input.units },
         Number(row.seed),
       );
-      expect(again.log).toEqual(JSON.parse(gunzipSync(row.log).toString('utf8')));
+      expect(again.log).toEqual(JSON.parse(gunzipSync(row.log!).toString('utf8')));
       expect(again.result).toEqual(row.result);
     }
   });

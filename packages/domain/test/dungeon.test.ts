@@ -185,7 +185,7 @@ describe('donjon en solo', () => {
       Number(b.seed),
     );
     // (jsonb réordonne les clés de l'entrée : on compare les valeurs, pas le texte)
-    expect(again.log).toEqual(JSON.parse(gunzipSync(b.log).toString('utf8')));
+    expect(again.log).toEqual(JSON.parse(gunzipSync(b.log!).toString('utf8')));
 
     // Sortie : le coffre part en banque, l'or entre au grand livre, retour sur l'étape de la route.
     const chest = v.chest;

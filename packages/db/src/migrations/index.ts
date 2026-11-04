@@ -11,6 +11,7 @@ import * as m0009 from './0009_pseudo_2fa.ts';
 import * as m0010 from './0010_donjons.ts';
 import * as m0011 from './0011_donjon_invitations.ts';
 import * as m0012 from './0012_echecs_connexion.ts';
+import * as m0013 from './0013_journaux_combat.ts';
 
 /**
  * Liste explicite des migrations, dans l'ordre. On évite `FileMigrationProvider`, qui charge
@@ -29,4 +30,5 @@ export const migrations: Record<string, Migration> = {
   '0010_donjons': m0010,
   '0011_donjon_invitations': m0011,
   '0012_echecs_connexion': m0012,
+  '0013_journaux_combat': m0013,
 };

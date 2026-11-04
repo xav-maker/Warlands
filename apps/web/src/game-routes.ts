@@ -3,7 +3,6 @@
  * Codex. Formulaires classiques (POST puis redirection) : tout marche sans JavaScript. Une erreur de jeu
  * ramène à la page d'origine avec son message (?e=CODE) ; pendant une rediffusion, vers le combat.
  */
-import { gunzipSync } from 'node:zlib';
 import type { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify';
 import { ERROR_CODES, isGameError, messageFr, type ErrorCode } from '@cr/shared';
 import type { Db } from '@cr/db';
@@ -58,6 +57,7 @@ import {
   withdrawListing,
   scaled,
   setDisabledSkills,
+  battleLog,
   DELETE_WORD,
   deleteAccount,
   exportData,
@@ -335,10 +335,13 @@ export function registerGameRoutes(app: FastifyInstance, d: GameRouteDeps): void
   app.get('/combat/:id/journal.json', async (req, reply) => {
     const b = await battleView(d.db, d.requireAuth(req).player.id, int((req.params as { id: string }).id));
     if (!b) return reply.status(404).send({ error: 'introuvable' });
+    // Journal effacé (plus de 30 jours) : rejoué depuis l'entrée et la graine si le contenu est le même (guide 15.3).
+    const log = battleLog(d.content, b);
+    if (!log) return reply.status(410).send({ error: 'journal expiré' });
     return reply
       .header('cache-control', 'private, max-age=86400')
       .type('application/json')
-      .send(`{"units":${JSON.stringify((b.input as { units: unknown }).units)},"log":${gunzipSync(b.log).toString('utf8')}}`);
+      .send(`{"units":${JSON.stringify((b.input as { units: unknown }).units)},"log":${log}}`);
   });
 
   // ---------- Butin, sac, banque, consommables ----------

@@ -199,8 +199,8 @@ export interface BattleTable {
   content_version: string;
   input: ColumnType<unknown, string, never>;
   result: ColumnType<unknown, string, never>;
-  /** Journal JSON compressé en gzip. */
-  log: ColumnType<Buffer, Buffer, never>;
+  /** Journal JSON compressé en gzip ; null passé 30 jours (guide 15.3), le combat restant rejouable. */
+  log: ColumnType<Buffer | null, Buffer, null>;
   duration: number;
   won: boolean;
   created_at: CreatedAt;

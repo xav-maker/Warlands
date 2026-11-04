@@ -149,9 +149,8 @@ export async function replayBattles(db: Db, c: GameContent, opts: { since: Date;
   for (const b of rows) {
     const units = (b.input as { units: UnitInput[] }).units;
     const again = simuler({ engineVersion: b.engine_version, params: c.pack.params, skills: c.pack.skills, units }, Number(b.seed));
-    const same =
-      JSON.stringify(canon(again.log)) === JSON.stringify(canon(JSON.parse(gunzipSync(b.log).toString('utf8')))) &&
-      JSON.stringify(canon(again.result)) === JSON.stringify(canon(b.result));
+    const sameLog = !b.log || JSON.stringify(canon(again.log)) === JSON.stringify(canon(JSON.parse(gunzipSync(b.log).toString('utf8'))));
+    const same = sameLog && JSON.stringify(canon(again.result)) === JSON.stringify(canon(b.result));
     if (!same) out.push({ check: 'battle.replay_differs', detail: { battle: b.id } });
   }
   return out;

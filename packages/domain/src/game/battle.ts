@@ -2,7 +2,7 @@
  * battle.fight (guide 8.2, README 11.3) : tout dans la même transaction, pour qu'un combat ne puisse pas
  * être relancé pour un meilleur tirage.
  */
-import { gzipSync } from 'node:zlib';
+import { gunzipSync, gzipSync } from 'node:zlib';
 import { z } from 'zod';
 import { GameError } from '@cr/shared';
 import { simuler } from '@cr/engine';
@@ -17,8 +17,8 @@ import { xpFor, xpToNext } from './rules.ts';
 import { asPlayerTroop, loadTroops, setUnit, statsOf } from './troops.ts';
 import type { LoadedTroop } from './troops.ts';
 import type { GameContent } from './content.ts';
-import type { Database, Transaction } from '@cr/db';
-import type { UnitResult } from '@cr/engine';
+import type { Database, Db, Transaction } from '@cr/db';
+import type { UnitInput, UnitResult } from '@cr/engine';
 
 type Tx = Transaction<Database>;
 
@@ -115,6 +115,36 @@ export async function settleSquad(
     await tx.updateTable('troop').set({ xp, level: t.level, updated_at: now }).where('id', '=', t.id).execute();
   }
   return r;
+}
+
+/** Journal complet gardé ce nombre de jours (guide 15.3 [H]). */
+export const BATTLE_LOG_DAYS = 30;
+
+/** Efface les journaux de plus de BATTLE_LOG_DAYS jours ; rend le nombre de combats concernés. */
+export async function purgeBattleLogs(db: Db, now = new Date(), days = BATTLE_LOG_DAYS): Promise<number> {
+  const r = await db
+    .updateTable('battle')
+    .set({ log: null })
+    .where('created_at', '<', new Date(now.getTime() - days * 86_400_000))
+    .where('log', 'is not', null)
+    .executeTakeFirst();
+  return Number(r.numUpdatedRows);
+}
+
+/**
+ * Journal d'un combat (rediffusion) : celui enregistré, ou, une fois effacé, le même rejoué par le moteur depuis l'entrée
+ * et la graine — possible tant que le contenu actif est celui du combat. Null sinon.
+ */
+export function battleLog(
+  c: GameContent,
+  b: { log: Buffer | null; input: unknown; seed: number | string; engine_version: string; content_version: string },
+): string | null {
+  if (b.log) return gunzipSync(b.log).toString('utf8');
+  if (b.content_version !== c.hash) return null;
+  const units = (b.input as { units: UnitInput[] }).units;
+  return JSON.stringify(
+    simuler({ engineVersion: b.engine_version, params: c.pack.params, skills: c.pack.skills, units }, Number(b.seed)).log,
+  );
 }
 
 export const fight = command({

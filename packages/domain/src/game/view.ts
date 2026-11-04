@@ -129,6 +129,9 @@ export async function battleView(db: Db, playerId: number, battleId: number) {
       'battle.input',
       'battle.result',
       'battle.log',
+      'battle.seed',
+      'battle.engine_version',
+      'battle.content_version',
       'battle.created_at',
       'battle_participant.rewards',
     ])

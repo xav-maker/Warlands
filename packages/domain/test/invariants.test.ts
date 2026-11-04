@@ -11,6 +11,8 @@ import type { GenContent } from '@cr/gen';
 import { startTestDb, type TestDb } from '@cr/testing';
 import {
   addStack,
+  battleLog,
+  purgeBattleLogs,
   checkInvariants,
   command,
   createTestSquad,
@@ -132,5 +134,23 @@ describe('invariants', () => {
       t.db,
     );
     expect(await replayBattles(t.db, content, { since, until })).toEqual([{ check: 'battle.replay_differs', detail: { battle: one.id } }]);
+  });
+});
+
+describe('journaux de combat (guide 15.3)', () => {
+  it('efface les journaux de plus de 30 jours ; le combat se rejoue à l’identique tant que le contenu est le même', async () => {
+    const select = () =>
+      t.db.selectFrom('battle').select(['id', 'log', 'input', 'seed', 'engine_version', 'content_version']).orderBy('id');
+    const before = await select().execute();
+    expect(before.length).toBeGreaterThan(0);
+    const logs = before.map((b) => JSON.parse(battleLog(content, b)!));
+    // Rien n'a 30 jours : rien n'est effacé ; dans 31 jours, tout l'est.
+    expect(await purgeBattleLogs(t.db)).toBe(0);
+    expect(await purgeBattleLogs(t.db, new Date(Date.now() + 31 * 86_400_000))).toBe(before.length);
+    const after = await select().execute();
+    expect(after.every((b) => b.log === null)).toBe(true);
+    expect(after.map((b) => JSON.parse(battleLog(content, b)!))).toEqual(logs);
+    // Contenu changé depuis : pas de rediffusion possible.
+    expect(battleLog({ ...content, hash: 'autre' }, after[0]!)).toBeNull();
   });
 });
