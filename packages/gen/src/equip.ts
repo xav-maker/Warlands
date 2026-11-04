@@ -67,6 +67,24 @@ export function genEquip(c: GenContent, baseId: string, r: Rng, fixedRoll?: numb
 
 export const itemValue = (c: GenContent, i: EquipInstance): number => Math.round((c.equip[i.base]!.value * i.roll) / 1e3);
 
+/**
+ * Équipement complet d'une unité (simulation d'équilibrage, escouade de test) : pour chaque emplacement que sa troupe
+ * accepte, la base non signature la plus chère du palier visé (ou du plus haut palier en dessous) que le niveau permet
+ * de porter, en exemplaire moyen (qualité 1 000).
+ */
+export function bestGear(c: GenContent, type: string, level: number, tier: number, rng: Rng): Record<string, EquipInstance> {
+  const out: Record<string, EquipInstance> = {};
+  for (const [slot, cats] of Object.entries(c.troopSlots[type] ?? {})) {
+    for (let t = tier; t >= 1 && !out[slot]; t--) {
+      const base = Object.values(c.equip)
+        .filter((b) => b.slot === slot && b.tier === t && !b.region && cats.includes(b.cat) && canWear(c, type, level, b.id) === null)
+        .sort((a, b) => b.value - a.value || a.id.localeCompare(b.id))[0];
+      if (base) out[slot] = genEquip(c, base.id, rng, 1000);
+    }
+  }
+  return out;
+}
+
 /** Une troupe peut-elle porter cette base ? null si oui, sinon la raison. */
 export function canWear(c: GenContent, type: string, level: number, baseId: string): string | null {
   const b = c.equip[baseId]!;

@@ -114,6 +114,8 @@ export interface BattleOptions {
    * la rencontre, escorte comprise ; `guardian` (correction du README 16, point 2) au seul gardien.
    */
   guardianAdjust: 'all' | 'guardian';
+  /** Réglage fin de l'étape (Step.mult, en ‰) : PV et attaque des monstres en plus du renfort de la région. */
+  mult?: number;
 }
 
 /** Unités des deux camps, dans l'ordre et avec les identifiants du prototype (A1…, B1…). */
@@ -158,8 +160,9 @@ export function battleUnits(c: GenContent, squad: PlayerTroop[], group: MonsterG
     const def = c.troops[tr.type]!;
     const s = computeStats(c, def, tr.form, tr.level);
     const adj = adjOf(tr.type);
-    const mHp = (v: number): number => Math.round((v * c.eco.monsterHp[r]! * adj) / 1e6);
-    const mAtk = (v: number): number => Math.round((v * c.eco.monsterAtk[r]! * adj) / 1e6);
+    const step = o.mult && o.mult !== 1e3 ? o.mult / 1e3 : 1;
+    const mHp = (v: number): number => Math.round((v * c.eco.monsterHp[r]! * adj * step) / 1e6);
+    const mAtk = (v: number): number => Math.round((v * c.eco.monsterAtk[r]! * adj * step) / 1e6);
     const w = c.weapons[def.weapon]!;
     tr.units.forEach((us, ui) =>
       units.push({

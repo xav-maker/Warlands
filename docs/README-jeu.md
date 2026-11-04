@@ -425,7 +425,7 @@ Au moment de construire l'entrée du combat, les monstres du territoire `r` reç
 | 4 Désert | 4,5 | 3,2 | ×0,48 |
 | 5 Ciel | 3,8 | 2,8 | ×1,05 |
 
-Formule : `round(valeur × renfort[r] × ajustement / 1 000 000)`. L'ajustement du gardien s'applique à **toutes les unités** de la rencontre de l'étape 5, escorte comprise. Volonté, énergie, mana, vitesse et résistances ne sont pas renforcés. Les monstres commencent toujours à pleine vie et plein mana.
+Formule : `round(valeur × renfort[r] × ajustement / 1 000 000)`. En ligne, chaque étape peut en plus porter un réglage fin `mult` (en ‰, 1 000 par défaut) qui multiplie PV et attaque des monstres de l'étape : il sert à régler la difficulté route par route et étape par étape (`pnpm content simulate`). L'ajustement du gardien s'applique à **toutes les unités** de la rencontre de l'étape 5, escorte comprise. Volonté, énergie, mana, vitesse et résistances ne sont pas renforcés. Les monstres commencent toujours à pleine vie et plein mana.
 
 Historique de ces réglages (pour comprendre les chiffres) : jauges ×3, puis bonus d'équipement ×2 (le jeu équipé devenait trop facile), puis monstres renforcés, +2 niveaux, soins ×1,2 avec recharges, et enfin difficulté croissante par région (« au fur et à mesure de la partie les monstres deviennent de plus en plus faciles, il faudrait l'inverse », Xavier, 3 novembre 2026). Le dragon réagit beaucoup plus fort que les autres gardiens, d'où son ajustement à 0,48.
 

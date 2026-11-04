@@ -6,10 +6,24 @@
 import { join } from 'node:path';
 import { validateContent } from '@cr/content';
 import type { GenContent } from '@cr/gen';
-import { routes } from '@cr/gen';
-import { describe, expect, it } from 'vitest';
+import { battleUnits, genMonsters, routes, stepSpec } from '@cr/gen';
+import { beforeAll, describe, expect, it } from 'vitest';
 import { diffPacks } from '../src/diff.ts';
-import { loadSquads, report, simulate, SQUADS_FILE, squadOf, tierTarget, TOLERANCE, verdicts } from '../src/simulate.ts';
+import {
+  loadSquads,
+  report,
+  ROUTE_TOLERANCE,
+  routeGaps,
+  simulate,
+  SQUADS_FILE,
+  squadForStep,
+  squadOf,
+  STEP_TOLERANCE,
+  stepTarget,
+  tierTarget,
+  TOLERANCE,
+  verdicts,
+} from '../src/simulate.ts';
 
 const v = validateContent(join(import.meta.dirname, '../../../content'));
 const pack = v.pack as unknown as GenContent;
@@ -109,16 +123,68 @@ describe('simulation', () => {
     expect(verdicts(rows)[0]!.ok).toBe(false);
   });
 
-  it('le contenu publié atteint les taux visés à chaque palier (escouades équipées)', () => {
-    const rows = simulate(pack, squads, { fights: 20 });
+  it('le multiplicateur d’étape (mult) renforce les PV et l’attaque des monstres', () => {
+    const R = routes(pack)[0]!;
+    const st = R.steps[1]!;
+    const squad = squadOf(pack, squads['1']!, 5);
+    const group = genMonsters(pack, stepSpec(st), 1);
+    const o = { territory: 0, guardianStep: false, guardianAdjust: pack.online!.guardianAdjust };
+    const foes = (mult?: number) => battleUnits(pack, squad, group, { ...o, ...(mult ? { mult } : {}) }).filter((u) => u.side === 1);
+    const [plain, same, double] = [foes(), foes(1000), foes(2000)];
+    expect(same.map((u) => u.hpMax)).toEqual(plain.map((u) => u.hpMax));
+    plain.forEach((u, i) => expect(double[i]!.hpMax).toBeGreaterThanOrEqual(u.hpMax * 2 - 1));
+    expect(double.some((u, i) => u.hpMax > plain[i]!.hpMax)).toBe(true);
+  });
+});
+
+describe('équilibrage du contenu publié (60 combats par étape, escouades équipées)', () => {
+  let rows: ReturnType<typeof simulate> = [];
+  beforeAll(() => {
+    rows = simulate(pack, squads, { fights: 60 });
+  }, 300_000);
+  const near = (x: number, target: number, tol: number): boolean => Math.abs(x - target) <= tol + 1e-9;
+
+  it('chaque palier atteint ses taux visés', () => {
     for (const v of verdicts(rows)) {
-      expect(v.steps, `palier ${v.tier} : étapes`).toBeGreaterThanOrEqual(v.stepsTarget - TOLERANCE - 1e-9);
-      expect(v.steps, `palier ${v.tier} : étapes`).toBeLessThanOrEqual(v.stepsTarget + TOLERANCE + 1e-9);
-      expect(v.guardians, `palier ${v.tier} : gardiens`).toBeGreaterThanOrEqual(v.guardiansTarget - TOLERANCE - 1e-9);
-      expect(v.guardians, `palier ${v.tier} : gardiens`).toBeLessThanOrEqual(v.guardiansTarget + TOLERANCE + 1e-9);
+      expect(near(v.steps, v.stepsTarget, TOLERANCE), `palier ${v.tier} : étapes ${v.steps}`).toBe(true);
+      expect(near(v.guardians, v.guardiansTarget, TOLERANCE), `palier ${v.tier} : gardiens ${v.guardians}`).toBe(true);
       expect(v.ok).toBe(true);
     }
-  }, 180_000);
+  });
+
+  it('les routes d’un même palier ont la même difficulté', () => {
+    for (const g of routeGaps(rows)) {
+      expect(near(g.steps, g.stepsTarget, ROUTE_TOLERANCE), `${g.routeName} : étapes ${g.steps}`).toBe(true);
+      expect(near(g.guardian, g.guardianTarget, STEP_TOLERANCE), `${g.routeName} : gardien ${g.guardian}`).toBe(true);
+    }
+  });
+
+  it('chaque étape suit la rampe de son palier', () => {
+    for (const r of rows)
+      expect(
+        near(r.winRate, stepTarget(r.tier, r.step, r.guardian), STEP_TOLERANCE),
+        `${r.routeName}, étape ${r.step} : ${r.winRate}`,
+      ).toBe(true);
+  });
+
+  it('chaque route monte en difficulté, et le tout début est facile', () => {
+    for (const R of routes(pack)) {
+      const of = rows.filter((r) => r.route === R.id && !r.guardian);
+      for (let i = 1; i < of.length; i++)
+        expect(of[i]!.winRate, `${R.name} : étape ${i + 1} contre ${i}`).toBeLessThanOrEqual(of[i - 1]!.winRate + 0.05);
+      expect(of[0]!.winRate, `${R.name} : première étape`).toBeGreaterThan(of.at(-1)!.winRate);
+    }
+    // Palier 1 : l'escouade de départ (pas pleine, niveau en retard, sans équipement) passe la première étape presque toujours.
+    for (const r of rows.filter((x) => x.tier === 1 && x.step === 1)) expect(r.winRate, r.routeName).toBeGreaterThanOrEqual(0.8);
+  });
+
+  it('l’escouade de la première étape du palier 1 est celle du départ plus l’Acolyte, sans équipement', () => {
+    const eco = pack.eco as unknown as { startTroops: [string, number][] };
+    const first = squadForStep(squads['1']!, 1);
+    expect(first.troops.map(([t]) => t).sort()).toEqual([...eco.startTroops.map(([t]) => t), 'acolyte'].sort());
+    expect(first.gear).toBe(false);
+    expect(first.offset).toBeLessThan(0);
+  });
 });
 
 describe('différence de packs', () => {

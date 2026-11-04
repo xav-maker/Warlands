@@ -142,6 +142,8 @@ export const Step = z.strictObject({
   draws: range2,
   guardian: z.boolean().optional(),
   forced: z.array(id).optional(),
+  /** Réglage fin de la difficulté de l'étape : PV et attaque des monstres × mult / 1 000 (défaut : 1 000, inchangé). */
+  mult: int.min(1).optional(),
 });
 
 /** Région : sa ville ; dans le prototype, aussi son territoire (route vers la région suivante) et son gardien. */

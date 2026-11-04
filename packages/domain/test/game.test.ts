@@ -22,7 +22,7 @@ import {
   setUnit,
   useConsumable,
   contents,
-  createTroop,
+  createTestSquad,
   depart,
   discard,
   executeCommand,
@@ -76,8 +76,7 @@ async function strongSquad(pid: number, level = 30): Promise<void> {
   await run(pid, searchOrStart); // remet le kit de départ
   await t.db.transaction().execute(async (tx) => {
     await tx.updateTable('troop').set({ container: 'BARRACKS' }).where('player_id', '=', pid).execute();
-    for (const type of ['briseur', 'acolyte', 'chasseur', 'milicien', 'frondeurs', 'pyromancien'])
-      await createTroop(tx, content, pid, { type, level, container: 'SQUAD', reason: 'test' });
+    await createTestSquad(tx, content, pid, level, 'test');
   });
 }
 /** Commande neutre : déclenche seulement le kit de départ. */

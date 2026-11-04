@@ -7,10 +7,16 @@
  */
 import { randomInt } from 'node:crypto';
 import { z } from 'zod';
+import { bestForm, bestGear } from '@cr/gen';
+import { Rng, hash } from '@cr/rng';
+import type { Database, Transaction } from '@cr/db';
 import { command } from '../command.ts';
 import { START_REGION } from '../identity.ts';
+import type { GameContent } from './content.ts';
 import { balance, transferGold } from './gold.ts';
-import { createTroop } from './troops.ts';
+import { createTroop, loadTroops, setUnit, statsOf } from './troops.ts';
+
+type Tx = Transaction<Database>;
 
 export const RESET_WORD = 'RECOMMENCER';
 
@@ -135,8 +141,62 @@ export const giveTestSquad = command({
       .where('player_id', '=', ctx.player.id)
       .where('container', '=', 'SQUAD')
       .execute();
-    for (const type of ['briseur', 'acolyte', 'chasseur', 'milicien', 'frondeurs', 'pyromancien'])
-      await createTroop(ctx.tx, ctx.content, ctx.player.id, { type, level: 30, container: 'SQUAD', reason: 'outil de test' });
+    await createTestSquad(ctx.tx, ctx.content, ctx.player.id, 30, 'outil de test');
     return { level: 30 };
   },
 });
+
+export const TEST_SQUAD = ['briseur', 'acolyte', 'chasseur', 'milicien', 'frondeurs', 'pyromancien'];
+
+/**
+ * Escouade de test (8 unités, 10 de population) : chaque troupe au niveau donné, dans la forme évoluée de ce niveau,
+ * équipée au plus haut palier que le niveau permet (exemplaires moyens) et à pleine vie. Les combats d'une route se
+ * suivent sans soin et les monstres sont réglés pour des escouades de leur niveau : sans équipement, même le niveau 30
+ * ne passe pas les cinq étapes de la première route.
+ */
+export async function createTestSquad(tx: Tx, c: GameContent, playerId: number, level: number, reason: string): Promise<void> {
+  const rng = new Rng(hash(level, playerId));
+  for (const type of TEST_SQUAD) {
+    const def = c.pack.troops[type]!;
+    const id = await createTroop(tx, c, playerId, { type, level, container: 'SQUAD', reason, form: bestForm(def, level) });
+    const units = (await loadTroops(tx, playerId, ['SQUAD'])).find((t) => t.id === id)!.units;
+    for (const u of units)
+      for (const [slot, it] of Object.entries(bestGear(c.pack, type, level, 5, rng))) {
+        const row = await tx
+          .insertInto('item_instance')
+          .values({
+            player_id: playerId,
+            container: 'EQUIPPED',
+            troop_id: id,
+            unit_n: u.n,
+            slot,
+            base: it.base,
+            roll: it.roll,
+            stats: JSON.stringify(it.stats),
+            origin: 'start',
+            content_version: c.hash,
+          })
+          .returning('id')
+          .executeTakeFirstOrThrow();
+        await tx
+          .insertInto('asset_move')
+          .values({
+            player_id: playerId,
+            kind: 'instance',
+            item: it.base,
+            instance_id: row.id,
+            troop_id: null,
+            from_container: 'SYSTEM',
+            to_container: 'EQUIPPED',
+            reason,
+          })
+          .execute();
+      }
+    // Pleine vie et plein mana avec l'équipement.
+    const t = (await loadTroops(tx, playerId, ['SQUAD'])).find((x) => x.id === id)!;
+    for (const u of t.units) {
+      const s = statsOf(c, t, u);
+      await setUnit(tx, id, u.n, { hp: s.hpMax, mana: s.manaMax });
+    }
+  }
+}

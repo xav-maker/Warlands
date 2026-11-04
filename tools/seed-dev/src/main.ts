@@ -1,17 +1,15 @@
 /**
  * Données de développement et de test (guide 3.1, tools/seed-dev). Jamais sur une base distante.
  *
- *   pnpm seed-dev squad <e-mail> [niveau]   escouade pleine de haut niveau (8 unités, 10 de population)
- *                                           pour le compte <e-mail> ; ses troupes actuelles vont en caserne
+ *   pnpm seed-dev squad <e-mail> [niveau]   escouade pleine de haut niveau (8 unités, 10 de population), évoluée et
+ *                                           équipée, pour le compte <e-mail> ; ses troupes actuelles vont en caserne
  */
 import { join } from 'node:path';
 import { createDb } from '@cr/db';
 import { validateContent } from '@cr/content';
-import { createTroop, startPlayer } from '@cr/domain';
+import { createTestSquad, startPlayer } from '@cr/domain';
 import type { GameContent } from '@cr/domain';
 import type { GenContent } from '@cr/gen';
-
-const SQUAD = ['briseur', 'acolyte', 'chasseur', 'milicien', 'frondeurs', 'pyromancien'];
 
 const url = process.env.DATABASE_URL ?? '';
 const host = (() => {
@@ -49,7 +47,7 @@ try {
     if (!p) throw new Error(`aucun joueur pour ${email}`);
     if (!p.started_at) await startPlayer(tx, content, p, new Date());
     await tx.updateTable('troop').set({ container: 'BARRACKS' }).where('player_id', '=', p.id).where('container', '=', 'SQUAD').execute();
-    for (const type of SQUAD) await createTroop(tx, content, p.id, { type, level, container: 'SQUAD', reason: 'seed-dev' });
+    await createTestSquad(tx, content, p.id, level, 'seed-dev');
   });
   console.log(`escouade de niveau ${level} donnée à ${email}`);
 } finally {

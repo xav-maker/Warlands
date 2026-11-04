@@ -92,6 +92,8 @@ export interface Step {
   draws: [number, number];
   guardian?: boolean;
   forced?: string[];
+  /** Réglage fin de la difficulté : PV et attaque des monstres de l'étape × mult / 1 000 (défaut 1 000). */
+  mult?: number;
 }
 
 export interface Region {

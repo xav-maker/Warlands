@@ -61,6 +61,7 @@ export const fight = command({
       territory: routeTierIndex(c, route),
       guardianStep: !!st.guardian,
       guardianAdjust: o.guardianAdjust,
+      ...(st.mult ? { mult: st.mult } : {}),
     });
     const seed = freshSeed(ctx);
     const input = { engineVersion: o.engineVersion, params: c.pack.params, skills: c.pack.skills, units };
