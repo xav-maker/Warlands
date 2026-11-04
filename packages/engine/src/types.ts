@@ -35,6 +35,10 @@ export interface Fx {
   cap?: number;
   tag?: string;
   tagMult?: number;
+  /** Étiquettes donnant le bonus tagMult (l'une suffit). */
+  tags?: string[];
+  /** Ignore la moitié des résistances positives (Estoc perforant). */
+  ignoreHalf?: boolean;
   ifState?: string;
 }
 

@@ -582,8 +582,16 @@ export function simuler(input: BattleInput, seed: number): BattleOutput {
         return enemiesOf(u2).some((e) => dEnemy(u2, e) === 1);
       case 'seisme':
         return enemiesOf(u2).some((e) => rank(e) <= 2);
-      default:
+      default: {
+        // Capacité fx sur soi qui frappe autour : seulement s'il y a des ennemis dans la zone ; avec l'arme,
+        // seulement au contact (Piétinement).
+        const fx = SK[id]?.fx;
+        const f = fx?.[0];
+        if (f?.area === 'contact' || (f?.area === 'front' && fx!.some((x) => x.k === 'wdmg')))
+          return enemiesOf(u2).some((e) => dEnemy(u2, e) === 1);
+        if (f?.area === 'front') return enemiesOf(u2).some((e) => rank(e) <= 2);
         return true;
+      }
     }
   }
   function candidates(u2: Unit, id: string): Unit[] {
@@ -1244,6 +1252,13 @@ export function simuler(input: BattleInput, seed: number): BattleOutput {
         return alliesOf(u2);
       case 'allyRank':
         return alliesOf(u2).filter((a) => a.dist === u2.dist);
+      case 'randomEnemy': {
+        // Un ennemi au hasard parmi ceux à portée de la capacité (Rafale).
+        const e = pick(candidates(u2, curId).filter(inPlay));
+        return e ? [e] : [];
+      }
+      case 'contact':
+        return enemiesOf(u2).filter((e) => dEnemy(u2, e) === 1);
     }
     // Zone inconnue : le prototype itère sur undefined et lève une erreur ; on garde ce comportement.
     return undefined as unknown as Unit[];
@@ -1253,14 +1268,19 @@ export function simuler(input: BattleInput, seed: number): BattleOutput {
       if (!inPlay(x) || ended) continue;
       if (f.ifState && !has(x, f.ifState)) continue;
       const v = f.v ?? 0;
-      const bonus = f.tag && x.tags.includes(f.tag) ? (f.tagMult ?? 1e3) : 1e3;
+      const tagged = (f.tag && x.tags.includes(f.tag)) || !!f.tags?.some((tg) => x.tags.includes(tg));
+      const bonus = tagged ? (f.tagMult ?? 1e3) : 1e3;
       switch (f.k) {
         case 'dmg':
-          spellHit(u2, x, Math.floor((v * bonus) / 1e3), f.type ?? 'contondant', cause);
+          spellHit(u2, x, Math.floor((v * bonus) / 1e3), f.type ?? 'contondant', cause, f.ignoreHalf ? { ignoreHalf: true } : {});
           break;
         case 'wdmg': {
           const type = f.type ?? u2.weapon.type;
-          damage(u2, x, Math.floor((weaponRaw(u2, v) * bonus) / 1e3), type, { cause, melee: dEnemy(u2, x) === 1 && x.side !== u2.side });
+          damage(u2, x, Math.floor((weaponRaw(u2, v) * bonus) / 1e3), type, {
+            cause,
+            melee: dEnemy(u2, x) === 1 && x.side !== u2.side,
+            ...(f.ignoreHalf ? { ignoreHalf: true } : {}),
+          });
           break;
         }
         case 'drain': {
@@ -1292,9 +1312,22 @@ export function simuler(input: BattleInput, seed: number): BattleOutput {
         case 'cleanse':
           for (const s3 of x.states.filter(isNegative)) removeState(x, s3.id);
           break;
+        case 'unstate':
+          removeState(x, f.s!);
+          break;
+        case 'hploss':
+          loseHp(x, v, cause);
+          break;
         case 'state':
           if (f.s === 'etourdi') stun(x, u2, f.dur ?? 0);
-          else addState(x, f.s!, u2, f.dur ?? 0, fixedFx(f) ? fxAmount(u2, v) : v, f.cap ? { cap: f.cap } : {});
+          else if (f.s === 'gele') {
+            // Même règle que Flèche de givre : pas de regel tant que dure l'immunité qui suit un Gel.
+            if ((thawUntil.get(x.id) ?? -1) > now) emit({ k: 'state', u: x.id, s: 'gele', op: 'immune' });
+            else {
+              addState(x, 'gele', u2, f.dur ?? 0);
+              thawUntil.set(x.id, now + (f.dur ?? 0) + (SK.fleche_givre?.p.freezeImmune ?? 0));
+            }
+          } else addState(x, f.s!, u2, f.dur ?? 0, fixedFx(f) ? fxAmount(u2, v) : v, f.cap ? { cap: f.cap } : {});
           break;
       }
     }

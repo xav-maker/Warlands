@@ -18,15 +18,19 @@ export const Rule = z.strictObject({
 });
 
 export const Fx = z.strictObject({
-  k: z.enum(['dmg', 'wdmg', 'drain', 'heal', 'will', 'mana', 'energy', 'stun', 'push', 'pull', 'cleanse', 'state']),
+  k: z.enum(['dmg', 'wdmg', 'drain', 'heal', 'will', 'mana', 'energy', 'stun', 'push', 'pull', 'cleanse', 'state', 'unstate', 'hploss']),
   v: num.optional(),
   dur: int.optional(),
-  area: z.enum(['target', 'rank', 'allEnemies', 'front', 'self', 'allies', 'allyRank']).optional(),
+  area: z.enum(['target', 'rank', 'allEnemies', 'front', 'self', 'allies', 'allyRank', 'randomEnemy', 'contact']).optional(),
   type: z.string().optional(),
   s: z.string().optional(),
   cap: int.optional(),
   tag: z.string().optional(),
   tagMult: int.optional(),
+  /** Plusieurs étiquettes qui donnent le bonus tagMult (l'une suffit). */
+  tags: z.array(z.string()).optional(),
+  /** Ignore la moitié des résistances positives de la cible (Estoc perforant). */
+  ignoreHalf: z.boolean().optional(),
   ifState: z.string().optional(),
 });
 

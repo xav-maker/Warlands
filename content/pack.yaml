@@ -3,7 +3,7 @@
 id: cible-0.1
 engineVersion: v1
 files:
-  skills: [skills/base.yaml, skills/sorts.yaml]
+  skills: [skills/base.yaml, skills/sorts.yaml, skills/cible.yaml]
   troops:
     [
       troops/recrutables.yaml,

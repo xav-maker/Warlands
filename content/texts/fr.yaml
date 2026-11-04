@@ -923,3 +923,113 @@ rare.rare_marches.name: Griffon aux ailes d’argent
 rare.rare_parvis.name: Sentinelle éveillée
 rare.rare_observatoire.name: Astromancien fou
 rare.rare_jardins.name: Chimère à trois têtes
+
+# Capacités du contenu cible.
+skill.frappe_brutale.name: Frappe brutale
+skill.frappe_brutale.desc: Arme ×1,6 contondant ; retire la Garde de la cible.
+skill.enchainement.name: Enchaînement
+skill.enchainement.desc: Deux coups à ×0,8 sur la même cible.
+skill.brise_genou.name: Brise-genou
+skill.brise_genou.desc: Arme ×0,9 et Ralenti 60.
+skill.taillade.name: Taillade large
+skill.taillade.desc: Arme ×0,8 à tout le rang de la cible.
+skill.estoc.name: Estoc perforant
+skill.estoc.desc: Arme ×1,3 ; ignore la moitié des résistances.
+skill.bond.name: Bond du prédateur
+skill.bond.desc: Bondit au premier rang, arme ×1,2 et Étourdi 10.
+skill.rempart_vivant.name: Rempart vivant
+skill.rempart_vivant.desc: Garde +30 % pendant 80 et Provocation 60.
+skill.cri_defi.name: Cri de défi
+skill.cri_defi.desc: Provocation 60 et +10 % de volonté.
+skill.rafale.name: Rafale
+skill.rafale.desc: Trois tirs à ×0,5 sur des ennemis au hasard à portée.
+skill.carreau_lourd.name: Carreau lourd
+skill.carreau_lourd.desc: Arme ×1,8 et Étourdi 15.
+skill.filet.name: Filet lesté
+skill.filet.desc: Ralenti 80 et attire la cible d’un rang.
+skill.coup_assommant.name: Coup assommant
+skill.coup_assommant.desc: Arme ×0,7 contondant et Étourdi 25.
+skill.laceration.name: Lacération
+skill.laceration.desc: Arme ×0,8 et Saignement 6 (cumulable 3 fois).
+skill.pietinement.name: Piétinement
+skill.pietinement.desc: Arme ×0,7 contondant aux ennemis des rangs 1 et 2, Étourdi 10 au contact.
+skill.lame_ardente.name: Lame ardente
+skill.lame_ardente.desc: Arme ×1,1 en feu et Brûlure 5.
+skill.harpon_tir.name: Harpon
+skill.harpon_tir.desc: Arme ×1 et attire la cible de deux rangs.
+skill.javelot_glace.name: Javelot de glace
+skill.javelot_glace.desc: 22 glace et Ralenti 40.
+skill.blizzard.name: Blizzard
+skill.blizzard.desc: 12 glace et Ralenti 40 à tous les ennemis.
+skill.prison_glace.name: Prison de glace
+skill.prison_glace.desc: Gelé 25 ; la cible ne peut être regelée tout de suite.
+skill.lance_feu.name: Lance de feu
+skill.lance_feu.desc: 28 feu.
+skill.nova_flammes.name: Nova de flammes
+skill.nova_flammes.desc: 16 feu et Brûlure 5 aux ennemis des rangs 1 et 2.
+skill.meteore.name: Météore
+skill.meteore.desc: 40 feu à tout un rang et Brûlure 6.
+skill.armure_givre.name: Armure de givre
+skill.armure_givre.desc: Garde +20 % et Épines 5 pendant 80.
+skill.bouclier_flammes.name: Bouclier de flammes
+skill.bouclier_flammes.desc: Bouclier 20 + 3 × Élémentaire et Épines 8 pendant 80.
+skill.souffle_glacial.name: Souffle glacial
+skill.souffle_glacial.desc: 18 glace et Ralenti 60 à un rang.
+skill.jet_magma.name: Jet de magma
+skill.jet_magma.desc: 20 feu et repousse la cible d’un rang.
+skill.onde_mentale.name: Onde mentale
+skill.onde_mentale.desc: 14 psychique et −10 % de volonté à tout un rang.
+skill.domination.name: Domination
+skill.domination.desc: Confusion et −25 % de volonté.
+skill.vision_terreur.name: Vision de terreur
+skill.vision_terreur.desc: 10 psychique et −30 % de volonté.
+skill.lame_psychique.name: Lame psychique
+skill.lame_psychique.desc: 20 psychique.
+skill.sommeil.name: Sommeil
+skill.sommeil.desc: Étourdi 40 ; sans effet sur les immunisés au psychique.
+skill.clarte.name: Clarté
+skill.clarte.desc: +25 % de volonté et retire la Confusion.
+skill.concentration.name: Concentration
+skill.concentration.desc: +30 % de volonté et +20 % du mana max.
+skill.hurlement_mental.name: Hurlement mental
+skill.hurlement_mental.desc: 8 psychique et −15 % de volonté à tous les ennemis.
+skill.mirage.name: Mirage
+skill.mirage.desc: Garde +40 % pendant 40.
+skill.lien_esprits.name: Lien des esprits
+skill.lien_esprits.desc: +10 % de volonté et +10 % d’énergie à tous les alliés.
+skill.mains_lumiere.name: Mains de lumière
+skill.mains_lumiere.desc: Soin 60 + 6 × Foi.
+skill.onde_soin.name: Onde de soin
+skill.onde_soin.desc: Soin 35 + 3,5 × Foi aux alliés de son rang.
+skill.rayon_sacre.name: Rayon sacré
+skill.rayon_sacre.desc: 24 sacré, ×2 contre mort-vivant et démon.
+skill.jugement.name: Jugement
+skill.jugement.desc: 40 sacré, ×2 contre démon.
+skill.egide.name: Égide
+skill.egide.desc: Bouclier 50 + 6 × Foi pendant 100.
+skill.consecration.name: Consécration
+skill.consecration.desc: 12 sacré (×2 contre mort-vivant et démon) et Affaibli 15 % à un rang.
+skill.purification_masse.name: Purification de masse
+skill.purification_masse.desc: Retire les états négatifs de tous les alliés.
+skill.chatiment.name: Châtiment
+skill.chatiment.desc: Arme ×1,1 en sacré (Foi).
+skill.trait_ombre.name: Trait d’ombre
+skill.trait_ombre.desc: 20 ténèbres.
+skill.peste.name: Peste
+skill.peste.desc: Poison 5 (cumulable 4 fois) à tout un rang.
+skill.drain_ame.name: Drain d’âme
+skill.drain_ame.desc: 26 ténèbres, rend la moitié des dégâts.
+skill.malefice.name: Maléfice
+skill.malefice.desc: Malédiction et Affaibli 20 % pendant 80.
+skill.nuee_ombres.name: Nuée d’ombres
+skill.nuee_ombres.desc: 10 ténèbres à tous les ennemis.
+skill.putrefaction.name: Putréfaction
+skill.putrefaction.desc: 16 maladie et Poison 4.
+skill.pacte_sang.name: Pacte de sang
+skill.pacte_sang.desc: Perd 30 PV ; Cri de guerre +30 % pendant 60.
+skill.toucher_tombe.name: Toucher de la tombe
+skill.toucher_tombe.desc: 14 ténèbres et Ralenti 40.
+skill.marque_mort.name: Marque de mort
+skill.marque_mort.desc: 8 ténèbres et Marque (3 attaques à +30 %).
+skill.silence_tombe.name: Silence de la tombe
+skill.silence_tombe.desc: Silence 60 à tout un rang.

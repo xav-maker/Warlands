@@ -1,0 +1,812 @@
+# Capacités actives du contenu cible (contenu-cible-unites.md 3.1 à 3.5) : effets génériques fx.
+frappe_brutale:
+  kind: active
+  target: enemy
+  range: 1
+  energy: 25
+  mana: 0
+  durBase: weapon
+  durMult: 1500
+  p: {}
+  attack: true
+  melee: true
+  power: for
+  coef: 1500
+  ai: attack
+  fx:
+    - { k: wdmg, v: 1600, type: contondant }
+    - { k: unstate, s: garde }
+enchainement:
+  kind: active
+  target: enemy
+  range: 1
+  energy: 20
+  mana: 0
+  durBase: weapon
+  durMult: 1500
+  p: {}
+  attack: true
+  melee: true
+  power: for
+  coef: 800
+  ai: attack
+  fx:
+    - { k: wdmg, v: 800 }
+    - { k: wdmg, v: 800 }
+brise_genou:
+  kind: active
+  target: enemy
+  range: 1
+  energy: 18
+  mana: 0
+  durBase: weapon
+  durMult: 1000
+  p: {}
+  attack: true
+  melee: true
+  power: for
+  ai: attack
+  fx:
+    - { k: wdmg, v: 900 }
+    - { k: state, s: ralenti, dur: 60 }
+taillade:
+  kind: active
+  target: enemy
+  range: 1
+  energy: 25
+  mana: 0
+  durBase: weapon
+  durMult: 2000
+  p: {}
+  attack: true
+  melee: true
+  power: for
+  coef: 800
+  ai: aoe
+  fx:
+    - { k: wdmg, v: 800, area: rank }
+estoc:
+  kind: active
+  target: enemy
+  range: 1
+  energy: 20
+  mana: 0
+  durBase: weapon
+  durMult: 1500
+  p: {}
+  attack: true
+  melee: true
+  power: for
+  coef: 1300
+  ai: attack
+  fx:
+    - { k: wdmg, v: 1300, ignoreHalf: true }
+bond:
+  kind: active
+  target: enemy
+  range: 3
+  minRange: 2
+  energy: 22
+  mana: 0
+  durBase: unit
+  durMult: 1500
+  p: {}
+  attack: true
+  power: for
+  coef: 1200
+  ai: attack
+  fx:
+    - { k: pull, v: 2, area: self }
+    - { k: wdmg, v: 1200 }
+    - { k: stun, v: 10 }
+rempart_vivant:
+  kind: active
+  target: self
+  range: 1
+  energy: 25
+  mana: 0
+  durBase: unit
+  durMult: 2000
+  p: {}
+  power: foi
+  ai: buffSelf
+  fx:
+    - { k: state, s: garde, v: 300, dur: 80, area: self }
+    - { k: state, s: provocation, dur: 60, area: self }
+cri_defi:
+  kind: active
+  target: self
+  range: 1
+  energy: 15
+  mana: 0
+  durBase: unit
+  durMult: 1000
+  p: {}
+  power: esp
+  ai: buffSelf
+  fx:
+    - { k: state, s: provocation, dur: 60, area: self }
+    - { k: will, v: 100, area: self }
+rafale:
+  kind: active
+  target: enemy
+  range: 4
+  energy: 25
+  mana: 0
+  durBase: weapon
+  durMult: 2000
+  p: {}
+  attack: true
+  power: for
+  coef: 500
+  ai: aoe
+  fx:
+    - { k: wdmg, v: 500, area: randomEnemy }
+    - { k: wdmg, v: 500, area: randomEnemy }
+    - { k: wdmg, v: 500, area: randomEnemy }
+carreau_lourd:
+  kind: active
+  target: enemy
+  range: 5
+  energy: 22
+  mana: 0
+  durBase: weapon
+  durMult: 2000
+  p: {}
+  attack: true
+  power: for
+  coef: 1800
+  ai: attack
+  fx:
+    - { k: wdmg, v: 1800 }
+    - { k: stun, v: 15 }
+filet:
+  kind: active
+  target: enemy
+  range: 3
+  energy: 15
+  mana: 0
+  durBase: unit
+  durMult: 1000
+  p: {}
+  power: for
+  ai: debuff
+  fx:
+    - { k: state, s: ralenti, dur: 80 }
+    - { k: pull, v: 1 }
+coup_assommant:
+  kind: active
+  target: enemy
+  range: 1
+  energy: 20
+  mana: 0
+  durBase: weapon
+  durMult: 1500
+  p: {}
+  attack: true
+  melee: true
+  power: for
+  ai: attack
+  fx:
+    - { k: wdmg, v: 700, type: contondant }
+    - { k: stun, v: 25 }
+laceration:
+  kind: active
+  target: enemy
+  range: 1
+  energy: 12
+  mana: 0
+  durBase: weapon
+  durMult: 1000
+  p: {}
+  attack: true
+  melee: true
+  power: for
+  ai: attack
+  fx:
+    - { k: wdmg, v: 800 }
+    - { k: state, s: saignement, v: 6, dur: 60, cap: 3 }
+pietinement:
+  kind: active
+  target: self
+  range: 1
+  energy: 30
+  mana: 0
+  durBase: unit
+  durMult: 2000
+  p: {}
+  power: for
+  coef: 700
+  ai: aoe
+  fx:
+    - { k: wdmg, v: 700, type: contondant, area: front }
+    - { k: stun, v: 10, area: contact }
+lame_ardente:
+  kind: active
+  target: enemy
+  range: 1
+  energy: 18
+  mana: 0
+  durBase: weapon
+  durMult: 1000
+  p: {}
+  attack: true
+  melee: true
+  power: for
+  coef: 1100
+  ai: attack
+  fx:
+    - { k: wdmg, v: 1100, type: feu }
+    - { k: state, s: brulure, v: 5, dur: 40 }
+harpon_tir:
+  kind: active
+  target: enemy
+  range: 3
+  energy: 18
+  mana: 0
+  durBase: weapon
+  durMult: 1000
+  p: {}
+  attack: true
+  power: for
+  ai: attack
+  fx:
+    - { k: wdmg, v: 1000 }
+    - { k: pull, v: 2 }
+javelot_glace:
+  kind: active
+  target: enemy
+  range: 5
+  energy: 0
+  mana: 12
+  durBase: unit
+  durMult: 1000
+  p: {}
+  attack: true
+  power: ele
+  coef: 1500
+  ai: attack
+  fx:
+    - { k: dmg, v: 22, type: glace }
+    - { k: state, s: ralenti, dur: 40 }
+blizzard:
+  kind: active
+  target: enemy
+  range: 5
+  energy: 0
+  mana: 26
+  durBase: unit
+  durMult: 2500
+  p: {}
+  attack: true
+  power: ele
+  coef: 800
+  ai: aoe
+  fx:
+    - { k: dmg, v: 12, type: glace, area: allEnemies }
+    - { k: state, s: ralenti, dur: 40, area: allEnemies }
+prison_glace:
+  kind: active
+  target: enemy
+  range: 5
+  energy: 0
+  mana: 18
+  durBase: unit
+  durMult: 2000
+  p: {}
+  dtype: glace
+  power: ele
+  ai: debuff
+  fx:
+    - { k: state, s: gele, dur: 25 }
+lance_feu:
+  kind: active
+  target: enemy
+  range: 5
+  energy: 0
+  mana: 14
+  durBase: unit
+  durMult: 1000
+  p: {}
+  attack: true
+  power: ele
+  coef: 1500
+  ai: attack
+  fx:
+    - { k: dmg, v: 28, type: feu }
+nova_flammes:
+  kind: active
+  target: self
+  range: 1
+  energy: 0
+  mana: 18
+  durBase: unit
+  durMult: 2000
+  p: {}
+  power: ele
+  ai: aoe
+  fx:
+    - { k: dmg, v: 16, type: feu, area: front }
+    - { k: state, s: brulure, v: 5, dur: 40, area: front }
+meteore:
+  kind: active
+  target: enemy
+  range: 5
+  energy: 0
+  mana: 32
+  durBase: unit
+  durMult: 3000
+  p: {}
+  attack: true
+  power: ele
+  coef: 2000
+  ai: aoe
+  fx:
+    - { k: dmg, v: 40, type: feu, area: rank }
+    - { k: state, s: brulure, v: 6, dur: 40, area: rank }
+armure_givre:
+  kind: active
+  target: ally
+  range: 2
+  energy: 0
+  mana: 12
+  durBase: unit
+  durMult: 1000
+  p: {}
+  power: ele
+  ai: buffAlly
+  fx:
+    - { k: state, s: garde, v: 200, dur: 80 }
+    - { k: state, s: epines, v: 5, dur: 80 }
+bouclier_flammes:
+  kind: active
+  target: self
+  range: 1
+  energy: 0
+  mana: 14
+  durBase: unit
+  durMult: 1000
+  p: {}
+  power: ele
+  coef: 3000
+  ai: buffSelf
+  fx:
+    - { k: state, s: bouclier, v: 20, dur: 80, area: self }
+    - { k: state, s: epines, v: 8, dur: 80, area: self }
+souffle_glacial:
+  kind: active
+  target: enemy
+  range: 2
+  energy: 30
+  mana: 0
+  durBase: unit
+  durMult: 2000
+  p: {}
+  attack: true
+  power: ele
+  ai: aoe
+  fx:
+    - { k: dmg, v: 18, type: glace, area: rank }
+    - { k: state, s: ralenti, dur: 60, area: rank }
+jet_magma:
+  kind: active
+  target: enemy
+  range: 4
+  energy: 0
+  mana: 14
+  durBase: unit
+  durMult: 1500
+  p: {}
+  attack: true
+  power: ele
+  coef: 1200
+  ai: attack
+  fx:
+    - { k: dmg, v: 20, type: feu }
+    - { k: push, v: 1 }
+onde_mentale:
+  kind: active
+  target: enemy
+  range: 5
+  energy: 0
+  mana: 14
+  durBase: unit
+  durMult: 2000
+  p: {}
+  attack: true
+  power: esp
+  coef: 1200
+  ai: aoe
+  fx:
+    - { k: dmg, v: 14, type: psychique, area: rank }
+    - { k: will, v: -100, area: rank }
+domination:
+  kind: active
+  target: enemy
+  range: 5
+  energy: 0
+  mana: 16
+  durBase: unit
+  durMult: 2000
+  p: {}
+  dtype: psychique
+  power: esp
+  ai: debuff
+  fx:
+    - { k: state, s: confusion, dur: 200 }
+    - { k: will, v: -250 }
+vision_terreur:
+  kind: active
+  target: enemy
+  range: 5
+  energy: 0
+  mana: 12
+  durBase: unit
+  durMult: 1000
+  p: {}
+  attack: true
+  power: esp
+  ai: attack
+  fx:
+    - { k: dmg, v: 10, type: psychique }
+    - { k: will, v: -300 }
+lame_psychique:
+  kind: active
+  target: enemy
+  range: 3
+  energy: 0
+  mana: 12
+  durBase: unit
+  durMult: 1000
+  p: {}
+  attack: true
+  power: esp
+  coef: 1800
+  ai: attack
+  fx:
+    - { k: dmg, v: 20, type: psychique }
+sommeil:
+  kind: active
+  target: enemy
+  range: 5
+  energy: 0
+  mana: 18
+  durBase: unit
+  durMult: 2000
+  p: {}
+  dtype: psychique
+  power: esp
+  ai: debuff
+  fx:
+    - { k: stun, v: 40 }
+clarte:
+  kind: active
+  target: ally
+  range: 3
+  energy: 0
+  mana: 10
+  durBase: unit
+  durMult: 1000
+  p: {}
+  power: esp
+  ai: buffAlly
+  fx:
+    - { k: will, v: 250 }
+    - { k: unstate, s: confusion }
+concentration:
+  kind: active
+  target: self
+  range: 1
+  energy: 10
+  mana: 0
+  durBase: unit
+  durMult: 2000
+  p: {}
+  power: esp
+  ai: restore
+  fx:
+    - { k: will, v: 300, area: self }
+    - { k: mana, v: 200, area: self }
+hurlement_mental:
+  kind: active
+  target: self
+  range: 1
+  energy: 0
+  mana: 22
+  durBase: unit
+  durMult: 2000
+  p: {}
+  power: esp
+  ai: aoe
+  fx:
+    - { k: dmg, v: 8, type: psychique, area: allEnemies }
+    - { k: will, v: -150, area: allEnemies }
+mirage:
+  kind: active
+  target: self
+  range: 1
+  energy: 20
+  mana: 0
+  durBase: unit
+  durMult: 1000
+  p: {}
+  power: esp
+  ai: buffSelf
+  fx:
+    - { k: state, s: garde, v: 400, dur: 40, area: self }
+lien_esprits:
+  kind: active
+  target: self
+  range: 1
+  energy: 0
+  mana: 16
+  durBase: unit
+  durMult: 1500
+  p: {}
+  power: esp
+  ai: buffGroup
+  fx:
+    - { k: will, v: 100, area: allies }
+    - { k: energy, v: 100, area: allies }
+mains_lumiere:
+  kind: active
+  target: ally
+  range: 2
+  energy: 0
+  mana: 14
+  durBase: unit
+  durMult: 1000
+  p: {}
+  power: foi
+  coef: 6000
+  ai: heal
+  fx:
+    - { k: heal, v: 60 }
+onde_soin:
+  kind: active
+  target: self
+  range: 1
+  energy: 0
+  mana: 18
+  durBase: unit
+  durMult: 2000
+  p: {}
+  power: foi
+  coef: 3500
+  ai: groupHeal
+  fx:
+    - { k: heal, v: 35, area: allyRank }
+rayon_sacre:
+  kind: active
+  target: enemy
+  range: 5
+  energy: 0
+  mana: 12
+  durBase: unit
+  durMult: 1000
+  p: {}
+  attack: true
+  power: foi
+  coef: 1500
+  ai: attack
+  fx:
+    - { k: dmg, v: 24, type: sacre, tags: [mort-vivant, demon], tagMult: 2000 }
+jugement:
+  kind: active
+  target: enemy
+  range: 5
+  energy: 0
+  mana: 25
+  durBase: unit
+  durMult: 2000
+  p: {}
+  attack: true
+  power: foi
+  coef: 2000
+  ai: attack
+  fx:
+    - { k: dmg, v: 40, type: sacre, tag: demon, tagMult: 2000 }
+egide:
+  kind: active
+  target: ally
+  range: 3
+  energy: 0
+  mana: 16
+  durBase: unit
+  durMult: 1000
+  p: {}
+  power: foi
+  coef: 6000
+  ai: buffAlly
+  fx:
+    - { k: state, s: bouclier, v: 50, dur: 100 }
+consecration:
+  kind: active
+  target: enemy
+  range: 5
+  energy: 0
+  mana: 20
+  durBase: unit
+  durMult: 2000
+  p: {}
+  attack: true
+  power: foi
+  ai: aoe
+  fx:
+    - { k: dmg, v: 12, type: sacre, area: rank, tags: [mort-vivant, demon], tagMult: 2000 }
+    - { k: state, s: affaibli, v: 150, dur: 80, area: rank }
+purification_masse:
+  kind: active
+  target: self
+  range: 1
+  energy: 0
+  mana: 20
+  durBase: unit
+  durMult: 2000
+  p: {}
+  power: foi
+  ai: buffGroup
+  fx:
+    - { k: cleanse, area: allies }
+chatiment:
+  kind: active
+  target: enemy
+  range: 1
+  energy: 15
+  mana: 0
+  durBase: weapon
+  durMult: 1000
+  p: {}
+  attack: true
+  melee: true
+  power: foi
+  ai: attack
+  fx:
+    - { k: wdmg, v: 1100, type: sacre }
+trait_ombre:
+  kind: active
+  target: enemy
+  range: 5
+  energy: 0
+  mana: 10
+  durBase: unit
+  durMult: 1000
+  p: {}
+  attack: true
+  power: omb
+  coef: 1500
+  ai: attack
+  fx:
+    - { k: dmg, v: 20, type: tenebres }
+peste:
+  kind: active
+  target: enemy
+  range: 4
+  energy: 0
+  mana: 18
+  durBase: unit
+  durMult: 2000
+  p: {}
+  dtype: maladie
+  power: omb
+  ai: aoe
+  fx:
+    - { k: state, s: poison, v: 5, dur: 60, cap: 4, area: rank }
+drain_ame:
+  kind: active
+  target: enemy
+  range: 3
+  energy: 0
+  mana: 16
+  durBase: unit
+  durMult: 2000
+  p: {}
+  attack: true
+  power: omb
+  coef: 1500
+  ai: attack
+  fx:
+    - { k: drain, v: 26, type: tenebres }
+malefice:
+  kind: active
+  target: enemy
+  range: 5
+  energy: 0
+  mana: 16
+  durBase: unit
+  durMult: 2000
+  p: {}
+  dtype: tenebres
+  power: omb
+  ai: debuff
+  fx:
+    - { k: state, s: malediction, v: -250, dur: 80 }
+    - { k: state, s: affaibli, v: 200, dur: 80 }
+nuee_ombres:
+  kind: active
+  target: enemy
+  range: 5
+  energy: 0
+  mana: 24
+  durBase: unit
+  durMult: 2500
+  p: {}
+  attack: true
+  power: omb
+  coef: 800
+  ai: aoe
+  fx:
+    - { k: dmg, v: 10, type: tenebres, area: allEnemies }
+putrefaction:
+  kind: active
+  target: enemy
+  range: 4
+  energy: 0
+  mana: 12
+  durBase: unit
+  durMult: 1000
+  p: {}
+  attack: true
+  power: omb
+  ai: attack
+  fx:
+    - { k: dmg, v: 16, type: maladie }
+    - { k: state, s: poison, v: 4, dur: 60, cap: 3 }
+pacte_sang:
+  kind: active
+  target: self
+  range: 1
+  energy: 0
+  mana: 0
+  durBase: unit
+  durMult: 1000
+  p: {}
+  power: omb
+  ai: buffSelf
+  fx:
+    - { k: hploss, v: 30, area: self }
+    - { k: state, s: cri, v: 300, dur: 60, area: self }
+toucher_tombe:
+  kind: active
+  target: enemy
+  range: 2
+  energy: 0
+  mana: 10
+  durBase: unit
+  durMult: 1000
+  p: {}
+  attack: true
+  power: omb
+  ai: attack
+  fx:
+    - { k: dmg, v: 14, type: tenebres }
+    - { k: state, s: ralenti, dur: 40 }
+marque_mort:
+  kind: active
+  target: enemy
+  range: 5
+  energy: 0
+  mana: 12
+  durBase: unit
+  durMult: 1000
+  p: {}
+  attack: true
+  power: omb
+  ai: attack
+  fx:
+    - { k: dmg, v: 8, type: tenebres }
+    - { k: state, s: marque, v: 3, dur: 100 }
+silence_tombe:
+  kind: active
+  target: enemy
+  range: 5
+  energy: 0
+  mana: 22
+  durBase: unit
+  durMult: 2000
+  p: {}
+  dtype: tenebres
+  power: omb
+  ai: debuff
+  fx:
+    - { k: state, s: silence, dur: 60, area: rank }
