@@ -34,9 +34,39 @@
         <h2>Une porte de donjon</h2>
         <p><b><%= it.door.name %></b>. Elle reste là tant que vous êtes sur cette étape.</p>
         <p class="muted">Salles sans fin, un boss toutes les 4 salles. Les PV ne remontent pas entre deux salles ; le butin va dans un coffre, livré en banque si vous sortez, perdu si vous êtes vaincu.</p>
-        <form method="post" action="/donjon/ouvrir">
+        <form method="post" action="/donjon/ouvrir" class="inline">
           <input type="hidden" name="_csrf" value="<%= it.csrf %>">
+          <input type="hidden" name="mode" value="solo">
           <button type="submit" class="primary">Entrer seul</button>
+        </form>
+        <form method="post" action="/donjon/ouvrir" class="inline">
+          <input type="hidden" name="_csrf" value="<%= it.csrf %>">
+          <input type="hidden" name="mode" value="random">
+          <button type="submit">Inviter un joueur au hasard</button>
+        </form>
+        <% if (it.friends.length) { %>
+          <form method="post" action="/donjon/ouvrir" class="row">
+            <input type="hidden" name="_csrf" value="<%= it.csrf %>">
+            <input type="hidden" name="mode" value="friend">
+            <label>Inviter un ami
+              <select name="pseudo"><% for (const f of it.friends) { %><option><%= f.pseudo %></option><% } %></select>
+            </label>
+            <button type="submit">Inviter</button>
+          </form>
+        <% } else { %>
+          <p class="muted">Aucun ami en ligne dans la région pour l’instant.</p>
+        <% } %>
+        <p class="muted">Une invitation dure 60 secondes ; à deux, les deux escouades combattent ensemble et chacun garde son butin.</p>
+      </div>
+    <% } %>
+
+    <% if (it.testDoor) { %>
+      <div class="card">
+        <h2>Outils de test</h2>
+        <p class="muted">Préproduction seulement : cette route a un donjon ; faire apparaître sa porte sur l’étape.</p>
+        <form method="post" action="/donjon/porte-test">
+          <input type="hidden" name="_csrf" value="<%= it.csrf %>">
+          <button type="submit">Faire apparaître la porte</button>
         </form>
       </div>
     <% } %>

@@ -18,7 +18,7 @@ type Tx = Transaction<Database>;
 export const FRIEND_MAX = 100;
 export const PENDING_MAX = 50;
 
-const pair = (x: number, y: number): { a: number; b: number } => (x < y ? { a: x, b: y } : { a: y, b: x });
+export const pair = (x: number, y: number): { a: number; b: number } => (x < y ? { a: x, b: y } : { a: y, b: x });
 const mineStatus = (me: number, other: number): FriendshipStatus => (me < other ? 'pending_a' : 'pending_b');
 
 async function relation(tx: Tx, me: number, other: number) {

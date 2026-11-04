@@ -411,6 +411,8 @@ export interface DungeonRunTable {
   invite_expires_at: ColumnType<Date | null, Date | null | undefined, Date | null>;
   /** Joueurs qui ont voté « salle suivante » (duo). */
   votes: ColumnType<number[], string | undefined, string>;
+  /** Joueurs sollicités par l'invitation en cours. */
+  invited: ColumnType<number[], string | undefined, string>;
   lock_version: ColumnType<number, number | undefined, number>;
   created_at: CreatedAt;
   updated_at: UpdatedAt;

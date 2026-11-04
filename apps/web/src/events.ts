@@ -43,7 +43,7 @@ export function toClient(e: BusEvent): { event: string; data: Record<string, unk
       return { event: 'notify', data: e.data ?? {} };
     default:
       // Événements sociaux (chat, messages, amis, sanctions, renommage) : transmis tels quels à leurs abonnés.
-      return /^(chat|dm|friend|sanction|pseudo)\./.test(e.type) ? { event: e.type, data: e.data ?? {} } : null;
+      return /^(chat|dm|friend|sanction|pseudo|dungeon)\./.test(e.type) ? { event: e.type, data: e.data ?? {} } : null;
   }
 }
 

@@ -339,6 +339,8 @@ export async function createSession(
       user_agent: meta.userAgent?.slice(0, 300) ?? null,
     })
     .execute();
+  // Se connecter, c'est être vu (présence, invitations de donjon) : sans attendre la première minute de session.
+  await db.updateTable('player').set({ last_seen_at: now }).where('account_id', '=', accountId).execute();
   return { token, csrfToken, expiresAt };
 }
 

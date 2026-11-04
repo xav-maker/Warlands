@@ -1,22 +1,58 @@
 <% layout('./layout', { title: it.dv.name, v: it.v, error: it.error }) %>
-<% const dv = it.dv; const nx = dv.next %>
+<% const dv = it.dv; const nx = dv.next; const duo = dv.members.length > 1; const other = dv.members.find((m) => m.id !== it.auth.player.id) %>
 <section class="route dungeon">
-  <p class="eyebrow"><%= it.R.name %> · donjon<%= dv.mode === 'duo' ? ' à deux' : '' %></p>
+  <p class="eyebrow"><%= it.R.name %> · donjon<%= duo ? ' à deux, avec ' + other.pseudo : '' %></p>
   <h1><%= dv.name %></h1>
   <p class="muted"><%= it.D.desc %></p>
 
   <div class="grid">
-    <div class="card">
-      <h2>Salle <%= nx.n %><%= nx.boss ? ' · boss' : '' %></h2>
-      <p><%= dv.room ? 'Salles gagnées : ' + dv.room + '.' : 'Première salle.' %></p>
-      <p>Monstres de niveau <%= nx.level %>, population <%= nx.pop %><%= nx.boss ? ', dont ' + it.L.troop(nx.boss) : '' %>.</p>
-      <form method="post" action="/donjon/combat">
-        <input type="hidden" name="_csrf" value="<%= it.csrf %>">
-        <input type="hidden" name="version" value="<%= dv.version %>">
-        <button type="submit" class="primary">Combattre la salle <%= nx.n %></button>
-      </form>
-      <p class="muted">Pas de soin entre deux salles : les consommables du sac s’utilisent ci-dessous.</p>
-    </div>
+    <% if (dv.status === 'lobby') { %>
+      <div class="card">
+        <h2>En attente d’un partenaire</h2>
+        <% if (dv.invite) { %>
+          <p role="status"><%= dv.invite.kind === 'friend' ? 'Invitation envoyée à ' + dv.invite.to : 'Invitation envoyée à ' + dv.invite.count + ' joueur' + (dv.invite.count > 1 ? 's' : '') + ' de la région' %>, valable jusqu’à <%= dv.invite.expiresAt.toLocaleTimeString('fr-FR', { timeZone: 'Europe/Paris' }) %>.</p>
+          <p class="muted">La page se met à jour dès qu’un joueur accepte.</p>
+        <% } else { %>
+          <p>Personne n’a encore rejoint. Invitez quelqu’un d’autre, ou continuez seul.</p>
+          <form method="post" action="/donjon/inviter" class="inline">
+            <input type="hidden" name="_csrf" value="<%= it.csrf %>">
+            <input type="hidden" name="mode" value="random">
+            <button type="submit">Inviter un joueur au hasard</button>
+          </form>
+          <form method="post" action="/donjon/inviter" class="row">
+            <input type="hidden" name="_csrf" value="<%= it.csrf %>">
+            <input type="hidden" name="mode" value="friend">
+            <label>Pseudo d’un ami <input type="text" name="pseudo" required maxlength="20"></label>
+            <button type="submit">Inviter</button>
+          </form>
+        <% } %>
+        <form method="post" action="/donjon/seul">
+          <input type="hidden" name="_csrf" value="<%= it.csrf %>">
+          <button type="submit" class="primary">Continuer seul</button>
+        </form>
+      </div>
+    <% } else { %>
+      <div class="card">
+        <h2>Salle <%= nx.n %><%= nx.boss ? ' · boss' : '' %></h2>
+        <p><%= dv.room ? 'Salles gagnées : ' + dv.room + '.' : 'Première salle.' %></p>
+        <p>Monstres de niveau <%= nx.level %>, population <%= nx.pop %><%= nx.boss ? ', dont ' + it.L.troop(nx.boss) : '' %><%= duo ? ' (pour deux escouades)' : '' %>.</p>
+        <% if (duo) { %>
+          <ul class="items">
+            <% for (const m of dv.members) { %><li><b><%= m.pseudo %></b> <span class="<%= m.ready ? 'good' : 'muted' %>"><%= m.ready ? 'prêt' : 'pas encore prêt' %></span></li><% } %>
+          </ul>
+        <% } %>
+        <% if (dv.me.ready) { %>
+          <p role="status">Vous êtes prêt : le combat commence quand <%= other ? other.pseudo : 'votre partenaire' %> l’est aussi.</p>
+        <% } else { %>
+          <form method="post" action="/donjon/combat">
+            <input type="hidden" name="_csrf" value="<%= it.csrf %>">
+            <input type="hidden" name="version" value="<%= dv.version %>">
+            <button type="submit" class="primary"><%= duo ? 'Prêt pour la salle ' + nx.n : 'Combattre la salle ' + nx.n %></button>
+          </form>
+        <% } %>
+        <p class="muted">Pas de soin entre deux salles : les consommables du sac s’utilisent ci-dessous.</p>
+      </div>
+    <% } %>
 
     <div class="card">
       <h2>Coffre du donjon</h2>
@@ -29,9 +65,9 @@
       <form method="post" action="/donjon/quitter">
         <input type="hidden" name="_csrf" value="<%= it.csrf %>">
         <input type="hidden" name="version" value="<%= dv.version %>">
-        <button type="submit">Quitter le donjon avec le coffre</button>
+        <button type="submit"><%= dv.status === 'lobby' ? 'Refermer la porte' : 'Quitter le donjon avec le coffre' %></button>
       </form>
-      <p class="muted">En sortant, le coffre est livré dans votre banque et vous retrouvez votre étape. Vaincu, vous perdez tout le coffre.</p>
+      <p class="muted">En sortant, le coffre est livré dans votre banque et vous retrouvez l’endroit d’où vous êtes venu. Vaincu, vous perdez tout le coffre.<%= duo ? ' Si vous sortez, votre partenaire continue seul.' : '' %></p>
     </div>
 
     <div class="card">

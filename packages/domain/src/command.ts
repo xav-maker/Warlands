@@ -36,6 +36,12 @@ export interface CommandDef<S extends z.ZodType, R> {
   where?: readonly PositionKind[];
   /** Vrai pour le chat, les messages privés, la consultation (guide 7.2, dernier paragraphe). */
   allowedDuringWatch?: boolean;
+  /**
+   * Autres joueurs à verrouiller avec celui qui agit (donjon en duo, guide 9.2) : lus sans verrou, puis tous les
+   * verrous pris par id croissant, ce qui évite l'interblocage de deux membres qui agissent en même temps. La
+   * commande revérifie ensuite ce qu'elle a lu.
+   */
+  coLock?(tx: Transaction<Database>, playerId: number, input: z.output<S>): Promise<number[]>;
   run(ctx: CommandContext, input: z.output<S>): Promise<R>;
 }
 
@@ -88,7 +94,12 @@ export async function executeCommand<S extends z.ZodType, R>(deps: CommandDeps, 
   const result = await deps.db.transaction().execute(async (tx) => {
     // FOR NO KEY UPDATE : sérialise les commandes d'un même joueur, sans bloquer les clés étrangères qui le
     // référencent (une vente ou une notification écrite par un autre joueur) : pas d'interblocage entre achats croisés.
-    let player = await tx.selectFrom('player').selectAll().where('id', '=', call.playerId).forNoKeyUpdate().executeTakeFirst();
+    const others = def.coLock ? (await def.coLock(tx, call.playerId, parsed.data)).filter((id) => id !== call.playerId) : [];
+    let player: Player | undefined;
+    for (const id of [...new Set([call.playerId, ...others])].sort((a, b) => a - b)) {
+      const row = await tx.selectFrom('player').selectAll().where('id', '=', id).forNoKeyUpdate().executeTakeFirst();
+      if (id === call.playerId) player = row;
+    }
     if (!player) throw new GameError('PLAYER_NOT_FOUND');
 
     if (call.idempotencyKey) {

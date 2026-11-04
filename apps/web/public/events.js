@@ -16,6 +16,9 @@
     'friend.update',
     'sanction.applied',
     'pseudo.renamed',
+    'dungeon.invite',
+    'dungeon.update',
+    'dungeon.fight',
   ];
 
   /** Petite bulle en bas de page ; le texte est inséré en texte brut (jamais en HTML). */
@@ -38,6 +41,13 @@
     'friend.request': (d) => toast(d.from + ' vous demande en ami.', '/amis'),
     'sanction.applied': (d) => toast(d.text),
     'pseudo.renamed': (d) => toast(d.text, '/compte'),
+    'dungeon.invite': (d) => toast(d.text, '/donjon/invitation/' + Number(d.run)),
+    // Donjon à deux : la page du donjon se met à jour ; ailleurs, une bulle y mène.
+    'dungeon.update': (d) => (window.location.pathname === '/donjon' ? window.location.reload() : toast(d.text, '/donjon')),
+    'dungeon.fight': (d) =>
+      window.location.pathname === '/donjon'
+        ? window.location.assign('/combat/' + Number(d.battle))
+        : toast('Le combat de la salle commence.', '/combat/' + Number(d.battle)),
   };
 
   function emit(type, detail) {

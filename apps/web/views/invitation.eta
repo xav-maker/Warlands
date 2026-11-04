@@ -1,0 +1,21 @@
+<% layout('./layout', { title: 'Invitation de donjon', v: it.v, error: it.error }) %>
+<section class="card narrow">
+  <h1>Invitation de donjon</h1>
+  <% if (it.inv) { %>
+    <p><b><%= it.inv.from %></b> vous invite dans le donjon <b><%= it.inv.name %></b>.</p>
+    <p class="muted">Vous le rejoignez avec votre escouade dans l’état où elle est ; à deux, chacun garde ses troupes, ses morts et son butin. Valable jusqu’à <%= it.inv.expiresAt.toLocaleTimeString('fr-FR', { timeZone: 'Europe/Paris' }) %>.</p>
+    <div class="actions">
+      <form method="post" action="/donjon/invitation/<%= it.inv.run %>/accepter" class="inline">
+        <input type="hidden" name="_csrf" value="<%= it.csrf %>">
+        <button type="submit" class="primary">Rejoindre</button>
+      </form>
+      <form method="post" action="/donjon/invitation/<%= it.inv.run %>/refuser" class="inline">
+        <input type="hidden" name="_csrf" value="<%= it.csrf %>">
+        <button type="submit">Décliner</button>
+      </form>
+    </div>
+  <% } else { %>
+    <p>Cette invitation n’est plus valable : elle a expiré, ou un autre joueur a déjà rejoint.</p>
+    <p><a class="btn" href="/jeu">Continuer</a></p>
+  <% } %>
+</section>

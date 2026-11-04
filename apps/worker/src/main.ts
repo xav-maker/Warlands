@@ -1,13 +1,15 @@
 import { PgBoss } from 'pg-boss';
 import pino from 'pino';
-import { createDb } from '@cr/db';
-import { expireListings, liftExpiredSuspensions, purgeExpiredSessions, purgeSocial } from '@cr/domain';
+import { createBus, createDb } from '@cr/db';
+import { expireListings, liftExpiredSuspensions, purgeExpiredSessions, purgeSocial, sweepDungeons } from '@cr/domain';
 
 const log = pino({ level: process.env.LOG_LEVEL ?? 'info', base: { role: 'worker' } });
 const url = process.env.DATABASE_URL;
 if (!url) throw new Error('DATABASE_URL manquante');
 
 const db = createDb(url, { max: 4 });
+// Publication seulement (NOTIFY) : les exemplaires web relaient les événements à leurs flux SSE.
+const bus = createBus({ db, log: (m, err) => log.error({ err }, m) });
 const boss = new PgBoss({ connectionString: url, schema: 'pgboss' });
 boss.on('error', (err) => log.error({ err }, 'pg-boss'));
 await boss.start();
@@ -21,6 +23,8 @@ const JOBS: Record<string, { cron: string; run: () => Promise<unknown> }> = {
   'purge-social': { cron: '37 * * * *', run: () => purgeSocial(db) },
   // Suspensions arrivées à leur terme : le compte redevient actif (aussi levées à la connexion).
   'lift-suspensions': { cron: '* * * * *', run: () => liftExpiredSuspensions(db) },
+  // Donjons (guide 9.1, README 26) : invitations expirées, membres absents plus de 5 minutes en duo.
+  'sweep-dungeons': { cron: '* * * * *', run: () => sweepDungeons(db, { publish: (e) => bus.publish(e) }) },
 };
 
 for (const [name, job] of Object.entries(JOBS)) {
@@ -37,6 +41,7 @@ for (const sig of ['SIGTERM', 'SIGINT'] as const) {
   process.on(sig, async () => {
     log.info({ sig }, 'arrêt demandé');
     await boss.stop({ graceful: true });
+    await bus.close();
     await db.destroy();
     process.exit(0);
   });

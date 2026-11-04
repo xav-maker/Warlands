@@ -106,3 +106,79 @@ describe('donjon en solo', () => {
     expect((await req('GET', '/route')).body).not.toContain('Une porte de donjon');
   });
 });
+
+/** Navigateur d'un joueur : ses cookies et son jeton CSRF. */
+class Browser {
+  jar = new Map<string, string>();
+  csrf = '';
+  async req(method: 'GET' | 'POST', url: string, form?: Record<string, string>) {
+    const res = await app.inject({
+      method,
+      url,
+      headers: {
+        cookie: [...this.jar].map(([k, v]) => `${k}=${v}`).join('; '),
+        origin: APP,
+        ...(form ? { 'content-type': 'application/x-www-form-urlencoded' } : {}),
+      },
+      ...(form ? { payload: new URLSearchParams({ _csrf: this.csrf, ...form }).toString() } : {}),
+    });
+    for (const c of res.cookies) this.jar.set(c.name, c.value);
+    const m = /name="_csrf" value="([^"]+)"/.exec(res.body);
+    if (m) this.csrf = m[1]!;
+    return res;
+  }
+  async join(name: string): Promise<number> {
+    const email = `${name.toLowerCase()}@example.org`;
+    await this.req('GET', '/inscription');
+    await this.req('POST', '/inscription', { email, pseudo: name, password: 'motdepasse-long', acceptTos: 'on' });
+    await this.req('GET', '/connexion');
+    await this.req('POST', '/connexion', { email, password: 'motdepasse-long' });
+    await this.req('GET', '/ville');
+    const pid = (await t.db.selectFrom('player').select('id').where('pseudo', '=', name).executeTakeFirstOrThrow()).id;
+    await t.db.transaction().execute(async (tx) => {
+      await tx.updateTable('troop').set({ container: 'BARRACKS' }).where('player_id', '=', pid).execute();
+      await createTestSquad(tx, content, pid, 30, 'test');
+    });
+    return pid;
+  }
+}
+
+describe('donjon à deux', () => {
+  it('invite au hasard un joueur disponible, qui rejoint ; le second « prêt » lance le combat', async () => {
+    const a = new Browser();
+    const b = new Browser();
+    await a.join('Ouvreuse');
+    await b.join('Renfort');
+    // B se déclare disponible depuis la ville.
+    expect((await b.req('GET', '/ville')).body).toContain('Me déclarer disponible');
+    const dispo = await b.req('POST', '/joueur/donjon-disponible', { available: 'true' });
+    expect(dispo.body).toContain('Ne plus être disponible');
+
+    await a.req('POST', '/depart', { direction: '1', route: 'pres_brande' });
+    expect((await a.req('GET', '/route')).body).toContain('Inviter un joueur au hasard');
+    expect((await a.req('POST', '/donjon/ouvrir', { mode: 'random' })).headers.location).toBe('/donjon');
+    const lobby = await a.req('GET', '/donjon');
+    expect(lobby.body).toContain('En attente d’un partenaire');
+    expect(lobby.body).toContain('Invitation envoyée à 1 joueur de la région');
+
+    const runId = (await t.db.selectFrom('dungeon_run').select('id').where('status', '=', 'lobby').executeTakeFirstOrThrow()).id;
+    const inv = await b.req('GET', `/donjon/invitation/${runId}`);
+    expect(inv.body).toContain('Ouvreuse</b> vous invite dans le donjon <b>Terriers du Roi Kobold');
+    expect((await b.req('POST', `/donjon/invitation/${runId}/accepter`, {})).headers.location).toBe('/donjon');
+
+    const pa = await a.req('GET', '/donjon');
+    expect(pa.body).toContain('donjon à deux, avec Renfort');
+    expect(pa.body).toContain('Prêt pour la salle 1');
+    const version = /name="version" value="(\d+)"/.exec(pa.body)![1]!;
+    expect((await a.req('POST', '/donjon/combat', { version })).headers.location).toBe('/donjon');
+    expect((await a.req('GET', '/donjon')).body).toContain('le combat commence quand Renfort l’est aussi');
+    const fought = await b.req('POST', '/donjon/combat', { version });
+    expect(fought.headers.location).toMatch(/^\/combat\/\d+$/);
+    // Les deux voient le combat (A y est renvoyé par /jeu pendant la rediffusion).
+    expect((await a.req('GET', '/jeu')).headers.location).toBe(fought.headers.location);
+    expect((await a.req('GET', fought.headers.location as string)).statusCode).toBe(200);
+
+    // Une invitation passée n'est plus valable.
+    expect((await b.req('GET', `/donjon/invitation/${runId}`)).body).toContain('n’est plus valable');
+  });
+});

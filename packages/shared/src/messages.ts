@@ -84,6 +84,14 @@ const FR: Record<ErrorCode, string> = {
   DOOR_NOT_FOUND: 'Aucune porte de donjon sur cette étape.',
   NOT_IN_DUNGEON: 'Vous n’êtes pas dans un donjon.',
   DUNGEON_STALE: 'Le donjon a changé entre-temps : la page est à jour, recommencez.',
+  NOT_FRIENDS: 'Vous ne pouvez inviter qu’un joueur de votre liste d’amis.',
+  INVITEE_UNAVAILABLE: 'Ce joueur doit être dans la même région que vous, en ville ou sur une route, et hors combat.',
+  NO_PLAYER_AVAILABLE: 'Aucun joueur disponible pour un donjon dans la région en ce moment.',
+  INVITE_PENDING: 'Une invitation est déjà en attente de réponse.',
+  INVITE_NOT_FOUND: 'Cette invitation n’existe plus.',
+  INVITE_EXPIRED: 'Cette invitation a expiré.',
+  INVITE_TAKEN: 'Un autre joueur a déjà rejoint ce donjon.',
+  NO_DUNGEON_HERE: 'Cette route n’a pas de donjon.',
   STAFF_2FA_REQUIRED: 'La modération exige la double authentification : activez-la depuis la page Compte.',
 };
 

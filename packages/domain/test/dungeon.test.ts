@@ -28,6 +28,7 @@ import {
   memoryMailer,
   noRateLimit,
   openDungeon,
+  spawnTestDoor,
   setUnit,
   signup,
   statsOf,
@@ -76,6 +77,12 @@ const start = command({
   allowedDuringWatch: true,
   run: async () => ({}),
 });
+/** Salle suivante, qui doit donner un combat (seul, ou au second vote). */
+async function fought(pid: number, input: unknown = {}) {
+  const r = await run(pid, fightRoom, input);
+  if (!('battle' in r)) throw new Error('combat attendu');
+  return r;
+}
 const err = (p: Promise<unknown>) => p.then(() => 'ok').catch((e: { code?: string }) => e.code ?? String(e));
 
 /** Escouade de niveau `level` engagée, troupes de départ en caserne. */
@@ -132,17 +139,23 @@ describe('donjon en solo', () => {
     expect(p).toMatchObject({ pos_kind: 'dungeon', pos_dungeon_run: runId, pos_route: 'pres_brande', pos_step: 0 });
     expect(await doorView(t.db, content, pid)).toBeNull();
     let v = (await dungeonView(t.db, content, pid))!;
-    expect(v).toMatchObject({ dungeon: 'terriers_roi_kobold', room: 0, mode: 'solo', next: { n: 1, level: 3, pop: 4, boss: null } });
+    expect(v).toMatchObject({
+      dungeon: 'terriers_roi_kobold',
+      room: 0,
+      status: 'between_rooms',
+      members: [{ id: pid, role: 'opener', ready: false }],
+      next: { n: 1, level: 3, pop: 4, boss: null },
+    });
 
     // La version de la page doit être la bonne ; pendant la rediffusion, on attend.
     expect(await err(run(pid, fightRoom, { version: v.version + 1 }))).toBe('DUNGEON_STALE');
-    const r1 = await run(pid, fightRoom, { version: v.version });
+    const r1 = await fought(pid, { version: v.version });
     expect(r1.won).toBe(true);
     expect(r1.rewards.room).toBe(1);
     expect(await err(run(pid, fightRoom, {}))).toBe('WATCH_IN_PROGRESS');
     for (let k = 2; k <= 4; k++) {
       later();
-      const r = await run(pid, fightRoom, {});
+      const r = await fought(pid);
       expect(r.won, `salle ${k}`).toBe(true);
     }
     v = (await dungeonView(t.db, content, pid))!;
@@ -165,7 +178,7 @@ describe('donjon en solo', () => {
     const b = await t.db.selectFrom('battle').selectAll().where('id', '=', r1.battle).executeTakeFirstOrThrow();
     expect(b).toMatchObject({ kind: 'dungeon', route: 'pres_brande', step: 0, encounter_id: null, won: true });
     const input = b.input as { units: never; dungeon: unknown };
-    expect(input.dungeon).toEqual({ run: runId, id: 'terriers_roi_kobold', room: 1 });
+    expect(input.dungeon).toEqual({ run: runId, id: 'terriers_roi_kobold', room: 1, owners: [{ player: pid, units: 8 }] });
     const o = content.pack.online!;
     const again = simuler(
       { engineVersion: o.engineVersion, params: content.pack.params, skills: content.pack.skills, units: input.units },
@@ -201,7 +214,7 @@ describe('donjon en solo', () => {
   it('défaite : le coffre est perdu, le joueur rentre dans sa ville et ses troupes sont soignées', async () => {
     const pid = await atDoor();
     await run(pid, openDungeon, { mode: 'solo' });
-    expect((await run(pid, fightRoom, {})).won).toBe(true);
+    expect((await fought(pid)).won).toBe(true);
     const chest = (await dungeonView(t.db, content, pid))!.chest;
     expect(chest.stacks.length + chest.instances.length).toBeGreaterThan(0);
     const gold0 = await balance(t.db as never, pid);
@@ -221,7 +234,7 @@ describe('donjon en solo', () => {
       for (const u of keep!.units) await setUnit(tx, keep!.id, u.n, { hp: 1, mana: 0 });
     });
     later();
-    const r = await run(pid, fightRoom, {});
+    const r = await fought(pid);
     expect(r.won).toBe(false);
     expect(r.rewards.retreat).toBe(true);
     expect(await dungeonView(t.db, content, pid)).toBeNull();
@@ -251,5 +264,28 @@ describe('donjon en solo', () => {
     expect(await err(run(pid, openDungeon, { mode: 'solo' }))).toBe('SQUAD_EMPTY');
     expect(await err(run(pid, fightRoom, {}))).toBe('WRONG_POSITION');
     expect(await err(run(pid, openDungeon, { mode: 'duo' }))).toBe('INVALID_INPUT');
+  });
+});
+
+describe('outil de test : porte de donjon', () => {
+  it('fait apparaître la porte de la route sur l’étape, seulement sur une route à donjon', async () => {
+    const pid = await newPlayer();
+    await squad(pid, 30);
+    roll = 999; // aucune porte tirée
+    await run(pid, depart, { direction: 1, route: 'ronces' });
+    expect(await err(run(pid, spawnTestDoor, {}))).toBe('NO_DUNGEON_HERE');
+    await run(pid, goHome);
+    await run(pid, depart, { direction: 1, route: 'pres_brande' });
+    expect(await doorView(t.db, content, pid)).toBeNull();
+    expect(await run(pid, spawnTestDoor, {})).toEqual({ dungeon: 'terriers_roi_kobold' });
+    expect(await doorView(t.db, content, pid)).toMatchObject({ dungeon: 'terriers_roi_kobold' });
+    expect(await err(run(pid, spawnTestDoor, {}))).toBe('ok'); // la porte visible est remplacée, jamais doublée
+    const visible = await t.db
+      .selectFrom('dungeon_door')
+      .select('id')
+      .where('player_id', '=', pid)
+      .where('status', '=', 'visible')
+      .execute();
+    expect(visible).toHaveLength(1);
   });
 });

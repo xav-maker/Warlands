@@ -39,6 +39,8 @@ export interface GameView {
   encounter: null | { side: MonsterGroup; rare: string | null; guardian: boolean };
   lastBattle: null | { id: number; won: boolean; createdAt: Date };
   stats: { fights: number; wins: number; deaths: number };
+  /** « Disponible pour un donjon à deux » (README 23.2) : sollicité par les invitations au hasard. */
+  dungeonAvailable: boolean;
   /** Notifications non lues (ventes en boutique, expirations…). */
   unread: number;
 }
@@ -65,9 +67,10 @@ export async function gameView(db: Db, c: GameContent, playerId: number): Promis
       .executeTakeFirst();
     const last = await tx
       .selectFrom('battle')
-      .select(['id', 'won', 'created_at'])
-      .where('player_id', '=', playerId)
-      .orderBy('id', 'desc')
+      .innerJoin('battle_participant', 'battle_participant.battle_id', 'battle.id')
+      .select(['battle.id', 'battle.won', 'battle.created_at'])
+      .where('battle_participant.player_id', '=', playerId)
+      .orderBy('battle.id', 'desc')
       .limit(1)
       .executeTakeFirst();
     return {
@@ -96,6 +99,7 @@ export async function gameView(db: Db, c: GameContent, playerId: number): Promis
       encounter: enc ? { side: enc.side as MonsterGroup, rare: enc.rare, guardian: enc.guardian } : null,
       lastBattle: last ? { id: last.id, won: last.won, createdAt: last.created_at } : null,
       stats: { fights: p.stat_fights, wins: p.stat_wins, deaths: p.stat_deaths },
+      dungeonAvailable: p.dungeon_available,
       unread: Number(
         (
           await tx

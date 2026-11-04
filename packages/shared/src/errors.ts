@@ -92,6 +92,14 @@ export const ERROR_CODES = [
   'DOOR_NOT_FOUND',
   'NOT_IN_DUNGEON',
   'DUNGEON_STALE',
+  'NOT_FRIENDS',
+  'INVITEE_UNAVAILABLE',
+  'NO_PLAYER_AVAILABLE',
+  'INVITE_PENDING',
+  'INVITE_NOT_FOUND',
+  'INVITE_EXPIRED',
+  'INVITE_TAKEN',
+  'NO_DUNGEON_HERE',
 ] as const;
 
 export type ErrorCode = (typeof ERROR_CODES)[number];

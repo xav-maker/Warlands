@@ -63,6 +63,13 @@ import {
   fightRoom,
   leaveDungeon,
   openDungeon,
+  spawnTestDoor,
+  acceptInvite,
+  declineInvite,
+  friendsView,
+  goSolo,
+  invitationsFor,
+  inviteDungeon,
   choosePseudo,
   confirmTotp,
   disableTotp,
@@ -184,8 +191,12 @@ export function registerGameRoutes(app: FastifyInstance, d: GameRouteDeps): void
     const v = await view(req);
     if (v.kind !== 'route' || !v.route) return reply.redirect(home(v));
     const R = route(d.content, v.route.id);
-    const door = await doorView(d.db, d.content, d.requireAuth(req).player.id);
-    return d.page(req, reply, 'route', { v, L, R, door, home: region(d.content, v.region), error: errorOf(req.query) });
+    const me = d.requireAuth(req).player.id;
+    const door = await doorView(d.db, d.content, me);
+    // Amis à inviter : en ligne, dans la même région (README 23.2).
+    const friends = door ? (await friendsView(d.db, me)).friends.filter((f) => f.online && f.region === v.region) : [];
+    const testDoor = d.testTools && !door && !!d.content.pack.dungeons?.some((x) => x.route === R.id);
+    return d.page(req, reply, 'route', { v, L, R, door, friends, testDoor, home: region(d.content, v.region), error: errorOf(req.query) });
   });
 
   // ---------- Donjon (README 23) ----------
@@ -196,17 +207,49 @@ export function registerGameRoutes(app: FastifyInstance, d: GameRouteDeps): void
     const D = d.content.pack.dungeons!.find((x) => x.id === dv.dungeon)!;
     return d.page(req, reply, 'donjon', { v, L, dv, D, R: route(d.content, D.route), error: errorOf(req.query) });
   });
+  /** Mode d'entrée ou d'invitation d'un formulaire : seul, un ami (pseudo), ou au hasard. */
+  const target = (b: Record<string, string>) =>
+    b.mode === 'friend' ? { mode: 'friend', pseudo: b.pseudo ?? '' } : { mode: b.mode ?? 'solo' };
   app.post('/donjon/ouvrir', (req, reply) =>
     act(req, reply, '/route', async () => {
-      await d.run(req, openDungeon, { mode: 'solo' });
+      await d.run(req, openDungeon, target(body(req)));
       return '/donjon';
     }),
   );
+  app.post('/donjon/porte-test', (req, reply) => {
+    if (!d.testTools) return reply.status(404).send();
+    return act(req, reply, '/route', async () => void (await d.run(req, spawnTestDoor, {})));
+  });
+  app.post('/donjon/inviter', (req, reply) =>
+    act(req, reply, '/donjon', async () => void (await d.run(req, inviteDungeon, target(body(req))))),
+  );
+  app.post('/donjon/seul', (req, reply) => act(req, reply, '/donjon', async () => void (await d.run(req, goSolo, {}))));
+  app.get('/donjon/invitation/:run', async (req, reply) => {
+    const v = await view(req);
+    const runId = int((req.params as { run: string }).run);
+    const inv = (await invitationsFor(d.db, d.content, d.requireAuth(req).player.id)).find((x) => x.run === runId) ?? null;
+    return d.page(req, reply, 'invitation', { v, L, inv, runId, error: errorOf(req.query) });
+  });
+  app.post('/donjon/invitation/:run/accepter', (req, reply) => {
+    const runId = int((req.params as { run: string }).run);
+    return act(req, reply, `/donjon/invitation/${runId}`, async () => {
+      await d.run(req, acceptInvite, { run: runId });
+      return '/donjon';
+    });
+  });
+  app.post('/donjon/invitation/:run/refuser', (req, reply) => {
+    const runId = int((req.params as { run: string }).run);
+    return act(req, reply, `/donjon/invitation/${runId}`, async () => {
+      await d.run(req, declineInvite, { run: runId });
+      return '/jeu';
+    });
+  });
   const version = (b: Record<string, string>) => (b.version ? { version: int(b.version) } : {});
   app.post('/donjon/combat', (req, reply) =>
     act(req, reply, '/donjon', async () => {
       const r = await d.run(req, fightRoom, version(body(req)));
-      return `/combat/${r.battle}`;
+      // À deux : un vote ; le combat se lance au second.
+      return 'battle' in r ? `/combat/${r.battle}` : '/donjon';
     }),
   );
   app.post('/donjon/quitter', (req, reply) =>

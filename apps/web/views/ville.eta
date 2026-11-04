@@ -37,6 +37,8 @@
         <li><a href="/sac">Sac et banque</a> <span class="muted">— sac <%= it.v.bag.used %> / <%= it.v.bag.cap %>, banque <%= it.v.bank.used %> / <%= it.v.bank.cap %></span></li>
         <li><a href="/codex">Codex</a></li>
       </ul>
+      <%~ include('./partials/dispo', { dungeonAvailable: it.v.dungeonAvailable, csrf: it.csrf }) %>
+      <p class="muted">Disponible, vous pouvez être invité au hasard dans le donjon d’un joueur de la région.</p>
       <p class="muted"><%= it.v.stats.fights %> combats, <%= it.v.stats.wins %> victoires, <%= it.v.stats.deaths %> unités perdues.</p>
     </div>
   </div>
