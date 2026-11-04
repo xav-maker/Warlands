@@ -42,12 +42,13 @@ Mis en place le 3 novembre 2026 : https://cr-preprod-web.onrender.com. Inscripti
 
 ## Outils d'exploitation
 
-Le chat, les messages privés, les demandes d'amis et les boutiques exigent une adresse e-mail vérifiée (variable `REQUIRE_VERIFIED_EMAIL`, vraie par défaut ; à mettre à `false` seulement si l'envoi d'e-mails tombe en panne). Deux outils de l'image se lancent depuis le shell du service web (_Shell_ dans Render), dans `/app/web`, et journalisent leur action dans `admin_action` :
+Le chat, les messages privés, les demandes d'amis et les boutiques exigent une adresse e-mail vérifiée (variable `REQUIRE_VERIFIED_EMAIL`, vraie par défaut ; à mettre à `false` seulement si l'envoi d'e-mails tombe en panne). La modération exige aussi que le modérateur ait activé la double authentification depuis sa page Compte (variable `REQUIRE_STAFF_2FA`, vraie par défaut). Trois outils de l'image se lancent depuis le shell du service web (_Shell_ dans Render), dans `/app/web`, et journalisent leur action dans `admin_action` :
 
 - `node dist/verify-email.js <e-mail>` : marque une adresse comme vérifiée (courriel perdu, comptes créés avant l'exigence).
-- `node dist/grant-role.js <e-mail> <player|moderator|admin>` : nomme un modérateur ou un administrateur (il n'y a pas d'écran pour le premier).
+- `node dist/grant-role.js <e-mail> <player|moderator|admin>` : nomme un modérateur ou un administrateur (il n'y a pas d'écran pour le premier). Il active ensuite la double authentification depuis sa page Compte.
+- `node dist/reset-2fa.js <e-mail>` : retire la double authentification d'un compte qui a perdu son application, et ferme ses sessions.
 
-En développement : `pnpm verify-email <e-mail>` et `pnpm grant-role <e-mail> <rôle>`.
+En développement : `pnpm verify-email <e-mail>`, `pnpm grant-role <e-mail> <rôle>` et `pnpm reset-2fa <e-mail>`.
 
 ## À vérifier sur Render avant la production
 

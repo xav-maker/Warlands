@@ -15,6 +15,7 @@
     'friend.request',
     'friend.update',
     'sanction.applied',
+    'pseudo.renamed',
   ];
 
   /** Petite bulle en bas de page ; le texte est inséré en texte brut (jamais en HTML). */
@@ -36,6 +37,7 @@
     'dm.received': (d) => toast('Message privé de ' + d.from, '/messages/' + encodeURIComponent(d.from)),
     'friend.request': (d) => toast(d.from + ' vous demande en ami.', '/amis'),
     'sanction.applied': (d) => toast(d.text),
+    'pseudo.renamed': (d) => toast(d.text, '/compte'),
   };
 
   function emit(type, detail) {

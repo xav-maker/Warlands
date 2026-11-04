@@ -466,3 +466,8 @@ button.danger {
 .good {
   color: var(--good);
 }
+.secret {
+  font-family: ui-monospace, monospace;
+  letter-spacing: 0.05em;
+  user-select: all;
+}

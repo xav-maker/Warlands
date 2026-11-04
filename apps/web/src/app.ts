@@ -62,6 +62,8 @@ export interface AppDeps {
   random?: (max: number) => number;
   /** Exiger une adresse e-mail vérifiée pour le chat, les messages, les amis et les boutiques (REQUIRE_VERIFIED_EMAIL). */
   requireVerifiedEmail?: boolean;
+  /** Exiger la double authentification du personnel de modération (REQUIRE_STAFF_2FA ; faux par défaut, pour les tests). */
+  requireStaff2fa?: boolean;
 }
 
 const here = dirname(fileURLToPath(import.meta.url));
@@ -150,6 +152,10 @@ export async function buildApp(deps: AppDeps): Promise<FastifyInstance> {
     return req.auth;
   }
 
+  function limit(key: string, perMinute: number) {
+    if (!limiter.hit(key, perMinute)) throw new GameError('RATE_LIMITED');
+  }
+
   function ipLimit(req: FastifyRequest, name: string, perMinute: number) {
     if (!limiter.hit(`${name}:${req.ip}`, perMinute)) throw new GameError('RATE_LIMITED');
   }
@@ -189,7 +195,9 @@ export async function buildApp(deps: AppDeps): Promise<FastifyInstance> {
           .type('text/html; charset=utf-8')
           .send(eta.render('partials/flash', { text, bad: true }));
       }
-      return page(req, reply, 'message', { title: 'Oups', text, bad: true }, status);
+      const link =
+        err.code === 'STAFF_2FA_REQUIRED' ? { href: '/compte#deux-facteurs', label: 'Activer la double authentification' } : undefined;
+      return page(req, reply, 'message', { title: 'Oups', text, bad: true, ...(link ? { link } : {}) }, status);
     }
     const status = (err as { statusCode?: number }).statusCode;
     if (status && status >= 400 && status < 500) {
@@ -234,13 +242,18 @@ export async function buildApp(deps: AppDeps): Promise<FastifyInstance> {
     ipLimit(req, 'login', 10);
     const b = (req.body ?? {}) as Record<string, string>;
     try {
-      const s = await login(deps.db, { email: b.email, password: b.password }, { ip: req.ip, userAgent: req.headers['user-agent'] });
+      const s = await login(
+        deps.db,
+        { email: b.email, password: b.password, code: b.code || undefined },
+        { ip: req.ip, userAgent: req.headers['user-agent'] },
+      );
       reply.setCookie(SID, s.token, { ...cookieBase, expires: s.expiresAt });
       reply.clearCookie(PRE, { path: '/' });
       return reply.redirect('/jeu', 303);
     } catch (e) {
-      if (isGameError(e) && (e.code === 'BAD_CREDENTIALS' || e.code === 'ACCOUNT_SUSPENDED')) {
-        return page(req, reply, 'connexion', { form: { email: b.email ?? '' }, error: messageFr(e.code) }, 422);
+      if (isGameError(e) && ['BAD_CREDENTIALS', 'ACCOUNT_SUSPENDED', 'TOTP_REQUIRED', 'TOTP_INVALID'].includes(e.code)) {
+        const totp = e.code === 'TOTP_REQUIRED' || e.code === 'TOTP_INVALID';
+        return page(req, reply, 'connexion', { form: { email: b.email ?? '' }, totp, error: messageFr(e.code) }, 422);
       }
       throw e;
     }
@@ -279,8 +292,15 @@ export async function buildApp(deps: AppDeps): Promise<FastifyInstance> {
 
   // ---------- Jeu ----------
   if (deps.content) {
-    registerGameRoutes(app, { db: deps.db, content: deps.content, page, run, requireAuth, testTools: deps.testTools ?? false });
-    registerSocialRoutes(app, { db: deps.db, content: deps.content, page, run, requireAuth });
+    registerGameRoutes(app, { db: deps.db, content: deps.content, page, run, requireAuth, testTools: deps.testTools ?? false, limit });
+    registerSocialRoutes(app, {
+      db: deps.db,
+      content: deps.content,
+      page,
+      run,
+      requireAuth,
+      requireStaff2fa: deps.requireStaff2fa ?? false,
+    });
   }
 
   app.post('/joueur/donjon-disponible', async (req, reply) => {

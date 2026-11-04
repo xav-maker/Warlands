@@ -16,6 +16,10 @@ export interface AccountTable {
   role: ColumnType<AccountRole, AccountRole | undefined, AccountRole>;
   status: ColumnType<AccountStatus, AccountStatus | undefined, AccountStatus>;
   totp_secret: string | null;
+  /** Secret proposé pendant l'activation de la 2FA, avant la confirmation par un premier code. */
+  totp_pending: ColumnType<string | null, string | null | undefined, string | null>;
+  /** Dernier pas TOTP accepté (refus du rejeu d'un code). */
+  totp_last_step: ColumnType<number | null, number | null | undefined, number | null>;
   tos_version: string;
   tos_accepted_at: Date;
   created_at: CreatedAt;
@@ -69,6 +73,8 @@ export interface PlayerTable {
   guardians: ColumnType<string[], string[] | undefined, string[]>;
   /** Indice de la région la plus lointaine atteinte (affichage seulement, README 3.3). */
   unlocked: ColumnType<number, number | undefined, number>;
+  /** Pseudo remplacé par la modération : le joueur peut en choisir un nouveau, une fois. */
+  rename_required: ColumnType<boolean, boolean | undefined, boolean>;
   created_at: CreatedAt;
   updated_at: UpdatedAt;
 }

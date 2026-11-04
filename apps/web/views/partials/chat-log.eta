@@ -1,3 +1,4 @@
+<% const staff = !!it.auth && it.auth.account.role !== 'player' %>
 <% for (const m of it.log) { %>
 <li class="chat-line<%= m.mine ? ' mine' : '' %>" id="m<%= m.id %>">
   <time class="muted" datetime="<%= m.at.toISOString() %>"><%= m.at.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit', timeZone: 'Europe/Paris' }) %></time>
@@ -6,6 +7,7 @@
     <span class="chat-tools muted">
       <a href="/messages/<%= encodeURIComponent(m.pseudo) %>">écrire</a> ·
       <a href="/signaler?kind=chat&amp;ref=<%= m.id %>">signaler</a> ·
+      <% if (staff) { %><a href="/moderation/joueur/<%= m.authorId %>">dossier</a> ·<% } %>
       <form method="post" action="/bloquer" class="inline">
         <input type="hidden" name="_csrf" value="<%= it.csrf %>">
         <input type="hidden" name="pseudo" value="<%= m.pseudo %>">

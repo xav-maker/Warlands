@@ -5,6 +5,7 @@ import { GameError } from '@cr/shared';
 import type { Account, Db, Player, Session } from '@cr/db';
 import type { Mailer } from './mailer.ts';
 import { liftExpiredSuspensions } from './social/sanctions.ts';
+import { matchTotp, newTotpSecret, totpUri } from './totp.ts';
 
 /** Région de départ : Havre-Gris (README 8.1), identifiant du contenu. */
 export const START_REGION = 'ronces';
@@ -41,6 +42,8 @@ export const SignupInput = z.object({
 export const LoginInput = z.object({
   email: z.string().trim().toLowerCase().max(254),
   password: z.string().max(200),
+  /** Code de l'application d'authentification, exigé si la double authentification est active. */
+  code: z.string().trim().max(10).optional(),
 });
 
 export interface IdentityDeps {
@@ -210,7 +213,109 @@ export async function login(db: Db, raw: unknown, meta: { ip?: string | undefine
   // Une suspension arrivée à son terme se lève à la connexion, sans attendre la tâche du worker.
   if (acc.status === 'suspended' && (await liftExpiredSuspensions(db, acc.id)) === 1) acc.status = 'active';
   if (acc.status !== 'active') throw new GameError('ACCOUNT_SUSPENDED');
+  // Double authentification (guide 13.4) : le mot de passe est juste, il faut encore le code du moment.
+  if (acc.totp_secret) {
+    if (!parsed.data.code) throw new GameError('TOTP_REQUIRED');
+    await useTotp(db, acc.id, acc.totp_secret, parsed.data.code, acc.totp_last_step);
+  }
   return createSession(db, acc.id, meta);
+}
+
+/** Consomme un code : il doit être juste et d'un pas plus récent que le dernier accepté (pas de rejeu). */
+async function useTotp(db: Db, accountId: number, secret: string, code: string, lastStep: number | null): Promise<void> {
+  const step = matchTotp(secret, code, new Date(), lastStep);
+  if (step === null) throw new GameError('TOTP_INVALID');
+  // Deux connexions simultanées avec le même code : une seule passe.
+  const r = await db
+    .updateTable('account')
+    .set({ totp_last_step: step })
+    .where('id', '=', accountId)
+    .where((eb) => eb.or([eb('totp_last_step', 'is', null), eb('totp_last_step', '<', step)]))
+    .executeTakeFirst();
+  if (!Number(r.numUpdatedRows)) throw new GameError('TOTP_INVALID');
+}
+
+// ---------------------------------------------------------------------------------------------------------
+// Double authentification (TOTP). Ouverte à tous ; exigée du personnel de modération (REQUIRE_STAFF_2FA).
+
+export interface TotpSetup {
+  /** Vrai si la double authentification est active. */
+  enabled: boolean;
+  /** Pendant l'activation : secret à saisir dans l'application, et son adresse otpauth://. */
+  secret?: string;
+  uri?: string;
+}
+
+async function playerOfAccount(db: Db, accountId: number): Promise<number> {
+  const p = await db.selectFrom('player').select('id').where('account_id', '=', accountId).executeTakeFirstOrThrow();
+  return p.id;
+}
+
+/** État de la 2FA d'un compte, sans rien changer. */
+export async function totpState(db: Db, accountId: number): Promise<TotpSetup> {
+  const a = await db
+    .selectFrom('account')
+    .select(['totp_secret', 'totp_pending', 'email'])
+    .where('id', '=', accountId)
+    .executeTakeFirstOrThrow();
+  if (a.totp_secret) return { enabled: true };
+  if (a.totp_pending) return { enabled: false, secret: a.totp_pending, uri: totpUri(a.totp_pending, a.email) };
+  return { enabled: false };
+}
+
+/** Commence l'activation : propose un secret (le même tant qu'il n'est pas confirmé). */
+export async function startTotp(db: Db, accountId: number): Promise<TotpSetup> {
+  const a = await db
+    .selectFrom('account')
+    .select(['totp_secret', 'totp_pending', 'email'])
+    .where('id', '=', accountId)
+    .executeTakeFirstOrThrow();
+  if (a.totp_secret) throw new GameError('TOTP_ALREADY_ON');
+  const secret = a.totp_pending ?? newTotpSecret();
+  if (!a.totp_pending) await db.updateTable('account').set({ totp_pending: secret }).where('id', '=', accountId).execute();
+  return { enabled: false, secret, uri: totpUri(secret, a.email) };
+}
+
+/** Termine l'activation avec un premier code juste ; les autres sessions du compte sont fermées. */
+export async function confirmTotp(db: Db, accountId: number, code: string, keepSession?: string): Promise<void> {
+  const a = await db.selectFrom('account').select(['totp_secret', 'totp_pending']).where('id', '=', accountId).executeTakeFirstOrThrow();
+  if (a.totp_secret) throw new GameError('TOTP_ALREADY_ON');
+  if (!a.totp_pending) throw new GameError('TOTP_INVALID');
+  const step = matchTotp(a.totp_pending, code, new Date());
+  if (step === null) throw new GameError('TOTP_INVALID');
+  const pid = await playerOfAccount(db, accountId);
+  await db.transaction().execute(async (tx) => {
+    await tx
+      .updateTable('account')
+      .set({ totp_secret: a.totp_pending, totp_pending: null, totp_last_step: step, updated_at: new Date() })
+      .where('id', '=', accountId)
+      .where('totp_secret', 'is', null)
+      .execute();
+    let del = tx.deleteFrom('session').where('account_id', '=', accountId);
+    if (keepSession) del = del.where('id', '<>', keepSession);
+    await del.execute();
+    await tx.insertInto('admin_action').values({ actor_id: pid, action: 'account.totp_on', target_id: pid, data: '{}' }).execute();
+  });
+}
+
+/** Désactive la 2FA ; il faut un code du moment (une session volée ne suffit pas). */
+export async function disableTotp(db: Db, accountId: number, code: string): Promise<void> {
+  const a = await db.selectFrom('account').select(['totp_secret', 'totp_last_step']).where('id', '=', accountId).executeTakeFirstOrThrow();
+  if (!a.totp_secret) {
+    // Activation commencée puis abandonnée : on oublie le secret proposé.
+    await db.updateTable('account').set({ totp_pending: null }).where('id', '=', accountId).execute();
+    return;
+  }
+  await useTotp(db, accountId, a.totp_secret, code, a.totp_last_step);
+  const pid = await playerOfAccount(db, accountId);
+  await db.transaction().execute(async (tx) => {
+    await tx
+      .updateTable('account')
+      .set({ totp_secret: null, totp_pending: null, totp_last_step: null, updated_at: new Date() })
+      .where('id', '=', accountId)
+      .execute();
+    await tx.insertInto('admin_action').values({ actor_id: pid, action: 'account.totp_off', target_id: pid, data: '{}' }).execute();
+  });
 }
 
 export async function createSession(
@@ -239,7 +344,7 @@ export async function createSession(
 
 export interface AuthContext {
   session: Session;
-  account: Pick<Account, 'id' | 'email' | 'role' | 'status' | 'email_verified_at'>;
+  account: Pick<Account, 'id' | 'email' | 'role' | 'status' | 'email_verified_at'> & { totp: boolean };
   player: Pick<Player, 'id' | 'pseudo' | 'pos_kind' | 'pos_region'>;
 }
 
@@ -264,6 +369,7 @@ export async function getAuth(db: Db, token: string | undefined): Promise<AuthCo
       'account.role',
       'account.status',
       'account.email_verified_at',
+      'account.totp_secret',
       'player.id as player_id',
       'player.pseudo',
       'player.pos_kind',
@@ -292,7 +398,14 @@ export async function getAuth(db: Db, token: string | undefined): Promise<AuthCo
       user_agent: row.user_agent,
       created_at: row.created_at,
     },
-    account: { id: row.account_id, email: row.email, role: row.role, status: row.status, email_verified_at: row.email_verified_at },
+    account: {
+      id: row.account_id,
+      email: row.email,
+      role: row.role,
+      status: row.status,
+      email_verified_at: row.email_verified_at,
+      totp: row.totp_secret !== null,
+    },
     player: { id: row.player_id, pseudo: row.pseudo, pos_kind: row.pos_kind, pos_region: row.pos_region },
   };
 }

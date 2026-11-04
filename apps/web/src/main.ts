@@ -24,6 +24,7 @@ const app = await buildApp({
   content,
   testTools: cfg.ENABLE_TEST_TOOLS,
   requireVerifiedEmail: cfg.REQUIRE_VERIFIED_EMAIL,
+  requireStaff2fa: cfg.REQUIRE_STAFF_2FA,
 });
 
 // Arrêt propre (guide 17.5) : plus de nouvelles requêtes, fin des requêtes en cours, puis fermeture de la base.

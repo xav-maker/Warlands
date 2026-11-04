@@ -1,10 +1,56 @@
-<% layout('./layout', { title: 'Compte' }) %>
+<% layout('./layout', { title: 'Compte', error: it.error }) %>
 <section>
   <h1>Compte</h1>
   <p class="muted">Connecté en tant que <b><%= it.auth.player.pseudo %></b> (<%= it.auth.account.email %>).</p>
   <% if (it.done === 'escouade') { %><p class="flash" role="status">Escouade de test engagée : six troupes de niveau 30. Vos troupes précédentes sont en caserne.</p><% } %>
+  <% if (it.done === 'pseudo') { %><p class="flash" role="status">Nouveau pseudo enregistré.</p><% } %>
+  <% if (it.done === '2fa') { %><p class="flash" role="status">Double authentification activée. Vos autres sessions ont été fermées.</p><% } %>
+  <% if (it.done === '2fa-off') { %><p class="flash" role="status">Double authentification désactivée.</p><% } %>
+
+  <% if (it.renameRequired) { %>
+    <div class="card">
+      <h2>Choisir un nouveau pseudo</h2>
+      <p>La modération a remplacé votre pseudo. Vous pouvez en choisir un nouveau, une seule fois : 3 à 20 caractères, lettres, chiffres, tiret ou espace.</p>
+      <form method="post" action="/compte/pseudo" class="row">
+        <input type="hidden" name="_csrf" value="<%= it.csrf %>">
+        <label class="grow">Nouveau pseudo <input type="text" name="pseudo" required minlength="3" maxlength="20" autocomplete="nickname"></label>
+        <button type="submit" class="primary">Enregistrer</button>
+      </form>
+    </div>
+  <% } %>
 
   <div class="grid">
+    <div class="card" id="deux-facteurs">
+      <h2>Double authentification</h2>
+      <% if (it.totp.enabled) { %>
+        <p>Active : chaque connexion demande, en plus du mot de passe, le code à 6 chiffres de votre application d’authentification.</p>
+        <form method="post" action="/compte/2fa/desactiver" class="row">
+          <input type="hidden" name="_csrf" value="<%= it.csrf %>">
+          <label>Code actuel <input type="text" name="code" required inputmode="numeric" pattern="[0-9 ]{6,7}" maxlength="7" autocomplete="one-time-code"></label>
+          <button type="submit" class="danger">Désactiver</button>
+        </form>
+      <% } else if (it.totp.secret) { %>
+        <p>Ajoutez ce compte dans votre application d’authentification (Aegis, FreeOTP, Google Authenticator…) avec la clé ci-dessous, puis saisissez le code qu’elle affiche.</p>
+        <p>Clé : <code class="secret" id="totp-secret"><%= it.totp.secret.replace(/(.{4})/g, '$1 ').trim() %></code></p>
+        <p class="muted">Sur téléphone : <a href="<%= it.totp.uri %>">ouvrir dans l’application</a>.</p>
+        <form method="post" action="/compte/2fa/confirmer" class="row">
+          <input type="hidden" name="_csrf" value="<%= it.csrf %>">
+          <label>Code à 6 chiffres <input type="text" name="code" required inputmode="numeric" pattern="[0-9 ]{6,7}" maxlength="7" autocomplete="one-time-code"></label>
+          <button type="submit" class="primary">Activer</button>
+        </form>
+        <form method="post" action="/compte/2fa/desactiver" class="inline">
+          <input type="hidden" name="_csrf" value="<%= it.csrf %>">
+          <button type="submit" class="link">Annuler</button>
+        </form>
+      <% } else { %>
+        <p>Protégez votre compte par un code à 6 chiffres, généré par une application sur votre téléphone, demandé à chaque connexion.<% if (it.auth.account.role !== 'player') { %> <b>Obligatoire pour la modération.</b><% } %></p>
+        <form method="post" action="/compte/2fa/commencer">
+          <input type="hidden" name="_csrf" value="<%= it.csrf %>">
+          <button type="submit">Activer la double authentification</button>
+        </form>
+      <% } %>
+    </div>
+
     <div class="card">
       <h2>Recommencer la partie</h2>
       <p>Votre partie repart de zéro : plus de troupes, d’objets ni d’or ; annonces en boutique retirées, quêtes effacées ; retour à Havre-Gris avec le kit de départ. Vous recevez de nouvelles recettes personnelles. Votre compte, votre pseudo et l’historique de vos combats sont gardés.</p>

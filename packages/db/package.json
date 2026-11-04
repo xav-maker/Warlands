@@ -16,6 +16,7 @@
   "scripts": {
     "migrate": "tsx --env-file-if-exists=../../.env src/migrate.ts",
     "grant-role": "tsx --env-file-if-exists=../../.env src/grant-role.ts",
-    "verify-email": "tsx --env-file-if-exists=../../.env src/verify-email.ts"
+    "verify-email": "tsx --env-file-if-exists=../../.env src/verify-email.ts",
+    "reset-2fa": "tsx --env-file-if-exists=../../.env src/reset-2fa.ts"
   }
 }

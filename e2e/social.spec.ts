@@ -1,10 +1,11 @@
 /**
  * Critère de J6 (guide 20) : un chat entre deux navigateurs, des sanctions appliquées. Alice et Bob discutent
  * en direct (flux SSE, sans recharger la page) ; Alice signale un message ; un modérateur sanctionne Bob :
- * la sourdine tombe en direct chez lui, puis une suspension le déconnecte.
+ * la sourdine tombe en direct chez lui, puis une suspension le déconnecte. La modération exige la double
+ * authentification, que le modérateur active d'abord ; il remplace enfin un pseudo, que le joueur change.
  */
 import { expect, test, type Browser, type Page } from '@playwright/test';
-import { grantRole, verifyEmail } from './support.ts';
+import { grantRole, totpCode, verifyEmail } from './support.ts';
 
 const stamp = `${Date.now() % 1_000_000}`;
 let ips = 0;
@@ -105,6 +106,16 @@ test('chat en direct entre deux navigateurs, signalement, sanctions', async ({ b
   await expect(bob.page.locator('#thread')).toContainText(`Rendez-vous à la sortie de la ville ${stamp}.`);
   await bob.page.goto('/chat');
 
+  // La modération est fermée tant que le modérateur n'a pas activé la double authentification.
+  await mod.page.goto('/moderation');
+  await expect(mod.page.getByText('exige la double authentification')).toBeVisible();
+  await mod.page.getByRole('link', { name: 'Activer la double authentification' }).click();
+  await mod.page.getByRole('button', { name: 'Activer la double authentification' }).click();
+  const secret = (await mod.page.locator('#totp-secret').textContent())!.replace(/\s/g, '');
+  await mod.page.getByLabel('Code à 6 chiffres').fill(totpCode(secret, new Date()));
+  await mod.page.getByRole('button', { name: 'Activer', exact: true }).click();
+  await expect(mod.page.getByText('Double authentification activée.')).toBeVisible();
+
   // Le modérateur traite le signalement et rend Bob muet : la sanction tombe en direct chez Bob.
   await mod.page.goto('/moderation');
   await mod.page.getByRole('link', { name: new RegExp(`#\\d+ · ${bob.pseudo}`) }).click();
@@ -140,5 +151,19 @@ test('chat en direct entre deux navigateurs, signalement, sanctions', async ({ b
   // Les actions de la modération sont au journal d'administration.
   await mod.page.goto('/moderation/journal');
   await expect(mod.page.getByText('sanction.suspend').first()).toBeVisible();
+
+  // Renommage forcé : depuis le chat, le modérateur ouvre le dossier de Nina et remplace son pseudo ; elle le
+  // voit en direct, puis en choisit un nouveau sur la page Compte.
+  await nina.page.goto('/chat');
+  await mod.page.goto('/chat');
+  await mod.page.locator('#chat-log li', { hasText: ninaSays }).first().getByRole('link', { name: 'dossier' }).click();
+  await mod.page.getByLabel(/Motif du renommage/).fill('Pseudo trompeur');
+  await mod.page.getByRole('button', { name: 'Renommer' }).click();
+  await expect(nina.page.locator('#toasts')).toContainText('Pseudo trompeur');
+  await nina.page.goto('/compte');
+  await nina.page.getByLabel('Nouveau pseudo').fill(`Nina R ${stamp}`);
+  await nina.page.getByRole('button', { name: 'Enregistrer' }).click();
+  await expect(nina.page.getByText('Nouveau pseudo enregistré.')).toBeVisible();
+  await expect(nina.page.locator('.who')).toHaveText(`Nina R ${stamp}`);
   expect(errors).toEqual([]);
 });

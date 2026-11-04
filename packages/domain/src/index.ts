@@ -2,6 +2,7 @@ export * from './command.ts';
 export * from './rate-limit.ts';
 export * from './mailer.ts';
 export * from './identity.ts';
+export * from './totp.ts';
 export * from './player.ts';
 export * from './game/content.ts';
 export * from './game/rules.ts';

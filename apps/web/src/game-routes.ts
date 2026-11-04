@@ -58,6 +58,11 @@ import {
   withdrawListing,
   scaled,
   setDisabledSkills,
+  choosePseudo,
+  confirmTotp,
+  disableTotp,
+  startTotp,
+  totpState,
   setRank,
   xpToNext,
   type AuthContext,
@@ -74,6 +79,8 @@ export interface GameRouteDeps {
   page(req: FastifyRequest, reply: FastifyReply, view: string, data?: Record<string, unknown>, status?: number): FastifyReply;
   run<S extends z.ZodType, R>(req: FastifyRequest, def: CommandDef<S, R>, input: unknown): Promise<R>;
   requireAuth(req: FastifyRequest): AuthContext;
+  /** Limitation de débit (lève RATE_LIMITED) : clé, nombre par minute. */
+  limit(key: string, perMinute: number): void;
   /** Outils de test (préproduction) : escouade de niveau 30 sur la page Compte. */
   testTools: boolean;
 }
@@ -461,12 +468,16 @@ export function registerGameRoutes(app: FastifyInstance, d: GameRouteDeps): void
     act(req, reply, '/notifications', async () => void (await d.run(req, markNotificationsRead, {}))),
   );
 
-  // ---------- Compte : recommencer la partie, outils de test ----------
+  // ---------- Compte : pseudo, double authentification, recommencer la partie, outils de test ----------
   app.get('/compte', async (req, reply) => {
     const v = await view(req);
+    const auth = d.requireAuth(req);
+    const me = await d.db.selectFrom('player').select('rename_required').where('id', '=', auth.player.id).executeTakeFirstOrThrow();
     return d.page(req, reply, 'compte', {
       v,
       L,
+      renameRequired: me.rename_required,
+      totp: await totpState(d.db, auth.account.id),
       testTools: d.testTools,
       word: RESET_WORD,
       done: (req.query as { ok?: string }).ok,
@@ -477,6 +488,35 @@ export function registerGameRoutes(app: FastifyInstance, d: GameRouteDeps): void
     act(req, reply, '/compte', async () => {
       await d.run(req, resetGame, { confirm: body(req).confirm });
       return '/ville';
+    }),
+  );
+  app.post('/compte/pseudo', (req, reply) =>
+    act(req, reply, '/compte', async () => {
+      await d.run(req, choosePseudo, { pseudo: body(req).pseudo ?? '' });
+      return '/compte?ok=pseudo';
+    }),
+  );
+  // Double authentification : ce sont des opérations de compte (pas de jeu), hors du cadre des commandes.
+  app.post('/compte/2fa/commencer', (req, reply) =>
+    act(req, reply, '/compte', async () => {
+      await startTotp(d.db, d.requireAuth(req).account.id);
+      return '/compte#deux-facteurs';
+    }),
+  );
+  app.post('/compte/2fa/confirmer', (req, reply) =>
+    act(req, reply, '/compte', async () => {
+      const auth = d.requireAuth(req);
+      d.limit(`totp:${auth.account.id}`, 5);
+      await confirmTotp(d.db, auth.account.id, body(req).code ?? '', auth.session.id);
+      return '/compte?ok=2fa';
+    }),
+  );
+  app.post('/compte/2fa/desactiver', (req, reply) =>
+    act(req, reply, '/compte', async () => {
+      const auth = d.requireAuth(req);
+      d.limit(`totp:${auth.account.id}`, 5);
+      await disableTotp(d.db, auth.account.id, body(req).code ?? '');
+      return '/compte?ok=2fa-off';
     }),
   );
   app.post('/compte/escouade-test', (req, reply) => {

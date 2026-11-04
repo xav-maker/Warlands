@@ -25,6 +25,11 @@ const Env = z.object({
     .enum(['true', 'false'])
     .default('true')
     .transform((v) => v === 'true'),
+  // Modération et administration réservées aux comptes dont la double authentification est active (guide 13.4).
+  REQUIRE_STAFF_2FA: z
+    .enum(['true', 'false'])
+    .default('true')
+    .transform((v) => v === 'true'),
   // Outils de test (escouade de niveau 30) : préproduction seulement, jamais en production.
   ENABLE_TEST_TOOLS: z
     .enum(['true', 'false'])

@@ -564,7 +564,7 @@ Requête paginée par curseur (prix, id) sur l'index `(ville, statut, famille, p
 - **Messages privés** : refusés si le destinataire a bloqué l'expéditeur. Notification si le destinataire est hors ligne.
 - **Signalement** : bouton sur chaque message, profil et annonce. Le signalement copie le contenu signalé, au cas où il serait supprimé.
 - **Outils de modération** : file des signalements, historique d'un joueur, sanctions (sourdine, interdiction de boutique, suspension, bannissement) avec durée et motif, journalisées dans `admin_action`.
-- **Pseudos** : 3 à 20 caractères, lettres, chiffres, tiret et espace, liste de pseudos interdits, renommage forcé possible par un modérateur.
+- **Pseudos** : 3 à 20 caractères, lettres, chiffres, tiret et espace, liste de pseudos interdits, renommage forcé possible par un modérateur. Réalisation (J6) : le pseudo devient « Aventurier <id> » (ou celui que donne le modérateur), le joueur est prévenu avec le motif et peut en choisir un nouveau une seule fois depuis la page Compte ; mêmes règles de rôle que les sanctions.
 
 ---
 
@@ -595,7 +595,7 @@ Le client n'envoie que des intentions validées par Zod. Les stats, prix, positi
 - Signaux collectés dès le lancement : IP tronquée, empreinte d'appareil légère (cookie long et agent utilisateur), transferts déséquilibrés entre deux comptes, prix loin de la moyenne, chaînes de propriétaires.
 - **Bots** : rythme de commandes très régulier sur de longues durées, détecté par une requête du worker. La revue reste manuelle au début.
 - Comptes neufs : pas de vente de troupe avant 24 heures, et un plafond d'or vendu par jour pendant 7 jours [H].
-- L'administration utilise la 2FA (TOTP), des routes séparées, et chaque action est tracée.
+- L'administration utilise la 2FA (TOTP), des routes séparées, et chaque action est tracée. Réalisation (J6) : TOTP RFC 6238 (SHA-1, 30 s, 6 chiffres, un pas de tolérance, rejeu d'un pas refusé), activable par tout joueur depuis la page Compte ; les pages et actions de modération l'exigent (`REQUIRE_STAFF_2FA`, vrai par défaut) ; `reset-2fa` la retire à un compte qui a perdu son application.
 
 ---
 

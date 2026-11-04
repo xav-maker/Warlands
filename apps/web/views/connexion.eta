@@ -6,6 +6,13 @@
     <input type="hidden" name="_csrf" value="<%= it.csrf %>">
     <label>Adresse e-mail<input type="email" name="email" required maxlength="254" autocomplete="email" value="<%= it.form.email ?? '' %>"></label>
     <label>Mot de passe<input type="password" name="password" required maxlength="200" autocomplete="current-password"></label>
+    <% if (it.totp) { %>
+      <label>Code de vérification<input type="text" name="code" required inputmode="numeric" pattern="[0-9 ]{6,7}" maxlength="7" autocomplete="one-time-code" autofocus></label>
+    <% } else { %>
+      <details class="muted"><summary>Double authentification activée ?</summary>
+        <label>Code de vérification<input type="text" name="code" inputmode="numeric" pattern="[0-9 ]{6,7}" maxlength="7" autocomplete="one-time-code"></label>
+      </details>
+    <% } %>
     <button type="submit" class="primary">Se connecter</button>
   </form>
   <p class="muted">Pas encore de compte ? <a href="/inscription">Créer un compte</a></p>

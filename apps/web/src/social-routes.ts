@@ -29,6 +29,8 @@ import {
   gameView,
   isStaff,
   liftSanction,
+  forceRename,
+  provisionalPseudo,
   onlineInRegion,
   parseLink,
   playerByPseudo,
@@ -57,6 +59,8 @@ export interface SocialRouteDeps {
   page(req: FastifyRequest, reply: FastifyReply, view: string, data?: Record<string, unknown>, status?: number): FastifyReply;
   run<S extends z.ZodType, R>(req: FastifyRequest, def: CommandDef<S, R>, input: unknown): Promise<R>;
   requireAuth(req: FastifyRequest): AuthContext;
+  /** Modération réservée aux comptes à double authentification (guide 13.4). */
+  requireStaff2fa: boolean;
 }
 
 /** Retours autorisés après une action (jamais une URL fournie telle quelle). */
@@ -98,6 +102,7 @@ export function registerSocialRoutes(app: FastifyInstance, d: SocialRouteDeps): 
   function staff(req: FastifyRequest): AuthContext {
     const a = d.requireAuth(req);
     if (!isStaff(a.account.role as AccountRole)) throw new GameError('NOT_MODERATOR');
+    if (d.requireStaff2fa && !a.account.totp) throw new GameError('STAFF_2FA_REQUIRED');
     return a;
   }
 
@@ -114,6 +119,20 @@ export function registerSocialRoutes(app: FastifyInstance, d: SocialRouteDeps): 
       return reply.redirect(`${back}${sep}e=${e.code}${det}`, 303);
     }
   }
+
+  // Une action de modération exige la double authentification (le rôle est vérifié par la commande).
+  app.addHook('preHandler', async (req) => {
+    const a = req.auth;
+    if (
+      req.method === 'POST' &&
+      req.url.startsWith('/moderation/') &&
+      a &&
+      isStaff(a.account.role as AccountRole) &&
+      d.requireStaff2fa &&
+      !a.account.totp
+    )
+      throw new GameError('STAFF_2FA_REQUIRED');
+  });
 
   const backOf = (b: Record<string, string>, fallback: string): string => (BACK.has(b.back ?? '') ? b.back! : fallback);
 
@@ -375,6 +394,7 @@ export function registerSocialRoutes(app: FastifyInstance, d: SocialRouteDeps): 
       KIND: SANCTION_KIND_FR,
       REASON: REPORT_REASON_FR,
       untilText,
+      provisional: provisionalPseudo(file.id),
       error: errorOf(req.query),
     });
   }
@@ -418,6 +438,18 @@ export function registerSocialRoutes(app: FastifyInstance, d: SocialRouteDeps): 
       return '/moderation';
     }),
   );
+  app.post('/moderation/renommer', (req, reply) => {
+    const b = body(req);
+    return act(req, reply, modBack(b), async () => {
+      await d.run(req, forceRename, {
+        player: int(b.player),
+        ...(b.pseudo?.trim() ? { pseudo: b.pseudo } : {}),
+        reason: str(b.reason),
+        ...(int(b.report) ? { report: int(b.report) } : {}),
+      });
+      return b.report ? '/moderation' : modBack(b);
+    });
+  });
   app.post('/moderation/supprimer-message', (req, reply) =>
     act(req, reply, modBack(body(req)), async () => void (await d.run(req, deleteChatMessage, { message: int(body(req).message) }))),
   );

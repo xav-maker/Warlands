@@ -15,6 +15,7 @@ import type { AccountRole, Database, Db, ReportKind, ReportReason, SanctionKind,
 import { sql } from '@cr/db';
 import { command, type CommandContext } from '../command.ts';
 import { notify } from '../game/shop.ts';
+import { checkPseudo } from '../identity.ts';
 import { playerByPseudo, Pseudo } from './direct.ts';
 import { activeSanctions, untilText, type ActiveSanction } from './sanctions.ts';
 
@@ -316,6 +317,89 @@ export const deleteChatMessage = command({
     await logAction(ctx.tx, ctx.player.id, 'chat.delete', m.author_id, { message: input.message, text: m.body });
     ctx.emit({ topic: `region:${m.region}`, type: 'chat.deleted', data: { id: input.message } });
     return {};
+  },
+});
+
+/** Pseudo provisoire donné par un renommage forcé sans pseudo choisi : neutre et unique. */
+export const provisionalPseudo = (playerId: number): string => `Aventurier ${playerId}`;
+
+/** Le pseudo est-il libre (casse ignorée), sauf pour `except` ? */
+async function pseudoFree(tx: Tx, pseudo: string, except: number): Promise<boolean> {
+  const taken = await tx
+    .selectFrom('player')
+    .select('id')
+    .where((eb) => eb(eb.fn('lower', ['pseudo']), '=', pseudo.toLowerCase()))
+    .where('id', '<>', except)
+    .executeTakeFirst();
+  return !taken;
+}
+
+/**
+ * Renommage forcé (guide 12) : le pseudo d'un joueur est remplacé par un pseudo provisoire (ou celui que donne
+ * le modérateur), et le joueur peut en choisir un nouveau une fois. Mêmes règles de rôle que les sanctions.
+ */
+export const forceRename = command({
+  name: 'mod.rename',
+  input: z.object({
+    player: z.number().int().positive(),
+    pseudo: z.string().max(40).optional(),
+    reason: z.string().trim().min(3).max(500),
+    report: z.number().int().positive().optional(),
+  }),
+  rate: { perMinute: 30 },
+  allowedDuringWatch: true,
+  async run(ctx, input) {
+    const role = await staffRole(ctx);
+    if (input.player === ctx.player.id) throw new GameError('SANCTION_FORBIDDEN');
+    const target = await ctx.tx
+      .selectFrom('player')
+      .innerJoin('account', 'account.id', 'player.account_id')
+      .select(['player.id', 'player.pseudo', 'account.role'])
+      .where('player.id', '=', input.player)
+      .forUpdate('player')
+      .executeTakeFirst();
+    if (!target) throw new GameError('PLAYER_NOT_FOUND');
+    if (target.role === 'admin' || (target.role === 'moderator' && role !== 'admin')) throw new GameError('SANCTION_FORBIDDEN');
+    const pseudo = input.pseudo?.trim() ? checkPseudo(input.pseudo) : provisionalPseudo(target.id);
+    if (!(await pseudoFree(ctx.tx, pseudo, target.id))) throw new GameError('PSEUDO_TAKEN');
+
+    await ctx.tx.updateTable('player').set({ pseudo, rename_required: true, updated_at: ctx.now }).where('id', '=', target.id).execute();
+    await logAction(ctx.tx, ctx.player.id, 'player.rename', target.id, { from: target.pseudo, to: pseudo, reason: input.reason });
+    if (input.report) await closeReportIn(ctx.tx, input.report, ctx.player.id, `Pseudo remplacé : ${input.reason}`, ctx.now);
+    await notify(ctx.tx, target.id, 'pseudo.renamed', { from: target.pseudo, to: pseudo, reason: input.reason });
+    ctx.emit({
+      topic: `user:${target.id}`,
+      type: 'pseudo.renamed',
+      data: {
+        text: `Votre pseudo « ${target.pseudo} » a été remplacé par « ${pseudo} » : ${input.reason}. Choisissez-en un nouveau depuis la page Compte.`,
+      },
+    });
+    return { pseudo };
+  },
+});
+
+/** Choix d'un nouveau pseudo après un renommage forcé (une seule fois). */
+export const choosePseudo = command({
+  name: 'player.rename',
+  input: z.object({ pseudo: z.string().max(40) }),
+  rate: { perMinute: 10 },
+  allowedDuringWatch: true,
+  async run(ctx, input) {
+    if (!ctx.player.rename_required) throw new GameError('RENAME_NOT_ALLOWED');
+    const pseudo = checkPseudo(input.pseudo);
+    if (!(await pseudoFree(ctx.tx, pseudo, ctx.player.id))) throw new GameError('PSEUDO_TAKEN');
+    try {
+      await ctx.tx
+        .updateTable('player')
+        .set({ pseudo, rename_required: false, updated_at: ctx.now })
+        .where('id', '=', ctx.player.id)
+        .execute();
+    } catch (e) {
+      if ((e as { constraint?: string }).constraint === 'player_pseudo_uq') throw new GameError('PSEUDO_TAKEN');
+      throw e;
+    }
+    await logAction(ctx.tx, ctx.player.id, 'player.rename_chosen', ctx.player.id, { from: ctx.player.pseudo, to: pseudo });
+    return { pseudo };
   },
 });
 

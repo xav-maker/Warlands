@@ -6,7 +6,7 @@ import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import type { FastifyInstance } from 'fastify';
 import { createBus, sql } from '@cr/db';
 import { startTestDb, type TestDb } from '@cr/testing';
-import { memoryMailer, noRateLimit } from '@cr/domain';
+import { memoryMailer, noRateLimit, totpCode } from '@cr/domain';
 import { buildApp } from '../src/app.ts';
 import { loadGameContent } from '../src/content.ts';
 
@@ -385,5 +385,103 @@ describe('adresse e-mail à vérifier', () => {
     const ok = await a.req('POST', '/chat', { text: 'bonjour, adresse vérifiée' });
     expect(ok.headers.location).toBe('/chat');
     expect((await a.req('GET', '/chat')).body).not.toContain('pas encore vérifiée');
+  });
+});
+
+describe('renommage forcé', () => {
+  it('le modérateur remplace un pseudo depuis le dossier ; le joueur en choisit un nouveau sur la page Compte', async () => {
+    const [b, mod] = [await player('Grossier'), await player('Modeste')];
+    await t.db.updateTable('account').set({ role: 'moderator' }).where('email', '=', 'modeste@example.org').execute();
+    const bid = await b.id();
+    const dossier = await mod.req('GET', `/moderation/joueur/${bid}`);
+    expect(dossier.body).toContain('action="/moderation/renommer"');
+    expect(dossier.body).toContain(`placeholder="Aventurier ${bid}"`);
+
+    const r = await mod.req('POST', '/moderation/renommer', {
+      player: String(bid),
+      pseudo: '',
+      reason: 'pseudo injurieux',
+      back: `/moderation/joueur/${bid}`,
+    });
+    expect(r.headers.location).toBe(`/moderation/joueur/${bid}`);
+    const compte = await b.req('GET', '/compte');
+    expect(compte.body).toContain(`Aventurier ${bid}`);
+    expect(compte.body).toContain('Choisir un nouveau pseudo');
+    expect((await b.req('GET', '/notifications')).body).toContain('a été remplacé par « Aventurier');
+
+    const bad = await b.req('POST', '/compte/pseudo', { pseudo: 'Modeste' });
+    expect(bad.headers.location).toBe('/compte?e=PSEUDO_TAKEN');
+    const ok = await b.req('POST', '/compte/pseudo', { pseudo: 'Poli Désormais' });
+    expect(ok.headers.location).toBe('/compte?ok=pseudo');
+    const after = await b.req('GET', '/compte');
+    expect(after.body).toContain('Poli Désormais');
+    expect(after.body).not.toContain('Choisir un nouveau pseudo');
+    expect((await b.req('POST', '/compte/pseudo', { pseudo: 'Encore Autre' })).headers.location).toBe('/compte?e=RENAME_NOT_ALLOWED');
+  });
+});
+
+describe('double authentification de la modération (REQUIRE_STAFF_2FA)', () => {
+  let strict: FastifyInstance;
+  beforeAll(async () => {
+    strict = await buildApp({
+      db: t.db,
+      mailer: memoryMailer(),
+      appUrl: APP,
+      cookieSecure: false,
+      logLevel: 'silent',
+      rateLimiter: noRateLimit,
+      content: loadGameContent(),
+      requireStaff2fa: true,
+    });
+  });
+  afterAll(async () => strict?.close());
+
+  it('refuse la modération sans 2FA, puis l’ouvre une fois activée ; la connexion demande alors le code', async () => {
+    const mod = await playerOn(strict, 'Vigilante');
+    const target = await playerOn(strict, 'Cible');
+    await t.db.updateTable('account').set({ role: 'moderator' }).where('email', '=', 'vigilante@example.org').execute();
+
+    const refused = await mod.req('GET', '/moderation');
+    expect(refused.statusCode).toBe(422);
+    expect(refused.body).toContain('exige la double authentification');
+    expect(refused.body).toContain('href="/compte#deux-facteurs"');
+    const post = await mod.req('POST', '/moderation/sanction', {
+      player: String(await target.id()),
+      kind: 'mute',
+      hours: '1',
+      reason: 'test',
+    });
+    expect(post.statusCode).toBe(422);
+    expect(
+      await t.db
+        .selectFrom('sanction')
+        .select('id')
+        .where('player_id', '=', await target.id())
+        .execute(),
+    ).toEqual([]);
+
+    // Activation depuis la page Compte : la clé s'affiche, un code juste l'active.
+    expect((await mod.req('GET', '/compte')).body).toContain('Obligatoire pour la modération');
+    await mod.req('POST', '/compte/2fa/commencer', {});
+    const setup = await mod.req('GET', '/compte');
+    const secret = /id="totp-secret">([A-Z2-7 ]+)</.exec(setup.body)![1]!.replace(/ /g, '');
+    expect(setup.body).toContain('otpauth://totp/');
+    expect((await mod.req('POST', '/compte/2fa/confirmer', { code: '000000' })).headers.location).toBe('/compte?e=TOTP_INVALID');
+    expect((await mod.req('POST', '/compte/2fa/confirmer', { code: totpCode(secret, new Date()) })).headers.location).toBe(
+      '/compte?ok=2fa',
+    );
+    expect((await mod.req('GET', '/moderation')).statusCode).toBe(200);
+
+    // Nouvelle connexion : le code est demandé après le mot de passe.
+    const again = new Browser('Vigilante', strict);
+    await again.req('GET', '/connexion');
+    const ask = await again.req('POST', '/connexion', { email: 'vigilante@example.org', password: 'motdepasse-long' });
+    expect(ask.statusCode).toBe(422);
+    expect(ask.body).toContain('Saisissez le code à 6 chiffres');
+    expect(ask.body).toContain('autocomplete="one-time-code" autofocus');
+    const next = totpCode(secret, new Date(Date.now() + 30_000)); // le code du moment vient d'être consommé
+    const ok = await again.req('POST', '/connexion', { email: 'vigilante@example.org', password: 'motdepasse-long', code: next });
+    expect(ok.headers.location).toBe('/jeu');
+    expect((await again.req('GET', '/moderation')).statusCode).toBe(200);
   });
 });

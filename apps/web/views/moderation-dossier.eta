@@ -60,6 +60,18 @@
         <label>Motif (communiqué au joueur) <textarea name="reason" minlength="3" maxlength="500" rows="2" required></textarea></label>
         <button type="submit" class="danger">Appliquer<%= r && r.status === 'open' ? ' et classer le signalement' : '' %></button>
       </form>
+
+      <h2>Remplacer le pseudo</h2>
+      <form method="post" action="/moderation/renommer">
+        <input type="hidden" name="_csrf" value="<%= it.csrf %>">
+        <input type="hidden" name="player" value="<%= f.id %>">
+        <input type="hidden" name="back" value="<%= here %>">
+        <% if (r && r.status === 'open') { %><input type="hidden" name="report" value="<%= r.id %>"><% } %>
+        <label>Pseudo provisoire <input type="text" name="pseudo" maxlength="20" placeholder="<%= it.provisional %>"></label>
+        <label>Motif du renommage (communiqué au joueur) <textarea name="reason" minlength="3" maxlength="500" rows="2" required></textarea></label>
+        <p class="muted">Le joueur pourra ensuite choisir un nouveau pseudo, une fois.</p>
+        <button type="submit" class="danger">Renommer<%= r && r.status === 'open' ? ' et classer le signalement' : '' %></button>
+      </form>
     </div>
 
     <div class="card">

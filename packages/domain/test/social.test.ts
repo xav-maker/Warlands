@@ -16,6 +16,7 @@ import {
   applySanction,
   blockPlayer,
   canOpenLink,
+  choosePseudo,
   chatHistory,
   cleanText,
   closeReport,
@@ -28,6 +29,7 @@ import {
   executeCommand,
   ficheOf,
   filterWords,
+  forceRename,
   friendsView,
   liftExpiredSuspensions,
   liftSanction,
@@ -737,5 +739,49 @@ describe('liens dans le chat (README 25)', () => {
     expect(parseLink('item:12')).toEqual({ kind: 'item', id: 12 });
     for (const bad of ['', 'item', 'item:', 'item:-1', 'item:1.5', 'autre:3', 'item:1;drop', ' item:1', undefined, 12])
       expect(parseLink(bad)).toBeNull();
+  });
+});
+
+describe('renommage forcé (guide 12)', () => {
+  it('remplace le pseudo, prévient le joueur, qui en choisit un nouveau une seule fois', async () => {
+    const [mod, a, b] = [await newPlayer('moderator'), await newPlayer(), await newPlayer()];
+    const old = b.pseudo;
+    const provisional = `Aventurier ${b.id}`;
+    await expect(run(a.id, forceRename, { player: b.id, reason: 'pseudo injurieux' })).rejects.toMatchObject({ code: 'NOT_MODERATOR' });
+    await expect(run(b.id, choosePseudo, { pseudo: 'Libre Choix' })).rejects.toMatchObject({ code: 'RENAME_NOT_ALLOWED' });
+    const r = await run(a.id, createReport, { kind: 'player', pseudo: old, reason: 'insulte' });
+    events.length = 0;
+
+    expect(await run(mod.id, forceRename, { player: b.id, reason: 'pseudo injurieux', report: r.id })).toEqual({ pseudo: provisional });
+    const row = await t.db.selectFrom('player').select(['pseudo', 'rename_required']).where('id', '=', b.id).executeTakeFirstOrThrow();
+    expect(row).toEqual({ pseudo: provisional, rename_required: true });
+    expect((await notifs(b, 'pseudo.renamed'))[0]!.data).toMatchObject({ from: old, to: provisional, reason: 'pseudo injurieux' });
+    expect(events.find((e) => e.type === 'pseudo.renamed')).toMatchObject({ topic: `user:${b.id}` });
+    expect((await reportQueue(t.db, 'closed')).find((x) => x.id === r.id)?.decision).toContain('Pseudo remplacé');
+    const log = await t.db.selectFrom('admin_action').select(['action', 'data']).where('actor_id', '=', mod.id).execute();
+    expect(log[0]).toMatchObject({ action: 'player.rename', data: { from: old, to: provisional } });
+
+    // Le choix suit les règles des pseudos, et un pseudo pris (casse ignorée) est refusé.
+    await expect(run(b.id, choosePseudo, { pseudo: 'Admin du jeu' })).rejects.toMatchObject({ code: 'PSEUDO_FORBIDDEN' });
+    await expect(run(b.id, choosePseudo, { pseudo: a.pseudo.toUpperCase() })).rejects.toMatchObject({ code: 'PSEUDO_TAKEN' });
+    expect(await run(b.id, choosePseudo, { pseudo: '  Nouveau  Nom ' })).toEqual({ pseudo: 'Nouveau Nom' });
+    await expect(run(b.id, choosePseudo, { pseudo: 'Encore Un' })).rejects.toMatchObject({ code: 'RENAME_NOT_ALLOWED' });
+  });
+
+  it('accepte un pseudo provisoire choisi, avec les règles de rôle des sanctions', async () => {
+    const [mod, mod2, admin, b] = [await newPlayer('moderator'), await newPlayer('moderator'), await newPlayer('admin'), await newPlayer()];
+    await expect(run(mod.id, forceRename, { player: b.id, pseudo: mod2.pseudo, reason: 'test' })).rejects.toMatchObject({
+      code: 'PSEUDO_TAKEN',
+    });
+    await expect(run(mod.id, forceRename, { player: b.id, pseudo: 'a<b', reason: 'test' })).rejects.toMatchObject({
+      code: 'PSEUDO_INVALID',
+    });
+    expect(await run(mod.id, forceRename, { player: b.id, pseudo: 'Voyageur Calme', reason: 'pseudo trompeur' })).toEqual({
+      pseudo: 'Voyageur Calme',
+    });
+    await expect(run(mod.id, forceRename, { player: mod2.id, reason: 'test' })).rejects.toMatchObject({ code: 'SANCTION_FORBIDDEN' });
+    await expect(run(mod.id, forceRename, { player: admin.id, reason: 'test' })).rejects.toMatchObject({ code: 'SANCTION_FORBIDDEN' });
+    await expect(run(mod.id, forceRename, { player: mod.id, reason: 'test' })).rejects.toMatchObject({ code: 'SANCTION_FORBIDDEN' });
+    await run(admin.id, forceRename, { player: mod2.id, reason: 'pseudo trompeur' });
   });
 });

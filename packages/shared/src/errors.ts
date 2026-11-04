@@ -83,6 +83,11 @@ export const ERROR_CODES = [
   'NOT_ADMIN',
   'SANCTION_FORBIDDEN',
   'SANCTION_NOT_FOUND',
+  'RENAME_NOT_ALLOWED',
+  'TOTP_REQUIRED',
+  'TOTP_INVALID',
+  'TOTP_ALREADY_ON',
+  'STAFF_2FA_REQUIRED',
 ] as const;
 
 export type ErrorCode = (typeof ERROR_CODES)[number];

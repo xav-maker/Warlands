@@ -77,6 +77,11 @@ const FR: Record<ErrorCode, string> = {
   NOT_ADMIN: 'Réservé aux administrateurs.',
   SANCTION_FORBIDDEN: 'Vous ne pouvez pas appliquer cette sanction à ce joueur.',
   SANCTION_NOT_FOUND: 'Sanction introuvable.',
+  RENAME_NOT_ALLOWED: 'Votre pseudo ne peut plus être changé.',
+  TOTP_REQUIRED: 'Saisissez le code à 6 chiffres de votre application d’authentification.',
+  TOTP_INVALID: 'Code de vérification incorrect ou déjà utilisé.',
+  TOTP_ALREADY_ON: 'La double authentification est déjà active.',
+  STAFF_2FA_REQUIRED: 'La modération exige la double authentification : activez-la depuis la page Compte.',
 };
 
 export function messageFr(code: ErrorCode, details?: Record<string, string | number>): string {
