@@ -118,9 +118,10 @@ jobs:
     environment:
       name: preproduction
       url: ${{ vars.PREPROD_URL }}
+    # Un déploiement plus récent remplace celui qui attend encore sa version (pushes rapprochés).
     concurrency:
       group: deploy-preprod
-      cancel-in-progress: false
+      cancel-in-progress: true
     env:
       IMAGE: ghcr.io/${{ github.repository_owner }}/cinq-regions
       SHA: ${{ github.sha }}
