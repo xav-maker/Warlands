@@ -177,12 +177,13 @@ describe('rang et capacités désactivées (README 4.5, 20.1)', () => {
 
 describe('réserve (README 29.2)', () => {
   const only = async (pid: number, type: string) => (await troops(pid)).find((x) => x.type === type)!;
+  const at = async (pid: number, id: number) => (await troops(pid)).find((x) => x.id === id)!;
 
   it('met en réserve, sans dépasser 5 unités et 8 de population, et en sort vers la caserne ou l’escouade', async () => {
     const pid = await newPlayer();
     const c = await only(pid, 'chasseur');
     expect(await run(pid, reserveAdd, { troop: c.id })).toEqual({ container: 'RESERVE' });
-    expect((await only(pid, 'chasseur')).container).toBe('RESERVE');
+    expect((await at(pid, c.id)).container).toBe('RESERVE');
     // Deux Frondeurs (3 unités chacun) : le second dépasse les 5 unités de la réserve.
     const ids = await t.db
       .transaction()
@@ -195,7 +196,7 @@ describe('réserve (README 29.2)', () => {
     await run(pid, withdraw, { troop: ids[0]! });
     expect((await troops(pid)).find((x) => x.id === ids[0])!.container).toBe('BARRACKS');
     await run(pid, engage, { troop: c.id });
-    expect((await only(pid, 'chasseur')).container).toBe('SQUAD');
+    expect((await at(pid, c.id)).container).toBe('SQUAD');
   });
 
   it('échange une troupe de l’escouade avec une troupe de la réserve, en ville comme en route', async () => {
@@ -205,12 +206,12 @@ describe('réserve (README 29.2)', () => {
     await run(pid, reserveAdd, { troop: c.id });
     await expect(run(pid, reserveSwap, { troop: c.id, with: m.id })).rejects.toMatchObject({ code: 'SWAP_INVALID' });
     await run(pid, reserveSwap, { troop: m.id, with: c.id });
-    expect((await only(pid, 'milicien')).container).toBe('RESERVE');
-    expect((await only(pid, 'chasseur')).container).toBe('SQUAD');
+    expect((await at(pid, m.id)).container).toBe('RESERVE');
+    expect((await at(pid, c.id)).container).toBe('SQUAD');
     await run(pid, depart, { direction: 1 });
     await run(pid, reserveSwap, { troop: c.id, with: m.id });
-    expect((await only(pid, 'milicien')).container).toBe('SQUAD');
-    expect((await only(pid, 'chasseur')).container).toBe('RESERVE');
+    expect((await at(pid, m.id)).container).toBe('SQUAD');
+    expect((await at(pid, c.id)).container).toBe('RESERVE');
     // Pas d'engagement ni de mise en réserve depuis la route.
     await expect(run(pid, reserveAdd, { troop: m.id })).rejects.toBeTruthy();
   });
@@ -219,7 +220,7 @@ describe('réserve (README 29.2)', () => {
     const pid = await newPlayer();
     const c = await only(pid, 'chasseur');
     await run(pid, reserveAdd, { troop: c.id });
-    const before = await only(pid, 'chasseur');
+    const before = await at(pid, c.id);
     const out = await t.db.transaction().execute(async (x) => {
       const squad = (await loadTroops(x, pid, ['SQUAD'])).filter((q) => q.units.length);
       const reserve = await loadTroops(x, pid, ['RESERVE']);
@@ -237,7 +238,7 @@ describe('réserve (README 29.2)', () => {
     expect(fighters.length).toBeGreaterThan(0);
     expect(idle[0]!.troop).toBe(c.id);
     expect(idle[0]!.gain).toBe(fighters[0]!.gain);
-    const after = await only(pid, 'chasseur');
+    const after = await at(pid, c.id);
     expect(after.level > before.level || after.xp > before.xp).toBe(true);
     expect(after.container).toBe('RESERVE');
   });
