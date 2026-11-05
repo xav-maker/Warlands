@@ -54,10 +54,14 @@ export const loadSquads = (file: string): Record<string, Squad> => YAML.parse(re
 export const SQUADS_FILE = join(import.meta.dirname, '../balance/squads.yaml');
 
 /**
- * Taux de victoire visé par palier, escouade équipée au palier : 50 % au palier 1, 10 % au palier 5 (−10 points
- * par palier) ; les gardiens 5 points plus bas (45 % au palier 1, 5 % au palier 5).
+ * Taux de victoire visé par palier, escouade équipée au palier [Xavier, 6 novembre 2026] : les anciennes cibles (50 %
+ * au palier 1, −10 points par palier) faisaient perdre la moitié de l'escouade dès la 3e étape, même à un niveau
+ * d'avance, et rendaient la première ville hors d'atteinte. Désormais : le palier 1 se passe presque sans perte
+ * (91 % de victoires en moyenne sur les 4 premières étapes) et la difficulté monte doucement, −7 points par palier
+ * (57 % au palier 5) ; un gardien reste un vrai obstacle, 75 % au palier 1 et −7 points par palier.
  */
-export const tierTarget = (tier: number, guardian: boolean): number => 0.5 - 0.1 * (tier - 1) - (guardian ? 0.05 : 0);
+export const tierTarget = (tier: number, guardian: boolean): number =>
+  guardian ? 0.75 - 0.07 * (tier - 1) : tier === 1 ? TIER1_STEPS.reduce((a, x) => a + x, 0) / TIER1_STEPS.length : 0.85 - 0.07 * (tier - 1);
 /** Écart toléré entre la moyenne simulée d'un palier et sa cible, en points de victoire (0,05 = 5 points). */
 export const TOLERANCE = 0.05;
 /** Écart toléré entre la moyenne d'une route et la cible de son palier (dispersion entre routes), et pour une étape. */
@@ -65,17 +69,16 @@ export const ROUTE_TOLERANCE = 0.05;
 export const STEP_TOLERANCE = 0.1;
 
 /**
- * Rampe de difficulté dans une route : les 4 premières étapes valent ce multiple de la cible du palier (leur moyenne
- * reste la cible). Palier 1 : départ très facile, car au début l'escouade n'est pas pleine ; les deux premières
- * étapes, les seules que beaucoup de joueurs voient d'abord, visent 90 % et 75 % [Xavier, 5 novembre 2026]. Le gardien
- * vise `tierTarget`.
+ * Rampe de difficulté dans une route. Palier 1 : cibles propres à chaque étape, car au début l'escouade n'est pas
+ * pleine, ni équipée, et son niveau est en retard : 98 % puis 95 % pour les deux premières étapes (celles que tout le
+ * monde voit d'abord), 90 % pour la troisième, 80 % pour la quatrième. Autres paliers : les 4 premières étapes valent
+ * ce multiple de la cible du palier (leur moyenne reste la cible), plafonné à 97 %.
  */
-const RAMP: Record<number, number[]> = { 1: [1.8, 1.5, 0.6, 0.2] };
-const DEFAULT_RAMP = [1.6, 1.2, 0.8, 0.4];
+const TIER1_STEPS = [0.98, 0.95, 0.9, 0.8];
+const RAMP = [1.15, 1.08, 0.95, 0.82];
 /** Taux de victoire visé pour l'étape `step` (1 à 5) d'une route du palier `tier`. */
 export const stepTarget = (tier: number, step: number, guardian: boolean): number =>
-  guardian ? tierTarget(tier, true) : tierTarget(tier, false) * (RAMP[tier] ?? DEFAULT_RAMP)[step - 1]!;
-
+  guardian ? tierTarget(tier, true) : tier === 1 ? TIER1_STEPS[step - 1]! : Math.min(0.97, tierTarget(tier, false) * RAMP[step - 1]!);
 /** Escouade de joueur à pleine santé, meilleure forme du niveau (évolutions comprises), équipée ou non. */
 export function squadOf(c: GenContent, s: Squad, level: number, gearTier?: number): PlayerTroop[] {
   const o = c.online!;
@@ -349,7 +352,7 @@ export function report(rows: StepReport[], squads: Record<string, Squad>, opt: {
   lines.push(
     '## Moyennes par palier et cibles',
     '',
-    `Cible : 50 % au palier 1, −10 points par palier ; gardiens 5 points plus bas ; tolérance ${Math.round(TOLERANCE * 100)} points.`,
+    `Cible : voir tierTarget (91 % au palier 1, −7 points par palier ; gardiens 75 % puis −7 points) ; tolérance ${Math.round(TOLERANCE * 100)} points.`,
     '',
     '| Palier | Étapes | Cible | Gardiens | Cible | Verdict |',
     '|---|---|---|---|---|---|',

@@ -28,8 +28,9 @@ eco:
   startItems: { bandage: 3 }
   startRecipe: acolyte
   manaRegenEnd: 25
-  # Réglés par `pnpm content simulate` (escouades de référence équipées, balance/squads.yaml) : 50 % de victoires
-  # aux étapes du palier 1, 10 % au palier 5 (−10 points par palier), gardiens 5 points plus bas. Le prototype
+  # Facteurs de palier, complétés étape par étape par le `mult` de world/routes.yaml (réglé par `pnpm content calibrate`,
+  # mesuré par `pnpm content simulate`, escouades de référence équipées, balance/squads.yaml) : 91 % de victoires
+  # en moyenne au palier 1, −7 points par palier, gardiens 75 % puis −7 points [Xavier, 6 novembre 2026]. Le prototype
   # avait [1250, 1700, 2300, 4500, 3800] (PV), [1200, 1500, 1900, 3200, 2800] (attaque) et [1000, 1000, 1050, 480, 1050] (gardien).
   monsterHp: [1850, 3270, 3772, 6104, 11753]
   monsterAtk: [1587, 2721, 3116, 4341, 8660]

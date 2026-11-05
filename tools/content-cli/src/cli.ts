@@ -6,6 +6,7 @@
  *   pnpm content annexe   [dossier] [--out fichier]   annexe de contenu en Markdown
  *   pnpm content simulate [dossier] [--fights N] [--runs N] [--bare] [--out fichier]  équilibrage contre les escouades de
  *                                                    référence, équipées au palier (--bare : sans équipement)
+ *   pnpm content calibrate [dossier] [--fights N] [--tier N] [--dry]  règle le mult de chaque étape sur les taux visés
  *   pnpm content diff     <ancien> [nouveau] [--out fichier]       différence de deux packs (dossiers ou JSON)
  *
  * Dossier par défaut : content/. La publication des packs viendra avec leur déploiement (guide 5.4, 17.3).
@@ -16,6 +17,7 @@ import { validateContent } from '@cr/content';
 import type { Issue } from '@cr/content';
 import type { GenContent } from '@cr/gen';
 import { annexe } from './annexe.ts';
+import { calibrate } from './calibrate.ts';
 import { diffPacks } from './diff.ts';
 import { dungeonReport, loadSquads, report as simReport, simulate, simulateDungeons, SQUADS_FILE } from './simulate.ts';
 
@@ -63,6 +65,20 @@ switch (cmd) {
     write(simReport(rows, squads, { gear }) + (dungeons.length ? '\n' + dungeonReport(dungeons) : ''));
     break;
   }
+  case 'calibrate': {
+    if (!v.ok) {
+      report(v.issues);
+      process.exitCode = 1;
+      break;
+    }
+    const tier = flag('tier');
+    calibrate(v.pack as unknown as GenContent, loadSquads(SQUADS_FILE), dir, {
+      fights: Number(flag('fights') ?? 60),
+      ...(tier ? { tier: Number(tier) } : {}),
+      dry: rest.includes('--dry'),
+    });
+    break;
+  }
   case 'diff':
     write(diffPacks(packOf(positional[0] ?? 'content'), packOf(positional[1] ?? 'content')));
     break;
@@ -100,6 +116,8 @@ switch (cmd) {
     break;
   }
   default:
-    console.error('usage : content-cli validate|compile|annexe|simulate [dossier] [--out fichier] ; content-cli diff <ancien> [nouveau]');
+    console.error(
+      'usage : content-cli validate|compile|annexe|simulate|calibrate [dossier] [--out fichier] ; content-cli diff <ancien> [nouveau]',
+    );
     process.exitCode = 2;
 }

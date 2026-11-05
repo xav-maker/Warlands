@@ -8,6 +8,7 @@ import { validateContent } from '@cr/content';
 import type { GenContent } from '@cr/gen';
 import { battleUnits, genMonsters, routes, stepSpec } from '@cr/gen';
 import { beforeAll, describe, expect, it } from 'vitest';
+import { rewriteMults, tuneStep } from '../src/calibrate.ts';
 import { diffPacks } from '../src/diff.ts';
 import {
   DUNGEON_TARGET,
@@ -115,9 +116,15 @@ describe('simulation', () => {
     expect(total(true)).toBeGreaterThan(total(false));
   });
 
-  it('cibles : 50 % au palier 1, −10 points par palier, gardiens 5 points plus bas', () => {
-    expect([1, 2, 3, 4, 5].map((t) => Math.round(tierTarget(t, false) * 100))).toEqual([50, 40, 30, 20, 10]);
-    expect([1, 2, 3, 4, 5].map((t) => Math.round(tierTarget(t, true) * 100))).toEqual([45, 35, 25, 15, 5]);
+  it('cibles : 91 % au palier 1, −7 points par palier, gardiens 75 % puis −7 points (6 novembre 2026)', () => {
+    expect([1, 2, 3, 4, 5].map((t) => Math.round(tierTarget(t, false) * 100))).toEqual([91, 78, 71, 64, 57]);
+    expect([1, 2, 3, 4, 5].map((t) => Math.round(tierTarget(t, true) * 100))).toEqual([75, 68, 61, 54, 47]);
+    // La rampe de chaque palier descend d'étape en étape et garde sa moyenne.
+    for (const t of [1, 2, 3, 4, 5]) {
+      const ramp = [1, 2, 3, 4].map((s) => stepTarget(t, s, false));
+      for (let i = 1; i < 4; i++) expect(ramp[i]!).toBeLessThan(ramp[i - 1]!);
+      if (t > 1) expect(ramp.reduce((a, x) => a + x, 0) / 4).toBeCloseTo(tierTarget(t, false), 1);
+    }
   });
 
   it('le rapport signale les paliers hors cible', () => {
@@ -179,16 +186,16 @@ describe('équilibrage du contenu publié (60 combats par étape, escouades équ
       expect(of[0]!.winRate, `${R.name} : première étape`).toBeGreaterThan(of.at(-1)!.winRate);
     }
     // Palier 1 : l'escouade de départ (pas pleine, niveau en retard, sans équipement) passe la première étape presque toujours.
-    for (const r of rows.filter((x) => x.tier === 1 && x.step === 1)) expect(r.winRate, r.routeName).toBeGreaterThanOrEqual(0.8);
+    for (const r of rows.filter((x) => x.tier === 1 && x.step === 1)) expect(r.winRate, r.routeName).toBeGreaterThanOrEqual(0.9);
   });
 
-  it('palier 1 : la deuxième étape vise 75 % avec l’escouade de départ, niveau 1 et sans équipement', () => {
-    expect(stepTarget(1, 1, false)).toBeCloseTo(0.9);
-    expect(stepTarget(1, 2, false)).toBeCloseTo(0.75);
+  it('palier 1 : les deux premières étapes visent 98 % et 95 % avec l’escouade de départ, niveau 1 et sans équipement', () => {
+    expect(stepTarget(1, 1, false)).toBeCloseTo(0.98);
+    expect(stepTarget(1, 2, false)).toBeCloseTo(0.95);
     const second = squadForStep(squads['1']!, 2);
     expect(second.gear).toBe(false);
     expect(second.troops).toEqual(squadForStep(squads['1']!, 1).troops);
-    for (const r of rows.filter((x) => x.tier === 1 && x.step === 2)) expect(r.winRate, r.routeName).toBeGreaterThanOrEqual(0.65);
+    for (const r of rows.filter((x) => x.tier === 1 && x.step === 2)) expect(r.winRate, r.routeName).toBeGreaterThanOrEqual(0.85);
   });
 
   it('l’escouade de la première étape du palier 1 est celle du départ plus l’Acolyte, sans équipement', () => {
@@ -197,6 +204,48 @@ describe('équilibrage du contenu publié (60 combats par étape, escouades équ
     expect(first.troops.map(([t]) => t).sort()).toEqual([...eco.startTroops.map(([t]) => t), 'acolyte'].sort());
     expect(first.gear).toBe(false);
     expect(first.offset).toBeLessThan(0);
+  });
+});
+
+describe('premiers pas : peu de pertes [Xavier, 6 novembre 2026]', () => {
+  it('au palier 1, les trois premières étapes coûtent en moyenne moins de 2 unités par combat (plus de 3 avant le réglage)', () => {
+    const rows = simulate(pack, squads, { fights: 60 }).filter((r) => r.tier === 1 && r.step <= 3);
+    const avg = rows.reduce((a, r) => a + r.avgLosses, 0) / rows.length;
+    expect(avg).toBeLessThan(2);
+  }, 300_000);
+});
+
+describe('réglage de la difficulté (calibrate)', () => {
+  const yaml = [
+    '# commentaire',
+    '- id: r1',
+    '  steps:',
+    '    - id: a',
+    '      mult: 100',
+    '      level: [1, 2]',
+    '    - id: b',
+    '      mult: 200',
+    '- id: r2',
+    '  steps:',
+    '    - id: a',
+    '      mult: 300',
+  ].join('\n');
+
+  it('réécrit le mult de chaque étape de chaque route, et rien d’autre', () => {
+    const tuned = [
+      { route: 'r1', step: 'a', mult: 111, winRate: 0.9, target: 0.9 },
+      { route: 'r1', step: 'b', mult: 222, winRate: 0.9, target: 0.9 },
+      { route: 'r2', step: 'a', mult: 333, winRate: 0.9, target: 0.9 },
+    ];
+    const out = rewriteMults(yaml, tuned);
+    expect(out).toBe(yaml.replace('100', '111').replace('200', '222').replace('300', '333'));
+    expect(rewriteMults(yaml, [])).toBe(yaml);
+  });
+
+  it('trouve un mult qui rapproche une étape de sa cible', () => {
+    const one = { ...pack, routes: routes(pack).slice(0, 1) } as GenContent;
+    const t = tuneStep(one, routes(one)[0]!.id, 2, squads, 20);
+    expect(Math.abs(t.winRate - t.target)).toBeLessThanOrEqual(0.15);
   });
 });
 
