@@ -16,7 +16,7 @@
   bosses: [lutin_grand_chapeau, fee_melancolie, roi_elfes_tertre]
   material: poussiere_fee
   uniques: [robe_petales, baguette_saule]
-  mult: 1550
+  mult: 1450
 - id: grotte_contrebandiers
   route: falaises_heron
   pool: [contrebandiers, chiens_garde, noyes_port, sorciere_quais]

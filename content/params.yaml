@@ -31,9 +31,9 @@ eco:
   # Réglés par `pnpm content simulate` (escouades de référence équipées, balance/squads.yaml) : 50 % de victoires
   # aux étapes du palier 1, 10 % au palier 5 (−10 points par palier), gardiens 5 points plus bas. Le prototype
   # avait [1250, 1700, 2300, 4500, 3800] (PV), [1200, 1500, 1900, 3200, 2800] (attaque) et [1000, 1000, 1050, 480, 1050] (gardien).
-  monsterHp: [1652, 3084, 3772, 6104, 11753]
+  monsterHp: [1850, 3270, 3772, 6104, 11753]
   monsterAtk: [1587, 2721, 3116, 4341, 8660]
-  guardianAdj: [502, 292, 356, 449, 428]
+  guardianAdj: [485, 292, 356, 449, 428]
   bagSlots: 20
   bankSlots: 100
   buyBack: 0.2

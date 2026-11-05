@@ -660,7 +660,7 @@
       level: [8, 9]
       pop: [8, 9]
       draws: [2, 3]
-      mult: 1364
+      mult: 1280
       guardian: true
       forced: [gardien_chene]
 - id: falaises_heron

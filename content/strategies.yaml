@@ -20,7 +20,10 @@ frondeurs:
   - { cond: noEnemyInRange, action: avancer, target: self }
 acolyte:
   - { cond: allyHpBelow, v: 40, action: priere, target: self }
-  - { cond: allyHpBelow, v: 50, action: soin_mineur, target: mostWoundedAlly }
+  # allyHpBelow ne compte pas l'unité elle-même (README 16.4) : sans la deuxième règle, l'acolyte, souvent la cible des
+  # tireurs au rang 3, ne se soignait jamais. Seuils relevés (50 → 75 %) : à 50 elle laissait ses alliés tomber bas.
+  - { cond: allyHpBelow, v: 75, action: soin_mineur, target: mostWoundedAlly }
+  - { cond: selfHpBelow, v: 60, action: soin_mineur, target: self }
   - { cond: targetHasState, s: poison, action: purification, target: mostWoundedAlly }
   - { cond: allyHpBelow, v: 70, action: bouclier_foi, target: mostWoundedAlly }
   - { cond: allyHpBelow, v: 85, action: regeneration, target: mostWoundedAlly }

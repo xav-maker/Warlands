@@ -17,7 +17,7 @@
 <% const here = (p) => (at(p) ? ' aria-current="page"' : '') %>
 <% const playPaths = ['/jeu', '/ville', '/route', '/donjon', '/caserne', '/atelier', '/marchand', '/boutique', '/quetes', '/troupe', '/combat', '/sac'] %>
 <% const socialPaths = ['/chat', '/messages', '/amis', '/notifications', '/signaler'] %>
-<% const helpPaths = ['/tutoriel', '/codex'] %>
+<% const helpPaths = ['/tutoriel', '/aide', '/codex'] %>
 <% const cur = (paths) => (paths.some(at) ? ' current' : '') %>
 <% const item = (href, ico, label, hint) => `<a href="${href}"${here(href)}><svg class="ico" aria-hidden="true"><use href="#i-${ico}"></use></svg><span><b>${label}</b>${hint ? `<small>${hint}</small>` : ''}</span></a>` %>
 <% const pos = it.v ? (it.v.kind === 'route' ? 'Ma route' : it.v.kind === 'dungeon' ? 'Mon donjon' : 'Ma ville') : 'Ma position' %>
@@ -54,6 +54,7 @@
             <summary><svg class="ico" aria-hidden="true"><use href="#i-help"></use></svg>Aide<svg class="ico chev" aria-hidden="true"><use href="#i-chevron"></use></svg></summary>
             <div class="menu-panel">
               <%~ item('/tutoriel', 'help', 'Guide', 'premiers pas') %>
+              <%~ item('/aide/combat', 'sword', 'Stats et combat', 'formules et calculs') %>
               <%~ item('/codex', 'book', 'Codex', 'troupes, monstres, objets') %>
             </div>
           </details>

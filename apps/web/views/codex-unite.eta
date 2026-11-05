@@ -1,0 +1,45 @@
+<% layout('./layout', { title: it.def.name }) %>
+<% const def = it.def; const m = it.monster; const back = it.monster ? 'monstres' : 'troupes' %>
+<% const fr = (n) => String(Math.round(n * 100) / 100).replace('.', ',') %>
+<section class="codex">
+  <p class="eyebrow"><a href="/codex?p=<%= back %>">Codex · <%= it.monster ? 'Monstres' : 'Troupes' %></a></p>
+  <h1><%= def.name %></h1>
+  <p class="muted">
+    <%= def.role %> ·
+    <%= def.units %> unité<%= def.units > 1 ? 's' : '' %> · population <%= def.pop %>
+    <% if (it.recruitedIn) { %> · se recrute à <%= it.recruitedIn %><% } %>
+    <% if (it.monster && it.tier !== undefined) { %> · palier <%= it.tier + 1 %><% } %>
+    <% if (def.tags.length) { %> · <%= def.tags.join(', ') %><% } %>
+  </p>
+
+  <form method="get" class="row" action="/codex/unite/<%= it.id %>">
+    <label>Niveau (1 à <%= it.maxLevel %>)
+      <input type="number" name="niveau" min="1" max="<%= it.maxLevel %>" value="<%= it.level %>" inputmode="numeric">
+    </label>
+    <button type="submit">Afficher</button>
+  </form>
+
+  <% if (it.monster) { %>
+    <p class="meta">
+      <% if (it.tier !== undefined) { %>
+        Les chiffres sont ceux du combat : les PV et la puissance de base sont multipliés par le renfort du palier <%= it.tier + 1 %>
+        (PV ×<%= fr(it.c.eco.monsterHp[it.tier] / 1000) %>, puissances et arme ×<%= fr(it.c.eco.monsterAtk[it.tier] / 1000) %>).
+      <% } else { %>Aucun renfort n’est appliqué aux chiffres ci-dessous.<% } %>
+      <% if (m.boss) { %>Un gardien reçoit en plus un ajustement propre à son palier.<% } %>
+      <a href="/aide/combat#monstres">Détails</a>
+    </p>
+  <% } else { %>
+    <p class="meta">Chaque forme est montrée au niveau choisi, ou au niveau où elle apparaît s’il est plus haut. <a href="/aide/combat#niveaux">Comment les stats progressent</a>.</p>
+  <% } %>
+
+  <% for (const f of it.forms) { %>
+    <div class="card">
+      <h2><%= f.form.name %> <span class="muted">
+        <% if (!it.monster) { %><%= f.form.level > 1 ? 'forme du niveau ' + f.form.level : 'forme de départ' %><%= f.parent ? ', évolue de ' + f.parent : '' %> · <% } %>niveau affiché : <%= f.sheet.level %></span></h2>
+      <%~ include('./partials/stat-sheet', { sheet: f.sheet }) %>
+      <h3>Capacités</h3>
+      <div class="spells"><% for (const [s, l] of f.form.skills) { %><%~ include('./partials/spell', { id: s, L: it.L, level: l > 1 ? l : 0 }) %><% } %></div>
+      <% if (!it.monster && f.form.level > 1) { %><p class="meta">Les capacités des formes précédentes sont conservées.</p><% } %>
+    </div>
+  <% } %>
+</section>

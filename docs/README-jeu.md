@@ -185,8 +185,8 @@ Les **stats finales** ajoutent l'équipement (section 7.4).
 
 - Niveaux 1 à 30 (`maxLevel`).
 - XP pour passer du niveau `n` à `n+1` : `round(50 × n × (1 + n/10))`. Exemples : niv. 1 → 55, niv. 5 → 375, niv. 10 → 1 000, niv. 20 → 3 000, niv. 29 → 5 655. L'XP restante est reportée.
-- XP d'une victoire : `base = Σ (niveau × population) des troupes de monstres × 8`.
-- **Chaque troupe gagnante reçoit la totalité de `base`** (l'XP n'est pas partagée), réduite si elle est trop forte : avec `écart = niveau_troupe − floor(niveau moyen des troupes de monstres) − 2`, la troupe reçoit `base` si écart ≤ 0, sinon `floor(base / 2^écart)`.
+- XP d'une victoire : `base = Σ (niveau × population) des troupes de monstres × 8` (`eco.xpPerMonsterLevelPop`).
+- **L'XP est partagée à parts égales** entre les troupes gagnantes [Xavier, 3 novembre 2026] : `part = floor(base / nombre de troupes gagnantes)`. Elle est réduite si la troupe est trop forte : avec `écart = niveau_troupe − floor(niveau moyen des troupes de monstres) − 2`, la troupe reçoit `part` si écart ≤ 0, sinon `floor(part / 2^écart)`.
 - Une troupe gagne de l'XP si au moins une de ses unités a fini le combat vivante et **sans avoir fui**. Défaite : aucune XP.
 - Au passage de niveau, les PV et le mana courants augmentent du gain de maximum (puis sont bornés).
 
@@ -292,7 +292,7 @@ Le résultat donne le vainqueur (`0` joueur, `1` monstres, `null` égalité impo
 |---|---|
 | `always` | toujours |
 | `selfHpBelow v` | mes PV < v % |
-| `allyHpBelow v` | un allié (moi compris) a PV < v % |
+| `allyHpBelow v` | un **autre** allié (moi exclu, depuis `proto-0.4.2`) a PV < v %. Pour se soigner soi-même : `selfHpBelow` avec la cible `self` |
 | `selfWillBelow v` | ma volonté < v % |
 | `selfEnergyBelow v` / `selfEnergyAbove v` | mon énergie < v % / ≥ v % |
 | `selfManaBelow v` | j'ai du mana et mon mana < v % |
@@ -835,8 +835,8 @@ Comportements actuels qui ressemblent à des accidents. La version en ligne doit
 
 1. **Embrasement** calcule les tics de brûlure restants avec la période de 20 instants (`P.tick`) alors que les brûlures tiquent maintenant tous les 4 : il compte environ 5 fois moins de dégâts restants que prévu.
 2. **L'ajustement du gardien** s'applique à toute la rencontre de l'étape 5, escorte comprise (utile pour le Dragon à ×0,48, qui adoucit aussi son escorte).
-3. **L'XP n'est pas partagée** entre les troupes : chacune reçoit le total. Une escouade de 5 troupes d'une unité gagne 5 fois plus d'XP au total qu'une escouade d'une seule troupe. **Tranché par Xavier le 3 novembre 2026 : en ligne, l'XP est partagée entre les troupes de l'escouade.**
-4. **`allyHpBelow`** compte l'unité elle-même parmi les alliés.
+3. **L'XP n'était pas partagée** entre les troupes : chacune recevait le total. Une escouade de 5 troupes d'une unité gagne 5 fois plus d'XP au total qu'une escouade d'une seule troupe. **Tranché par Xavier le 3 novembre 2026 : en ligne, l'XP est partagée entre les troupes de l'escouade.**
+4. **`allyHpBelow`** comptait l'unité elle-même parmi les alliés. **Corrigé** dans le moteur `proto-0.4.2` (donc aussi `v1`) : l'unité est exclue. Conséquence : un soigneur dont la règle de soin n'utilise que `allyHpBelow` ne se soigne jamais lui-même (voir 28.1).
 5. Les **règles par défaut** contiennent des capacités que la troupe n'apprendra jamais faute d'évolution ; elles sont filtrées pour les troupes de joueur mais restent dans le contenu.
 6. **`searchFight`** ne vérifie pas qu'aucun groupe n'est en vue (13.2, point 3).
 7. Le rare consomme 2 points du budget de population, mais l'étape 1 de la région 1 n'a que 1 à 2 de population : le groupe peut se réduire au rare seul (il n'apparaît qu'après 10 victoires).
@@ -1131,3 +1131,31 @@ Certaines quêtes demandent des **trophées de boss de donjon**. Le générateur
 4. Taxe de 5 %, durée de 7 jours et limite de 20 annonces des boutiques (section 22.2).
 5. Coûts des évolutions (section 24).
 6. Soin au changement d'équipement limité à la ville (section 21).
+
+## 28. Stats, guide de combat et réglage de l'Acolyte (5 novembre 2026)
+
+### 28.1 Acolyte : soins
+
+- **Problème** : `allyHpBelow` exclut l'unité elle-même (section 16, point 4). L'Acolyte, qui n'avait que cette condition pour soigner, ne se soignait jamais ; et son seuil de 50 % la faisait réagir trop tard, la recharge par cible (`healCooldown`, 60) l'empêchant ensuite de rattraper un allié déjà bas.
+- **Correction** (`content/strategies.yaml`, bloc `acolyte`) : soin d'un allié sous **75 %** de PV (au lieu de 50 %) ; nouvelle règle de **soin sur elle-même** sous 60 % de PV (`selfHpBelow`, cible `self`). `healCooldown` et `hotCooldown` ne changent pas.
+- **Autres soigneurs** : les stratégies des autres types soigneurs ont le même défaut (pas de soin sur eux-mêmes, seuils de 50 à 55 %). Non modifiées pour l'instant : chaque changement impose de refaire l'équilibrage (28.2).
+
+### 28.2 Rééquilibrage associé
+
+Une Acolyte plus efficace rendait le palier 1 trop facile ; les escouades de référence contiennent toutes une Acolyte. Valeurs recalées par simulation (`pnpm content simulate`, tests `tools/content-cli/test/simulate.test.ts`) :
+
+| Réglage | Avant | Après |
+|---|---|---|
+| `eco.monsterHp[0]` (palier 1) | 1 652 | 1 850 |
+| `eco.guardianAdj[0]` (palier 1) | 502 | 485 |
+| `mult` du gardien de la Lisière d'Ambre (`routes.yaml`) | 1 364 | 1 280 |
+| `mult` du donjon Tertre des Fées (`dungeons.yaml`) | 1 550 | 1 450 |
+
+Les taux de victoire du gardien d'une route sont très sensibles à ces valeurs (quelques pour cent de PV font varier un gardien de plus de 20 points) : après toute modification des stratégies, relancer la simulation et ajuster route par route.
+
+### 28.3 Statistiques des unités et guide de combat (interface)
+
+- **Fiche de statistiques** (`apps/web/src/stat-sheet.ts`) : pour une unité, niveau et forme donnés, PV, mana, volonté, énergie, puissances, vitesse, arme, résistances et immunités, avec le gain au niveau suivant et, pour une troupe du joueur, le détail base + équipement = total. Pour un monstre, le renfort du palier (`eco.monsterHp`, `eco.monsterAtk`) est appliqué.
+- **Page Troupe** (`/troupe/:id`) : une carte « Statistiques » par unité.
+- **Codex** : colonne « Stats » et page `GET /codex/unite/:id` (paramètre `?niveau=`) pour tout type de troupe ou de monstre.
+- **Aide → « Stats et combat »** (`GET /aide/combat`) : guide pour les joueurs (statistiques, niveaux et évolutions, équipement, temps et jauges, rangs, actions, volonté, formules de dégâts et de soins, états, monstres et donjons, fin du combat). Tous les chiffres sont lus dans le contenu publié, jamais recopiés.

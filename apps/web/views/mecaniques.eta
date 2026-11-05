@@ -1,0 +1,319 @@
+<% layout('./layout', { title: it.title }) %>
+<%/* Guide des statistiques et du combat. Tous les chiffres viennent du contenu actif (it.c) : ils suivent les réglages du jeu. */%>
+<% const c = it.c; const P = c.params; const eco = c.eco; const ex = it.ex; const exId = it.exId; const W = c.weapons[ex.weapon] %>
+<% const fr = (n) => String(Math.round(n * 100) / 100).replace('.', ',') %>
+<% const mult = (n) => fr(n / 1000) %>
+<% const pct = (n) => fr(n / 10) %>
+<% const lab = (key, fallback) => c.statCost[key]?.label ?? fallback %>
+<% const POW = ['for', 'ele', 'esp', 'foi', 'omb'] %>
+<% const form0 = ex.forms[0].id %>
+<% const g = (key, n) => (ex.base[key] ?? 0) + Math.floor((ex.growth[key] ?? 0) * (n - 1)) %>
+<% const sign = (n) => (n < 0 ? '−' : '+') + Math.abs(n) %>
+<section class="mech">
+  <p class="eyebrow">Aide</p>
+  <h1>Stats et combat : comment ça se calcule</h1>
+  <p class="muted">Un combat se joue tout seul, mais rien n’y est laissé au hasard de ce que vous pouvez préparer : niveau, équipement, rang, capacités actives. Cette page explique les chiffres, avec des exemples calculés sur le jeu tel qu’il est réglé aujourd’hui. Les fiches de chaque unité (PV, puissances, arme, résistances) sont dans <a href="/codex?p=troupes">le Codex</a> et, pour vos troupes, sur leur page.</p>
+  <ul class="toc" aria-label="Sections">
+    <li><a href="#stats">Les statistiques</a></li>
+    <li><a href="#niveaux">Niveaux et évolutions</a></li>
+    <li><a href="#equipement">Équipement</a></li>
+    <li><a href="#temps">Temps et vitesse</a></li>
+    <li><a href="#rangs">Rangs et portée</a></li>
+    <li><a href="#action">Une action</a></li>
+    <li><a href="#volonte">Volonté</a></li>
+    <li><a href="#degats">Dégâts</a></li>
+    <li><a href="#soins">Soins</a></li>
+    <li><a href="#etats">États</a></li>
+    <li><a href="#monstres">Monstres</a></li>
+    <li><a href="#fin">Fin du combat</a></li>
+  </ul>
+
+  <article class="card" id="stats">
+    <h2>Les statistiques d’une unité</h2>
+    <p>Une troupe compte une ou plusieurs <b>unités</b> ; chaque unité a ses propres statistiques et son propre équipement.</p>
+    <table class="data">
+      <thead><tr><th>Statistique</th><th>Rôle</th></tr></thead>
+      <tbody>
+        <tr><td><b><%= lab('hp', 'PV max') %></b></td><td>Les points de vie. À 0, l’unité meurt, définitivement.</td></tr>
+        <tr><td><b><%= lab('will', 'Volonté max') %></b></td><td>Le sang-froid. Elle baisse quand on est blessé ou qu’un allié tombe ; trop basse, les actions ratent (voir <a href="#volonte">Volonté</a>).</td></tr>
+        <tr><td><b><%= lab('energy', 'Énergie max') %></b></td><td>Paie les attaques d’arme et les techniques. À sec, l’unité attend pour en récupérer.</td></tr>
+        <tr><td><b><%= lab('mana', 'Mana max') %></b></td><td>Paie les sorts. Seules certaines troupes en ont.</td></tr>
+        <tr><td><b>Les 5 puissances</b></td><td>Elles s’ajoutent aux dégâts, aux soins et aux boucliers (tableau ci-dessous).</td></tr>
+        <tr><td><b>Vitesse</b></td><td>La durée de base d’une action, en instants : <b>plus petit, plus rapide</b>.</td></tr>
+        <tr><td><b>Arme</b></td><td>Dégâts, vitesse, coût en énergie et type de dégâts. Une arme équipée remplace l’arme naturelle de la troupe.</td></tr>
+        <tr><td><b>Résistances</b></td><td>Un pourcentage par type de dégâts : il retire cette part des dégâts reçus. Borné entre −<%= pct(-P.resFloor) %> % et +<%= pct(P.resCap) %> %. Une résistance négative est une faiblesse.</td></tr>
+        <tr><td><b>Immunités</b></td><td>Réservées aux monstres : 0 dégât du type concerné, et pas non plus d’effets liés (une immunité au feu protège de la Brûlure).</td></tr>
+      </tbody>
+    </table>
+    <h3>Les 5 puissances</h3>
+    <table class="data">
+      <thead><tr><th>Puissance</th><th>Sert à</th><th>Types de dégâts habituels</th></tr></thead>
+      <tbody>
+        <tr><td><b><%= lab('for', 'Force') %></b></td><td>Armes et techniques d’arme, charges, coups</td><td>contondant, tranchant (celui de l’arme)</td></tr>
+        <tr><td><b><%= lab('ele', 'Élémentaire') %></b></td><td>Magie du feu et de la glace</td><td>feu, glace</td></tr>
+        <tr><td><b><%= lab('esp', 'Esprit') %></b></td><td>Sorts mentaux : peur, confusion, contrôle</td><td>psychique</td></tr>
+        <tr><td><b><%= lab('foi', 'Foi') %></b></td><td>Magie sacrée, <b>soins</b>, boucliers</td><td>sacré</td></tr>
+        <tr><td><b><%= lab('omb', 'Ombre') %></b></td><td>Magie noire, poisons, drains</td><td>ténèbres, maladie</td></tr>
+      </tbody>
+    </table>
+    <p>Chaque capacité indique la puissance qu’elle utilise et le type de dégâts qu’elle inflige, et les deux ne vont pas toujours ensemble : la Lame d’ombre se sert de la Force pour infliger des ténèbres. Survolez une capacité pour voir son effet.</p>
+  </article>
+
+  <article class="card" id="niveaux">
+    <h2>Niveaux et évolutions</h2>
+    <p>Chaque troupe a, pour chaque statistique, une <b>valeur de base</b> et une <b>croissance par niveau</b>. À un niveau <i>n</i> :</p>
+    <code class="formula">g(stat) = base + floor(croissance × (n − 1))
+PV max      = floor(g(PV) × multiplicateur de la forme / 1000) × <%= c.gaugeMult %>
+Énergie max = (g(énergie) + bonus de la forme) × <%= c.gaugeMult %>
+Mana max    = (g(mana) + bonus de la forme) × <%= c.gaugeMult %>
+Volonté max = g(volonté) + bonus de la forme
+Puissance   = g(puissance) + bonus de la forme</code>
+    <p>Les jauges de PV, d’énergie et de mana sont multipliées par <b><%= c.gaugeMult %></b> pour tout le monde (troupes et monstres) ; la volonté et les puissances ne le sont pas.</p>
+    <div class="example">
+      <b>Exemple : <%= ex.name %> (sans évolution)</b>
+      <p>Base : <%= ex.base.hp %> PV avec +<%= ex.growth.hp %> par niveau. Au niveau 10 : g(PV) = <%= ex.base.hp %> + floor(<%= ex.growth.hp %> × 9) = <%= g('hp', 10) %>, donc <%= g('hp', 10) %> × <%= c.gaugeMult %> = <b><%= g('hp', 10) * c.gaugeMult %> PV max</b>.</p>
+    </div>
+    <table class="data stats">
+      <thead>
+        <tr><th>Niveau</th><th class="num">PV max</th><th class="num">Volonté</th><th class="num">Énergie</th><% for (const k of POW) { %><th class="num"><%= lab(k, k) %></th><% } %></tr>
+      </thead>
+      <tbody>
+        <% for (const n of [1, 5, 10, 15, 20, 25, eco.maxLevel]) { const s = it.stats(exId, form0, n) %>
+          <tr><td><%= n %></td><td class="num"><%= s.hpMax %></td><td class="num"><%= s.willMax %></td><td class="num"><%= s.energyMax %></td><% for (const k of POW) { %><td class="num"><%= s.pow ? s.pow[k] : '' %></td><% } %></tr>
+        <% } %>
+      </tbody>
+    </table>
+    <p class="meta">Les niveaux vont de 1 à <%= eco.maxLevel %>. Chaque fiche de troupe, sur sa page, donne ce que le prochain niveau apporte.</p>
+
+    <h3>Évolutions</h3>
+    <p>Aux niveaux d’évolution, une troupe peut prendre une nouvelle forme : elle apprend de nouvelles capacités, ses <b>PV sont multipliés</b> par le multiplicateur de la forme, et elle gagne des <b>bonus fixes</b>. La vitesse et les résistances sont celles de la forme.</p>
+    <table class="data">
+      <thead><tr><th>Forme de <%= ex.name %></th><th>Niveau requis</th><th>PV</th><th>Bonus</th><th>Vitesse</th></tr></thead>
+      <tbody>
+        <% for (const f of ex.forms) { %>
+          <tr>
+            <td><b><%= f.name %></b></td>
+            <td><%= f.level %></td>
+            <td>× <%= mult(f.hpMult ?? 1000) %></td>
+            <td><%= Object.entries(f.bonus ?? {}).map(([k, v]) => '+' + v + ' ' + lab(k, k).toLowerCase()).join(', ') || '—' %></td>
+            <td><%= f.speed %></td>
+          </tr>
+        <% } %>
+      </tbody>
+    </table>
+
+    <h3>Expérience</h3>
+    <code class="formula">XP pour passer du niveau n au suivant = round(50 × n × (1 + n / 10))</code>
+    <p>Quelques paliers : <% for (const [i, n] of [1, 5, 10, 20, eco.maxLevel - 1].entries()) { %><%= i ? ' · ' : '' %>niveau <%= n %> → <b><%= it.xpToNext(n) %></b><% } %> XP.</p>
+    <ul class="plain">
+      <li>Une victoire rapporte <b>niveau × population × <%= eco.xpPerMonsterLevelPop %></b> pour chaque troupe de monstres, additionnés.</li>
+      <li>Cette XP est <b>partagée à parts égales</b> entre les troupes gagnantes : celles qui ont au moins une unité en vie qui n’a pas fui.</li>
+      <li>Une troupe <b>trop forte</b> apprend moins : avec écart = niveau de la troupe − niveau moyen des monstres (arrondi à l’inférieur) − 2, sa part est divisée par 2<sup>écart</sup> si l’écart est positif.</li>
+      <li>En montant de niveau, les PV et le mana actuels augmentent autant que les maximums.</li>
+    </ul>
+  </article>
+
+  <article class="card" id="equipement">
+    <h2>Équipement</h2>
+    <p>Chaque objet d’équipement est <b>tiré</b> à la fabrication ou au butin : sa <b>qualité</b> varie de 60 % à 140 % du budget normal de son palier (moyenne de deux tirages, donc le plus souvent proche de 100 %). Qualité : médiocre sous 85 %, correct jusqu’à 105 %, bon jusqu’à 120 %, excellent au-delà.</p>
+    <code class="formula">budget      = floor(budget du palier × qualité / 1000)
+points      = budget partagé au hasard entre les stats (15 % du budget au moins chacune)
+stat de l’objet = floor(points × valeur d’un point)</code>
+    <table class="data">
+      <thead><tr><th>Palier</th><th class="num">Budget</th><th class="num">Stats par objet</th><th class="num">Niveau requis</th></tr></thead>
+      <tbody>
+        <% for (const t of Object.keys(c.tierBudget)) { %>
+          <tr><td><%= t %></td><td class="num"><%= c.tierBudget[t] %></td><td class="num"><%= c.tierNStats[t] %></td><td class="num"><%= c.tierLevel[t] %></td></tr>
+        <% } %>
+      </tbody>
+    </table>
+    <table class="data">
+      <thead><tr><th>Statistique</th><th>Un point de budget donne</th></tr></thead>
+      <tbody>
+        <% for (const [key, s] of Object.entries(c.statCost)) { if (key === 'atk') continue; const down = key === 'wspeed' || key === 'wcost' %>
+          <tr><td><%= s.label %></td><td><%= down ? '−' : '+' %><%= fr(s.per) %><%= s.unit ? ' ' + s.unit : '' %><%= key === 'res' ? ' sur un type de dégâts' : '' %></td></tr>
+        <% } %>
+      </tbody>
+    </table>
+    <h3>Ce que l’objet change vraiment</h3>
+    <ul class="plain">
+      <li>Les valeurs d’un objet sont <b>multipliées par <%= c.itemBoost %></b> à l’usage : ce que la fiche de l’objet affiche est déjà ce chiffre.</li>
+      <li>Pour les <b>PV, l’énergie et le mana</b>, le chiffre affiché est encore multiplié par <b><%= c.gaugeMult %></b> sur l’unité, comme toutes les jauges.</li>
+      <li>L’arme équipée <b>remplace</b> l’arme naturelle (dégâts, vitesse, coût, type), puis ses bonus s’ajoutent. La vitesse de l’arme ne descend pas sous 8, son coût en énergie pas sous 1.</li>
+      <li>Une troupe ne porte que les catégories qu’elle accepte, et seulement à partir du niveau requis du palier.</li>
+    </ul>
+    <% const T1 = c.tierBudget['1']; const half = Math.floor(T1 / 2) %>
+    <div class="example">
+      <b>Exemple : un objet de palier 1, qualité « correct » (100 %)</b>
+      <p>Budget <%= T1 %>, réparti à parts égales entre deux stats : <%= half %> points chacune. En Force (1 point = +<%= fr(c.statCost.for.per) %>) : <%= half %> × <%= fr(c.statCost.for.per) %> × <%= c.itemBoost %> = <b>+<%= Math.floor(half * c.statCost.for.per) * c.itemBoost %> Force</b>. En PV (1 point = +<%= fr(c.statCost.hp.per) %>) : <%= half %> × <%= fr(c.statCost.hp.per) %> = <%= Math.floor(half * c.statCost.hp.per) %>, × <%= c.itemBoost %> = <%= Math.floor(half * c.statCost.hp.per) * c.itemBoost %> sur la fiche de l’objet, et <b>+<%= Math.floor(half * c.statCost.hp.per) * c.itemBoost * c.gaugeMult %> PV max</b> sur l’unité.</p>
+    </div>
+  </article>
+
+  <article class="card" id="temps">
+    <h2>Temps et vitesse</h2>
+    <p>Le temps du combat est compté en <b>instants</b>. Chaque unité a un instant de prochaine action ; le moteur fait jouer la plus proche. À égalité : la plus petite vitesse d’abord, puis le camp du joueur, puis l’emplacement.</p>
+    <code class="formula">durée d’une action = base × multiplicateur de la capacité / 1000
+base = vitesse de l’unité (sorts, déplacements) ou vitesse de l’arme (capacités d’arme)
+sous Hâte : durée × <%= mult(P.hasteMod) %>      sous Ralenti : durée × <%= mult(P.slowMod) %>      (les deux s’annulent)</code>
+    <ul class="plain">
+      <li>Avancer, Reculer et Attendre durent la vitesse de l’unité × <%= mult(P.moveMult) %> ; <b>Fuir</b> × <%= mult(P.fleeMult) %>.</li>
+      <li>Une unité étourdie voit sa prochaine action repoussée de la durée de l’étourdissement ; une unité gelée ne joue pas jusqu’à la fin du gel.</li>
+    </ul>
+    <div class="example">
+      <b>Exemple</b>
+      <p><%= ex.name %> a une vitesse de <%= ex.forms[0].speed %> et frappe avec <%= W.name %> (vitesse <%= W.speed %>). Son Emploi d’arme dure la vitesse de l’arme × 1 = <b><%= W.speed %> instants</b>. Sous Hâte : <%= Math.max(1, Math.floor(W.speed * P.hasteMod / 1000)) %> instants.</p>
+    </div>
+  </article>
+
+  <article class="card" id="rangs">
+    <h2>Rangs et portée</h2>
+    <p>Chaque unité se tient au <b>rang 1</b> (au contact), <b>2</b> ou <b>3</b> (à l’arrière). Le rang de départ se choisit par troupe, sur sa page.</p>
+    <ul class="plain">
+      <li>Le <b>rang effectif</b> compte les rangs réellement occupés de son camp : si seuls les rangs 2 et 3 sont occupés, ils comptent comme 1 et 2.</li>
+      <li>Distance entre deux ennemis = rang effectif de l’un + rang effectif de l’autre − 1. Le <b>contact</b> est une distance de 1.</li>
+      <li>Distance entre deux alliés = écart de leurs rangs effectifs.</li>
+      <li>Une capacité touche les cibles dont la distance est au plus égale à sa <b>portée</b> (certaines ont aussi une portée minimale).</li>
+      <li><b>Avancer</b> rejoint le rang occupé le plus proche devant soi. <b>Reculer</b> descend d’un rang. <b>Fuir</b> n’est possible qu’au rang 3 : l’unité survit mais ne gagne pas d’XP.</li>
+      <li>Une capacité d’attaque doit viser un ennemi sous <b>Provocation</b> s’il y en a un à portée.</li>
+    </ul>
+  </article>
+
+  <article class="card" id="action">
+    <h2>Une action, pas à pas</h2>
+    <ol>
+      <li>L’énergie et le mana mis de côté par un « Attendre » précédent sont crédités.</li>
+      <li>Une unité <b>gelée</b> ne fait rien et rejoue à la fin du gel.</li>
+      <li>L’unité parcourt ses règles dans l’ordre et prend la <b>première applicable</b> : capacité active, condition vraie, au moins une cible valide, mana suffisant. Les règles sont celles du type de troupe ; vous choisissez seulement lesquelles de ses capacités sont actives (6 au plus : l’attaque de base et les 5 plus récentes, sauf si vous en désactivez).</li>
+      <li>Si le combat est bloqué (personne n’a perdu de PV depuis <%= P.stallTime %> instants), les unités des rangs arrière avancent.</li>
+      <li>Le <b>coût</b> est payé : énergie = coût de la capacité + coût de l’arme × son coefficient ; mana = coût du sort. S’il manque de l’énergie ou du mana, l’unité <b>attend</b> à la place.</li>
+      <li>Un <b>test de volonté</b> décide du résultat (section suivante), puis la capacité est résolue.</li>
+    </ol>
+    <p><b>Attendre</b> met de côté <%= pct(P.waitRegen) %> % de l’énergie max<% if (P.waitManaRegen) { %> et <%= pct(P.waitManaRegen) %> % du mana max<% } %>, crédités à l’action suivante.</p>
+  </article>
+
+  <article class="card" id="volonte">
+    <h2>Volonté : réussite, demi-échec, échec critique</h2>
+    <p>Avant chaque capacité (pas pour Avancer, Reculer, Attendre, Fuir), l’unité compare sa volonté actuelle à sa volonté max :</p>
+    <table class="data">
+      <thead><tr><th>Volonté</th><th>Résultat</th></tr></thead>
+      <tbody>
+        <tr><td>50 % ou plus</td><td>Réussite, toujours.</td></tr>
+        <tr><td>de 20 % à moins de 50 %</td><td>1 chance sur 2 de <b>demi-échec</b> (effet réduit, ou mal dirigé), sinon réussite.</td></tr>
+        <tr><td>moins de 20 %</td><td>1 chance sur 2 d’<b>échec critique</b> (l’action se retourne souvent contre l’unité ou ses alliés), sinon réussite.</td></tr>
+        <tr><td>sous Confusion</td><td>Demi-échec forcé, puis la Confusion disparaît.</td></tr>
+      </tbody>
+    </table>
+    <p>Il n’y a pas de réussite critique. L’effet exact du demi-échec (DE) et de l’échec critique (EC) est écrit dans l’infobulle de chaque capacité.</p>
+    <h3>Ce qui fait bouger la volonté</h3>
+    <code class="formula">blessure : −(PV perdus / PV max) × volonté max × <%= mult(P.woundWill) %>
+ennemi tué par l’unité : +<%= pct(P.killWill) %> % de la volonté max
+mort d’un allié d’une autre troupe : −<%= pct(P.allyDeathWill) %> %
+mort d’un allié de la même troupe : −<%= pct(P.sameTroopDeathWill) %> %</code>
+    <p class="meta">Exemple : une unité de 60 de volonté qui perd la moitié de ses PV perd 60 × 0,5 × <%= mult(P.woundWill) %> = <%= Math.floor(60 * 0.5 * P.woundWill / 1000) %> de volonté. Perdre ses compagnons de troupe pèse deux fois plus que perdre les autres.</p>
+  </article>
+
+  <article class="card" id="degats">
+    <h2>Dégâts</h2>
+    <code class="formula">puissance effective = floor(puissance × (1000 + bonus − malus) / 1000)
+
+capacité d’arme : brut = floor(dégâts de l’arme × multiplicateur / 1000) + floor(puissance effective × coefficient / 1000)
+sort de dégâts  : brut = dégâts de base du sort                         + floor(puissance effective × coefficient / 1000)
+
+dégâts finaux = max(1, floor(brut × (1000 − résistance) / 1000))</code>
+    <ul class="plain">
+      <li>Le <b>multiplicateur</b> est celui de la capacité (Emploi d’arme : × 1 ; Exploit : × <%= c.skills.exploit ? mult(c.skills.exploit.p.mult) : '2' %>…). Le <b>coefficient</b> vaut 1 pour la plupart des capacités ; les capacités récentes l’augmentent pour que la puissance compte davantage.</li>
+      <li>Le bonus et le malus sont ceux des états Cri de guerre et Affaibli (toutes les puissances) ; Rage joue sur la Force.</li>
+      <li>Avant la résistance, les attaques d’un ennemi peuvent être augmentées : <b>Marque</b> sur la cible, <b>Instinct de meute</b>, <b>Cœur ardent</b> sur une cible qui brûle, bonus contre les morts-vivants et démons pour les sorts sacrés…</li>
+      <li>La résistance du type est celle de l’unité, plus ou moins celle des états (Malédiction, Garde, Peau de pierre, Brise-armure), bornée entre −<%= pct(-P.resFloor) %> % et +<%= pct(P.resCap) %> %.</li>
+      <li>Un coup fait <b>au moins 1 dégât</b>, sauf contre une <b>immunité</b> : 0, sans bonus ni effet. Une attaque évite de viser un immunisé tant qu’une autre cible est possible.</li>
+      <li>Un <b>Bouclier</b> absorbe d’abord les dégâts finaux ; ce qui dépasse retire des PV.</li>
+    </ul>
+    <% const s1 = it.stats(exId, form0, 1); const fo = s1.pow ? s1.pow.for : 0; const brut = W.dmg + fo %>
+    <div class="example">
+      <b>Exemple : un coup de <%= ex.name %> de niveau 1</b>
+      <p>Force <%= fo %>, arme <%= W.name %> (<%= W.dmg %> dégâts) : brut = <%= W.dmg %> + <%= fo %> = <b><%= brut %></b>. Contre un ennemi à 10 % de résistance à ce type : floor(<%= brut %> × 900 / 1000) = <b><%= Math.floor(brut * 900 / 1000) %> dégâts</b>. Contre une faiblesse de −10 % : <b><%= Math.floor(brut * 1100 / 1000) %></b>.</p>
+    </div>
+    <p class="meta">Les dégâts sur la durée (Saignement, Poison, Brûlure) sont fixés par la capacité qui les applique, multipliés par le nombre de charges, et frappent tous les <%= P.dotTick %> instants ; la résistance du type s’y applique aussi, mais pas la puissance de l’attaquant.</p>
+  </article>
+
+  <article class="card" id="soins">
+    <h2>Soins et boucliers</h2>
+    <p>Les soins, la régénération et les boucliers dépendent de la <b><%= lab('foi', 'Foi') %></b> du lanceur, jamais des PV de la cible.</p>
+    <code class="formula">soin       = floor((soin de base + floor(Foi × coefficient / 1000)) × <%= mult(P.healMult ?? 1000) %>)
+bouclier   = base + floor(Foi × coefficient / 1000)
+régénération par tic = base + floor(Foi × coefficient / 1000)</code>
+    <% const sm = c.skills.soin_mineur; const ac = c.troops.acolyte %>
+    <% if (sm && ac) { const foi1 = it.stats('acolyte', ac.forms[0].id, 1).pow.foi; const foi10 = it.stats('acolyte', ac.forms[0].id, 10).pow.foi; const heal = (f) => Math.floor((sm.p.heal + Math.floor(f * (sm.coef ?? 1000) / 1000)) * (P.healMult ?? 1000) / 1000) %>
+      <div class="example">
+        <b>Exemple : Soin mineur (<%= sm.p.heal %> + <%= mult(sm.coef ?? 1000) %> × Foi)</b>
+        <p><%= ac.name %> niveau 1 (Foi <%= foi1 %>) : floor((<%= sm.p.heal %> + <%= Math.floor(foi1 * (sm.coef ?? 1000) / 1000) %>) × <%= mult(P.healMult ?? 1000) %>) = <b><%= heal(foi1) %> PV</b>. Au niveau 10 (Foi <%= foi10 %>) : <b><%= heal(foi10) %> PV</b>.</p>
+      </div>
+    <% } %>
+    <ul class="plain">
+      <li>Tous les soins en combat sont multipliés par <b><%= mult(P.healMult ?? 1000) %></b>.</li>
+      <li><b>Recharge</b> : une unité qui vient d’être soignée par un soin direct ne peut plus l’être pendant <b><%= P.healCooldown %> instants</b> ; une Régénération pendant <b><%= P.hotCooldown %> instants</b>. Un soin de groupe est sans effet sur les unités en recharge.</li>
+      <li>Les <b>consommables</b> (bandage, potions) rendent des valeurs fixes et s’utilisent entre deux combats.</li>
+    </ul>
+  </article>
+
+  <article class="card" id="etats">
+    <h2>États</h2>
+    <table class="data">
+      <thead><tr><th>État</th><th>Effet</th></tr></thead>
+      <tbody>
+        <tr><td><b>Saignement, Poison, Brûlure</b></td><td>Dégâts (tranchant, maladie, feu) à chaque tic, tous les <%= P.dotTick %> instants ; cumulables jusqu’à un plafond. Un immunisé du type les ignore ; le Non-mort ignore Poison et Saignement.</td></tr>
+        <tr><td><b>Régénération</b></td><td>Soin à chaque tic.</td></tr>
+        <tr><td><b>Hâte, Ralenti</b></td><td>Durée des actions × <%= mult(P.hasteMod) %> et × <%= mult(P.slowMod) %>.</td></tr>
+        <tr><td><b>Étourdi, Gelé</b></td><td>L’unité perd son tour (étourdi : repoussé de la durée ; gelé : jusqu’à la fin du gel).</td></tr>
+        <tr><td><b>Bouclier</b></td><td>Absorbe un nombre fixe de dégâts.</td></tr>
+        <tr><td><b>Marque</b></td><td>Les prochaines attaques reçues font plus de dégâts.</td></tr>
+        <tr><td><b>Provocation</b></td><td>Les attaques ennemies à portée doivent viser cette unité.</td></tr>
+        <tr><td><b>Confusion</b></td><td>La prochaine action est un demi-échec.</td></tr>
+        <tr><td><b>Cri de guerre, Affaibli</b></td><td>Puissances en hausse ou en baisse.</td></tr>
+        <tr><td><b>Peau de pierre, Brise-armure, Malédiction, Garde</b></td><td>Résistances en hausse ou en baisse.</td></tr>
+        <tr><td><b>Silence</b></td><td>Interdit les capacités qui coûtent du mana.</td></tr>
+      </tbody>
+    </table>
+    <p class="meta">Tous les états disparaissent à la mort de l’unité et à la fin du combat.</p>
+  </article>
+
+  <article class="card" id="monstres">
+    <h2>Monstres et difficulté</h2>
+    <p>Un monstre se calcule comme une troupe (base, croissance, forme), puis reçoit un <b>renfort selon le palier</b> de la route où on le combat (une route prend le palier le plus bas de ses deux villes) :</p>
+    <code class="formula">PV max           = round(PV × renfort PV / 1000)
+puissances, dégâts de l’arme = round(valeur × renfort attaque / 1000)</code>
+    <table class="data stats">
+      <thead><tr><th>Palier</th><th class="num">PV ×</th><th class="num">Puissances et arme ×</th><th class="num">Ajustement du gardien ×</th></tr></thead>
+      <tbody>
+        <% eco.monsterHp.forEach((hp, i) => { %>
+          <tr><td><%= i + 1 %> <span class="muted">(<%= c.regions.filter((R) => R.tier === i + 1).map((R) => R.name).join(', ') %>)</span></td><td class="num"><%= mult(hp) %></td><td class="num"><%= mult(eco.monsterAtk[i]) %></td><td class="num"><%= mult(eco.guardianAdj[i]) %></td></tr>
+        <% }) %>
+      </tbody>
+    </table>
+    <ul class="plain">
+      <li>La volonté, l’énergie, le mana, la vitesse et les résistances des monstres ne sont pas renforcés. Ils commencent le combat à pleine vie et plein mana.</li>
+      <li>L’<b>ajustement du gardien</b> s’applique à toute la rencontre de la cinquième étape<%= c.online && c.online.guardianAdjust === 'all' ? ', escorte comprise' : ' (au gardien seul)' %>.</li>
+      <li>Chaque étape peut avoir un réglage fin qui ajuste encore PV et puissances, route par route.</li>
+      <li>Les <b>immunités</b> des monstres (au plus deux types) sont indiquées dans le Codex, sur leur fiche.</li>
+    </ul>
+    <% const D = c.dungeonParams %>
+    <% if (D) { %>
+      <h3>Donjons</h3>
+      <code class="formula">niveau des monstres = min(<%= D.levelCap %>, L + <%= D.levelBonus %> + floor((salle − 1) / 2))      L = niveau minimal de la route
+au-delà du niveau <%= D.levelCap %> : PV et puissances + <%= pct(D.overpower) %> % par niveau de dépassement
+population du groupe (solo) = min(<%= D.pop.solo[0] %> + <%= D.pop.solo[1] %> × salle, <%= D.pop.solo[2] %>)       boss compris</code>
+      <p>Chaque salle est plus dure que la précédente ; un boss apparaît toutes les <%= D.bossEvery %> salles. Le renfort est celui du palier de la route. Une défaite en donjon fait perdre tout le coffre.</p>
+    <% } %>
+  </article>
+
+  <article class="card" id="fin">
+    <h2>Fin du combat</h2>
+    <ul class="plain">
+      <li>Un camp qui n’a plus d’unité en jeu (mortes ou enfuies) perd.</li>
+      <li>Au bout de <b><%= P.timeLimit %> instants</b>, le combat s’arrête et <b>c’est une défaite</b> : mieux vaut une escouade capable de blesser ses adversaires (attention aux immunités).</li>
+      <li>Les survivants gardent au moins 1 PV. Les PV ne remontent pas d’un combat à l’autre sur la route : ils sont soignés en entrant en ville.</li>
+    </ul>
+    <p class="meta">Le combat est entièrement déterministe : la rediffusion que vous regardez est exactement ce qui s’est passé.</p>
+  </article>
+  <p><a href="/tutoriel">Guide des débutants</a> · <a href="/codex">Codex</a></p>
+</section>

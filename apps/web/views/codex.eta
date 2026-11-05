@@ -37,8 +37,9 @@
 
   <% if (it.part === 'troupes' || it.part === 'monstres') { %>
     <% const monsters = it.part === 'monstres' %>
+    <p class="muted">« Voir » ouvre la fiche de statistiques (PV, puissances, arme, résistances) au niveau de votre choix. <a href="/aide/combat">Comment les chiffres se calculent</a>.</p>
     <table class="data">
-      <thead><tr><th>Nom</th><th>Pop.</th><th>Unités</th><th><%= monsters ? 'Région' : 'Ville' %></th><th>Rôle</th><% if (monsters) { %><th>Immunités</th><% } %><th>Capacités (niveau)</th></tr></thead>
+      <thead><tr><th>Nom</th><th>Pop.</th><th>Unités</th><th><%= monsters ? 'Région' : 'Ville' %></th><th>Rôle</th><% if (monsters) { %><th>Immunités</th><% } %><th>Capacités (niveau)</th><th>Stats</th></tr></thead>
       <tbody>
         <% for (const [id, t] of Object.entries(c.troops)) { if (!!c.monsters[id] !== monsters) continue; const m = c.monsters[id] %>
           <tr>
@@ -48,6 +49,7 @@
             <td><%= t.role %></td>
             <% if (monsters) { %><td><%= L.immune(id) || '—' %></td><% } %>
             <td><div class="spells"><% for (const [s, l] of t.forms[0].skills) { %><%~ include('./partials/spell', { id: s, L, level: l > 1 ? l : 0 }) %><% } %></div></td>
+            <td><a href="/codex/unite/<%= id %>">Voir</a></td>
           </tr>
         <% } %>
       </tbody>

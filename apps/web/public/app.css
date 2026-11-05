@@ -735,6 +735,88 @@ table.data tbody tr:hover {
   }
 }
 
+/* ---------- Fiches de statistiques et guide des mécaniques ---------- */
+.card.wide {
+  grid-column: 1 / -1;
+}
+table.stats th.num,
+table.stats td.num {
+  text-align: right;
+  white-space: nowrap;
+}
+table.stats td.num:not(.good):not(.muted) {
+  color: var(--ink);
+}
+.mech .toc {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 6px;
+  margin: 12px 0 4px;
+  padding: 0;
+  list-style: none;
+}
+.mech .toc a {
+  display: inline-block;
+  padding: 5px 11px;
+  border-radius: 999px;
+  background: var(--sunk);
+  color: var(--ink);
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+.mech .toc a:hover {
+  background: var(--a-soft);
+  color: var(--a);
+}
+.mech .card {
+  scroll-margin-top: 80px;
+}
+.mech .card > p:last-child {
+  margin-bottom: 0;
+}
+.mech .formula {
+  display: block;
+  margin: 8px 0 14px;
+  padding: 10px 14px;
+  background: var(--sunk);
+  border-left: 3px solid var(--a);
+  border-radius: var(--r-sm);
+  font:
+    0.92rem/1.7 ui-monospace,
+    SFMono-Regular,
+    Menlo,
+    Consolas,
+    monospace;
+  white-space: pre-wrap;
+  overflow-x: auto;
+}
+.mech .example {
+  margin: 8px 0 14px;
+  padding: 10px 14px;
+  background: var(--brass-soft);
+  border-radius: var(--r-sm);
+}
+.mech .example > :last-child {
+  margin-bottom: 0;
+}
+.mech .example > b:first-child {
+  display: block;
+  margin-bottom: 4px;
+  color: var(--brass);
+}
+.mech ul.plain {
+  margin: 0 0 12px;
+  padding-left: 1.2em;
+  max-width: 72ch;
+}
+.mech ul.plain li {
+  margin-bottom: 4px;
+}
+.mech table.data {
+  margin-bottom: 12px;
+}
+
 /* ---------- Jeu : escouade, jauges, étapes ---------- */
 .troop {
   border-bottom: 1px solid var(--line);

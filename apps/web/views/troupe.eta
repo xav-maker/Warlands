@@ -27,6 +27,15 @@
       </form>
     </div>
 
+    <div class="card wide">
+      <h2>Statistiques <span class="muted">niveau <%= t.level %></span></h2>
+      <p class="muted">Ce que le combat utilisera : la base de la troupe (selon son niveau et sa forme), plus l’équipement. La dernière colonne donne ce que gagne la base au prochain niveau. <a href="/aide/combat#niveaux">Comment ça se calcule</a>.</p>
+      <% for (const [i, u] of t.units.entries()) { %>
+        <% if (t.units.length > 1) { %><h3>Unité <%= u.n %></h3><% } %>
+        <%~ include('./partials/stat-sheet', { sheet: it.sheets[i] }) %>
+      <% } %>
+    </div>
+
     <% if (it.evolutions.length) { %>
       <div class="card">
         <h2>Évolutions</h2>

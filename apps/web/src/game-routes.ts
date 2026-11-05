@@ -89,6 +89,7 @@ import {
 } from '@cr/domain';
 import { basicAttack, canWear, computeStats, itemValue, learned, quality, routes, troopActive } from '@cr/gen';
 import type { z } from 'zod';
+import { monsterLevel, monsterTier, sheet } from './stat-sheet.ts';
 
 export interface GameRouteDeps {
   db: Db;
@@ -486,11 +487,14 @@ export function registerGameRoutes(app: FastifyInstance, d: GameRouteDeps): void
     const wearable = (slot: string) => pool.filter((i) => p.equip[i.base]?.slot === slot && canWear(p, t.type, t.level, i.base) === null);
     const evolutions = await evolutionPreview(d.db, d.content, d.requireAuth(req).player.id, t);
     const canEvolveHere = v.kind === 'city' && region(d.content, v.region).city.recruit.includes(t.type);
+    // Statistiques de chaque unité, équipement compris : celles que le combat utilisera.
+    const sheets = t.units.map((u) => sheet(p, { type: t.type, form: t.form, level: t.level, equip: u.equip }));
     return d.page(req, reply, 'troupe', {
       v,
       L,
       t,
       def,
+      sheets,
       known,
       active,
       base: basicAttack(def),
@@ -719,5 +723,55 @@ export function registerGameRoutes(app: FastifyInstance, d: GameRouteDeps): void
     const q = (req.query as { p?: string }).p;
     const part = (PARTS as readonly string[]).includes(q ?? '') ? q! : 'regions';
     return d.page(req, reply, 'codex', { part, parts: PARTS, c: d.content.pack, L, routes: routes(d.content.pack) });
+  });
+
+  /**
+   * Fiche d'une troupe ou d'un monstre du Codex : statistiques à un niveau au choix, forme par forme. Un monstre est
+   * montré tel qu'on le combat (renfort de sa région compris), à son niveau habituel.
+   */
+  app.get('/codex/unite/:id', (req, reply) => {
+    const p = d.content.pack;
+    const { id } = req.params as { id: string };
+    const def = Object.hasOwn(p.troops, id) ? p.troops[id] : undefined;
+    if (!def) return d.page(req, reply, 'message', { title: 'Unité introuvable', text: 'Cette unité n’existe pas.' }, 404);
+    const maxLevel = p.eco.maxLevel;
+    const monster = Object.hasOwn(p.monsters, id) ? p.monsters[id] : undefined;
+    const asked = int((req.query as { niveau?: string }).niveau);
+    const level = asked >= 1 && asked <= maxLevel ? asked : monster ? monsterLevel(p, id) : 1;
+    const tier = monster ? monsterTier(p, id) : undefined;
+    // Un monstre n'a qu'une forme à un niveau donné ; une troupe en a plusieurs, chacune à partir de son niveau.
+    const forms = (monster ? [def.forms.findLast((f) => f.level <= level) ?? def.forms[0]!] : def.forms).map((f) => ({
+      form: f,
+      sheet: sheet(p, { type: id, form: f.id, level: Math.max(level, f.level), reinforce: tier }),
+      parent: def.forms.find((x) => x.id === f.parent)?.name,
+    }));
+    return d.page(req, reply, 'codex-unite', {
+      c: p,
+      L,
+      id,
+      def,
+      monster,
+      level,
+      maxLevel,
+      tier,
+      forms,
+      recruitedIn: monster ? undefined : p.regions.find((r) => r.city.recruit.includes(id))?.city.name,
+    });
+  });
+
+  // ---------- Guide des statistiques et du combat (public, comme le Codex) ----------
+  app.get('/aide/combat', (req, reply) => {
+    const p = d.content.pack;
+    // Troupe prise pour exemple : le Milicien, la première que l'on recrute ; à défaut, la première du pack.
+    const exId = Object.hasOwn(p.troops, 'milicien') ? 'milicien' : Object.keys(p.troops)[0]!;
+    return d.page(req, reply, 'mecaniques', {
+      title: 'Stats et combat',
+      c: p,
+      L,
+      xpToNext,
+      exId,
+      ex: p.troops[exId]!,
+      stats: (type: string, form: string, level: number) => computeStats(p, p.troops[type]!, form, level),
+    });
   });
 }

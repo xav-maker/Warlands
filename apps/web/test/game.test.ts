@@ -220,7 +220,11 @@ describe('parcours de jeu (J2)', () => {
     expect(
       (await t.db.selectFrom('item_instance').select('container').where('id', '=', sword.id).executeTakeFirstOrThrow()).container,
     ).toBe('EQUIPPED');
-    expect((await req('GET', `/troupe/${milicien.id}`)).body).toContain('Retirer');
+    const worn = (await req('GET', `/troupe/${milicien.id}`)).body;
+    expect(worn).toContain('Retirer');
+    // Fiche de statistiques : colonne d'équipement et total (celui du combat).
+    expect(worn).toContain('<th class="num">Équipement</th>');
+    expect(worn).toContain('Statistiques');
     await req('POST', `/troupe/${milicien.id}/desequiper`, { unit: '1', slot: 'arme' });
     expect(
       (await t.db.selectFrom('item_instance').select('container').where('id', '=', sword.id).executeTakeFirstOrThrow()).container,
@@ -290,5 +294,25 @@ describe('parcours de jeu (J2)', () => {
     // Donjons (README 23) : sur leur route, et leurs boss parmi les monstres.
     expect((await req('GET', '/codex?p=regions')).body).toContain('Donjon : Terriers du Roi Kobold');
     expect((await req('GET', '/codex?p=monstres')).body).toContain('Taupe-Reine</b> (boss de donjon)');
+  });
+
+  it('sert la fiche de statistiques d’une unité et le guide des mécaniques, sans être connecté', async () => {
+    jar.clear();
+    const milicien = await req('GET', '/codex/unite/milicien?niveau=10');
+    expect(milicien.statusCode).toBe(200);
+    expect(milicien.body).toContain('PV max');
+    expect(milicien.body).toContain('Fantassin');
+    expect(milicien.body).toContain('niveau affiché : 10');
+    const gobelins = await req('GET', '/codex/unite/gobelins');
+    expect(gobelins.body).toContain('renfort du palier 1');
+    expect((await req('GET', '/codex/unite/constructor')).statusCode).toBe(404);
+    expect((await req('GET', '/codex/unite/inconnu')).statusCode).toBe(404);
+    expect((await req('GET', '/codex?p=troupes')).body).toContain('/codex/unite/milicien');
+    const guide = await req('GET', '/aide/combat');
+    expect(guide.statusCode).toBe(200);
+    expect(guide.body).toContain('Niveaux et évolutions');
+    expect(guide.body).toContain('dégâts finaux = max(1, floor(brut × (1000 − résistance) / 1000))');
+    // L'exemple chiffré vient du contenu : Milicien de niveau 10 = 154 × 3 PV.
+    expect(guide.body).toContain('462 PV max');
   });
 });

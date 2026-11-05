@@ -1,0 +1,33 @@
+<%/* Fiche de statistiques (stat-sheet.ts). it.sheet ; it.nextLabel : titre de la colonne du niveau suivant (facultatif). */%>
+<% const S = it.sheet; const sign = (n) => (n > 0 ? '+' + n : n < 0 ? '−' + Math.abs(n) : '—') %>
+<table class="data stats">
+  <thead>
+    <tr>
+      <th>Statistique</th>
+      <th class="num">Base</th>
+      <% if (S.hasBonus) { %><th class="num">Équipement</th><th class="num">Total</th><% } %>
+      <% if (S.hasNext) { %><th class="num">Gain au niv. <%= S.level + 1 %></th><% } %>
+    </tr>
+  </thead>
+  <tbody>
+    <% for (const l of S.lines) { %>
+      <tr>
+        <td><%= l.label %><% if (l.hint) { %> <small class="muted">(<%= l.hint %>)</small><% } %></td>
+        <td class="num"><%= l.base %></td>
+        <% if (S.hasBonus) { %>
+          <td class="num"><%= sign(l.bonus) %></td>
+          <td class="num"><b><%= l.total %></b></td>
+        <% } %>
+        <% if (S.hasNext) { %><td class="num <%= l.next ? 'good' : 'muted' %>"><%= l.next === undefined ? '' : sign(l.next) %></td><% } %>
+      </tr>
+    <% } %>
+  </tbody>
+</table>
+<p class="meta">
+  Arme : <b><%= S.weapon.name %></b> (<%= S.weapon.type %>).
+  <% if (S.res.length) { %>
+    Résistances :
+    <% S.res.forEach((r, i) => { %><%= i ? ', ' : '' %><%= r.label %> <%= r.total > 0 ? '+' : '' %><%= r.total %> %<%= S.hasBonus && r.bonus ? ' (dont ' + sign(r.bonus) + ' d’équipement)' : '' %><% }) %>.
+  <% } else { %>Aucune résistance.<% } %>
+  <% if (S.immune.length) { %>Immunités : <b><%= S.immune.join(', ') %></b>.<% } %>
+</p>
