@@ -212,7 +212,11 @@ describe('parcours de jeu (J2)', () => {
       .where('container', '=', 'SQUAD')
       .executeTakeFirstOrThrow();
     const page = await req('GET', `/troupe/${milicien.id}`);
-    expect(page.body).toContain('Équiper');
+    expect(page.body).toContain(`/equipement?troupe=${milicien.id}`);
+    // Page Équipement : l'épée de la banque est proposée, avec son effet sur les statistiques.
+    const gear = (await req('GET', `/equipement?troupe=${milicien.id}`)).body;
+    expect(gear).toContain('Équiper');
+    expect(gear).toContain('Effet');
     // Milicien de niveau 30 dans sa ville de recrutement : l'évolution vers le Fantassin est proposée.
     expect(page.body).toContain('Fantassin');
     expect(page.body).toContain('Évoluer');
@@ -220,8 +224,8 @@ describe('parcours de jeu (J2)', () => {
     expect(
       (await t.db.selectFrom('item_instance').select('container').where('id', '=', sword.id).executeTakeFirstOrThrow()).container,
     ).toBe('EQUIPPED');
+    expect((await req('GET', `/equipement?troupe=${milicien.id}`)).body).toContain('Retirer');
     const worn = (await req('GET', `/troupe/${milicien.id}`)).body;
-    expect(worn).toContain('Retirer');
     // Fiche de statistiques : colonne d'équipement et total (celui du combat).
     expect(worn).toContain('<th class="num">Équipement</th>');
     expect(worn).toContain('Statistiques');

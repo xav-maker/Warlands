@@ -6,7 +6,7 @@
       <th>Statistique</th>
       <th class="num">Base</th>
       <% if (S.hasBonus) { %><th class="num">Équipement</th><th class="num">Total</th><% } %>
-      <% if (S.hasNext) { %><th class="num">Gain au niv. <%= S.level + 1 %></th><% } %>
+      <% if (S.hasNext && !it.compact) { %><th class="num">Gain au niv. <%= S.level + 1 %></th><% } %>
     </tr>
   </thead>
   <tbody>
@@ -18,7 +18,7 @@
           <td class="num"><%= sign(l.bonus) %></td>
           <td class="num"><b><%= l.total %></b></td>
         <% } %>
-        <% if (S.hasNext) { %><td class="num <%= l.next ? 'good' : 'muted' %>"><%= l.next === undefined ? '' : sign(l.next) %></td><% } %>
+        <% if (S.hasNext && !it.compact) { %><td class="num <%= l.next ? 'good' : 'muted' %>"><%= l.next === undefined ? '' : sign(l.next) %></td><% } %>
       </tr>
     <% } %>
   </tbody>

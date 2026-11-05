@@ -21,6 +21,8 @@ export interface StatLine {
   /** Suffixe de l'unité de mesure (« % »). */
   unit?: string;
   hint?: string;
+  /** Une valeur plus petite est meilleure (vitesse, coût en énergie). */
+  lowerBetter?: boolean;
 }
 
 export interface Sheet {
@@ -125,12 +127,15 @@ export function sheet(c: GenContent, o: SheetOptions): Sheet {
         gain((s) => s.pow?.[k] ?? 0),
       ),
     );
-  lines.push(line('Vitesse', base.speed, total.speed, undefined, { hint: 'plus petit = plus rapide' }));
+  lines.push(line('Vitesse', base.speed, total.speed, undefined, { hint: 'plus petit = plus rapide', lowerBetter: true }));
   lines.push(line(label('wdmg', 'Dégâts de l’arme'), base.weapon.dmg, total.weapon.dmg, undefined));
   lines.push(
-    line(label('wspeed', 'Vitesse de l’arme'), base.weapon.speed, total.weapon.speed, undefined, { hint: 'plus petit = plus rapide' }),
+    line(label('wspeed', 'Vitesse de l’arme'), base.weapon.speed, total.weapon.speed, undefined, {
+      hint: 'plus petit = plus rapide',
+      lowerBetter: true,
+    }),
   );
-  lines.push(line(label('wcost', 'Coût en énergie de l’arme'), base.weapon.cost, total.weapon.cost, undefined));
+  lines.push(line(label('wcost', 'Coût en énergie de l’arme'), base.weapon.cost, total.weapon.cost, undefined, { lowerBetter: true }));
 
   const res: StatLine[] = [];
   for (const t of c.dmgTypes) {

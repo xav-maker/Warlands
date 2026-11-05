@@ -15,7 +15,7 @@
 </head>
 <% const at = (p) => it.path === p || (p !== '/' && (it.path ?? '').startsWith(p + '/')) %>
 <% const here = (p) => (at(p) ? ' aria-current="page"' : '') %>
-<% const playPaths = ['/jeu', '/ville', '/route', '/donjon', '/caserne', '/atelier', '/marchand', '/boutique', '/quetes', '/troupe', '/combat', '/sac'] %>
+<% const playPaths = ['/jeu', '/ville', '/route', '/donjon', '/caserne', '/atelier', '/marchand', '/boutique', '/quetes', '/troupe', '/equipement', '/combat', '/sac'] %>
 <% const socialPaths = ['/chat', '/messages', '/amis', '/notifications', '/signaler'] %>
 <% const helpPaths = ['/tutoriel', '/aide', '/codex'] %>
 <% const cur = (paths) => (paths.some(at) ? ' current' : '') %>
@@ -33,6 +33,7 @@
             <div class="menu-panel">
               <%~ item('/jeu', it.v && it.v.kind === 'route' ? 'map' : it.v && it.v.kind === 'dungeon' ? 'door' : 'city', pos, 'là où vous êtes') %>
               <%~ item('/caserne', 'sword', 'Caserne', 'recruter, engager') %>
+              <%~ item('/equipement', 'shield', 'Équipement', 'armes et armures') %>
               <%~ item('/atelier', 'hammer', 'Atelier', 'fabriquer') %>
               <%~ item('/marchand', 'coins', 'Marchand', 'acheter, revendre') %>
               <%~ item('/boutique', 'shop', 'Boutique', 'entre joueurs') %>

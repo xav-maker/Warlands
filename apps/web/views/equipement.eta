@@ -1,0 +1,121 @@
+<% layout('./layout', { title: 'Équipement', v: it.v, error: it.error }) %>
+<%
+  const inCity = it.v.kind === 'city';
+  const sign = (n) => (n > 0 ? '+' + n : '−' + Math.abs(n));
+  const here = (t, u) => '/equipement?troupe=' + t.id + (u ? '&unite=' + u.n : '');
+%>
+<section class="equip">
+  <p class="eyebrow">Troupes</p>
+  <h1>Équipement</h1>
+  <p class="muted">
+    <%= inCity ? 'En ville : on équipe depuis le sac et la banque ; un changement soigne l’unité.' : 'En expédition : on équipe depuis le sac seulement ; un objet retiré va dans le sac.' %>
+    Chaque objet affiche ce qu’il change aux statistiques de l’unité. <a href="/aide/combat#equipement">Comment ça compte</a>.
+  </p>
+
+  <% if (!it.t || !it.u) { %>
+    <div class="card"><p class="muted">Aucune de vos troupes ne porte d’équipement. <a href="/caserne">Recrutez-en à la caserne.</a></p></div>
+  <% } else { %>
+    <nav class="tabs" aria-label="Troupe">
+      <% for (const w of it.wearers) { %>
+        <a href="<%= here(w) %>"<%~ w.id === it.t.id ? ' aria-current="page"' : '' %>><%= w.name %> <span class="muted">niv. <%= w.level %><%= w.container === 'SQUAD' ? '' : ' · caserne' %></span></a>
+      <% } %>
+    </nav>
+    <% if (it.t.units.length > 1) { %>
+      <nav class="tabs sub" aria-label="Unité">
+        <% for (const x of it.t.units) { %>
+          <a href="<%= here(it.t, x) %>"<%~ x.n === it.u.n ? ' aria-current="page"' : '' %>>Unité <%= x.n %></a>
+        <% } %>
+      </nav>
+    <% } %>
+
+    <div class="equip-layout">
+      <div class="equip-slots">
+        <% for (const s of it.slots) { %>
+          <div class="card slot">
+            <h2><span><%= s.slot %></span><span class="muted"><%= s.cats.join(', ').replaceAll('_', ' ') %></span></h2>
+
+            <% if (s.current) { %>
+              <div class="worn">
+                <div class="gear-head">
+                  <b><%= it.L.item(s.current.base) %></b>
+                  <span class="tag"><%= it.L.quality(s.current.roll) %></span>
+                  <span class="tag">palier <%= s.current.tier %></span>
+                  <span class="muted">porté</span>
+                </div>
+                <ul class="chips"><% for (const st of s.current.stats) { %><li><%= it.L.statText(st) %></li><% } %></ul>
+                <form method="post" action="/troupe/<%= it.t.id %>/desequiper" class="inline">
+                  <input type="hidden" name="_csrf" value="<%= it.csrf %>">
+                  <input type="hidden" name="unit" value="<%= it.u.n %>">
+                  <input type="hidden" name="slot" value="<%= s.slot %>">
+                  <input type="hidden" name="to" value="equipement">
+                  <button type="submit">Retirer</button>
+                </form>
+              </div>
+            <% } else { %>
+              <p class="worn empty muted">Emplacement vide.</p>
+            <% } %>
+
+            <% if (s.candidates.length) { %>
+              <h3><%= s.current ? 'Remplacer par' : 'Équiper' %> <span class="muted">(<%= s.candidates.length %>)</span></h3>
+              <ul class="gear-list">
+                <% for (const o of s.candidates) { %>
+                  <li class="gear">
+                    <div class="gear-head">
+                      <b><%= it.L.item(o.base) %></b>
+                      <span class="tag"><%= it.L.quality(o.roll) %></span>
+                      <span class="tag">palier <%= o.tier %></span>
+                      <span class="tag"><%= o.from %></span>
+                    </div>
+                    <ul class="chips"><% for (const st of o.stats) { %><li><%= it.L.statText(st) %></li><% } %></ul>
+                    <p class="effect">
+                      <% if (o.deltas.length) { %>
+                        <span class="muted">Effet :</span>
+                        <% for (const dl of o.deltas) { %><span class="delta <%= dl.good ? 'good' : 'bad' %>"><%= sign(dl.diff) %><%= dl.unit %> <%= dl.label %></span> <% } %>
+                      <% } else { %><span class="muted">Aucun changement de statistiques.</span><% } %>
+                    </p>
+                    <% if (o.weapon) { %><p class="muted">Arme : <%= o.weapon %>.</p><% } %>
+                    <form method="post" action="/troupe/<%= it.t.id %>/equiper" class="inline">
+                      <input type="hidden" name="_csrf" value="<%= it.csrf %>">
+                      <input type="hidden" name="unit" value="<%= it.u.n %>">
+                      <input type="hidden" name="instance" value="<%= o.id %>">
+                      <input type="hidden" name="to" value="equipement">
+                      <button type="submit" class="primary">Équiper</button>
+                    </form>
+                  </li>
+                <% } %>
+              </ul>
+            <% } else if (!s.locked.length) { %>
+              <p class="muted">Rien à porter ici dans <%= inCity ? 'votre sac ni votre banque' : 'votre sac' %>. <% if (inCity) { %><a href="/atelier">Fabriquer</a> ou <a href="/marchand">acheter</a>.<% } %></p>
+            <% } %>
+
+            <% if (s.locked.length) { %>
+              <details class="locked">
+                <summary><%= s.locked.length %> objet<%= s.locked.length > 1 ? 's' : '' %> trop haut<%= s.locked.length > 1 ? 's' : '' %> pour cette troupe</summary>
+                <ul class="gear-list">
+                  <% for (const o of s.locked) { %>
+                    <li class="gear dim">
+                      <div class="gear-head">
+                        <b><%= it.L.item(o.base) %></b>
+                        <span class="tag"><%= it.L.quality(o.roll) %></span>
+                        <span class="tag"><%= o.from %></span>
+                        <span class="bad"><%= o.locked %></span>
+                      </div>
+                      <ul class="chips"><% for (const st of o.stats) { %><li><%= it.L.statText(st) %></li><% } %></ul>
+                    </li>
+                  <% } %>
+                </ul>
+              </details>
+            <% } %>
+          </div>
+        <% } %>
+      </div>
+
+      <aside class="card equip-side">
+        <h2>Statistiques <span class="muted">niveau <%= it.t.level %></span></h2>
+        <p class="muted"><%= it.t.name %><%= it.t.units.length > 1 ? ', unité ' + it.u.n : '' %> : ce que le combat utilisera, équipement compris.</p>
+        <%~ include('./partials/stat-sheet', { sheet: it.sheet, compact: true }) %>
+        <p class="muted"><a href="/troupe/<%= it.t.id %>">Fiche de la troupe</a> · Sac <%= it.v.bag.used %> / <%= it.v.bag.cap %></p>
+      </aside>
+    </div>
+  <% } %>
+</section>

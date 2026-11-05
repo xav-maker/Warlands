@@ -185,7 +185,7 @@ Les **stats finales** ajoutent l'équipement (section 7.4).
 
 - Niveaux 1 à 30 (`maxLevel`).
 - XP pour passer du niveau `n` à `n+1` : `round(50 × n × (1 + n/10))`. Exemples : niv. 1 → 55, niv. 5 → 375, niv. 10 → 1 000, niv. 20 → 3 000, niv. 29 → 5 655. L'XP restante est reportée.
-- XP d'une victoire : `base = Σ (niveau × population) des troupes de monstres × 8` (`eco.xpPerMonsterLevelPop`).
+- XP d'une victoire : `base = Σ (niveau × population) des troupes de monstres × 16` (`eco.xpPerMonsterLevelPop`, doublé par Xavier le 5 novembre 2026 : c'était 8).
 - **L'XP est partagée à parts égales** entre les troupes gagnantes [Xavier, 3 novembre 2026] : `part = floor(base / nombre de troupes gagnantes)`. Elle est réduite si la troupe est trop forte : avec `écart = niveau_troupe − floor(niveau moyen des troupes de monstres) − 2`, la troupe reçoit `part` si écart ≤ 0, sinon `floor(part / 2^écart)`.
 - Une troupe gagne de l'XP si au moins une de ses unités a fini le combat vivante et **sans avoir fui**. Défaite : aucune XP.
 - Au passage de niveau, les PV et le mana courants augmentent du gain de maximum (puis sont bornés).
@@ -1159,3 +1159,11 @@ Les taux de victoire du gardien d'une route sont très sensibles à ces valeurs 
 - **Page Troupe** (`/troupe/:id`) : une carte « Statistiques » par unité.
 - **Codex** : colonne « Stats » et page `GET /codex/unite/:id` (paramètre `?niveau=`) pour tout type de troupe ou de monstre.
 - **Aide → « Stats et combat »** (`GET /aide/combat`) : guide pour les joueurs (statistiques, niveaux et évolutions, équipement, temps et jauges, rangs, actions, volonté, formules de dégâts et de soins, états, monstres et donjons, fin du combat). Tous les chiffres sont lus dans le contenu publié, jamais recopiés.
+
+### 28.4 Page Équipement (`GET /equipement`)
+
+- **Menu Jouer → Équipement** : une page dédiée à la gestion de l'équipement, qui remplace les listes déroulantes de la fiche de troupe. Onglets par troupe (escouade, puis caserne ; les troupes prêtées par la garde n'y sont pas) et, pour une troupe de plusieurs unités, par unité. Paramètres : `?troupe=ID&unite=N`.
+- **Un bloc par emplacement** : l'objet porté (qualité, palier, bonus) avec « Retirer », puis les objets du sac et, en ville, de la banque qui peuvent être portés. Chaque candidat affiche ce qu'il change aux statistiques de l'unité par rapport à l'objet porté (vert = progrès, rouge = recul ; pour la vitesse et le coût d'une arme, baisser est un progrès), l'arme qui remplacerait l'actuelle si elle change, et un bouton « Équiper ».
+- Les objets d'une catégorie acceptée mais d'un palier trop haut pour le niveau de la troupe sont rangés dans un volet replié, avec le niveau requis.
+- À droite, la fiche de statistiques de l'unité (base, équipement, total), fixe pendant le défilement. Les écarts annoncés sont calculés avec les mêmes fonctions que le combat (`apps/web/src/equipment.ts`, `stat-sheet.ts`).
+- Les règles ne changent pas : mêmes commandes `equip` et `unequip`, mêmes conditions (catégorie, niveau, ville ou sac). La fiche de troupe garde un résumé des emplacements avec un lien « Changer ».

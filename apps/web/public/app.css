@@ -1401,3 +1401,133 @@ details.fold[open] > summary h2::before {
     z-index: 50;
   }
 }
+
+/* ---------- Page Équipement ---------- */
+.tabs.sub {
+  margin-top: 6px;
+}
+.tabs a .muted {
+  font-weight: 400;
+  font-size: 0.82rem;
+}
+.equip-layout {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: minmax(0, 1fr) minmax(18rem, 24rem);
+  align-items: start;
+  margin-top: 16px;
+}
+.equip-slots {
+  display: grid;
+  gap: 16px;
+}
+.equip-slots > .card,
+.equip-side {
+  margin-top: 0;
+}
+.equip-side {
+  position: sticky;
+  top: 12px;
+}
+.slot > h2 span:first-child {
+  text-transform: capitalize;
+  font-size: 1.15rem;
+}
+.slot h3 {
+  margin: 20px 0 10px;
+  font-size: 0.95rem;
+}
+.worn {
+  display: grid;
+  gap: 10px;
+  justify-items: start;
+  padding: 14px 16px;
+  border-radius: var(--r-sm);
+  background: var(--brass-soft);
+  border: 1px solid var(--line-strong);
+}
+.worn.empty {
+  background: none;
+  border-style: dashed;
+}
+.gear-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 8px;
+}
+.gear-head b {
+  font-size: 1.02rem;
+}
+.chips {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+}
+.chips li {
+  padding: 2px 9px;
+  border-radius: 999px;
+  background: var(--raised);
+  border: 1px solid var(--line);
+  font-size: 0.85rem;
+}
+.gear-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 19rem), 1fr));
+}
+.gear {
+  display: grid;
+  gap: 10px;
+  align-content: start;
+  padding: 14px 16px;
+  border-radius: var(--r-sm);
+  background: var(--raised);
+  border: 1px solid var(--line);
+}
+.gear.dim {
+  opacity: 0.7;
+}
+.gear .effect,
+.gear p {
+  margin: 0;
+}
+.delta {
+  display: inline-block;
+  padding: 1px 8px;
+  margin: 2px 2px 0 0;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.delta.good {
+  background: var(--good-soft);
+}
+.delta.bad {
+  background: var(--bad-soft);
+}
+details.locked {
+  margin-top: 16px;
+}
+details.locked > summary {
+  cursor: pointer;
+  color: var(--muted);
+  font-size: 0.92rem;
+  margin-bottom: 10px;
+}
+@media (max-width: 62rem) {
+  .equip-layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .equip-side {
+    position: static;
+    order: -1;
+  }
+}

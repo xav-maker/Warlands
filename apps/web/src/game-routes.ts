@@ -87,8 +87,9 @@ import {
   type GameContent,
   type GameView,
 } from '@cr/domain';
-import { basicAttack, canWear, computeStats, itemValue, learned, quality, routes, troopActive } from '@cr/gen';
+import { basicAttack, computeStats, itemValue, learned, quality, routes, troopActive } from '@cr/gen';
 import type { z } from 'zod';
+import { slotViews } from './equipment.ts';
 import { monsterLevel, monsterTier, sheet } from './stat-sheet.ts';
 
 export interface GameRouteDeps {
@@ -193,7 +194,7 @@ export function registerGameRoutes(app: FastifyInstance, d: GameRouteDeps): void
         const v = await gameView(d.db, d.content, d.requireAuth(req).player.id);
         if (v.lastBattle) return reply.redirect(`/combat/${v.lastBattle.id}?e=${e.code}`, 303);
       }
-      return reply.redirect(`${back}?e=${e.code}`, 303);
+      return reply.redirect(`${back}${back.includes('?') ? '&' : '?'}e=${e.code}`, 303);
     }
   }
   const body = (req: FastifyRequest): Record<string, string> => (req.body ?? {}) as Record<string, string>;
@@ -480,11 +481,6 @@ export function registerGameRoutes(app: FastifyInstance, d: GameRouteDeps): void
     const known = learned(def, t.form, t.level);
     const active = troopActive(p, { type: t.type, level: t.level, form: t.form, rank: t.rank, units: [], disabled: t.disabledSkills });
     const slots = p.troopSlots[t.type] ?? {};
-    const pool = [
-      ...v.bag.instances.map((i) => ({ ...i, from: 'sac' })),
-      ...(v.kind === 'city' ? v.bank.instances.map((i) => ({ ...i, from: 'banque' })) : []),
-    ];
-    const wearable = (slot: string) => pool.filter((i) => p.equip[i.base]?.slot === slot && canWear(p, t.type, t.level, i.base) === null);
     const evolutions = await evolutionPreview(d.db, d.content, d.requireAuth(req).player.id, t);
     const canEvolveHere = v.kind === 'city' && region(d.content, v.region).city.recruit.includes(t.type);
     // Statistiques de chaque unité, équipement compris : celles que le combat utilisera.
@@ -500,7 +496,6 @@ export function registerGameRoutes(app: FastifyInstance, d: GameRouteDeps): void
       base: basicAttack(def),
       xpToNext,
       slots,
-      wearable,
       evolutions,
       canEvolveHere,
       error: errorOf(req.query),
@@ -537,20 +532,45 @@ export function registerGameRoutes(app: FastifyInstance, d: GameRouteDeps): void
     const id = int((req.params as { id: string }).id);
     return act(req, reply, `/troupe/${id}`, async () => void (await d.run(req, evolve, { troop: id, form: body(req).form })));
   });
+  /** Où revenir après avoir équipé ou retiré : la page Équipement (même troupe, même unité) ou la fiche de la troupe. */
+  const equipBack = (id: number, b: Record<string, string>): string =>
+    b.to === 'equipement' ? `/equipement?troupe=${id}&unite=${int(b.unit) || 1}` : `/troupe/${id}`;
   app.post('/troupe/:id/equiper', (req, reply) => {
     const id = int((req.params as { id: string }).id);
     const b = body(req);
     return act(
       req,
       reply,
-      `/troupe/${id}`,
+      equipBack(id, b),
       async () => void (await d.run(req, equip, { troop: id, unit: int(b.unit), instance: int(b.instance) })),
     );
   });
   app.post('/troupe/:id/desequiper', (req, reply) => {
     const id = int((req.params as { id: string }).id);
     const b = body(req);
-    return act(req, reply, `/troupe/${id}`, async () => void (await d.run(req, unequip, { troop: id, unit: int(b.unit), slot: b.slot })));
+    return act(req, reply, equipBack(id, b), async () => void (await d.run(req, unequip, { troop: id, unit: int(b.unit), slot: b.slot })));
+  });
+  app.get('/equipement', async (req, reply) => {
+    const v = await view(req);
+    const p = d.content.pack;
+    const q = req.query as { troupe?: string; unite?: string };
+    const wearers = v.troops.filter((t) => !t.loaned && t.units.length && Object.keys(p.troopSlots[t.type] ?? {}).length);
+    const t = wearers.find((x) => x.id === int(q.troupe)) ?? wearers[0];
+    const u = t?.units.find((x) => x.n === int(q.unite)) ?? t?.units[0];
+    const pool = [
+      ...v.bag.instances.map((i) => ({ ...i, from: 'sac' })),
+      ...(v.kind === 'city' ? v.bank.instances.map((i) => ({ ...i, from: 'banque' })) : []),
+    ];
+    return d.page(req, reply, 'equipement', {
+      v,
+      L,
+      wearers,
+      t: t ?? null,
+      u: u ?? null,
+      slots: t && u ? slotViews(p, t, u, pool) : [],
+      sheet: t && u ? sheet(p, { type: t.type, form: t.form, level: t.level, equip: u.equip }) : null,
+      error: errorOf(req.query),
+    });
   });
 
   // ---------- Quêtes ----------

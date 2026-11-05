@@ -41,7 +41,7 @@ eco:
   shopRoll: 800
   recruitGoldPerPop: 40
   craftGoldPerTier: 6
-  xpPerMonsterLevelPop: 8
+  xpPerMonsterLevelPop: 16
   maxLevel: 30
   table: { materiau: 85, composant: 5, consommable: 7, equipement: 3 }
   guardianTable: { composant: 50, equipement: 30, materiau: 20 }
