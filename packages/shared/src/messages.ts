@@ -42,6 +42,8 @@ const FR: Record<ErrorCode, string> = {
   TROOP_COMPLETE: 'La troupe est déjà complète.',
   NOT_RECRUITED_HERE: 'Cette troupe ne se recrute pas dans cette ville.',
   SQUAD_FULL: 'L’escouade est pleine (8 unités et 11 de population au plus).',
+  RESERVE_FULL: 'La réserve est pleine (5 unités et 8 de population au plus).',
+  SWAP_INVALID: 'Il faut échanger une troupe de l’escouade avec une troupe de la réserve.',
   BASIC_ATTACK_LOCKED: 'L’attaque de base ne peut pas être désactivée.',
   SKILL_UNKNOWN: 'Cette troupe ne connaît pas cette capacité.',
   RECIPE_UNKNOWN: 'Recette inconnue.',

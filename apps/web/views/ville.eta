@@ -29,6 +29,11 @@
     </div>
 
     <div class="card">
+      <h2>Réserve</h2>
+      <%~ include('./partials/reserve', { v: it.v, csrf: it.csrf, back: '/ville' }) %>
+    </div>
+
+    <div class="card">
       <h2>Services</h2>
       <ul class="tiles">
         <li><a href="/caserne"><svg class="ico" aria-hidden="true"><use href="#i-sword"></use></svg><b>Caserne</b><span>recruter, engager, racheter des unités</span></a></li>

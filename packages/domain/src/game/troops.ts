@@ -31,12 +31,18 @@ export interface LoadedTroop {
   rank: number;
   sort: number;
   loaned: boolean;
+  /** Troupe immobile (README 29.1). */
+  hold: boolean;
   disabledSkills: string[];
   units: LoadedUnit[];
 }
 
 /** Troupes du joueur (hors tombe), avec leurs unités vivantes et l'équipement porté. */
-export async function loadTroops(tx: Tx, playerId: number, containers: TroopContainer[] = ['SQUAD', 'BARRACKS']): Promise<LoadedTroop[]> {
+export async function loadTroops(
+  tx: Tx,
+  playerId: number,
+  containers: TroopContainer[] = ['SQUAD', 'RESERVE', 'BARRACKS'],
+): Promise<LoadedTroop[]> {
   const troops = await tx
     .selectFrom('troop')
     .selectAll()
@@ -65,6 +71,7 @@ export async function loadTroops(tx: Tx, playerId: number, containers: TroopCont
     rank: t.rank,
     sort: t.sort,
     loaned: t.loaned,
+    hold: t.hold,
     disabledSkills: t.disabled_skills,
     units: units
       .filter((u) => u.troop_id === t.id)
@@ -90,6 +97,7 @@ export const asPlayerTroop = (t: LoadedTroop): PlayerTroop => ({
   rank: t.rank,
   units: t.units.map((u): PlayerUnit => ({ hp: u.hp, mana: u.mana, equip: u.equip })),
   ...(t.disabledSkills.length ? { disabled: t.disabledSkills } : {}),
+  ...(t.hold ? { hold: true } : {}),
 });
 
 export const statsOf = (c: GameContent, t: LoadedTroop, u: LoadedUnit): UnitStats =>
@@ -152,6 +160,7 @@ export async function createTroop(
     rank: def.defaultDist,
     sort: 0,
     loaned: false,
+    hold: false,
     disabledSkills: [],
     units: [],
   };

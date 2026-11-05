@@ -24,15 +24,29 @@ export async function troopOf(ctx: CommandContext, id: number): Promise<LoadedTr
   return t;
 }
 
-/** Une troupe de plus tient-elle dans l'escouade (8 unités, 11 de population, README 20) ? */
-export async function fits(ctx: CommandContext, add: { pop: number; units: number }): Promise<boolean> {
+/** Lieux à capacité limitée : l'escouade combat, la réserve attend et gagne l'expérience (README 20, 29.2). */
+export type Limited = 'SQUAD' | 'RESERVE';
+
+/**
+ * Une troupe de plus tient-elle dans l'escouade (8 unités, 11 de population, README 20) ou dans la réserve
+ * (5 unités, 8 de population, README 29.2) ? `except` écarte des troupes qui vont partir (échange).
+ */
+export async function fits(
+  ctx: CommandContext,
+  add: { pop: number; units: number },
+  where: Limited = 'SQUAD',
+  except: number[] = [],
+): Promise<boolean> {
   const o = online(ctx.content);
+  const lim = where === 'SQUAD' ? o.squad : o.reserve;
   const u = squadUsage(
     ctx.content,
-    (await loadTroops(ctx.tx, ctx.player.id, ['SQUAD'])).filter((t) => t.units.length),
+    (await loadTroops(ctx.tx, ctx.player.id, [where])).filter((t) => t.units.length && !except.includes(t.id)),
   );
-  return u.pop + add.pop <= o.squad.maxPop && u.units + add.units <= o.squad.maxUnits;
+  return u.pop + add.pop <= lim.maxPop && u.units + add.units <= lim.maxUnits;
 }
+
+const fullError = (where: Limited): GameError => new GameError(where === 'SQUAD' ? 'SQUAD_FULL' : 'RESERVE_FULL');
 
 export const recruit = command({
   name: 'recruit',
@@ -65,7 +79,8 @@ export const rebuyUnits = command({
     const missing = def.units - t.units.length;
     if (missing <= 0) throw new GameError('TROOP_COMPLETE');
     if (!recruitedIn(ctx, t.type)) throw new GameError('NOT_RECRUITED_HERE');
-    if (t.container === 'SQUAD' && !(await fits(ctx, { pop: 0, units: missing }))) throw new GameError('SQUAD_FULL');
+    if ((t.container === 'SQUAD' || t.container === 'RESERVE') && !(await fits(ctx, { pop: 0, units: missing }, t.container)))
+      throw fullError(t.container);
     // Coût : recette de recrutement × (unités manquantes ÷ unités du type), arrondi au supérieur (README 4.6).
     const rec = (await recipes(ctx.tx, c, ctx.player)).get(t.type)!;
     await payRecipe(ctx.tx, ctx.player.id, rec, missing / def.units, 'SINK_REBUY_UNIT', `rachat ${t.type}`);
@@ -90,7 +105,7 @@ export const engage = command({
   async run(ctx, input) {
     const t = await troopOf(ctx, input.troop);
     if (t.container === 'SQUAD') return { container: 'SQUAD' as const };
-    if (!(await fits(ctx, { pop: ctx.content.pack.troops[t.type]!.pop, units: t.units.length }))) throw new GameError('SQUAD_FULL');
+    if (!(await fits(ctx, { pop: ctx.content.pack.troops[t.type]!.pop, units: t.units.length }))) throw fullError('SQUAD');
     await ctx.tx.updateTable('troop').set({ container: 'SQUAD', updated_at: ctx.now }).where('id', '=', t.id).execute();
     return { container: 'SQUAD' as const };
   },
@@ -136,5 +151,53 @@ export const setDisabledSkills = command({
     const skills = [...new Set(input.skills)];
     await ctx.tx.updateTable('troop').set({ disabled_skills: skills, updated_at: ctx.now }).where('id', '=', t.id).execute();
     return { disabled: skills };
+  },
+});
+
+/** Met une troupe en réserve : elle ne combat plus mais reçoit l'expérience des victoires (README 29.2). */
+export const reserveAdd = command({
+  name: 'reserve.add',
+  input: z.object({ troop: troopId }),
+  rate: { perMinute: 60 },
+  where: ['city'],
+  async run(ctx, input) {
+    const t = await troopOf(ctx, input.troop);
+    if (t.container === 'RESERVE') return { container: 'RESERVE' as const };
+    if (!(await fits(ctx, { pop: ctx.content.pack.troops[t.type]!.pop, units: t.units.length }, 'RESERVE'))) throw fullError('RESERVE');
+    await ctx.tx.updateTable('troop').set({ container: 'RESERVE', updated_at: ctx.now }).where('id', '=', t.id).execute();
+    return { container: 'RESERVE' as const };
+  },
+});
+
+/** Échange une troupe de l'escouade avec une troupe de la réserve, en ville comme en route (README 29.2). */
+export const reserveSwap = command({
+  name: 'reserve.swap',
+  input: z.object({ troop: troopId, with: troopId }),
+  rate: { perMinute: 60 },
+  where: ['city', 'route'],
+  async run(ctx, input) {
+    const a = await troopOf(ctx, input.troop);
+    const b = await troopOf(ctx, input.with);
+    if (a.container !== 'SQUAD' || b.container !== 'RESERVE') throw new GameError('SWAP_INVALID');
+    const pop = (t: LoadedTroop) => ({ pop: ctx.content.pack.troops[t.type]!.pop, units: t.units.length });
+    const both = [a.id, b.id];
+    if (!(await fits(ctx, pop(b), 'SQUAD', both))) throw fullError('SQUAD');
+    if (!(await fits(ctx, pop(a), 'RESERVE', both))) throw fullError('RESERVE');
+    await ctx.tx.updateTable('troop').set({ container: 'RESERVE', updated_at: ctx.now }).where('id', '=', a.id).execute();
+    await ctx.tx.updateTable('troop').set({ container: 'SQUAD', updated_at: ctx.now }).where('id', '=', b.id).execute();
+    return { squad: b.id, reserve: a.id };
+  },
+});
+
+/** Troupe immobile : elle ne se déplace pas d'elle-même au combat (README 29.1). */
+export const setHold = command({
+  name: 'troop.setHold',
+  input: z.object({ troop: troopId, hold: z.boolean() }),
+  rate: { perMinute: 60 },
+  where: ['city', 'route'],
+  async run(ctx, input) {
+    const t = await troopOf(ctx, input.troop);
+    await ctx.tx.updateTable('troop').set({ hold: input.hold, updated_at: ctx.now }).where('id', '=', t.id).execute();
+    return { hold: input.hold };
   },
 });

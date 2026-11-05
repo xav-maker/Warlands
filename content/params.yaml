@@ -88,6 +88,9 @@ online:
   engineVersion: v1
   guardianAdjust: all
   squad: { maxUnits: 8, maxPop: 11 } # README 20 [Xavier]
+  # Réserve [Xavier, 5 novembre 2026] : 5 emplacements, 8 de population ; ses troupes ne combattent pas mais reçoivent
+  # l'XP, xpShare ‰ de la part d'une troupe qui combat (1 000 : la même).
+  reserve: { maxUnits: 5, maxPop: 8, xpShare: 1000 }
   encounters: { popMult: 2, slots: 8 } # README 20 [H] : population des étapes ×2, 8 emplacements
   # Taille des piles par famille (prototype : constante STACK de monde.ts).
   stack: { materiau: 50, composant: 20, consommable: 10, trophee: 20 }

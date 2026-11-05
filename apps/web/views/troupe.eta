@@ -1,7 +1,7 @@
 <% layout('./layout', { title: it.t.name }) %>
 <% const t = it.t; const next = it.xpToNext(t.level) %>
 <section>
-  <p class="eyebrow"><%= it.def.name %> · <%= t.container === 'SQUAD' ? 'en escouade' : 'en caserne' %></p>
+  <p class="eyebrow"><%= it.def.name %> · <%= t.container === 'SQUAD' ? 'en escouade' : t.container === 'RESERVE' ? 'en réserve' : 'en caserne' %><%= t.hold ? ' · immobile' : '' %></p>
   <h1><%= t.name %></h1>
   <p class="muted">Niveau <%= t.level %><%= t.level < 30 ? ' · ' + t.xp + ' / ' + next + ' XP' : ' (maximum)' %> · <%= it.def.role %></p>
   <div class="grid">
@@ -25,6 +25,13 @@
         </label>
         <button type="submit">Changer</button>
       </form>
+      <form method="post" action="/troupe/<%= t.id %>/immobile" class="row">
+        <input type="hidden" name="_csrf" value="<%= it.csrf %>">
+        <input type="hidden" name="hold" value="<%= t.hold ? '0' : '1' %>">
+        <span class="muted"><%= t.hold ? 'Cette troupe reste à son rang : elle ne s’avance ni ne recule d’elle-même.' : 'Cette troupe avance, recule et charge selon ses règles.' %> Un effet qui la pousse ou la tire (ennemi, allié) la déplace quand même ; la fuite reste possible.</span>
+        <button type="submit"><%= t.hold ? 'Lui rendre sa liberté' : 'La rendre immobile' %></button>
+      </form>
+      <% if (t.container === 'RESERVE') { %><p class="muted">En réserve, cette troupe ne combat pas mais reçoit sa part de l’expérience à chaque victoire. <a href="/caserne">Gérer la réserve</a>.</p><% } %>
     </div>
 
     <div class="card wide">

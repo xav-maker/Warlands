@@ -38,7 +38,7 @@
       <ul class="links">
         <% if (r.won) { %><li><b>+<%= r.gold %> or</b><%= dungeon ? ' dans le coffre' : '' %>, <%= r.xp %> XP à partager</li><% } %>
         <% if (dungeon && r.loot.length) { %><li class="muted">Butin gardé dans le coffre du donjon : livré en banque à la sortie, perdu en cas de défaite.</li><% } %>
-        <% for (const x of r.xpBy) { %><li><%= it.L.troop(x.type) %> : +<%= x.gain %> XP</li><% } %>
+        <% for (const x of r.xpBy) { %><li><%= it.L.troop(x.type) %> : +<%= x.gain %> XP<%= x.reserve ? ' (réserve)' : '' %></li><% } %>
         <% for (const x of r.levelUps) { %><li class="good"><%= it.L.troop(x.type) %> passe niveau <%= x.level %></li><% } %>
         <% for (const x of r.deaths) { %><li class="bad"><%= it.L.troop(x.type) %> : une unité est morte</li><% } %>
         <% for (const x of r.loot) { %><li><%= 'item' in x ? it.L.item(x.item) + ' × ' + x.qty : it.L.item(x.base) + ' (' + it.L.quality(x.roll) + ')' %></li><% } %>

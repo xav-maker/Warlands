@@ -6,7 +6,7 @@
 <section>
   <p class="eyebrow"><%= it.R.city.name %></p>
   <h1>Caserne</h1>
-  <p class="muted">Vos recettes sont personnelles : les ingrédients sont pris d’abord en banque, puis dans le sac. Une recrue rejoint l’escouade si elle y tient (8 unités, 11 de population), sinon elle attend ici. Survolez ou touchez une capacité pour voir son effet.</p>
+  <p class="muted">Vos recettes sont personnelles : les ingrédients sont pris d’abord en banque, puis dans le sac. Une recrue rejoint l’escouade si elle y tient (8 unités, 11 de population), sinon elle attend ici. La réserve (5 unités, 8 de population) accueille des troupes qui ne combattent pas mais gagnent l’expérience des victoires ; on les échange avec l’escouade ici ou en route. Survolez ou touchez une capacité pour voir son effet.</p>
   <p class="legend"><span class="l-ok">recrutable maintenant</span><span class="l-partial">une partie des ingrédients</span><span class="l-none">aucun ingrédient</span></p>
   <div class="grid">
     <div>
@@ -44,22 +44,25 @@
       <%~ include('./partials/filterbar', {
         for: '#my-troops',
         placeholder: 'Chercher une de vos troupes…',
-        groups: [{ key: 'where', label: 'Où', options: [['*', 'Toutes'], ['squad', 'En escouade'], ['barracks', 'En caserne'], ['hurt', 'À compléter']] }],
+        groups: [{ key: 'where', label: 'Où', options: [['*', 'Toutes'], ['squad', 'En escouade'], ['reserve', 'En réserve'], ['barracks', 'En caserne'], ['hurt', 'À compléter']] }],
       }) %>
       <div class="card">
         <h2>Vos troupes <span class="count muted"><%= troops.length %></span></h2>
         <ul class="offers" id="my-troops">
           <% for (const t of troops) { const d = c.troops[t.type]; const missing = d.units - t.units.length; const here = it.R.city.recruit.includes(t.type); const r = missing > 0 ? rv.recipes.get(t.type) : null; const cost = r ? it.scaled(r, missing / d.units) : null; const st = cost && here ? it.L.recipeStatus(cost, have, it.v.gold) : null %>
-            <li class="offer <%= missing > 0 && st ? st : '' %>" data-text="<%= t.name %> <%= d.role ?? '' %>" data-where="<%= t.container === 'SQUAD' ? 'squad' : 'barracks' %><%= missing > 0 ? ' hurt' : '' %>">
+            <li class="offer <%= missing > 0 && st ? st : '' %>" data-text="<%= t.name %> <%= d.role ?? '' %>" data-where="<%= t.container === 'SQUAD' ? 'squad' : t.container === 'RESERVE' ? 'reserve' : 'barracks' %><%= missing > 0 ? ' hurt' : '' %>">
               <div class="row">
                 <span><a href="/troupe/<%= t.id %>" class="title"><%= t.name %></a> <span class="meta">niv. <%= t.level %> · <%= t.units.length %>/<%= d.units %> unité<%= d.units > 1 ? 's' : '' %><%= t.loaned ? ' · prêtée par la garde' : '' %></span></span>
                 <span class="actions">
-                  <span class="status <%= t.container === 'SQUAD' ? 'ok' : 'ko' %>"><%= t.container === 'SQUAD' ? 'en escouade' : 'en caserne' %></span>
-                  <form method="post" action="/troupe/<%= t.id %>/<%= t.container === 'SQUAD' ? 'retirer' : 'engager' %>" class="inline">
-                    <input type="hidden" name="_csrf" value="<%= it.csrf %>">
-                    <input type="hidden" name="back" value="/caserne">
-                    <button type="submit"><%= t.container === 'SQUAD' ? 'Retirer' : 'Engager' %></button>
-                  </form>
+                  <span class="status <%= t.container === 'BARRACKS' ? 'ko' : 'ok' %>"><%= t.container === 'SQUAD' ? 'en escouade' : t.container === 'RESERVE' ? 'en réserve' : 'en caserne' %><%= t.hold ? ' · immobile' : '' %></span>
+                  <% const moves = t.container === 'SQUAD' ? [['retirer', 'Retirer'], ['reserver', 'En réserve']] : t.container === 'RESERVE' ? [['engager', 'Engager'], ['retirer', 'Retirer']] : [['engager', 'Engager'], ['reserver', 'En réserve']] %>
+                  <% for (const [act, label] of moves) { %>
+                    <form method="post" action="/troupe/<%= t.id %>/<%= act %>" class="inline">
+                      <input type="hidden" name="_csrf" value="<%= it.csrf %>">
+                      <input type="hidden" name="back" value="/caserne">
+                      <button type="submit"><%= label %></button>
+                    </form>
+                  <% } %>
                 </span>
               </div>
               <% if (missing > 0) { %>

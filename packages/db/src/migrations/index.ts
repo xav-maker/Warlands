@@ -17,6 +17,7 @@ import * as m0015 from './0015_mot_de_passe_oublie.ts';
 import * as m0016 from './0016_tutoriel.ts';
 import * as m0017 from './0017_boutique_commune.ts';
 import * as m0018 from './0018_peage_routes.ts';
+import * as m0019 from './0019_reserve_immobile.ts';
 
 /**
  * Liste explicite des migrations, dans l'ordre. On évite `FileMigrationProvider`, qui charge
@@ -41,4 +42,5 @@ export const migrations: Record<string, Migration> = {
   '0016_tutoriel': m0016,
   '0017_boutique_commune': m0017,
   '0018_peage_routes': m0018,
+  '0019_reserve_immobile': m0019,
 };

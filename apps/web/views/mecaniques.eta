@@ -107,7 +107,7 @@ Puissance   = g(puissance) + bonus de la forme</code>
     <p>Quelques paliers : <% for (const [i, n] of [1, 5, 10, 20, eco.maxLevel - 1].entries()) { %><%= i ? ' · ' : '' %>niveau <%= n %> → <b><%= it.xpToNext(n) %></b><% } %> XP.</p>
     <ul class="plain">
       <li>Une victoire rapporte <b>niveau × population × <%= eco.xpPerMonsterLevelPop %></b> pour chaque troupe de monstres, additionnés.</li>
-      <li>Cette XP est <b>partagée à parts égales</b> entre les troupes gagnantes : celles qui ont au moins une unité en vie qui n’a pas fui.</li>
+      <li>Cette XP est <b>partagée à parts égales</b> entre les troupes gagnantes : celles qui ont au moins une unité en vie qui n’a pas fui. Les troupes en <b>réserve</b> (5 unités, 8 de population) ne combattent pas mais reçoivent la même part qu’une troupe gagnante.</li>
       <li>Une troupe <b>trop forte</b> apprend moins : avec écart = niveau de la troupe − niveau moyen des monstres (arrondi à l’inférieur) − 2, sa part est divisée par 2<sup>écart</sup> si l’écart est positif.</li>
       <li>En montant de niveau, les PV et le mana actuels augmentent autant que les maximums.</li>
     </ul>
@@ -167,7 +167,7 @@ sous Hâte : durée × <%= mult(P.hasteMod) %>      sous Ralenti : durée × <%=
 
   <article class="card" id="rangs">
     <h2>Rangs et portée</h2>
-    <p>Chaque unité se tient au <b>rang 1</b> (au contact), <b>2</b> ou <b>3</b> (à l’arrière). Le rang de départ se choisit par troupe, sur sa page.</p>
+    <p>Chaque unité se tient au <b>rang 1</b> (au contact), <b>2</b> ou <b>3</b> (à l’arrière). Le rang de départ se choisit par troupe, sur sa page, qui permet aussi de la rendre <b>immobile</b> : elle ne s’avance ni ne recule alors d’elle-même (Avancer, Reculer, Charge, approche automatique), mais un effet extérieur qui la repousse ou l’attire la déplace quand même.</p>
     <ul class="plain">
       <li>Le <b>rang effectif</b> compte les rangs réellement occupés de son camp : si seuls les rangs 2 et 3 sont occupés, ils comptent comme 1 et 2.</li>
       <li>Distance entre deux ennemis = rang effectif de l’un + rang effectif de l’autre − 1. Le <b>contact</b> est une distance de 1.</li>

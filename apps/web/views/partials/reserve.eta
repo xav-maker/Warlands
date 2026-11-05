@@ -1,0 +1,26 @@
+<%/* Réserve : troupes qui ne combattent pas mais gagnent l'XP (README 29.2). it.v, it.csrf, it.back. */%>
+<% const reserve = it.v.troops.filter((t) => t.container === 'RESERVE' && t.units.length) %>
+<% const squad = it.v.troops.filter((t) => t.container === 'SQUAD' && t.units.length) %>
+<% if (reserve.length) { %>
+  <ul class="squad">
+    <% for (const t of reserve) { %>
+      <li class="troop">
+        <div class="row between"><a href="/troupe/<%= t.id %>"><b><%= t.name %></b></a><span class="muted">niv. <%= t.level %> · <%= t.units.length %> unité<%= t.units.length > 1 ? 's' : '' %><%= t.hold ? ' · immobile' : '' %></span></div>
+        <% if (squad.length) { %>
+          <form method="post" action="/troupe/<%= t.id %>/echanger" class="row">
+            <input type="hidden" name="_csrf" value="<%= it.csrf %>">
+            <input type="hidden" name="back" value="<%= it.back %>">
+            <label>Remplace
+              <select name="with">
+                <% for (const s of squad) { %><option value="<%= s.id %>"><%= s.name %> (niv. <%= s.level %>)</option><% } %>
+              </select>
+            </label>
+            <button type="submit">Échanger</button>
+          </form>
+        <% } %>
+      </li>
+    <% } %>
+  </ul>
+<% } else { %>
+  <p class="muted">Aucune troupe en réserve. Mettez-en depuis la <a href="/caserne">caserne</a> : elles ne combattent pas mais gagnent l’expérience de chaque victoire.</p>
+<% } %>

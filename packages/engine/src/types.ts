@@ -118,6 +118,11 @@ export interface UnitInput {
   dist: number;
   skills: string[];
   rules: Rule[];
+  /**
+   * Unité immobile (README 29.1) : elle ne se déplace jamais d'elle-même (ni Avancer, ni Reculer, ni approche
+   * automatique, ni capacité qui la déplace) ; seuls les effets d'autrui (repousser, grappin…) la bougent.
+   */
+  hold?: boolean;
 }
 
 export interface BattleInput {

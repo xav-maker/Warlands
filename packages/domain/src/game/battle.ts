@@ -27,7 +27,7 @@ export interface BattleRewards {
   gold: number;
   /** XP de base de la victoire, avant partage. */
   xp: number;
-  xpBy: { troop: number; type: string; gain: number }[];
+  xpBy: { troop: number; type: string; gain: number; reserve?: boolean }[];
   levelUps: { troop: number; type: string; level: number }[];
   deaths: { troop: number; type: string; unit: number }[];
   loot: ({ item: string; qty: number } | { base: string; roll: number })[];
@@ -47,7 +47,7 @@ export type SquadOutcome = Pick<BattleRewards, 'xp' | 'xpBy' | 'levelUps' | 'dea
 /**
  * Applique un combat à l'escouade d'un joueur (guide 8.2, point 4) : unités mortes (équipement détruit), survivantes
  * à au moins 1 PV et +25 % de mana, troupes sans unité en tombe ; en cas de victoire, XP partagée entre les troupes
- * qui ont combattu jusqu'au bout. En duo, chaque joueur l'applique à sa propre escouade (README 23.3).
+ * qui ont combattu jusqu'au bout, et aussi aux troupes en réserve (README 29.2). En duo, chaque joueur l'applique à sa propre escouade (README 23.3).
  */
 export async function settleSquad(
   tx: Tx,
@@ -58,8 +58,10 @@ export async function settleSquad(
   results: UnitResult[],
   won: boolean,
   side: MonsterGroup,
+  reserve: LoadedTroop[] = [],
 ): Promise<SquadOutcome> {
   const eco = c.pack.eco as unknown as { manaRegenEnd: number; xpPerMonsterLevelPop: number; maxLevel: number };
+  const reserveShare = online(c).reserve.xpShare;
   const byId = new Map(results.map((u) => [u.id, u]));
   const r: SquadOutcome = { xp: 0, xpBy: [], levelUps: [], deaths: [] };
   const earners = new Set<number>();
@@ -96,9 +98,8 @@ export async function settleSquad(
   const avg = side.troops.reduce((a, t) => a + t.level, 0) / side.troops.length;
   const winners = squad.filter((t) => earners.has(t.id) && t.units.length);
   const share = winners.length ? Math.floor(r.xp / winners.length) : 0;
-  for (const t of winners) {
-    const gain = xpFor(share, t.level, avg);
-    r.xpBy.push({ troop: t.id, type: t.type, gain });
+  const award = async (t: LoadedTroop, gain: number, inReserve: boolean): Promise<void> => {
+    r.xpBy.push({ troop: t.id, type: t.type, gain, ...(inReserve ? { reserve: true } : {}) });
     let xp = t.xp + gain;
     while (t.level < eco.maxLevel && xp >= xpToNext(t.level)) {
       const before = t.units.map((u) => statsOf(c, t, u));
@@ -113,7 +114,11 @@ export async function settleSquad(
       r.levelUps.push({ troop: t.id, type: t.type, level: t.level });
     }
     await tx.updateTable('troop').set({ xp, level: t.level, updated_at: now }).where('id', '=', t.id).execute();
-  }
+  };
+  for (const t of winners) await award(t, xpFor(share, t.level, avg), false);
+  // La réserve n'a pas combattu mais reçoit la même part qu'une troupe qui a gagné (README 29.2).
+  if (winners.length)
+    for (const t of reserve) if (t.units.length) await award(t, xpFor(Math.floor((share * reserveShare) / 1000), t.level, avg), true);
   return r;
 }
 
@@ -186,7 +191,17 @@ export const fight = command({
     const r: BattleRewards = { won, gold: 0, xp: 0, xpBy: [], levelUps: [], deaths: [], loot: [], left: [], retreat: false };
 
     // 4. Unités (morts, PV, mana) et XP.
-    const out = await settleSquad(ctx.tx, c, ctx.now, squad, unitIds(squad, 0), result.units, won, side);
+    const out = await settleSquad(
+      ctx.tx,
+      c,
+      ctx.now,
+      squad,
+      unitIds(squad, 0),
+      result.units,
+      won,
+      side,
+      await loadTroops(ctx.tx, pid, ['RESERVE']),
+    );
     Object.assign(r, out);
 
     if (won) {

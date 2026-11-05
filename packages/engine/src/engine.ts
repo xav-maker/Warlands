@@ -695,10 +695,19 @@ export function simuler(input: BattleInput, seed: number): BattleOutput {
   const isHealSkill = (id: string): boolean =>
     id === 'soin_mineur' || id === 'priere' || (!!SK[id]?.fx && (SK[id]!.ai === 'heal' || SK[id]!.ai === 'groupHeal'));
   const isHotSkill = (id: string): boolean => id === 'regeneration' || !!SK[id]?.fx?.some((f) => f.k === 'state' && f.s === 'regeneration');
+  /** Capacité qui déplace son lanceur (Charge, bond, rempart vivant…) : interdite à une unité immobile. */
+  const movesSelf = (id: string): boolean => {
+    if (id === 'avancer' || id === 'reculer' || id === 'charge') return true;
+    const sk = SK[id];
+    return !!sk?.fx?.some(
+      (f) => (f.k === 'push' || f.k === 'pull') && (f.area === 'self' || (sk.target === 'self' && (!f.area || f.area === 'target'))),
+    );
+  };
   function choose(u2: Unit): Choice | null {
     for (let i = 0; i < u2.rules.length; i++) {
       const r = u2.rules[i]!;
       const id = r.action;
+      if (u2.hold && movesSelf(id)) continue;
       if (!COMMON.has(id) && (!u2.active.has(id) || !SK[id] || SK[id]!.kind !== 'active')) continue;
       if (!COMMON.has(id) && SK[id]!.mana > 0 && has(u2, 'silence')) continue;
       if (!condOk(u2, r)) continue;
@@ -757,7 +766,7 @@ export function simuler(input: BattleInput, seed: number): BattleOutput {
     u2.acting = true;
     u2.extraDelay = 0;
     let dur: number;
-    const c: Choice | null = blocked() && rank(u2) > 1 ? { i: -1, id: 'avancer', target: u2 } : choose(u2);
+    const c: Choice | null = blocked() && rank(u2) > 1 && !u2.hold ? { i: -1, id: 'avancer', target: u2 } : choose(u2);
     if (!c) dur = wait(u2, 'norule');
     else if (c.id === 'attendre') {
       emit({ k: 'act', u: u2.id, rule: c.i, skill: c.id });

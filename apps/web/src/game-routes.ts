@@ -32,6 +32,9 @@ import {
   useConsumable,
   engage,
   withdraw,
+  reserveAdd,
+  reserveSwap,
+  setHold,
   rebuyUnits,
   recruit,
   recipeView,
@@ -462,16 +465,20 @@ export function registerGameRoutes(app: FastifyInstance, d: GameRouteDeps): void
   app.post('/caserne/recruter', (req, reply) =>
     act(req, reply, '/caserne', async () => void (await d.run(req, recruit, { type: body(req).type }))),
   );
-  const troopActs: Record<string, CommandDef<z.ZodType, unknown>> = { engager: engage, retirer: withdraw, racheter: rebuyUnits } as Record<
-    string,
-    CommandDef<z.ZodType, unknown>
-  >;
+  const troopActs: Record<string, CommandDef<z.ZodType, unknown>> = {
+    engager: engage,
+    retirer: withdraw,
+    racheter: rebuyUnits,
+    reserver: reserveAdd,
+  } as Record<string, CommandDef<z.ZodType, unknown>>;
   app.post('/troupe/:id/:action', (req, reply) => {
     const { id, action } = req.params as { id: string; action: string };
     const b = body(req);
     const back = backOf(b, `/troupe/${int(id)}`);
     return act(req, reply, back, async () => {
       if (action === 'rang') await d.run(req, setRank, { troop: int(id), rank: int(b.rank) });
+      else if (action === 'immobile') await d.run(req, setHold, { troop: int(id), hold: b.hold === '1' });
+      else if (action === 'echanger') await d.run(req, reserveSwap, { troop: int(b.with), with: int(id) });
       else if (action === 'capacites') {
         const skills = Object.keys(b)
           .filter((k) => k.startsWith('off_'))

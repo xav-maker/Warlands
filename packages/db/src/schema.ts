@@ -81,7 +81,7 @@ export interface PlayerTable {
   updated_at: UpdatedAt;
 }
 
-export type TroopContainer = 'BARRACKS' | 'SQUAD' | 'GRAVE' | 'ESCROW';
+export type TroopContainer = 'BARRACKS' | 'SQUAD' | 'RESERVE' | 'GRAVE' | 'ESCROW';
 export type StackContainer = 'BAG' | 'BANK' | 'PENDING_LOOT' | 'DUNGEON_CHEST';
 export type InstanceContainer = StackContainer | 'EQUIPPED' | 'GRAVE' | 'SYSTEM' | 'ESCROW';
 
@@ -97,6 +97,8 @@ export interface TroopTable {
   sort: ColumnType<number, number | undefined, number>;
   disabled_skills: ColumnType<string[], string[] | undefined, string[]>;
   loaned: ColumnType<boolean, boolean | undefined, boolean>;
+  /** Troupe immobile : ne se déplace pas d'elle-même au combat (README 29.1). */
+  hold: ColumnType<boolean, boolean | undefined, boolean>;
   died_at: Date | null;
   lock_version: ColumnType<number, number | undefined, number>;
   created_at: CreatedAt;

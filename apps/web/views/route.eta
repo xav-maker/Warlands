@@ -89,6 +89,11 @@
     </div>
 
     <div class="card">
+      <h2>Réserve</h2>
+      <%~ include('./partials/reserve', { v: it.v, csrf: it.csrf, back: '/route' }) %>
+    </div>
+
+    <div class="card">
       <h2>Sac <span class="muted"><%= it.v.bag.used %> / <%= it.v.bag.cap %></span></h2>
       <% if (it.v.pending.stacks.length || it.v.pending.instances.length) { %>
         <p><b>Au sol</b> <span class="muted">— perdu si vous quittez l’étape</span></p>

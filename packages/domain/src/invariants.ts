@@ -102,17 +102,22 @@ async function positions(db: Db): Promise<Violation[]> {
   return out;
 }
 
-/** Escouades (README 20) : au plus 8 unités et 11 de population ; en ville, toutes les troupes à pleins PV et mana. */
+/** Escouades (README 20) : au plus 8 unités et 11 de population, la réserve 5 et 8 (README 29.2) ; en ville, toutes les troupes à pleins PV et mana. */
 async function squads(db: Db, c: GameContent): Promise<Violation[]> {
   const out: Violation[] = [];
   const o = online(c);
   const players = await db.selectFrom('player').select(['id', 'pos_kind']).where('started_at', 'is not', null).execute();
   for (const p of players) {
-    const troops = await db.transaction().execute((tx) => loadTroops(tx, p.id, ['SQUAD', 'BARRACKS']));
+    const troops = await db.transaction().execute((tx) => loadTroops(tx, p.id, ['SQUAD', 'RESERVE', 'BARRACKS']));
     const squad = troops.filter((t) => t.container === 'SQUAD');
     const units = squad.reduce((a, t) => a + t.units.length, 0);
     const pop = squad.filter((t) => t.units.length).reduce((a, t) => a + (c.pack.troops[t.type]?.pop ?? 0), 0);
     if (units > o.squad.maxUnits || pop > o.squad.maxPop) out.push({ check: 'squad.too_big', detail: { player: p.id, units, pop } });
+    const reserve = troops.filter((t) => t.container === 'RESERVE' && t.units.length);
+    const rUnits = reserve.reduce((a, t) => a + t.units.length, 0);
+    const rPop = reserve.reduce((a, t) => a + (c.pack.troops[t.type]?.pop ?? 0), 0);
+    if (rUnits > o.reserve.maxUnits || rPop > o.reserve.maxPop)
+      out.push({ check: 'reserve.too_big', detail: { player: p.id, units: rUnits, pop: rPop } });
     if (p.pos_kind === 'city')
       for (const t of troops)
         for (const u of t.units) {

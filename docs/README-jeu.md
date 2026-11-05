@@ -194,6 +194,7 @@ Les **stats finales** ajoutent l'équipement (section 7.4).
 
 - **Escouade** : les troupes engagées. Contraintes : population totale ≤ 5 et nombre d'unités ≤ 5. Une troupe de 3 unités prend 3 emplacements.
 - Les troupes non engagées restent **en caserne**, sans limite de nombre et sans coût. Elles ne vont pas en expédition.
+- Une **réserve** (5 unités, 8 de population) garde des troupes qui ne combattent pas mais gagnent l'expérience (29.2) ; une troupe peut être rendue **immobile** (29.1).
 - Engager ou retirer une troupe n'est possible **qu'en ville**. Une recrue (ou une troupe de récompense) rejoint l'escouade automatiquement s'il reste de la place, sinon elle va en caserne.
 - **Rang** (1 = contact, 2, 3 = arrière) : choisi par troupe ; toutes ses unités démarrent au même rang. Modifiable partout, y compris en expédition entre deux combats. Valeur initiale : le rang par défaut du type.
 
@@ -1176,3 +1177,20 @@ Les taux de victoire du gardien d'une route sont très sensibles à ces valeurs 
 - **Par unité** : dégâts infligés (nombre de coups, plus gros coup), dégâts subis, soins reçus, soins prodigués, éliminations, sort (instant de la mort). Les étiquettes « plus de dégâts » et « plus de soins » désignent le premier de chaque camp.
 - **Détail par capacité** (volet replié) : dégâts, coups et soins reçus par source, pour chaque camp.
 - **Dégâts** = valeur finale du coup après résistances et avant bouclier ; **soins** = PV réellement rendus (plafonnés au maximum). Les soins sont attribués à l'unité qui vient d'agir si elle est du même camp que le soigné ; les régénérations et effets dans la durée, dont le journal n'indique pas l'auteur, sont comptés à part (« sans lanceur identifiable »).
+
+## 29. Troupe immobile et réserve (5 novembre 2026)
+
+### 29.1 Troupe immobile [Xavier]
+
+- Un interrupteur par troupe (page de la troupe, colonne `troop.hold`, commande `troop.setHold`, permise en ville et en route) : une troupe **immobile** ne se déplace pas **d'elle-même** au combat. Ses unités gardent le rang où elles démarrent (le rang de départ reste réglable).
+- Ce que le drapeau interdit au moteur (`UnitInput.hold`, ignoré des versions et des journaux quand il est absent) : les actions **Avancer** et **Reculer**, la **Charge**, toute capacité qui déplace son propre lanceur (`push` ou `pull` de zone `self`, ou à cible `self`), et l'**approche automatique** des rangs arrière quand le combat est bloqué.
+- Ce qu'il n'interdit pas : un **effet extérieur** (Repousser d'un ennemi, attirance, déplacement imposé par un allié) déplace l'unité normalement ; la **fuite** (rang 3) reste possible, c'est un choix de survie et non un déplacement tactique ; la troupe attaque, soigne et lance ses sorts comme d'habitude.
+- Conséquence : une troupe immobile au rang 3 ne rejoint jamais le contact ; si ses capacités n'ont pas la portée, elle attend. C'est voulu (le joueur règle le rang de départ pour cela).
+
+### 29.2 Réserve [Xavier]
+
+- Cinquième emplacement de troupe, `RESERVE` (migration 0019), à côté de l'escouade et de la caserne : **5 unités et 8 de population au plus** (`online.squad.reserve` de `params.yaml`). Une troupe de la réserve **ne combat pas** : elle ne fait pas partie des unités du combat, ne subit aucun dégât, et ses PV ne bougent pas en route (le temple les soigne comme ceux des autres troupes).
+- **Expérience** : à chaque victoire (route et donjon, chacun pour sa propre réserve en duo), chaque troupe en réserve reçoit **la même part qu'une troupe qui a combattu** : `xp de la victoire ÷ nombre de troupes gagnantes de l'escouade`, puis la réduction habituelle pour une troupe trop forte (README 4.4). La réserve ne dilue donc pas la part de l'escouade. Le coefficient `xpShare` (en millièmes, 1 000 par défaut) permet de la réduire. Rien si l'escouade perd ou si personne n'a tenu jusqu'au bout. Les montées de niveau suivent les règles habituelles et sont listées au bilan, avec la mention « (réserve) ».
+- **Commandes** : `reserve.add` (caserne ou escouade vers réserve ; **en ville**, `RESERVE_FULL` si elle ne tient pas) ; `squad.engage` et `squad.withdraw` marchent aussi depuis la réserve ; `reserve.swap` (une troupe de l'escouade contre une troupe de la réserve ; **en ville et en expédition**, `SWAP_INVALID` si les emplacements ne sont pas les bons, `SQUAD_FULL` ou `RESERVE_FULL` si l'une des deux ne tient pas après l'échange). Pendant un donjon, les compositions sont figées comme avant.
+- Le rachat d'unités d'une troupe en réserve respecte la limite de la réserve. Les contrôles d'invariants vérifient aussi la réserve (`reserve.too_big`).
+- Interface : la caserne propose pour chaque troupe Retirer / En réserve / Engager ; la ville et la route ont une carte « Réserve » avec, pour chaque troupe, un choix de la troupe de l'escouade qu'elle remplace.

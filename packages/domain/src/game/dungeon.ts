@@ -488,7 +488,20 @@ async function playRoom(
   let first = 0;
   for (const [i, part] of parts.entries()) {
     const r: RoomRewards = { won, gold: 0, xp: 0, xpBy: [], levelUps: [], deaths: [], loot: [], left: [], retreat: false, room: n };
-    Object.assign(r, await settleSquad(ctx.tx, c, ctx.now, part.squad, unitIds(part.squad, first), result.units, won, side));
+    Object.assign(
+      r,
+      await settleSquad(
+        ctx.tx,
+        c,
+        ctx.now,
+        part.squad,
+        unitIds(part.squad, first),
+        result.units,
+        won,
+        side,
+        await loadTroops(ctx.tx, part.m.player_id, ['RESERVE']),
+      ),
+    );
     first += owners[i]!.units;
     if (won) {
       // Chacun tire son butin, avec sa propre graine (README 23.3), dans son coffre ; l'or attend la sortie.

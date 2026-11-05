@@ -232,6 +232,8 @@ export interface OnlineRules {
   engineVersion: string;
   guardianAdjust: 'all' | 'guardian';
   squad: { maxUnits: number; maxPop: number };
+  /** Réserve : unités et population au plus ; xpShare : part (‰) de l'XP d'une troupe qui combat. */
+  reserve: { maxUnits: number; maxPop: number; xpShare: number };
   encounters: { popMult: number; slots: number };
   stack: Record<string, number>;
   watch: { instantsPerSecond: number };

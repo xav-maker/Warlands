@@ -17,7 +17,7 @@
   <% } else { %>
     <nav class="tabs" aria-label="Troupe">
       <% for (const w of it.wearers) { %>
-        <a href="<%= here(w) %>"<%~ w.id === it.t.id ? ' aria-current="page"' : '' %>><%= w.name %> <span class="muted">niv. <%= w.level %><%= w.container === 'SQUAD' ? '' : ' · caserne' %></span></a>
+        <a href="<%= here(w) %>"<%~ w.id === it.t.id ? ' aria-current="page"' : '' %>><%= w.name %> <span class="muted">niv. <%= w.level %><%= w.container === 'SQUAD' ? '' : w.container === 'RESERVE' ? ' · réserve' : ' · caserne' %></span></a>
       <% } %>
     </nav>
     <% if (it.t.units.length > 1) { %>

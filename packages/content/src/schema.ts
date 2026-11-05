@@ -220,6 +220,11 @@ export const Params = z.strictObject({
     engineVersion: id,
     guardianAdjust: z.enum(['all', 'guardian']),
     squad: z.strictObject({ maxUnits: int.min(1), maxPop: int.min(1) }),
+    // Réserve (README 29) : troupes qui ne combattent pas mais reçoivent l'XP ; xpShare : part de l'XP d'une troupe qui
+    // combat, en ‰.
+    reserve: z
+      .strictObject({ maxUnits: int.min(1), maxPop: int.min(1), xpShare: int.min(0).max(1000) })
+      .default({ maxUnits: 5, maxPop: 8, xpShare: 1000 }),
     encounters: z.strictObject({ popMult: num.positive(), slots: int.min(1) }),
     stack: z.record(z.string(), int.min(1)),
     watch: z.strictObject({ instantsPerSecond: int.min(1) }),

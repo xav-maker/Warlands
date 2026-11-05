@@ -25,6 +25,8 @@ export interface PlayerTroop {
   units: PlayerUnit[];
   /** Capacités désactivées par le joueur (README 20.1) ; l'attaque de base ne l'est jamais. */
   disabled?: string[];
+  /** Troupe immobile (README 29.1) : ses unités ne se déplacent pas d'elles-mêmes au combat. */
+  hold?: boolean;
 }
 
 /**
@@ -149,6 +151,7 @@ export function battleUnits(c: GenContent, squad: PlayerTroop[], group: MonsterG
         dist: t.rank,
         skills,
         rules,
+        ...(t.hold ? { hold: true } : {}),
       });
     });
   });

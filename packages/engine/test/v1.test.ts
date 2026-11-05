@@ -335,3 +335,49 @@ describe('moteur v1 : camp de 16 en duo', () => {
     expect(['wipe', 'timeout']).toContain(out.result.reason);
   });
 });
+
+describe('moteur : unité immobile (README 29.1)', () => {
+  const moves = (out: BattleOutput, u: string): LogEvent[] => out.log.filter((e) => e.k === 'move' && e.u === u);
+  const advance: Rule[] = [{ cond: 'always', action: 'avancer', target: 'self' }];
+
+  it('sans le drapeau, une unité de l’arrière avance ; avec, elle reste en place', () => {
+    // Le rang compte les rangées occupées : il faut un allié devant pour qu'« Avancer » ait un sens.
+    const free = battle(() => [unit(0, { dist: 1, act: 'emploi' }), unit(0, { dist: 3, skills: ['emploi'], rules: advance }), unit(1)]);
+    expect(moves(free, 'A2').length).toBeGreaterThan(0);
+    const held = battle(() => [
+      unit(0, { dist: 1, act: 'emploi' }),
+      unit(0, { dist: 3, skills: ['emploi'], rules: advance, hold: true }),
+      unit(1),
+    ]);
+    expect(moves(held, 'A2')).toEqual([]);
+  });
+
+  it('refuse aussi l’approche automatique quand plus personne ne peut frapper', () => {
+    // Personne n'a de capacité : le combat est bloqué, les unités de l'arrière s'approchent d'elles-mêmes.
+    const free = battle(() => [unit(0, { dist: 1 }), unit(0, { dist: 3 }), unit(1)]);
+    expect(moves(free, 'A2').some((e) => e.cause === 'Approche automatique')).toBe(true);
+    const held = battle(() => [unit(0, { dist: 1 }), unit(0, { dist: 3, hold: true }), unit(1)]);
+    expect(moves(held, 'A2')).toEqual([]);
+  });
+
+  it('interdit une capacité qui déplace son lanceur (Charge)', () => {
+    const charge = battle(() => [unit(0, { act: 'charge', dist: 3 }), unit(0, { dist: 1 }), unit(1)]);
+    expect(moves(charge, 'A1').some((e) => e.cause === 'Charge')).toBe(true);
+    const held = battle(() => [unit(0, { act: 'charge', dist: 3, hold: true }), unit(0, { dist: 1 }), unit(1)]);
+    expect(moves(held, 'A1').some((e) => e.cause === 'Charge')).toBe(false);
+  });
+
+  it('un effet de l’adversaire la déplace quand même (repousser)', () => {
+    const out = battle(() => [unit(0, { dist: 1, hold: true }), unit(1, { act: 'repousser' })]);
+    expect(moves(out, 'A1').some((e) => e.cause === 'repoussé')).toBe(true);
+  });
+
+  it('ne change rien pour les unités sans le drapeau (combat identique)', () => {
+    const make = (hold?: boolean) => () => [
+      unit(0, { act: 'emploi', pow: POW({ for: 6 }), ...(hold === undefined ? {} : { hold }) }),
+      unit(1, { act: 'emploi' }),
+    ];
+    const noStart = (o: BattleOutput) => o.log.filter((e) => e.k !== 'start');
+    expect(noStart(battle(make(false)))).toEqual(noStart(battle(make())));
+  });
+});
