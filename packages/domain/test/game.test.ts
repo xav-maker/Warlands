@@ -18,6 +18,8 @@ import {
   bankMove,
   command,
   merchantBuy,
+  merchantBuyTroop,
+  transferGold,
   merchantSell,
   setUnit,
   useConsumable,
@@ -331,5 +333,25 @@ describe('grand livre (guide 6.3)', () => {
       t.db,
     );
     expect(neg.rows[0]!.n).toBe(0);
+  });
+});
+
+describe('troupes vendues par le marchand', () => {
+  it('Havre-Gris vend un Milicien 300 or : or au grand livre, troupe en escouade ou en caserne', async () => {
+    const pid = await newPlayer();
+    await run(pid, searchOrStart);
+    const gold0 = await t.db.transaction().execute((tx) => balance(tx, pid));
+    const before = (await loadTroops(t.db as never, pid, ['SQUAD', 'BARRACKS'])).length;
+    const r = await run(pid, merchantBuyTroop, { type: 'milicien' });
+    expect(r).toMatchObject({ price: 300 });
+    expect(await t.db.transaction().execute((tx) => balance(tx, pid))).toBe(gold0 - 300);
+    const troops = await loadTroops(t.db as never, pid, ['SQUAD', 'BARRACKS']);
+    expect(troops.length).toBe(before + 1);
+    const bought = troops.find((x) => x.id === r.troop)!;
+    expect(bought).toMatchObject({ type: 'milicien', level: 1, container: r.container });
+    // Pas une troupe d'un autre type, ni sans assez d'or.
+    await expect(run(pid, merchantBuyTroop, { type: 'chasseur' })).rejects.toMatchObject({ code: 'NOT_SOLD_HERE' });
+    await t.db.transaction().execute((tx) => transferGold(tx, { player: pid }, { system: 'SINK_RESET' }, gold0 - 300, 'test'));
+    await expect(run(pid, merchantBuyTroop, { type: 'milicien' })).rejects.toMatchObject({ code: 'NOT_ENOUGH_GOLD' });
   });
 });

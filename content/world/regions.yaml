@@ -6,6 +6,8 @@
   city:
     recruit: [milicien, chasseur, acolyte, frondeurs, moine, ecuyer, herboriste, braconniers]
     shop: [lame_1, baton_1, arc_1, legere_1, robe_1, bandage, potion_mineure]
+    # Troupes vendues par le marchand, et leur prix [Xavier, 5 novembre 2026].
+    troops: [[milicien, 300]]
 - id: marais
   tier: 2
   minLevel: 6

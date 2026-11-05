@@ -21,6 +21,7 @@ import {
   goHome,
   merchantBuy,
   merchantSell,
+  merchantBuyTroop,
   region,
   route,
   routeTierIndex,
@@ -692,10 +693,13 @@ export function registerGameRoutes(app: FastifyInstance, d: GameRouteDeps): void
   app.get('/marchand', async (req, reply) => {
     const v = await view(req);
     if (v.kind !== 'city') return reply.redirect('/route');
-    return d.page(req, reply, 'marchand', { v, L, R: region(d.content, v.region), error: errorOf(req.query) });
+    return d.page(req, reply, 'marchand', { v, L, R: region(d.content, v.region), c: d.content.pack, error: errorOf(req.query) });
   });
   app.post('/marchand/acheter', (req, reply) =>
     act(req, reply, '/marchand', async () => void (await d.run(req, merchantBuy, { id: body(req).id }))),
+  );
+  app.post('/marchand/troupe', (req, reply) =>
+    act(req, reply, '/marchand', async () => void (await d.run(req, merchantBuyTroop, { type: body(req).type }))),
   );
   app.post('/marchand/vendre', (req, reply) =>
     act(req, reply, '/marchand', async () => void (await d.run(req, merchantSell, { ...goods(body(req)), from: body(req).from }))),

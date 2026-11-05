@@ -25,6 +25,31 @@
         <% } %>
       </ul>
     </div>
+    <% const troops = (it.R.city.troops ?? []).map(([type, price]) => ({ type, price, d: it.c.troops[type], ok: it.v.gold >= price })) %>
+    <% if (troops.length) { %>
+      <div class="card">
+        <h2>Troupes <span class="count"><%= troops.filter((x) => x.ok).length %> à votre portée</span></h2>
+        <p class="meta">Elles arrivent au niveau <%= it.R.minLevel %>, en escouade si elles y tiennent, sinon en caserne.</p>
+        <ul class="offers">
+          <% for (const { type, price, d, ok } of troops) { %>
+            <li class="offer <%= ok ? 'ok' : 'none' %>">
+              <div class="row">
+                <span><span class="title"><%= d.name %></span> <span class="meta">— <%= d.role %> · <%= d.units %> unité<%= d.units > 1 ? 's' : '' %>, <%= d.pop %> de pop.</span></span>
+                <span class="actions">
+                  <span class="price coin <%= ok ? 'ok' : 'ko' %>"><%= price %> or</span>
+                  <form method="post" action="/marchand/troupe" class="inline">
+                    <input type="hidden" name="_csrf" value="<%= it.csrf %>">
+                    <input type="hidden" name="type" value="<%= type %>">
+                    <button type="submit" class="buy"<%= ok ? '' : ' disabled' %>>Acheter</button>
+                  </form>
+                </span>
+              </div>
+              <div class="spells"><% for (const [s, l] of d.forms[0].skills) { %><%~ include('./partials/spell', { id: s, L: it.L, level: l > 1 ? l : 0 }) %><% } %></div>
+            </li>
+          <% } %>
+        </ul>
+      </div>
+    <% } %>
     <div class="card">
       <h2>Vendre depuis le sac</h2>
       <%~ include('./partials/items', { x: it.v.bag, from: 'BAG', L: it.L, csrf: it.csrf, back: '/marchand', actions: ['vendre'] }) %>

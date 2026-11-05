@@ -13,7 +13,8 @@ import type { GameContent } from './content.ts';
 import { freshSeed } from './expedition.ts';
 import { transferGold } from './gold.ts';
 import { addInstance, addStack, moveInstance, stackQty, takeStack } from './inventory.ts';
-import { loadTroops, setUnit, statsOf } from './troops.ts';
+import { createTroop, loadTroops, setUnit, statsOf } from './troops.ts';
+import { fits } from './barracks.ts';
 import { recipes } from './recipes.ts';
 import { ensureQuests } from './quests.ts';
 
@@ -86,6 +87,29 @@ export const merchantBuy = command({
       if (!(await addInstance(ctx.tx, c, pid, 'BANK', it, 'merchant', 'achat'))) throw new GameError('BANK_FULL');
     } else if (await addStack(ctx.tx, c, pid, 'BANK', input.id, 1, 'SYSTEM', 'achat')) throw new GameError('BANK_FULL');
     return { price };
+  },
+});
+
+/**
+ * Troupe vendue par le marchand (city.troops) : payée en or au grand livre, elle arrive au niveau minimal de la région,
+ * en escouade si elle y tient (8 unités, 11 de population), sinon en caserne — comme une recrue.
+ */
+export const merchantBuyTroop = command({
+  name: 'merchant.buyTroop',
+  input: z.object({ type: z.string().min(1) }),
+  rate: { perMinute: 20 },
+  where: ['city'],
+  async run(ctx, input) {
+    const c = ctx.content;
+    const R = region(c, ctx.player.pos_region);
+    const offer = (R.city.troops ?? []).find(([t]) => t === input.type);
+    if (!offer) throw new GameError('NOT_SOLD_HERE');
+    const [type, price] = offer;
+    await transferGold(ctx.tx, { player: ctx.player.id }, { system: 'SINK_MERCHANT_SELL' }, price, `achat ${type}`);
+    const def = c.pack.troops[type]!;
+    const container = (await fits(ctx, { pop: def.pop, units: def.units })) ? 'SQUAD' : 'BARRACKS';
+    const troop = await createTroop(ctx.tx, c, ctx.player.id, { type, level: R.minLevel, container, reason: 'achat' });
+    return { troop, container, price };
   },
 });
 

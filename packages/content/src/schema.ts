@@ -155,7 +155,8 @@ export const Region = z.strictObject({
   minLevel: int.min(1),
   firstItem: id.optional(),
   guardianLoot: id.optional(),
-  city: z.strictObject({ recruit: z.array(id), shop: z.array(id) }),
+  /** troops : troupes vendues par le marchand de la ville, avec leur prix en or. */
+  city: z.strictObject({ recruit: z.array(id), shop: z.array(id), troops: z.array(z.tuple([id, int.min(1)])).optional() }),
   territory: z.strictObject({ steps: z.array(Step).min(1) }).optional(),
 });
 

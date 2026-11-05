@@ -25,7 +25,7 @@ export async function troopOf(ctx: CommandContext, id: number): Promise<LoadedTr
 }
 
 /** Une troupe de plus tient-elle dans l'escouade (8 unités, 11 de population, README 20) ? */
-async function fits(ctx: CommandContext, add: { pop: number; units: number }): Promise<boolean> {
+export async function fits(ctx: CommandContext, add: { pop: number; units: number }): Promise<boolean> {
   const o = online(ctx.content);
   const u = squadUsage(
     ctx.content,

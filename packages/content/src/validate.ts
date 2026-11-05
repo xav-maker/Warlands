@@ -55,6 +55,8 @@ export function checkReferences(raw: RawContent): Issue[] {
     const where = `world/regions.yaml › ${R.id}`;
     for (const t of R.city.recruit) if (!(t in raw.troops) || raw.troops[t]!.region !== undefined) err(where, `recrue inconnue ${t}`);
     for (const x of R.city.shop) if (!isItem(x) && !isEquip(x)) err(where, `article de marchand inconnu ${x}`);
+    for (const [t] of R.city.troops ?? [])
+      if (!(t in raw.troops) || raw.troops[t]!.region !== undefined) err(where, `troupe de marchand inconnue ${t}`);
     if (ri > 0 && !raw.routes && R.minLevel < raw.regions[ri - 1]!.minLevel) err(where, 'niveau minimal inférieur à la région précédente');
     if (raw.routes && R.territory) err(where, 'avec world/routes.yaml, les territoires sont des routes');
     if (!raw.routes && !R.territory) err(where, 'territoire manquant (ou world/routes.yaml)');

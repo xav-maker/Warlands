@@ -143,6 +143,11 @@ describe('parcours de jeu (J2)', () => {
     expect(offer(before.body, 'Bandage')).toContain('offer ok');
     expect(offer(before.body, 'Bandage')).toMatch(/class="buy">Acheter/);
     expect((await req('POST', '/marchand/acheter', { id: 'bandage' })).headers.location).toBe('/marchand');
+    // Troupe vendue par le marchand de Havre-Gris : un Milicien pour 300 or.
+    expect(before.body).toContain('action="/marchand/troupe"');
+    expect(offer(before.body, 'Milicien')).toContain('300 or');
+    expect((await req('POST', '/marchand/troupe', { type: 'milicien' })).headers.location).toBe('/marchand');
+    expect((await req('POST', '/marchand/troupe', { type: 'chasseur' })).headers.location).toBe('/marchand?e=NOT_SOLD_HERE');
     expect((await req('POST', '/marchand/acheter', { id: 'lame_1' })).headers.location).toBe('/marchand');
     expect((await req('POST', '/banque', { from: 'BANK', item: 'bandage', qty: '2' })).headers.location).toBe('/sac');
     const sac = await req('GET', '/sac');

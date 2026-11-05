@@ -106,7 +106,7 @@ export interface Region {
   /** Prototype : la région porte son territoire et son gardien. Monde en graphe : dans les routes. */
   firstItem?: string;
   guardianLoot?: string;
-  city: { name: string; desc?: string; recruit: string[]; shop: string[] };
+  city: { name: string; desc?: string; recruit: string[]; shop: string[]; troops?: [string, number][] };
   territory?: { name: string; desc?: string; steps: Step[] };
 }
 

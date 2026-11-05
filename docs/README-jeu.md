@@ -550,6 +550,7 @@ Puits d'objets : recrutement, craft, quêtes (trophées), mort des unités (équ
 
 - Vend dans chaque ville : 5 bases d'équipement du palier de la région (jet fixe 80 %, qualité « médiocre »), Bandage et Potion de soin mineure, plus Potion de soin et Potion de mana dès le palier 2. Stock illimité.
 - Prix d'achat = `ceil(valeur × 1,5)`. Rachat de tout objet = `max(1, floor(valeur × 0,2))` (valeur de l'exemplaire pour l'équipement).
+- Le marchand de Havre-Gris vend aussi un **Milicien pour 300 or** [Xavier, 5 novembre 2026] : il arrive au niveau 1, en escouade s'il y tient, sinon en caserne (liste `city.troops` du contenu).
 - Il n'y a pas encore de marché entre joueurs.
 
 ### 8.4 Recrutement
