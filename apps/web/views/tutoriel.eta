@@ -34,7 +34,7 @@
     <article class="card" id="acheter">
       <h2>3. Acheter <%~ badge('acheter') %></h2>
       <p>Le <b>marchand</b> de chaque ville vend l’équipement et les consommables de son palier, et rachète tout à bas prix. Ce que vous achetez arrive en <b>banque</b>.</p>
-      <p>La <b>boutique</b> de la ville est celle des joueurs : chacun y met en vente ce qu’il veut, à son prix. Chaque ville a ses propres annonces.</p>
+      <p>La <b>boutique</b> est celle des joueurs : chacun y met en vente ce qu’il veut, à son prix. Elle est commune à tout le jeu : depuis n’importe quelle ville, vous voyez toutes les annonces.</p>
       <p>Partout, ce qui est <span class="good"><b>en vert</b></span> est à votre portée.</p>
       <p><a href="/marchand">Aller au marchand</a> · <a href="/boutique">Aller à la boutique</a></p>
     </article>

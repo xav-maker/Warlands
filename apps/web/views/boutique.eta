@@ -3,9 +3,9 @@
 <% const SLOTS = { arme: 'arme', armure: 'armure', accessoire: 'accessoire' } %>
 <%~ include('./partials/verify-banner', { auth: it.auth }) %>
 <section>
-  <p class="eyebrow"><%= it.R.city.name %></p>
+  <p class="eyebrow">Marché des joueurs · depuis <%= it.R.city.name %></p>
   <h1>Boutique</h1>
-  <p class="muted">Les annonces de cette boutique ne sont visibles et achetables qu’ici : chaque ville est un marché à part. Ce qui est acheté arrive en banque (une troupe en caserne). Le vendeur paie une taxe de <%= it.taxPermille / 10 %> % à la vente.</p>
+  <p class="muted">La boutique est commune à tout le jeu : depuis n’importe quelle ville, vous voyez et achetez toutes les annonces des joueurs. Ce qui est acheté arrive en banque (une troupe en caserne). Le vendeur paie une taxe de <%= it.taxPermille / 10 %> % à la vente.</p>
 
   <form method="get" action="/boutique" class="card row filters">
     <label>Nom <input type="search" name="q" value="<%= f.q ?? '' %>" maxlength="40"></label>
@@ -33,7 +33,7 @@
         <li class="offer row between <%= ok ? 'ok' : own ? '' : 'none' %>" data-text="<%= l.name %> <%= l.seller %> <%= FAM[l.family] ?? l.family %>" data-status="<%= own ? 'own' : ok ? 'ok' : 'none' %>">
           <span>
             <span class="title"><%= l.name %></span><%= l.qty > 1 ? ' × ' + l.qty : '' %>
-            <span class="meta">— <%= FAM[l.family] ?? l.family %>, palier <%= l.tier %><%= l.level ? ', niveau ' + l.level : '' %><%= l.roll ? ', ' + it.L.quality(l.roll) : '' %><%= l.stats ? ' : ' + l.stats.map(it.L.statText).join(', ') : '' %> · par <%= l.seller %></span>
+            <span class="meta">— <%= FAM[l.family] ?? l.family %>, palier <%= l.tier %><%= l.level ? ', niveau ' + l.level : '' %><%= l.roll ? ', ' + it.L.quality(l.roll) : '' %><%= l.stats ? ' : ' + l.stats.map(it.L.statText).join(', ') : '' %> · par <%= l.seller %>, mise en vente à <%= it.L.region(l.region).city.name %></span>
             <a href="/boutique/historique/<%= l.item %>" class="muted">historique</a>
             <% if (!own) { %><a href="/signaler?kind=listing&amp;ref=<%= l.id %>" class="muted">signaler</a><% } %>
           </span>
@@ -90,7 +90,7 @@
         <% for (const l of it.mine) { const here = l.region === it.v.region %>
           <li class="row between">
             <span><b><%= l.name %></b><%= l.qty > 1 ? ' × ' + l.qty : '' %> <span class="muted">— <%= l.price %> or · <%= it.L.region(l.region).city.name %> · jusqu’au <%= l.expires_at.toLocaleDateString('fr-FR') %></span></span>
-            <% if (here) { %><form method="post" action="/boutique/<%= l.id %>/retirer" class="inline"><input type="hidden" name="_csrf" value="<%= it.csrf %>"><button type="submit">Retirer</button></form><% } else { %><span class="muted">se retire à <%= it.L.region(l.region).city.name %></span><% } %>
+            <form method="post" action="/boutique/<%= l.id %>/retirer" class="inline"><input type="hidden" name="_csrf" value="<%= it.csrf %>"><button type="submit">Retirer</button></form>
           </li>
         <% } %>
         <% if (!it.mine.length) { %><li class="muted">Aucune annonce en cours.</li><% } %>

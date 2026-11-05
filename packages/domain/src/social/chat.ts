@@ -23,6 +23,13 @@ export const MIN_GAP_MS = 1000;
 /** Fenêtre de présence : « en ligne » = vu il y a moins de 2 minutes (guide 11). */
 export const ONLINE_MS = 2 * 60_000;
 export const CHAT_HISTORY = 50;
+/**
+ * Canal général, commun à tout le jeu [Xavier, 5 novembre 2026] : ses messages vont dans la même table que ceux des
+ * régions, sous ce nom de canal (aucune région ne s'appelle ainsi) ; filtre, sourdine, blocage, signalement, modération
+ * et conservation de 7 jours s'y appliquent de même.
+ */
+export const GENERAL_CHANNEL = '*';
+export type ChatChannel = 'region' | 'general';
 
 type Tx = Transaction<Database>;
 
@@ -46,11 +53,12 @@ export function prepareText(raw: string, rules: { maxLength: number; bannedWords
 
 export const sayInRegion = command({
   name: 'chat.say',
-  input: z.object({ text: z.string().max(5000), links: LinkRefs }),
+  input: z.object({ text: z.string().max(5000), links: LinkRefs, channel: z.enum(['region', 'general']).default('region') }),
   rate: { perMinute: 20 },
   allowedDuringWatch: true,
   async run(ctx, input) {
     await assertEmailVerified(ctx);
+    const channel = input.channel === 'general' ? GENERAL_CHANNEL : ctx.player.pos_region;
     const { text, hits } = prepareText(input.text, online(ctx.content).chat);
     await assertNotMuted(ctx.tx, ctx.player.id, ctx.now);
     await assertSendSpacing(ctx.tx, ctx.player.id, ctx.now);
@@ -58,7 +66,7 @@ export const sayInRegion = command({
     const row = await ctx.tx
       .insertInto('chat_message')
       .values({
-        region: ctx.player.pos_region,
+        region: channel,
         author_id: ctx.player.id,
         body: text,
         links: JSON.stringify(links),
@@ -67,7 +75,7 @@ export const sayInRegion = command({
       })
       .returning('id')
       .executeTakeFirstOrThrow();
-    ctx.emit({ topic: `region:${ctx.player.pos_region}`, type: 'chat.message', data: { id: row.id } });
+    ctx.emit({ topic: `region:${channel}`, type: 'chat.message', data: { id: row.id, channel: input.channel } });
     return { id: row.id, filtered: hits };
   },
 });
@@ -123,11 +131,12 @@ export async function chatHistory(db: Db, viewerId: number, region: string, limi
 }
 
 /** Joueurs vus en ligne dans une région (présence : dernière activité il y a moins de 2 minutes). */
+/** Joueurs en ligne dans une région (ou dans tout le jeu, pour le canal général). */
 export async function onlineInRegion(db: Db, region: string, now = new Date()): Promise<number> {
   const r = await db
     .selectFrom('player')
     .select((eb) => eb.fn.countAll<number>().as('n'))
-    .where('pos_region', '=', region)
+    .$if(region !== GENERAL_CHANNEL, (q) => q.where('pos_region', '=', region))
     .where('last_seen_at', '>', new Date(now.getTime() - ONLINE_MS))
     .executeTakeFirstOrThrow();
   return Number(r.n);

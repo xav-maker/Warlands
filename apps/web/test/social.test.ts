@@ -85,6 +85,23 @@ class Browser {
 const player = (name: string) => new Browser(name).join();
 const playerOn = (server: FastifyInstance, name: string) => new Browser(name, server).join();
 
+describe('canal général', () => {
+  it('s’affiche dans son onglet, reçoit les messages de tous, et le canal de région reste à part', async () => {
+    const [a, b] = [await player('Gaspard'), await player('Hermine')];
+    await t.db.updateTable('player').set({ pos_region: 'marais' }).where('pseudo', '=', 'Hermine').execute();
+    await rewind();
+    const sent = await a.req('POST', '/chat', { text: 'Salut tout le monde', canal: 'general' });
+    expect(sent.headers.location).toBe('/chat?canal=general');
+    const page = await b.req('GET', '/chat?canal=general');
+    expect(page.body).toContain('Canal général');
+    expect(page.body).toContain('Salut tout le monde');
+    expect(page.body).toContain('name="canal" value="general"');
+    expect((await b.req('GET', '/chat')).body).not.toContain('Salut tout le monde');
+    const frag = await b.req('GET', '/chat/messages?canal=general', undefined, { 'hx-request': 'true' });
+    expect(frag.body).toContain('Salut tout le monde');
+  });
+});
+
 describe('chat de région', () => {
   it('publie un message, l’échappe, et le montre aux joueurs de la région', async () => {
     const [a, b] = [await player('Alice'), await player('Bastien')];

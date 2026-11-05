@@ -79,7 +79,7 @@
       <ul class="items">
         <% for (const m of f.recentChat) { %>
           <li class="row between<%= m.deleted ? ' muted' : '' %>">
-            <span><span class="muted"><%= m.at.toLocaleString('fr-FR', { timeZone: 'Europe/Paris', day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' }) %> · <%= m.region %></span> <%= m.text %><%= m.deleted ? ' (supprimé)' : '' %></span>
+            <span><span class="muted"><%= m.at.toLocaleString('fr-FR', { timeZone: 'Europe/Paris', day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' }) %> · <%= m.region === '*' ? 'canal général' : m.region %></span> <%= m.text %><%= m.deleted ? ' (supprimé)' : '' %></span>
             <% if (!m.deleted) { %><form method="post" action="/moderation/supprimer-message" class="inline"><input type="hidden" name="_csrf" value="<%= it.csrf %>"><input type="hidden" name="message" value="<%= m.id %>"><input type="hidden" name="back" value="<%= here %>"><button type="submit">Supprimer</button></form><% } %>
           </li>
         <% } %>

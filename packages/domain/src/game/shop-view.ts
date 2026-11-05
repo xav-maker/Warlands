@@ -13,8 +13,11 @@ export interface ShopFilters {
 
 export const SHOP_PAGE = 30;
 
-/** Annonces actives d'une ville, triées par prix puis id (pagination par curseur sur l'index de recherche). */
-export async function searchListings(db: Db, region: string, f: ShopFilters) {
+/**
+ * Annonces actives de la boutique, commune à tout le jeu [Xavier, 5 novembre 2026], triées par prix puis id
+ * (pagination par curseur sur l'index de recherche). Chaque annonce garde la ville où elle a été mise en vente.
+ */
+export async function searchListings(db: Db, f: ShopFilters) {
   let q = db
     .selectFrom('shop_listing as l')
     .innerJoin('player as p', 'p.id', 'l.seller_id')
@@ -32,11 +35,11 @@ export async function searchListings(db: Db, region: string, f: ShopFilters) {
       'l.level',
       'l.seller_id',
       'l.expires_at',
+      'l.region',
       'p.pseudo as seller',
       'i.roll',
       'i.stats',
     ])
-    .where('l.region', '=', region)
     .where('l.status', '=', 'active');
   if (f.q?.trim()) q = q.where('l.name', 'ilike', `%${f.q.trim().replace(/[\\%_]/g, (m) => `\\${m}`)}%`);
   if (f.family) q = q.where('l.family', '=', f.family);
@@ -65,12 +68,11 @@ export async function myListings(db: Db, playerId: number) {
     .execute();
 }
 
-/** Les 20 dernières ventes d'un objet dans une ville, et le prix moyen à l'unité. */
-export async function priceHistory(db: Db, region: string, item: string) {
+/** Les 20 dernières ventes d'un objet dans la boutique, et le prix moyen à l'unité. */
+export async function priceHistory(db: Db, item: string) {
   const rows = await db
     .selectFrom('shop_sale')
     .select(['price', 'qty', 'created_at'])
-    .where('region', '=', region)
     .where('item', '=', item)
     .orderBy('created_at', 'desc')
     .limit(20)

@@ -15,7 +15,6 @@ import { itemValue } from '@cr/gen';
 import type { Database, Db, Transaction } from '@cr/db';
 import { command } from '../command.ts';
 import type { CommandContext } from '../command.ts';
-import { region } from './content.ts';
 import type { GameContent } from './content.ts';
 import { sellPrice } from './city.ts';
 import { transferGold } from './gold.ts';
@@ -245,7 +244,6 @@ export const withdrawListing = command({
   async run(ctx, input) {
     const l = await activeListing(ctx.tx, input.listing);
     if (l.seller_id !== ctx.player.id) throw new GameError('LISTING_NOT_FOUND');
-    if (l.region !== ctx.player.pos_region) throw new GameError('LISTING_ELSEWHERE', { ville: region(ctx.content, l.region).city.name });
     await giveBack(ctx.tx, ctx.content, l, 'retrait d’annonce', false);
     await ctx.tx.updateTable('shop_listing').set({ status: 'withdrawn', closed_at: ctx.now }).where('id', '=', l.id).execute();
     return { withdrawn: l.id };
@@ -262,7 +260,6 @@ export const buyListing = command({
     const c = ctx.content;
     const pid = ctx.player.id;
     const l = await activeListing(ctx.tx, input.listing);
-    if (l.region !== ctx.player.pos_region) throw new GameError('LISTING_ELSEWHERE', { ville: region(c, l.region).city.name });
     if (l.seller_id === pid) throw new GameError('OWN_LISTING');
     const tax = taxOf(l.price);
     // Or : acheteur → vendeur, puis la taxe du vendeur vers le puits (comptes verrouillés dans l'ordre des ids).

@@ -563,7 +563,7 @@ export function registerGameRoutes(app: FastifyInstance, d: GameRouteDeps): void
     const pid = d.requireAuth(req).player.id;
     const q = req.query as Record<string, string | undefined>;
     const filters = { q: q.q, family: q.f || undefined, tier: int(q.p) || undefined, slot: q.s || undefined, after: q.apres };
-    const found = await searchListings(d.db, v.region, filters);
+    const found = await searchListings(d.db, filters);
     const mine = await myListings(d.db, pid);
     const troops = v.troops.filter((x) => x.container === 'BARRACKS' && x.units.length && !x.loaned);
     return d.page(req, reply, 'boutique', {
@@ -583,7 +583,7 @@ export function registerGameRoutes(app: FastifyInstance, d: GameRouteDeps): void
     const v = await view(req);
     if (v.kind !== 'city') return reply.redirect('/route');
     const item = (req.params as { item: string }).item;
-    const h = await priceHistory(d.db, v.region, item);
+    const h = await priceHistory(d.db, item);
     return d.page(req, reply, 'historique', { v, L, R: region(d.content, v.region), item, h });
   });
   app.post('/boutique/vendre', (req, reply) => {

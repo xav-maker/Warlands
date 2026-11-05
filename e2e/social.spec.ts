@@ -98,6 +98,16 @@ test('chat en direct entre deux navigateurs, signalement, sanctions', async ({ b
   await alice.page.getByRole('button', { name: 'Envoyer le signalement' }).click();
   await expect(alice.page.getByText(/signalement a été transmis/)).toBeVisible();
 
+  // Canal général : commun à tout le jeu, en direct lui aussi.
+  await alice.page.goto('/chat?canal=general');
+  await bob.page.goto('/chat?canal=general');
+  await expect(bob.page.getByRole('heading', { name: 'Canal général' })).toBeVisible();
+  await say(alice.page, `Annonce générale ${stamp}`);
+  await expect(bob.page.locator('#chat-log')).toContainText(`Annonce générale ${stamp}`);
+  await bob.page.goto('/chat');
+  await expect(bob.page.locator('#chat-log')).not.toContainText(`Annonce générale ${stamp}`);
+  await alice.page.waitForTimeout(1100); // un message par seconde, chat et messages privés confondus
+
   // Messages privés en direct : Alice écrit à Bob, qui a la conversation ouverte.
   await bob.page.goto(`/messages/${encodeURIComponent(alice.pseudo)}`);
   await alice.page.goto(`/messages/${encodeURIComponent(bob.pseudo)}`);

@@ -1013,9 +1013,9 @@ Les pools de stats des bases gagnent les 5 puissances (coût : 1 point de budget
 
 ### 22.1 Principe
 
-- Chaque ville a sa **boutique** : une liste d'annonces de joueurs. Une annonce n'est visible et achetable **que dans la ville où elle a été posée**. Les boutiques de deux villes sont donc deux marchés séparés, avec leurs propres prix.
+- La **boutique** des joueurs est **commune à tout le jeu** [Xavier, 5 novembre 2026 ; une boutique par ville auparavant] : une annonce posée dans une ville est visible et achetable depuis n'importe quelle ville. Elle garde la ville où elle a été posée, à titre d'information.
 - On peut vendre une **pile d'objets** (quantité au choix), un **exemplaire d'équipement** ou une **troupe** (avec son niveau, son XP, sa forme, ses unités vivantes, leur équipement et ses PV pleins).
-- Le vendeur fixe un **prix en or**. L'acheteur doit être **dans la ville** de la boutique.
+- Le vendeur fixe un **prix en or**. L'acheteur doit être **en ville** (n'importe laquelle).
 - Le **marchand PNJ** reste (vente et rachat à prix fixe, section 8.3).
 
 ### 22.2 Règles [H sauf mention]
@@ -1023,11 +1023,11 @@ Les pools de stats des bases gagnent les 5 puissances (coût : 1 point de budget
 - **Poser une annonce** : en ville ; le bien vient de la banque (ou de la caserne pour une troupe, qui ne doit pas être engagée). Il passe en **séquestre** : il n'est plus dans la banque, ne peut être ni utilisé ni vendu ailleurs.
 - **Taxe** : 5 % du prix, prélevée sur le vendeur à la vente (puits d'or). Pas de frais de dépôt. Prix minimal : le prix de rachat PNJ (évite le blanchiment d'or entre comptes à 1 or).
 - **Durée** : 7 jours. Ensuite l'annonce expire et le bien retourne à la banque du vendeur (une troupe à sa caserne).
-- **Retirer une annonce** : dans la ville de l'annonce seulement.
+- **Retirer une annonce** : depuis n'importe quelle ville.
 - **Achat** : immédiat, au prix affiché, transaction atomique ; l'objet arrive dans la banque de l'acheteur, la troupe dans sa caserne ; l'or (moins la taxe) est versé au vendeur même s'il est hors ligne, avec une notification.
 - **Limites** : 20 annonces actives par joueur ; comptes de moins de 24 heures ou de niveau d'escouade faible : pas de vente de troupes (anti multi-comptes).
 - Bien non vendable : la troupe prêtée par la garde. Les trophées se vendent (c'est voulu : on peut acheter de quoi rendre une quête).
-- **Recherche** : par nom, famille, palier, emplacement, prix ; tri par prix. Historique des 20 dernières ventes de chaque objet dans la ville (prix moyen affiché).
+- **Recherche** : par nom, famille, palier, emplacement, prix ; tri par prix. Historique des 20 dernières ventes de chaque objet (prix moyen affiché).
 - Les matériaux « réservés à l'échange » (section 8.5) et les recettes personnelles sont le moteur de ce commerce : ce qui est inutile à l'un est un ingrédient pour un autre.
 
 ### 22.3 Exigences techniques

@@ -44,6 +44,7 @@
             <summary><svg class="ico" aria-hidden="true"><use href="#i-chat"></use></svg>Social<svg class="ico chev" aria-hidden="true"><use href="#i-chevron"></use></svg></summary>
             <div class="menu-panel">
               <%~ item('/chat', 'chat', 'Discussion', 'canal de la région') %>
+              <a href="/chat?canal=general"><svg class="ico" aria-hidden="true"><use href="#i-chat"></use></svg><span><b>Canal général</b><small>tout le jeu</small></span></a>
               <%~ item('/messages', 'mail', 'Messages', 'privés') %>
               <%~ item('/amis', 'users', 'Amis', 'liste et demandes') %>
               <%~ item('/notifications', 'bell', 'Notifications', it.v && it.v.unread ? it.v.unread + ' non lue' + (it.v.unread > 1 ? 's' : '') : 'à jour') %>

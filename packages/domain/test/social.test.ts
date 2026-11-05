@@ -29,6 +29,7 @@ import {
   executeCommand,
   ficheOf,
   filterWords,
+  GENERAL_CHANNEL,
   forceRename,
   friendsView,
   liftExpiredSuspensions,
@@ -141,7 +142,7 @@ describe('chat de région', () => {
     const a = await newPlayer();
     events.length = 0;
     const r = await run(a.id, sayInRegion, { text: '  Bonjour   à tous ' });
-    expect(events).toContainEqual({ topic: 'region:ronces', type: 'chat.message', data: { id: r.id } });
+    expect(events).toContainEqual({ topic: 'region:ronces', type: 'chat.message', data: { id: r.id, channel: 'region' } });
     const log = await chatHistory(t.db, a.id, 'ronces');
     expect(log.at(-1)).toMatchObject({ id: r.id, pseudo: a.pseudo, text: 'Bonjour à tous', mine: true });
   });
@@ -152,6 +153,22 @@ describe('chat de région', () => {
     const r = await run(a.id, sayInRegion, { text: 'ici' });
     expect((await chatHistory(t.db, a.id, 'ailleurs')).map((m) => m.id)).toContain(r.id);
     expect((await chatHistory(t.db, a.id, 'ronces')).map((m) => m.id)).not.toContain(r.id);
+  });
+
+  it('canal général : lu depuis toutes les régions, à part des canaux de région, diffusé à tous, mêmes règles', async () => {
+    const a = await newPlayer();
+    const b = await newPlayer();
+    await setRegion(b, 'marais');
+    events.length = 0;
+    const r = await run(a.id, sayInRegion, { text: 'Bonjour le monde', channel: 'general' });
+    expect(events).toContainEqual({ topic: 'region:*', type: 'chat.message', data: { id: r.id, channel: 'general' } });
+    // Lu par un joueur d'une autre région ; absent des canaux de région.
+    expect((await chatHistory(t.db, b.id, GENERAL_CHANNEL)).map((m) => m.id)).toContain(r.id);
+    expect((await chatHistory(t.db, a.id, 'ronces')).map((m) => m.id)).not.toContain(r.id);
+    // Un joueur réduit au silence ne parle pas non plus dans le canal général.
+    const mod = await newPlayer('moderator');
+    await run(mod.id, applySanction, { player: b.id, kind: 'mute', hours: 1, reason: 'test du canal général' });
+    await expect(run(b.id, sayInRegion, { text: 'puis-je ?', channel: 'general' }, at(10))).rejects.toMatchObject({ code: 'MUTED' });
   });
 
   it('refuse un message vide, trop long ou un second message en moins d’une seconde', async () => {

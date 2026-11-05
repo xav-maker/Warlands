@@ -94,21 +94,19 @@ describe('annonce et achat d’une pile (README 22)', () => {
     await expect(run(buyer, buyListing, { listing: id })).rejects.toMatchObject({ code: 'LISTING_GONE' });
   });
 
-  it('ne s’achète et ne se retire que dans sa ville ; 20 annonces au plus', async () => {
+  it('s’achète et se retire depuis n’importe quelle ville (boutique commune) ; 20 annonces au plus', async () => {
     const seller = await newPlayer();
     const buyer = await newPlayer();
     const had = await bankQty(seller, 'bois_tordu');
     await give(seller, 'bois_tordu', 30);
     const { listing: id } = await run(seller, listGoods, { kind: 'stack', item: 'bois_tordu', qty: 1, price: 5 });
     await t.db.updateTable('player').set({ pos_region: 'marais' }).where('id', 'in', [seller, buyer]).execute();
-    await expect(run(buyer, buyListing, { listing: id })).rejects.toMatchObject({
-      code: 'LISTING_ELSEWHERE',
-      details: { ville: 'Havre-Gris' },
-    });
-    await expect(run(seller, withdrawListing, { listing: id })).rejects.toMatchObject({ code: 'LISTING_ELSEWHERE' });
+    // Mise en vente à Havre-Gris, achetée depuis Port-Salant.
+    await run(buyer, buyListing, { listing: id });
+    const { listing: id2 } = await run(seller, listGoods, { kind: 'stack', item: 'bois_tordu', qty: 1, price: 5 }); // depuis Port-Salant
     await t.db.updateTable('player').set({ pos_region: 'ronces' }).where('id', 'in', [seller, buyer]).execute();
-    expect(await run(seller, withdrawListing, { listing: id })).toEqual({ withdrawn: id });
-    expect(await bankQty(seller, 'bois_tordu')).toBe(had + 30);
+    expect(await run(seller, withdrawListing, { listing: id2 })).toEqual({ withdrawn: id2 });
+    expect(await bankQty(seller, 'bois_tordu')).toBe(had + 29);
     for (let k = 0; k < SHOP.maxActive; k++) await run(seller, listGoods, { kind: 'stack', item: 'bois_tordu', qty: 1, price: 5 });
     await expect(run(seller, listGoods, { kind: 'stack', item: 'bois_tordu', qty: 1, price: 5 })).rejects.toMatchObject({
       code: 'TOO_MANY_LISTINGS',

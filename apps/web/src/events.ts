@@ -71,7 +71,7 @@ export function registerEvents(app: FastifyInstance, d: EventsDeps): { streams()
           void refresh(s).catch(() => {});
           continue;
         }
-      } else if (e.topic !== `region:${s.region}`) continue;
+      } else if (e.topic !== `region:${s.region}` && e.topic !== 'region:*') continue;
       const out = toClient(e);
       if (out) send(s, out.event, out.data);
     }

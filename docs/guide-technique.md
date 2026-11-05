@@ -79,7 +79,7 @@ Un seul code, une seule image de conteneur, deux rôles (`web` et `worker`) choi
 | Sujet | Architecture v1.1 | Jeu cible (README partie II) | Conséquence technique |
 |---|---|---|---|
 | Factions | 3 factions et une ville neutre | Aucune faction, départ unique [Xavier] | La colonne faction, les marchés de faction et les contrôles de troupes exclusives disparaissent. Le service de transfert garde un point d'extension « règle de transfert » pour pouvoir les réintroduire. |
-| Marché | 4 carnets d'ordres | **Une boutique par ville** (20), annonces à prix fixe | Les ordres d'achat et la confrontation de carnets ne sont pas nécessaires. On a une table d'annonces indexée par ville (section 11). |
+| Marché | 4 carnets d'ordres | **Une boutique commune** à tout le jeu [Xavier, 5 novembre 2026 ; une par ville auparavant], annonces à prix fixe | Les ordres d'achat et la confrontation de carnets ne sont pas nécessaires. On a une table d'annonces indexée par ville (section 11). |
 | Escouade | 5 emplacements, 5 de population, réserve emmenée | **8 emplacements, 11 de population**, caserne illimitée, engagement en ville seulement | Le conteneur `RESERVE` n'est pas créé. La caserne devient le conteneur `BARRACKS`. La réserve (Q-A4) est abandonnée [Xavier, 3 novembre 2026]. |
 | Soins | Gratuits en ville [H] | Soin automatique à toute entrée en ville [Xavier] | Le soin est un effet de la commande d'arrivée en ville, pas une commande séparée. |
 | Combat | 1 joueur contre des monstres | Duo possible : 2 joueurs, 16 emplacements, 22 de population | L'entrée du moteur accepte un camp composé de deux propriétaires. Le résultat est réparti par propriétaire (section 9). |

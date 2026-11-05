@@ -50,9 +50,14 @@
       }
     });
 
-    // Chat de région.
-    const chat = refresher('/chat/messages', '#chat-log');
-    for (const type of ['chat.message', 'chat.deleted', 'resync']) document.addEventListener('cr:' + type, chat);
+    // Chat : le fil relu est celui du canal affiché (région ou général) ; un message d'un autre canal est ignoré.
+    const log = document.getElementById('chat-log');
+    const chat = refresher(() => (log ? log.dataset.src : null), '#chat-log');
+    document.addEventListener('cr:chat.message', (e) => {
+      const ch = e.detail && e.detail.channel;
+      if (!log || !ch || ch === log.dataset.channel) chat();
+    });
+    for (const type of ['chat.deleted', 'resync']) document.addEventListener('cr:' + type, chat);
     // Changement de région : le titre et le fil changent ; une page rechargée est la plus simple et la plus sûre.
     document.addEventListener('cr:resubscribe', () => {
       if (document.getElementById('chat-log')) window.location.reload();

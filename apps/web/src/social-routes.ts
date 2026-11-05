@@ -8,6 +8,7 @@ import { GameError, isGameError, messageFr, ERROR_CODES, type ErrorCode } from '
 import type { AccountRole, Db } from '@cr/db';
 import {
   CHAT_HISTORY,
+  GENERAL_CHANNEL,
   REPORT_REASONS,
   REPORT_REASON_FR,
   SANCTION_KIND_FR,
@@ -137,15 +138,21 @@ export function registerSocialRoutes(app: FastifyInstance, d: SocialRouteDeps): 
   const backOf = (b: Record<string, string>, fallback: string): string => (BACK.has(b.back ?? '') ? b.back! : fallback);
 
   // ---------- Chat de région ----------
+  /** Canal demandé : la région du joueur (par défaut) ou le canal général (?canal=general). */
+  const channelOf = (q: unknown): 'region' | 'general' =>
+    (q as Record<string, string | undefined>).canal === 'general' ? 'general' : 'region';
+
   app.get('/chat', async (req, reply) => {
     const v = await view(req);
     const me = d.requireAuth(req).player.id;
-    const reg = v.region;
+    const channel = channelOf(req.query);
+    const reg = channel === 'general' ? GENERAL_CHANNEL : v.region;
     return d.page(req, reply, 'chat', {
       title: 'Discussion',
       tab: 'chat',
       v,
-      regionName: regionName(reg),
+      channel,
+      regionName: regionName(v.region),
       log: await chatHistory(d.db, me, reg),
       cite: await citables(d.db, d.content, me),
       online: await onlineInRegion(d.db, reg),
@@ -157,7 +164,8 @@ export function registerSocialRoutes(app: FastifyInstance, d: SocialRouteDeps): 
   /** Historique de la région (fragment rechargé par le flux temps réel). */
   app.get('/chat/messages', async (req, reply) => {
     const auth = d.requireAuth(req);
-    const log = await chatHistory(d.db, auth.player.id, auth.player.pos_region);
+    const reg = channelOf(req.query) === 'general' ? GENERAL_CHANNEL : auth.player.pos_region;
+    const log = await chatHistory(d.db, auth.player.id, reg);
     return d.page(req, reply, 'partials/chat-log', { log });
   });
 
@@ -169,9 +177,13 @@ export function registerSocialRoutes(app: FastifyInstance, d: SocialRouteDeps): 
     return [l];
   };
 
-  app.post('/chat', (req, reply) =>
-    act(req, reply, '/chat', async () => void (await d.run(req, sayInRegion, { text: str(body(req).text), links: linksOf(body(req)) }))),
-  );
+  app.post('/chat', (req, reply) => {
+    const channel = channelOf({ canal: body(req).canal });
+    return act(req, reply, channel === 'general' ? '/chat?canal=general' : '/chat', async () => {
+      await d.run(req, sayInRegion, { text: str(body(req).text), links: linksOf(body(req)), channel });
+      return channel === 'general' ? '/chat?canal=general' : '/chat';
+    });
+  });
 
   /** Fiche d'un bien cité : visible seulement si un message que le lecteur peut voir la cite (voir `canOpenLink`). */
   app.get('/fiche/:kind/:id', async (req, reply) => {
