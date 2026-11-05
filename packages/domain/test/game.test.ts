@@ -155,6 +155,84 @@ describe('déplacements (README 3.3)', () => {
   });
 });
 
+describe('péage des routes (5 or par départ et par retour à l’étape précédente)', () => {
+  const gold = (pid: number) => t.db.transaction().execute((tx) => balance(tx, pid));
+  /** Ramène le solde du joueur à `to` or, par le grand livre. */
+  const drainTo = async (pid: number, to: number) => {
+    const g = await gold(pid);
+    if (g > to) await t.db.transaction().execute((tx) => transferGold(tx, { player: pid }, { system: 'SINK_RESET' }, g - to, 'test'));
+  };
+  /** Écritures du compte système du péage, de la plus ancienne à la plus récente. */
+  const tollEntries = () =>
+    t.db
+      .selectFrom('gold_entry')
+      .innerJoin('gold_account', 'gold_account.id', 'gold_entry.account_id')
+      .select(['gold_entry.amount', 'gold_entry.reason'])
+      .where('gold_account.code', '=', 'SINK_ROUTE_TOLL')
+      .orderBy('gold_entry.id')
+      .execute();
+
+  it('le contenu fixe le péage à 5 or', () => expect(content.pack.online?.routeToll).toBe(5));
+
+  it('partir coûte 5 or, versés au compte système du péage', async () => {
+    const pid = await newPlayer();
+    await run(pid, searchOrStart);
+    const before = await gold(pid);
+    const sink = await tollEntries();
+    await run(pid, depart, { direction: 1 });
+    expect(await gold(pid)).toBe(before - 5);
+    const after = await tollEntries();
+    expect(after.length).toBe(sink.length + 1);
+    expect(after.at(-1)).toMatchObject({ amount: 5, reason: 'péage départ ronces' });
+  });
+
+  it('refuse le départ, sans rien changer, quand l’or manque', async () => {
+    const pid = await newPlayer();
+    await run(pid, searchOrStart);
+    await drainTo(pid, 4);
+    await expect(run(pid, depart, { direction: 1 })).rejects.toMatchObject({ code: 'NOT_ENOUGH_GOLD' });
+    expect(await gold(pid)).toBe(4);
+    expect((await player(pid)).pos_kind).toBe('city');
+    expect(await visible(pid)).toHaveLength(0);
+    await t.db.transaction().execute((tx) => transferGold(tx, { system: 'SOURCE_ADMIN' }, { player: pid }, 1, 'test'));
+    await run(pid, depart, { direction: 1 });
+    expect(await gold(pid)).toBe(0);
+  });
+
+  it('rebrousser coûte 5 or ; avancer, combattre, chercher et rentrer sont gratuits', async () => {
+    const pid = await newPlayer();
+    await strongSquad(pid);
+    await run(pid, depart, { direction: 1 });
+    await run(pid, fight);
+    later();
+    const g0 = await gold(pid);
+    await run(pid, advance);
+    expect(await gold(pid)).toBe(g0);
+    await run(pid, back);
+    expect(await gold(pid)).toBe(g0 - 5);
+    expect((await player(pid)).pos_step).toBe(0);
+    await run(pid, goHome);
+    expect(await gold(pid)).toBe(g0 - 5);
+  });
+
+  it('refuse de rebrousser sans or, et reste sur l’étape avec son groupe', async () => {
+    const pid = await newPlayer();
+    await strongSquad(pid);
+    await run(pid, depart, { direction: 1 });
+    await run(pid, fight);
+    later();
+    await run(pid, advance);
+    const [seen] = await visible(pid);
+    await drainTo(pid, 3);
+    await expect(run(pid, back)).rejects.toMatchObject({ code: 'NOT_ENOUGH_GOLD' });
+    const p = await player(pid);
+    expect(p.pos_step).toBe(1);
+    const [still] = await visible(pid);
+    expect(still!.id).toBe(seen!.id);
+    expect(await gold(pid)).toBe(3);
+  });
+});
+
 describe('traversée complète (critère de J2, côté serveur)', () => {
   it('de Havre-Gris au gardien des Ronces, puis à Port-Salant', async () => {
     const pid = await newPlayer();

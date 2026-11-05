@@ -19,7 +19,7 @@
       <h2>1. Combattre <%~ badge('combat') %></h2>
       <p>Depuis la ville, <b>Partir</b> vous emmène sur une route de cinq étapes. Sur chaque étape, <b>Chercher un combat</b> fait venir un groupe de monstres : vous voyez qui ils sont avant de choisir de <b>Combattre</b>.</p>
       <p>Le combat se joue tout seul : chaque troupe agit selon ses capacités, du premier rang (au contact) au troisième (à distance). Vous regardez la rediffusion jusqu’au bout avant de pouvoir continuer.</p>
-      <p>Une étape gagnée se franchit : <b>Avancer</b>. La cinquième étape est gardée par un <b>gardien</b>, plus fort ; le battre ouvre la ville suivante. Vous pouvez toujours <b>Rebrousser</b> ou <b>Rentrer</b>.</p>
+      <p>Une étape gagnée se franchit : <b>Avancer</b>. La cinquième étape est gardée par un <b>gardien</b>, plus fort ; le battre ouvre la ville suivante. Vous pouvez toujours <b>Rebrousser</b> (5 or, comme chaque départ de ville) ou <b>Rentrer</b> (gratuit).</p>
       <p class="meta">Conseil : sur la page d’une troupe, vous choisissez son rang et les capacités qu’elle n’utilise pas.</p>
     </article>
 

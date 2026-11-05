@@ -344,7 +344,7 @@ Conteneurs [A, 5.2] adaptés au jeu cible :
 
 ### 6.3 Or
 
-`gold_account` et `gold_entry` en partie double [A, 5.4]. Comptes système : `SOURCE_COMBAT`, `SOURCE_QUEST`, `SOURCE_DUNGEON`, `SOURCE_MERCHANT_BUY` (rachat PNJ), `SINK_MERCHANT_SELL`, `SINK_RECRUIT`, `SINK_EVOLUTION`, `SINK_REBUY_UNIT`, `SINK_CRAFT`, `SINK_SHOP_TAX`. Le séquestre d'or n'est pas nécessaire : les boutiques vendent à prix fixe, payé au moment de l'achat.
+`gold_account` et `gold_entry` en partie double [A, 5.4]. Comptes système : `SOURCE_COMBAT`, `SOURCE_QUEST`, `SOURCE_DUNGEON`, `SOURCE_MERCHANT_BUY` (rachat PNJ), `SINK_MERCHANT_SELL`, `SINK_RECRUIT`, `SINK_EVOLUTION`, `SINK_REBUY_UNIT`, `SINK_CRAFT`, `SINK_SHOP_TAX`, `SINK_ROUTE_TOLL` (péage de 5 or à chaque départ de ville et à chaque `route.back`). Le séquestre d'or n'est pas nécessaire : les boutiques vendent à prix fixe, payé au moment de l'achat.
 
 ### 6.4 Expédition, rencontres, combats
 
@@ -416,8 +416,8 @@ Chaque page est utilisable sur téléphone (le prototype ne l'est qu'en partie) 
 | `troop.setDisabledSkills` | partout entre deux combats, hors blocage | capacités connues seulement, attaque de base non désactivable (README 20.1) | 30/min |
 | `equip` / `unequip` | ville (banque ou sac) ; route (sac seulement) | `EQUIPPED` ↔ `BAG` / `BANK` ; soin au maximum en ville (README 21) | 60/min |
 | `consumable.use` | partout entre deux combats | pile − 1, PV ou mana fixes | 60/min |
-| `route.depart` | ville, route qui en part | position = étape 1, tirage de porte (2 %) | 10/min |
-| `route.advance` / `route.back` / `route.home` | route, aucun combat à regarder | position, tirage de porte, perte du butin en attente | 30/min |
+| `route.depart` | ville, route qui en part | **péage de 5 or** (`NOT_ENOUGH_GOLD` sans effet s'il manque), position = étape 1, tirage de porte (2 %) | 10/min |
+| `route.advance` / `route.back` / `route.home` | route, aucun combat à regarder | position, tirage de porte, perte du butin en attente ; `route.back` coûte le même péage de 5 or | 30/min |
 | `encounter.search` | route, aucune rencontre visible | nouvelle `encounter` | 30/min |
 | `battle.fight` | route, rencontre visible | combat, résultat, butin, XP, morts (8.2) | 20/min |
 | `loot.take` / `loot.discard` | écran de résultat | `PENDING_LOOT` → `BAG` | 60/min |

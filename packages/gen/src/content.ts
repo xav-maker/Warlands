@@ -235,6 +235,8 @@ export interface OnlineRules {
   encounters: { popMult: number; slots: number };
   stack: Record<string, number>;
   watch: { instantsPerSecond: number };
+  /** Or payé à chaque départ de ville et à chaque retour à l'étape précédente (0 : gratuit). */
+  routeToll: number;
   chat: { maxLength: number; bannedWords: string[] };
 }
 

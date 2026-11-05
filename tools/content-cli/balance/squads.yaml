@@ -15,11 +15,14 @@
       offset: -3
       gear: false
       troops: [[milicien, 1], [milicien, 1], [chasseur, 3], [chasseur, 3], [herboriste, 3], [herboriste, 3], [acolyte, 3]]
+    # L’XP est partagée entre les troupes : avec 6 troupes, il faut une dizaine de combats de l’étape 1 pour monter
+    # d’un niveau. À l’étape 2, le joueur est donc encore au niveau 1, sans équipement ni Écuyer recruté.
     '2':
-      offset: -2
-      troops: [[milicien, 1], [milicien, 1], [ecuyer, 1], [chasseur, 3], [chasseur, 3], [herboriste, 3], [herboriste, 3], [acolyte, 3]]
+      offset: -3
+      gear: false
+      troops: [[milicien, 1], [milicien, 1], [chasseur, 3], [chasseur, 3], [herboriste, 3], [herboriste, 3], [acolyte, 3]]
     '3':
-      offset: -1
+      offset: -2
       troops: [[milicien, 1], [ecuyer, 1], [moine, 1], [chasseur, 3], [chasseur, 3], [acolyte, 3], [herboriste, 3], [herboriste, 3]]
 '2':
   offset: 0

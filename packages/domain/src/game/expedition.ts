@@ -1,6 +1,6 @@
 /**
  * Expédition (README 3.3, guide 7.2 et 8.4) : départ, avancer, rebrousser, rentrer, arriver, chercher un
- * combat. Une seule rencontre visible par joueur (contrainte de la base) : la faille searchFight du
+ * combat. Partir et rebrousser coûtent un péage (5 or) : ce sont les deux moyens de tirer une nouvelle rencontre. Une seule rencontre visible par joueur (contrainte de la base) : la faille searchFight du
  * prototype (README 16, point 6) est fermée.
  */
 import { z } from 'zod';
@@ -10,6 +10,7 @@ import { dungeonOfRoute, dungeonParams, genMonsters, stepSpec } from '@cr/gen';
 import { command } from '../command.ts';
 import type { CommandContext } from '../command.ts';
 import { departures, destination, online, regionIndex, stepCount, stepOf } from './content.ts';
+import { transferGold } from './gold.ts';
 import { dropPendingLoot } from './inventory.ts';
 import { healAll, loadTroops, loanIfNoTroops } from './troops.ts';
 
@@ -129,6 +130,15 @@ async function expedition(ctx: CommandContext) {
   return { ...e, step: ctx.player.pos_step };
 }
 
+/**
+ * Péage (params.yaml › online › routeToll) : payé à chaque départ de ville et à chaque retour à l'étape précédente,
+ * les deux façons de faire retirer une rencontre sans la combattre. Refusé, sans rien changer, si l'or manque.
+ */
+async function payToll(ctx: CommandContext, reason: string): Promise<void> {
+  const toll = online(ctx.content).routeToll;
+  if (toll > 0) await transferGold(ctx.tx, { player: ctx.player.id }, { system: 'SINK_ROUTE_TOLL' }, toll, reason);
+}
+
 const emitMoved = (ctx: CommandContext): void => ctx.emit({ topic: `user:${ctx.player.id}`, type: 'player.moved' });
 
 export const depart = command({
@@ -145,6 +155,7 @@ export const depart = command({
     if (!d) throw new GameError('NO_SUCH_ROUTE');
     const squad = await loadTroops(ctx.tx, ctx.player.id, ['SQUAD']);
     if (!squad.some((t) => t.units.length)) throw new GameError('SQUAD_EMPTY');
+    await payToll(ctx, `péage départ ${d.route}`);
     await ctx.tx.deleteFrom('expedition').where('player_id', '=', ctx.player.id).execute();
     await ctx.tx
       .insertInto('expedition')
@@ -190,6 +201,7 @@ export const back = command({
   async run(ctx) {
     const e = await expedition(ctx);
     if (e.step === 0) throw new GameError('FIRST_STEP');
+    await payToll(ctx, `péage retour ${e.route}`);
     await dropPendingLoot(ctx.tx, ctx.player.id, 'rebrousse');
     await setPosition(ctx, { kind: 'route', route: e.route, direction: e.direction, step: e.step - 1 });
     await newEncounter(ctx, e.route, e.step - 1);

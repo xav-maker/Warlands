@@ -182,6 +182,15 @@ describe('équilibrage du contenu publié (60 combats par étape, escouades équ
     for (const r of rows.filter((x) => x.tier === 1 && x.step === 1)) expect(r.winRate, r.routeName).toBeGreaterThanOrEqual(0.8);
   });
 
+  it('palier 1 : la deuxième étape vise 75 % avec l’escouade de départ, niveau 1 et sans équipement', () => {
+    expect(stepTarget(1, 1, false)).toBeCloseTo(0.9);
+    expect(stepTarget(1, 2, false)).toBeCloseTo(0.75);
+    const second = squadForStep(squads['1']!, 2);
+    expect(second.gear).toBe(false);
+    expect(second.troops).toEqual(squadForStep(squads['1']!, 1).troops);
+    for (const r of rows.filter((x) => x.tier === 1 && x.step === 2)) expect(r.winRate, r.routeName).toBeGreaterThanOrEqual(0.65);
+  });
+
   it('l’escouade de la première étape du palier 1 est celle du départ plus l’Acolyte, sans équipement', () => {
     const eco = pack.eco as unknown as { startTroops: [string, number][] };
     const first = squadForStep(squads['1']!, 1);

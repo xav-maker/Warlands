@@ -66,9 +66,11 @@ export const STEP_TOLERANCE = 0.1;
 
 /**
  * Rampe de difficulté dans une route : les 4 premières étapes valent ce multiple de la cible du palier (leur moyenne
- * reste la cible). Palier 1 : départ très facile, car au début l'escouade n'est pas pleine. Le gardien vise `tierTarget`.
+ * reste la cible). Palier 1 : départ très facile, car au début l'escouade n'est pas pleine ; les deux premières
+ * étapes, les seules que beaucoup de joueurs voient d'abord, visent 90 % et 75 % [Xavier, 5 novembre 2026]. Le gardien
+ * vise `tierTarget`.
  */
-const RAMP: Record<number, number[]> = { 1: [1.8, 1.2, 0.7, 0.3] };
+const RAMP: Record<number, number[]> = { 1: [1.8, 1.5, 0.6, 0.2] };
 const DEFAULT_RAMP = [1.6, 1.2, 0.8, 0.4];
 /** Taux de victoire visé pour l'étape `step` (1 à 5) d'une route du palier `tier`. */
 export const stepTarget = (tier: number, step: number, guardian: boolean): number =>

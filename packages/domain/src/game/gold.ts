@@ -20,6 +20,7 @@ export type SystemAccount =
   | 'SINK_CRAFT'
   | 'SINK_SHOP_TAX'
   | 'SINK_QUEST_ABANDON'
+  | 'SINK_ROUTE_TOLL'
   | 'SINK_RESET'
   | 'SOURCE_ADMIN'
   | 'SINK_ADMIN';

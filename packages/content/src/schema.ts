@@ -223,6 +223,8 @@ export const Params = z.strictObject({
     encounters: z.strictObject({ popMult: num.positive(), slots: int.min(1) }),
     stack: z.record(z.string(), int.min(1)),
     watch: z.strictObject({ instantsPerSecond: int.min(1) }),
+    // Péage d'une route : or payé à chaque départ de ville et à chaque retour à l'étape précédente (0 : gratuit).
+    routeToll: int.min(0).default(0),
     // Chat et messages privés (README 25) : longueur maximale et mots masqués par le filtre.
     chat: z.strictObject({ maxLength: int.min(1).max(300), bannedWords: z.array(z.string().min(2)) }),
   }),

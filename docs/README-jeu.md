@@ -112,6 +112,8 @@ Pour une région de niveau minimal `L` et de palier `T`, l'étape `i` (0 à 4) a
 
 Exception au palier 1 [Xavier, 5 novembre 2026] : les étapes 1 à 3 sont aux niveaux 1-2, 3-4 et 4-6 (l’étape 4 et le gardien ne changent pas), pour que les premières troupes, de niveau 1, rencontrent des monstres de leur niveau. Le « +2 » est `MONSTER_LEVEL_BONUS` [Xavier]. `firstPop` vaut [1,2] (région 1), [2,3] (régions 2 et 3), [3,4] (régions 4 et 5). `guardianPop` vaut [8,9] (régions 1 et 3), [6,7] (région 2), [9,10] (région 4), [7,7] (région 5). Le gardien est **imposé** dans le groupe de la 5e étape ; le reste du budget est complété par des monstres du pool de l'étape (section 6.1).
 
+Difficulté du palier 1 [Xavier, 5 novembre 2026] : les deux premières étapes de chaque route étaient trop dures pour un joueur qui débute (l'XP est partagée entre les troupes, donc il est encore au niveau 1, sans équipement, quand il arrive à l'étape 2). Elles visent maintenant, par simulation (`pnpm content simulate`), **90 % puis 75 %** de victoires pour l'escouade de départ (niveau 1, sans équipement, avec l'Acolyte) ; l'étape 3 vise 30 % et l'étape 4 10 % (escouades de référence en retard de 2 niveaux à l'étape 3). Le gardien ne change pas (45 %).
+
 ### 3.3 Déplacements [Xavier, 3 novembre 2026]
 
 - Le territoire `i` relie la ville `i` à la ville `i+1`. Le territoire 5 (Ruines Célestes) est un cul-de-sac.
@@ -122,6 +124,7 @@ Exception au palier 1 [Xavier, 5 novembre 2026] : les étapes 1 à 3 sont aux ni
 - **Dans les deux sens, les étapes se font dans le même ordre**, de 1 à 5, gardien au bout. Revenir en arrière impose donc aussi de battre le gardien du territoire.
 - On peut **rentrer à la ville de départ à tout moment** (hors rediffusion en cours), sans combat.
 - On ne peut **avancer** à l'étape suivante que si l'étape courante est dégagée (une victoire). On peut **rebrousser** d'une étape (l'étape reste dégagée et une nouvelle rencontre est tirée) et **chercher un nouveau combat** sur place pour récolter.
+- **Péage** [Xavier, 5 novembre 2026] : **partir** d'une ville et **rebrousser** coûtent chacun **5 or** (`online.routeToll` de `params.yaml`, versés au compte système `SINK_ROUTE_TOLL`). Ce sont les deux façons de faire retirer une rencontre sans la combattre ; le péage évite de les enchaîner jusqu'à tomber sur le groupe voulu. Sans 5 or, la commande est refusée (`NOT_ENOUGH_GOLD`) et rien ne change. Avancer, combattre, chercher un combat sur place, rentrer et arriver restent gratuits.
 - **Arriver** n'est possible qu'à la dernière étape, une fois dégagée. L'arrivée change la région du joueur et efface le butin laissé au sol.
 - Chaque départ remet toutes les étapes à « non dégagée ». Rien n'est débloqué définitivement : retraverser un territoire demande de le refaire en entier.
 - `unlocked` (ville la plus lointaine atteinte) et `guardians[]` (gardien déjà vaincu) sont mémorisés, mais ne servent qu'à l'affichage et à l'objet de première victoire (section 8.6). Ils ne donnent aucun raccourci.
@@ -763,7 +766,7 @@ Aujourd'hui **tout** est dans le navigateur : l'état, les règles, les généra
 
 1. **Sauvegarde modifiable** : or, objets, niveaux, tout se change dans le `localStorage`.
 2. **Issue prévisible** : la graine du combat dépend de la rencontre, connue avant de combattre ; avec la graine du joueur et le moteur, on peut simuler le combat exact avant de le livrer (le Labo simule même 100 combats contre son escouade).
-3. **Relance de rencontre sans limite** : la commande `searchFight` tire un nouveau groupe à tout moment, même si un groupe est en vue (l'interface ne propose le bouton que s'il n'y a pas de groupe, mais la commande ne le vérifie pas). Idem pour `back` puis `advance`. En ligne : décider si l'on peut fuir une rencontre vue (aujourd'hui oui en rentrant en ville ou en rebroussant) et faire vérifier la règle par le serveur.
+3. **Relance de rencontre sans limite** : la commande `searchFight` tire un nouveau groupe à tout moment, même si un groupe est en vue (l'interface ne propose le bouton que s'il n'y a pas de groupe, mais la commande ne le vérifie pas). Idem pour `back` puis `advance`. En ligne : décider si l'on peut fuir une rencontre vue (aujourd'hui oui en rentrant en ville ou en rebroussant) et faire vérifier la règle par le serveur. En ligne [Xavier, 5 novembre 2026] : partir et rebrousser coûtent 5 or (section 3.3), ce qui rend la relance coûteuse sans l'interdire.
 4. **Blocage de rediffusion** contournable en effaçant `watch`.
 5. **Rang, stratégie, équipement depuis le sac** sont modifiables sans contrôle de moment ; c'est voulu (entre deux combats), mais le serveur doit refuser pendant le blocage de rediffusion.
 6. **Rare** : sa présence se calcule à l'avance à partir de la graine.

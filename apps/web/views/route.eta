@@ -77,7 +77,7 @@
       <div class="actions">
         <% if (!last) { %><%~ include('./partials/action', { action: 'avancer', label: 'Avancer', cls: cleared ? 'primary' : '', csrf: it.csrf }) %><% } %>
         <% if (last && r.to) { %><%~ include('./partials/action', { action: 'arriver', label: 'Arriver à ' + it.L.region(r.to).city.name, cls: cleared ? 'primary' : '', csrf: it.csrf }) %><% } %>
-        <% if (r.step > 0) { %><%~ include('./partials/action', { action: 'rebrousser', label: 'Rebrousser', cls: '', csrf: it.csrf }) %><% } %>
+        <% if (r.step > 0) { %><%~ include('./partials/action', { action: 'rebrousser', label: 'Rebrousser' + (it.toll ? ' (' + it.toll + ' or)' : ''), cls: '', csrf: it.csrf }) %><% } %>
         <%~ include('./partials/action', { action: 'rentrer', label: 'Rentrer à ' + it.home.city.name, cls: '', csrf: it.csrf }) %>
       </div>
       <% if (!cleared) { %><p class="muted">Il faut vaincre le groupe de l’étape pour avancer.</p><% } %>

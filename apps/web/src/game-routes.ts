@@ -212,7 +212,14 @@ export function registerGameRoutes(app: FastifyInstance, d: GameRouteDeps): void
     const v = await view(req);
     if (v.kind !== 'city') return reply.redirect(home(v));
     const tut = await tutorialView(d.db, d.requireAuth(req).player.id);
-    return d.page(req, reply, 'ville', { v, L, R: region(d.content, v.region), tut, error: errorOf(req.query) });
+    return d.page(req, reply, 'ville', {
+      v,
+      L,
+      R: region(d.content, v.region),
+      tut,
+      toll: d.content.pack.online?.routeToll ?? 0,
+      error: errorOf(req.query),
+    });
   });
   app.post('/depart', (req, reply) =>
     act(req, reply, '/ville', async () => {
@@ -241,6 +248,7 @@ export function registerGameRoutes(app: FastifyInstance, d: GameRouteDeps): void
       friends,
       testDoor,
       tut,
+      toll: d.content.pack.online?.routeToll ?? 0,
       home: region(d.content, v.region),
       error: errorOf(req.query),
     });
