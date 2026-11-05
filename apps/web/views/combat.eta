@@ -47,4 +47,100 @@
       </ul>
     </div>
   </div>
+
+  <% if (it.stats) { %>
+    <%
+      const S = it.stats;
+      const n = (v) => v.toLocaleString('fr-FR');
+      const names = ['Votre escouade', 'Adversaires'];
+      const max = (f) => Math.max(1, ...S.units.map(f));
+      const top = (side, f) => { const us = S.units.filter((u) => u.side === side && f(u) > 0); return us.length ? us.reduce((a, u) => (f(u) > f(a) ? u : a)) : null };
+      const bar = (v, m) => (v > 0 ? Math.max(1, Math.round((100 * v) / m)) : 0);
+    %>
+    <div class="card wide combat-stats" id="stats" data-after-replay>
+      <h2>Statistiques du combat <span class="muted"><%= S.duration %> instants</span></h2>
+
+      <table class="data stats sides">
+        <thead><tr><th></th><% for (const s of [0, 1]) { %><th class="num"><%= names[s] %></th><% } %></tr></thead>
+        <tbody>
+          <tr><td>Dégâts infligés</td><% for (const s of S.sides) { %><td class="num"><b><%= n(s.dealt) %></b></td><% } %></tr>
+          <tr><td>Dégâts subis <small class="muted">(dont absorbés par un bouclier)</small></td><% for (const s of S.sides) { %><td class="num"><b><%= n(s.taken) %></b><% if (s.absorbed) { %> <small class="muted">(<%= n(s.absorbed) %>)</small><% } %></td><% } %></tr>
+          <tr><td>Soins reçus</td><% for (const s of S.sides) { %><td class="num"><b><%= n(s.healed) %></b></td><% } %></tr>
+          <tr><td>Éliminations</td><% for (const s of S.sides) { %><td class="num"><b><%= s.kills %></b></td><% } %></tr>
+          <tr><td>Unités tombées</td><% for (const s of S.sides) { %><td class="num"><b><%= s.deaths %></b></td><% } %></tr>
+          <tr><td>PV restants</td><% for (const s of S.sides) { %><td class="num"><b><%= n(s.hpEnd) %></b> <small class="muted">/ <%= n(s.hpMax) %></small></td><% } %></tr>
+        </tbody>
+      </table>
+
+      <div class="grid charts">
+        <div>
+          <h3>Points de vie de chaque camp</h3>
+          <p class="muted">En pourcentage du total de chaque camp, instant par instant.</p>
+          <%~ include('./partials/battle-chart', { c: it.hpChart, unit: 'instants', label: 'Points de vie restants de chaque camp au fil du combat, en pourcentage' }) %>
+        </div>
+        <div>
+          <h3>Dégâts cumulés</h3>
+          <p class="muted">Total des dégâts infligés par chaque camp depuis le début.</p>
+          <%~ include('./partials/battle-chart', { c: it.dmgChart, unit: 'instants', label: 'Dégâts cumulés infligés par chaque camp au fil du combat' }) %>
+        </div>
+      </div>
+
+      <h3>Par unité</h3>
+      <% for (const side of [0, 1]) { const us = S.units.filter((u) => u.side === side); const bestDmg = top(side, (u) => u.dealt); const bestHeal = top(side, (u) => u.healedOut) %>
+        <div class="scroll">
+          <table class="data stats units">
+            <caption><%= names[side] %></caption>
+            <thead>
+              <tr>
+                <th>Unité</th>
+                <th>Dégâts infligés</th>
+                <th>Dégâts subis</th>
+                <th class="num">Soins reçus</th>
+                <th class="num">Soins prodigués</th>
+                <th class="num">Éliminations</th>
+                <th>Sort <small class="muted">(instant)</small></th>
+              </tr>
+            </thead>
+            <tbody>
+              <% for (const u of us) { %>
+                <tr>
+                  <td>
+                    <b><%= u.name %></b>
+                    <% if (u === bestDmg) { %><span class="tag">plus de dégâts</span><% } %>
+                    <% if (u === bestHeal) { %><span class="tag">plus de soins</span><% } %>
+                  </td>
+                  <td class="meter"><b><%= n(u.dealt) %></b><% if (u.hits) { %><small class="muted"><%= u.hits %> coup<%= u.hits > 1 ? 's' : '' %>, maximum <%= n(u.biggestHit) %></small><% } %><span class="bar s<%= side %>" style="width:<%= bar(u.dealt, max((x) => x.dealt)) %>%"></span></td>
+                  <td class="meter"><b><%= n(u.taken) %></b><% if (u.absorbed) { %><small class="muted">dont <%= n(u.absorbed) %> absorbés</small><% } %><span class="bar taken" style="width:<%= bar(u.taken, max((x) => x.taken)) %>%"></span></td>
+                  <td class="num"><%= u.healedIn ? n(u.healedIn) : '—' %></td>
+                  <td class="num"><%= u.healedOut ? n(u.healedOut) : '—' %></td>
+                  <td class="num"><%= u.kills || '—' %></td>
+                  <td class="<%= u.diedAt !== null ? 'bad' : '' %>"><%= u.diedAt !== null ? 'tombé (' + u.diedAt + ')' : 'debout' %></td>
+                </tr>
+              <% } %>
+            </tbody>
+          </table>
+        </div>
+        <% if (S.sides[side].healedUnattributed) { %><p class="muted">Soins reçus par ce camp sans lanceur identifiable dans le journal (régénérations, effets dans la durée) : <%= n(S.sides[side].healedUnattributed) %>.</p><% } %>
+      <% } %>
+
+      <details class="locked">
+        <summary>Détail par capacité</summary>
+        <div class="grid">
+          <% for (const side of [0, 1]) { const cs = S.causes.filter((c) => c.side === side) %>
+            <table class="data stats">
+              <caption><%= names[side] %></caption>
+              <thead><tr><th>Source</th><th class="num">Dégâts infligés</th><th class="num">Coups</th><th class="num">Soins reçus</th></tr></thead>
+              <tbody>
+                <% for (const c of cs) { %>
+                  <tr><td><%= c.cause %></td><td class="num"><%= c.dealt ? n(c.dealt) : '—' %></td><td class="num"><%= c.hits || '—' %></td><td class="num"><%= c.healed ? n(c.healed) : '—' %></td></tr>
+                <% } %>
+                <% if (!cs.length) { %><tr><td class="muted" colspan="4">Rien à signaler.</td></tr><% } %>
+              </tbody>
+            </table>
+          <% } %>
+        </div>
+        <p class="muted">Dégâts : valeur finale de chaque coup, après les résistances et avant le bouclier. Soins : points de vie réellement rendus (un soin ne dépasse pas le maximum). <a href="/aide/combat#degats">Comment les dégâts se calculent</a>.</p>
+      </details>
+    </div>
+  <% } %>
 </section>

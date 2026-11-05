@@ -1167,3 +1167,12 @@ Les taux de victoire du gardien d'une route sont très sensibles à ces valeurs 
 - Les objets d'une catégorie acceptée mais d'un palier trop haut pour le niveau de la troupe sont rangés dans un volet replié, avec le niveau requis.
 - À droite, la fiche de statistiques de l'unité (base, équipement, total), fixe pendant le défilement. Les écarts annoncés sont calculés avec les mêmes fonctions que le combat (`apps/web/src/equipment.ts`, `stat-sheet.ts`).
 - Les règles ne changent pas : mêmes commandes `equip` et `unequip`, mêmes conditions (catégorie, niveau, ville ou sac). La fiche de troupe garde un résumé des emplacements avec un lien « Changer ».
+
+### 28.5 Statistiques de fin de combat (`GET /combat/:id`)
+
+- Un bloc « Statistiques du combat » s'ajoute au bilan, révélé comme lui à la fin de la rediffusion. Il est calculé à la demande à partir du journal du combat (`apps/web/src/battle-stats.ts`) : aucune formule nouvelle, et les dégâts infligés de chaque unité sont exactement le `dmgDealt` du résultat du moteur (vérifié par test). Un combat dont le journal a expiré (plus de 30 jours, contenu changé) n'affiche pas le bloc.
+- **Par camp** : dégâts infligés, dégâts subis (dont absorbés par un bouclier), soins reçus, éliminations, unités tombées, PV restants.
+- **Deux courbes** (SVG en escalier, sans JavaScript) : les PV de chaque camp en % de leur total au fil des instants, avec un point à chaque mort d'unité ; les dégâts cumulés de chaque camp.
+- **Par unité** : dégâts infligés (nombre de coups, plus gros coup), dégâts subis, soins reçus, soins prodigués, éliminations, sort (instant de la mort). Les étiquettes « plus de dégâts » et « plus de soins » désignent le premier de chaque camp.
+- **Détail par capacité** (volet replié) : dégâts, coups et soins reçus par source, pour chaque camp.
+- **Dégâts** = valeur finale du coup après résistances et avant bouclier ; **soins** = PV réellement rendus (plafonnés au maximum). Les soins sont attribués à l'unité qui vient d'agir si elle est du même camp que le soigné ; les régénérations et effets dans la durée, dont le journal n'indique pas l'auteur, sont comptés à part (« sans lanceur identifiable »).

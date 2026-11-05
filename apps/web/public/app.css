@@ -1531,3 +1531,112 @@ details.locked > summary {
     order: -1;
   }
 }
+
+/* ---------- Statistiques de fin de combat ---------- */
+.combat-stats h3 {
+  margin: 22px 0 6px;
+  font-size: 1rem;
+}
+.combat-stats table caption {
+  text-align: left;
+  font-weight: 700;
+  padding: 10px 0 6px;
+}
+.combat-stats .sides {
+  max-width: 40rem;
+}
+.combat-stats .charts {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 24rem), 1fr));
+  margin-top: 6px;
+}
+.combat-stats .scroll {
+  overflow-x: auto;
+}
+.combat-stats td.meter {
+  min-width: 9rem;
+}
+.combat-stats td.meter small {
+  display: block;
+}
+.combat-stats td.meter .bar {
+  display: block;
+  height: 6px;
+  margin-top: 5px;
+  border-radius: 3px;
+}
+.chart {
+  width: 100%;
+  height: auto;
+  display: block;
+  background: var(--raised);
+  border: 1px solid var(--line);
+  border-radius: var(--r-sm);
+}
+.chart .grid {
+  stroke: var(--line);
+  stroke-width: 1;
+}
+.chart .grid.v {
+  stroke-dasharray: 2 4;
+}
+.chart .tick {
+  fill: var(--muted);
+  font-size: 11px;
+}
+.chart .line {
+  fill: none;
+  stroke-width: 2.2;
+  stroke-linejoin: round;
+}
+.chart .area {
+  stroke: none;
+  opacity: 0.1;
+}
+.chart .mark {
+  stroke: var(--surface);
+  stroke-width: 1.5;
+}
+.s0.line {
+  stroke: var(--a);
+}
+.s1.line {
+  stroke: var(--bad);
+}
+.s0.area,
+.s0.mark,
+.s0.bar,
+.sw.s0 {
+  fill: var(--a);
+  background: var(--a);
+}
+.s1.area,
+.s1.mark,
+.s1.bar,
+.sw.s1 {
+  fill: var(--bad);
+  background: var(--bad);
+}
+.bar.taken {
+  background: var(--brass);
+}
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 16px;
+  margin: 6px 0 0;
+  font-size: 0.88rem;
+}
+.legend .sw {
+  display: inline-block;
+  width: 14px;
+  height: 4px;
+  margin-right: 6px;
+  vertical-align: middle;
+  border-radius: 2px;
+}
+.legend .sw.dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--muted);
+}

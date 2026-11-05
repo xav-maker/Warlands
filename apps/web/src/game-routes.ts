@@ -89,6 +89,8 @@ import {
 } from '@cr/domain';
 import { basicAttack, computeStats, itemValue, learned, quality, routes, troopActive } from '@cr/gen';
 import type { z } from 'zod';
+import type { LogEvent } from '@cr/engine';
+import { battleStats, chart } from './battle-stats.ts';
 import { slotViews } from './equipment.ts';
 import { monsterLevel, monsterTier, sheet } from './stat-sheet.ts';
 
@@ -385,11 +387,18 @@ export function registerGameRoutes(app: FastifyInstance, d: GameRouteDeps): void
       skills,
       looks,
     };
+    // Statistiques du bilan, lues dans le journal (absent si plus de 30 jours et contenu changé).
+    const raw = battleLog(d.content, b);
+    const stats = raw ? battleStats(units, JSON.parse(raw) as LogEvent[]) : null;
+    const marks = stats?.deaths.map((x) => ({ t: x.t, side: x.side, title: `${x.name} meurt` }));
     return d.page(req, reply, 'combat', {
       v,
       L,
       b,
       units,
+      stats,
+      hpChart: stats ? chart(stats.hp, { tMax: stats.duration, yMax: 100, yUnit: ' %', marks: marks! }) : null,
+      dmgChart: stats ? chart(stats.damage, { tMax: stats.duration }) : null,
       r: b.rewards,
       R: route(d.content, b.route),
       waitMs,

@@ -1,0 +1,20 @@
+<%/* Courbe en escalier (battle-stats.ts, chart). it.c (Chart), it.label (texte alternatif), it.unit (étiquette de l'axe horizontal). */%>
+<% const C = it.c %>
+<svg class="chart" viewBox="0 0 <%= C.w %> <%= C.h %>" role="img" aria-label="<%= it.label %>">
+  <% for (const y of C.yTicks) { %>
+    <line class="grid" x1="<%= C.x0 %>" x2="<%= C.x1 %>" y1="<%= y.y %>" y2="<%= y.y %>"></line>
+    <text class="tick" x="<%= C.x0 - 6 %>" y="<%= y.y + 4 %>" text-anchor="end"><%= y.label %></text>
+  <% } %>
+  <% for (const x of C.xTicks) { %>
+    <line class="grid v" x1="<%= x.x %>" x2="<%= x.x %>" y1="<%= C.y1 %>" y2="<%= C.y0 %>"></line>
+    <text class="tick" x="<%= x.x %>" y="<%= C.y0 + 16 %>" text-anchor="middle"><%= x.label %></text>
+  <% } %>
+  <% for (const l of C.lines) { %><path class="area s<%= l.side %>" d="<%= l.area %>"></path><% } %>
+  <% for (const l of C.lines) { %><path class="line s<%= l.side %>" d="<%= l.d %>"></path><% } %>
+  <% for (const m of C.marks) { %><circle class="mark s<%= m.side %>" cx="<%= m.x %>" cy="<%= m.y %>" r="4"><title><%= m.title %></title></circle><% } %>
+  <text class="tick" x="<%= C.x1 %>" y="<%= C.h - 2 %>" text-anchor="end"><%= it.unit %></text>
+</svg>
+<p class="legend">
+  <% for (const l of C.lines) { %><span><i class="sw s<%= l.side %>"></i><%= l.name %></span><% } %>
+  <% if (C.marks.length) { %><span class="muted"><i class="sw dot"></i>mort d’une unité</span><% } %>
+</p>
