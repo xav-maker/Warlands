@@ -57,4 +57,25 @@ describe('page Équipement', () => {
     expect(arme.candidates).toEqual([]);
     expect(arme.locked[0]).toMatchObject({ id: 3, locked: expect.stringContaining('niveau') });
   });
+
+  it('ne plante pour aucune troupe, avec n’importe quel objet du jeu (la ligne de mana n’existe pas toujours)', () => {
+    const pool = Object.values(pack.equip).map((b, i) => item(b.id, 1000, i + 1, 99));
+    for (const [type, def] of Object.entries(pack.troops)) {
+      if (!Object.keys(pack.troopSlots[type] ?? {}).length) continue;
+      const slots = slotViews(pack, { type, form: def.forms[0]!.id, level: 30 }, { equip: {} }, pool);
+      expect(slots.length).toBeGreaterThan(0);
+    }
+  });
+
+  it('annonce le mana d’un objet pour une troupe qui n’en a pas', () => {
+    const noMana = Object.keys(pack.troopSlots).find((ty) =>
+      sheet(pack, { type: ty, form: pack.troops[ty]!.forms[0]!.id, level: 1 }).lines.every(
+        (l) => l.label !== (pack.statCost.mana?.label ?? 'Mana max'),
+      ),
+    );
+    const bare = sheet(pack, { type: noMana!, form: pack.troops[noMana!]!.forms[0]!.id, level: 1, equip: {} });
+    const withMana = { ...bare, lines: [...bare.lines, { label: 'Mana max', base: 0, bonus: 10, total: 10 }] };
+    expect(deltas(bare, withMana)).toContainEqual({ label: 'Mana max', diff: 10, good: true, unit: '' });
+    expect(deltas(withMana, bare)).toContainEqual({ label: 'Mana max', diff: -10, good: false, unit: '' });
+  });
 });

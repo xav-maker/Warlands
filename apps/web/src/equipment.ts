@@ -54,7 +54,13 @@ export function deltas(from: Sheet, to: Sheet): Delta[] {
     const diff = Math.round((b - a) * 10) / 10;
     if (diff) out.push({ label, diff, good: lowerBetter ? diff < 0 : diff > 0, unit });
   };
-  to.lines.forEach((l, i) => push(from.lines[i]!.total, l.total, l.label, '', l.lowerBetter));
+  // Par libellé : la ligne de mana n'existe que si la troupe, ou l'objet, en donne ; les deux fiches n'ont donc pas toujours les mêmes lignes.
+  const labelsOfLines = [...new Set([...from.lines, ...to.lines].map((l) => l.label))];
+  for (const label of labelsOfLines) {
+    const a = from.lines.find((l) => l.label === label);
+    const b = to.lines.find((l) => l.label === label);
+    push(a?.total ?? 0, b?.total ?? 0, label, '', (b ?? a)?.lowerBetter);
+  }
   const labels = new Set([...from.res, ...to.res].map((r) => r.label));
   for (const label of labels)
     push(from.res.find((r) => r.label === label)?.total ?? 0, to.res.find((r) => r.label === label)?.total ?? 0, label, ' %', false);
