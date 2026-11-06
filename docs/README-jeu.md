@@ -498,14 +498,14 @@ Une arme définit les dégâts, le type, la vitesse et le coût en énergie de l
 
 ### 7.4 Effet de l'équipement sur les stats
 
-Les bonus d'équipement sont **doublés à l'usage** (`ITEM_BOOST = 2` [Xavier]), y compris pour les objets déjà existants et dans l'affichage. Puis les jauges suivent le multiplicateur ×3 :
+Les bonus d'équipement sont **doublés à l'usage** (`ITEM_BOOST = 2` [Xavier]), y compris pour les objets déjà existants et dans l'affichage. Puis les jauges suivent leur multiplicateur (×3 pour les PV et le mana, ×1,5 pour l'énergie, section 31) :
 
 | Stat de l'objet (valeur `v`) | Effet sur l'unité |
 |---|---|
 | Attaque | +2v |
 | PV max | +2v × 3 |
 | Volonté max | +2v |
-| Énergie max | +2v × 3 |
+| Énergie max | floor(2v × 1,5) |
 | Mana max | +2v × 3 |
 | Résistance type | +2v % |
 | Dégâts de l'arme | +2v |
