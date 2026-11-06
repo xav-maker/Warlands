@@ -127,7 +127,7 @@ fourche_meunier:
   cat: deux_mains
   value: 30
   tags: [metal, bois]
-  pool: [[for, 3], [hp, 3], [wdmg, 3], [wspeed, 1], [wcost, 1], [energy, 1]]
+  pool: [[for, 3], [hp, 3], [wdmg, 3], [wspeed, 1], [energy, 2]]
   weapon: { type: tranchant, dmg: 16, speed: 24, cost: 14 }
   region: val_moussu
 collier_galets_chantants:
@@ -168,7 +168,7 @@ arc_ambre:
   cat: arc
   value: 70
   tags: [bois, fil, plume]
-  pool: [[for, 3], [wdmg, 3], [res, 3, maladie], [wspeed, 1], [wcost, 1], [energy, 1]]
+  pool: [[for, 3], [wdmg, 3], [res, 3, maladie], [wspeed, 1], [energy, 2]]
   weapon: { type: tranchant, dmg: 13, speed: 18, cost: 10 }
   region: ambrerive
 hache_givre:
@@ -177,7 +177,7 @@ hache_givre:
   cat: deux_mains
   value: 140
   tags: [metal, bois]
-  pool: [[for, 3], [wdmg, 3], [res, 3, glace], [wspeed, 1], [wcost, 1], [energy, 1], [hp, 1]]
+  pool: [[for, 3], [wdmg, 3], [res, 3, glace], [wspeed, 1], [energy, 2], [hp, 1]]
   weapon: { type: glace, dmg: 25, speed: 24, cost: 14 }
   region: givrecime
 dague_nuit:
@@ -186,7 +186,7 @@ dague_nuit:
   cat: une_main
   value: 140
   tags: [metal, cuir]
-  pool: [[for, 3], [omb, 3], [wspeed, 2], [wdmg, 1], [wcost, 1], [energy, 1]]
+  pool: [[for, 3], [omb, 3], [wspeed, 2], [wdmg, 1], [energy, 2]]
   weapon: { type: tenebres, dmg: 19, speed: 20, cost: 10 }
   region: lanterne_noire
 marteau_lave:
@@ -195,7 +195,7 @@ marteau_lave:
   cat: une_main
   value: 140
   tags: [metal, bois]
-  pool: [[for, 3], [ele, 3], [res, 3, feu], [foi, 1], [wdmg, 1], [wspeed, 1], [wcost, 1], [will, 1]]
+  pool: [[for, 3], [ele, 3], [res, 3, feu], [foi, 1], [wdmg, 1], [wspeed, 1], [energy, 1], [will, 1]]
   weapon: { type: feu, dmg: 16, speed: 21, cost: 8 }
   region: braise_haute
 tricorne_capitaine:
@@ -220,7 +220,7 @@ arc_steppes:
   cat: arc
   value: 260
   tags: [bois, fil, plume]
-  pool: [[for, 3], [wspeed, 2], [energy, 2], [wdmg, 1], [wcost, 1]]
+  pool: [[for, 3], [wspeed, 2], [energy, 3], [wdmg, 1]]
   weapon: { type: tranchant, dmg: 19, speed: 18, cost: 10 }
   region: kharak
 orbe_abysses:

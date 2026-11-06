@@ -56,19 +56,22 @@ items:
   tierBudget: { '1': 10, '2': 20, '3': 35, '4': 55, '5': 80 }
   tierNStats: { '1': 2, '2': 2, '3': 3, '4': 3, '5': 4 }
   tierLevel: { '1': 1, '2': 6, '3': 11, '4': 16, '5': 21 }
+  # Valeur de chaque stat par point de budget, réglée pour qu'à budget égal chaque stat rapporte à peu près autant
+  # (README 32, demandé par Xavier le 6 novembre 2026 ; valeurs [H]). Le coût d'arme n'est plus tiré (remplacé par de
+  # l'énergie dans les pools) mais reste lu pour les exemplaires existants.
   statCost:
-    atk: { per: 1 }
-    for: { per: 1 }
-    ele: { per: 1 }
-    esp: { per: 1 }
-    foi: { per: 1 }
-    omb: { per: 1 }
-    hp: { per: 5 }
+    atk: { per: 0.7 }
+    for: { per: 0.7 }
+    ele: { per: 0.7 }
+    esp: { per: 0.7 }
+    foi: { per: 0.7 }
+    omb: { per: 0.7 }
+    hp: { per: 1.5 }
     will: { per: 3 }
-    energy: { per: 4 }
+    energy: { per: 6.5 }
     mana: { per: 3 }
-    res: { per: 2, unit: '%' }
-    wdmg: { per: 1 }
+    res: { per: 3, unit: '%' }
+    wdmg: { per: 0.7 }
     wspeed: { per: 0.25 }
     wcost: { per: 0.5 }
 recipes:

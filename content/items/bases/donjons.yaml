@@ -11,8 +11,7 @@ pioche_roi_kobold:
     - [for, 3]
     - [wdmg, 3]
     - [wspeed, 1]
-    - [wcost, 2]
-    - [energy, 1]
+    - [energy, 3]
     - [hp, 1]
   weapon: { type: tranchant, dmg: 16, speed: 24, cost: 14 }
   nStats: 3
@@ -75,8 +74,7 @@ sabre_capitaine:
     - [for, 3]
     - [wdmg, 3]
     - [wspeed, 1]
-    - [wcost, 2]
-    - [energy, 1]
+    - [energy, 3]
   weapon: { type: tranchant, dmg: 15, speed: 20, cost: 10 }
   nStats: 3
   budget: 1250
@@ -122,8 +120,7 @@ faux_roi_corbeau:
     - [for, 3]
     - [wdmg, 3]
     - [wspeed, 1]
-    - [wcost, 2]
-    - [energy, 1]
+    - [energy, 3]
     - [hp, 1]
   weapon: { type: tranchant, dmg: 20, speed: 24, cost: 14 }
   nStats: 3
@@ -140,7 +137,7 @@ marteau_puits:
     - [foi, 1]
     - [wdmg, 2]
     - [wspeed, 1]
-    - [wcost, 2]
+    - [energy, 2]
     - [will, 1]
   weapon: { type: contondant, dmg: 16, speed: 21, cost: 8 }
   nStats: 4
@@ -170,8 +167,7 @@ aiguillon_cristal:
     - [for, 3]
     - [wdmg, 3]
     - [wspeed, 1]
-    - [wcost, 2]
-    - [energy, 1]
+    - [energy, 3]
   weapon: { type: tranchant, dmg: 16, speed: 18, cost: 10 }
   nStats: 4
   budget: 1250
@@ -217,8 +213,7 @@ lame_hiver:
     - [for, 3]
     - [wdmg, 3]
     - [wspeed, 1]
-    - [wcost, 2]
-    - [energy, 1]
+    - [energy, 3]
   weapon: { type: tranchant, dmg: 19, speed: 20, cost: 10 }
   nStats: 4
   budget: 1250
@@ -233,8 +228,7 @@ harpon_leviathan:
     - [for, 3]
     - [wdmg, 3]
     - [wspeed, 1]
-    - [wcost, 2]
-    - [energy, 1]
+    - [energy, 3]
     - [hp, 1]
   weapon: { type: tranchant, dmg: 30, speed: 24, cost: 14 }
   nStats: 4
@@ -310,8 +304,7 @@ arc_quatre_vents:
     - [for, 3]
     - [wdmg, 3]
     - [wspeed, 1]
-    - [wcost, 2]
-    - [energy, 1]
+    - [energy, 3]
   weapon: { type: tranchant, dmg: 19, speed: 18, cost: 10 }
   nStats: 4
   budget: 1250
@@ -359,8 +352,7 @@ lame_ames:
     - [for, 3]
     - [wdmg, 3]
     - [wspeed, 1]
-    - [wcost, 2]
-    - [energy, 1]
+    - [energy, 3]
   weapon: { type: sacre, dmg: 28, speed: 20, cost: 10 }
   nStats: 5
   budget: 1250

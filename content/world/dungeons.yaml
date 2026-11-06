@@ -16,7 +16,7 @@
   bosses: [lutin_grand_chapeau, fee_melancolie, roi_elfes_tertre]
   material: poussiere_fee
   uniques: [robe_petales, baguette_saule]
-  mult: 1680
+  mult: 1600
 - id: grotte_contrebandiers
   route: falaises_heron
   pool: [contrebandiers, chiens_garde, noyes_port, sorciere_quais]
@@ -30,7 +30,7 @@
   bosses: [gardien_os, abbesse_plume_noire, roi_corbeau]
   material: plume_ossuaire
   uniques: [masque_corbeau, faux_roi_corbeau]
-  mult: 470
+  mult: 530
 - id: puits_sans_fond
   route: mines
   pool: [nains_revenants, golems_fer_rouille, vers_aveugles, kobolds_fous]
@@ -58,14 +58,14 @@
   bosses: [bosco_noye, sorciere_mare_noire, coeur_leviathan]
   material: ecaille_leviathan
   uniques: [harpon_leviathan, cape_ecume]
-  mult: 1160
+  mult: 980
 - id: pyramide_jade
   route: temples_etouffes
   pool: [momies_jade, serpents_sacres, pretres_jaguars, gardiens_pierre_jade]
   bosses: [grand_jaguar, pretresse_jade_mort, dieu_serpent]
   material: jade_ancien
   uniques: [masque_jade, sceptre_serpent]
-  mult: 950
+  mult: 800
 - id: tour_vents
   route: route_tempetes
   pool: [elementaires_air, harpies_tour, moines_vent, gargouilles_bronze]
@@ -79,11 +79,11 @@
   bosses: [gardien_orrery, astronome_vide, etoile_noire]
   material: fragment_etoile_noire
   uniques: [robe_nuit_etoilee, orbe_astre_mort]
-  mult: 630
+  mult: 570
 - id: abime_obsidienne
   route: pont_ames
   pool: [demons_verre, ames_captives, molosses_obsidienne, sorciers_gouffre]
   bosses: [geolier_ames, duchesse_verre, prince_abime]
   material: obsidienne_vivante
   uniques: [lame_ames, armure_prince]
-  mult: 550
+  mult: 440

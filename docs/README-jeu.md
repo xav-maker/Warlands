@@ -489,7 +489,7 @@ Une arme définit les dégâts, le type, la vitesse et le coût en énergie de l
 3. `N` stats tirées sans remise dans le pool de la base selon leurs poids.
 4. Budget = `max(N, floor(budget du palier × roll / 1000))`.
 5. Répartition : chaque stat reçoit 15 % du budget, le reste est réparti selon des poids aléatoires (1 à 100).
-6. Valeur de la stat = `max(1, floor(points × coût))` avec les coûts par point de budget : attaque 1, PV 5, volonté 3, énergie 4, mana 3, résistance 2 %, dégâts d'arme 1, vitesse d'arme −0,25 (plafonnée à −3), coût d'arme −0,5.
+6. Valeur de la stat = `max(1, floor(points × coût))` avec les coûts par point de budget (section 32 ; avant : puissances 1, PV 5, énergie 4, résistance 2 %, dégâts d'arme 1) : puissances 0,7, PV 1,5, volonté 3, énergie 6,5, mana 3, résistance 3 %, dégâts d'arme 0,7, vitesse d'arme −0,25 (plafonnée à −3), coût d'arme −0,5 (plus tiré depuis la section 32, gardé pour les exemplaires existants).
 7. Une résistance prend le type imposé par le pool s'il n'est pas déjà pris, sinon un type au hasard parmi ceux restants. Deux stats identiques fusionnent.
 
 **Qualité affichée** (dérivée du jet) : < 850 médiocre, < 1 050 correct, < 1 200 bon, sinon excellent.
@@ -1217,3 +1217,26 @@ Constat (simulation de 2 900 combats d'étape par réglage, en ne changeant qu'u
 - **Contenu** : `online.engineVersion` et `pack.engineVersion` passent à `v2` ; `woundWill` passe de 500 à 1 000 ; `gauges.energy: 1.5` multiplie l'énergie (base et équipement, arrondi à l'entier inférieur) par 1,5 au lieu de 3 : un Milicien de niveau 1 a 150 d'énergie au lieu de 300.
 - **Réglage** : les 145 `mult` des routes ont été recalculés par `pnpm content calibrate` et les `mult` des 12 donjons par la même dichotomie (40 parties par essai) ; les cibles de la section 30 ne changent pas.
 - **Effet mesuré** (contenu recalibré, 12 combats par étape) : 73 % de victoires en moyenne, comme avant. Les actions du joueur ratées (demi-échec ou échec critique) passent de 13,5 % à 17 %, les attentes faute d'énergie de 2,6 % à 10 %. Volonté max ×1,5 : **+7,1 points** de victoire (−0,8 avant), ×0,67 : **−8,4** (+1,5 avant). Énergie max ×1,5 : **+6,2** (+3,3 avant), ×0,67 : **−11,8** (−4,1 avant). Pour comparaison, +10 % de PV rapportaient +4,7 points.
+
+## 32. Stats d'objets équilibrées (6 novembre 2026)
+
+Question de Xavier : les stats des objets sont-elles équilibrées, chaque stat peut-elle compter ? Mesure : on donne à chaque unité de l'escouade de référence un objet d'**une seule stat**, valant la moitié du budget du palier, et on rejoue les 145 étapes (12 combats par étape, 1 740 combats par stat) ; on mesure aussi une **route enchaînée** (étapes 2 à 5 à la suite, PV et mana reportés, +25 % de mana entre deux combats, 12 parties par route). Gain en points de victoire :
+
+| Stat | Avant (combat / route) | Après (combat / route) |
+|---|---|---|
+| PV | +17,3 / +13,1 | +9,9 / +5,9 |
+| Puissance principale | +12,2 / +12,5 | +10,9 / +8,5 |
+| Dégâts d'arme | +11,2 / +8,3 | +8,4 / +4,9 |
+| Vitesse d'arme | +8,0 / +5,3 | +8,3 / +4,2 |
+| Volonté | +7,8 / +5,1 | +8,4 / +4,2 |
+| Énergie | +6,6 / +2,7 | +5,2 / +1,4 |
+| Résistance au tranchant | +6,0 / +9,6 | +6,2 / +8,2 |
+| Résistance, type au hasard | +4,5 / +4,2 | +5,9 / +5,1 |
+| Coût d'arme | +0,8 / +0,4 | +1,1 / +0,6 (plus tiré) |
+| Mana (lanceurs) | −0,7 / +0,5 | +0,1 / +0,4 |
+
+- **Coûts par point** (`items.statCost`) : puissances 1 → **0,7**, PV 5 → **1,5**, dégâts d'arme 1 → **0,7**, énergie 4 → **6,5**, résistance 2 → **3 %** ; volonté, mana, vitesse et coût d'arme inchangés. Les gains sont fortement décroissants (diviser le prix des PV par 3,3 n'a fait que diviser leur gain par 1,7), d'où des écarts de prix plus grands que les écarts de gain. L'énergie reste un peu en dessous : plus l'équipement en donne, moins le point suivant rapporte.
+- **Coût d'arme retiré des pools** : il ne réduit que le coût de l'attaque de base (les capacités ont un coût fixe), donc ne rapportait rien. Dans les 46 bases qui le tiraient, son poids s'ajoute à celui de l'énergie (même intention : agir plus souvent). Les exemplaires existants gardent leur stat, toujours appliquée.
+- **Mana : laissé tel quel**, la mesure contredit la piste « rendre le mana rare ». Les premiers sorts comptent beaucoup (sans mana au départ : −19 points), mais au-delà, le mana ne change presque rien : avec une jauge de mana ×1,5 au lieu de ×3, 70 % des lanceurs finissent à sec et pourtant +45 à +120 de mana ne rapportent pas 1 point. Le rendre rare n'aurait fait qu'affaiblir les lanceurs. Pour que le mana max compte, il faudrait revoir les sorts eux-mêmes (coûts, puissance), pas le prix de la stat.
+- **Résistance** : elle vaut beaucoup plus sur le bon type (route enchaînée +8,2 contre +5,1 au hasard) ; c'est un choix d'équipement selon la route, voulu.
+- **Réglage** : les `mult` des routes ont été recalculés deux fois par `pnpm content calibrate --fights 40` (l'équipement de référence s'affaiblit, surtout les PV), et ceux des donjons ajustés à la main jusqu'à la cible (tertre 1 600, crypte 530, épave 980, pyramide 800, observatoire 570, abîme 440). Victoires moyennes : 72,5 %, comme avant.

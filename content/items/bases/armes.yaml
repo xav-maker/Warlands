@@ -6,7 +6,7 @@ lame_1:
   cat: une_main
   value: 30
   tags: [metal, cuir]
-  pool: [[for, 3], [wdmg, 3], [wspeed, 1], [wcost, 2], [energy, 1]]
+  pool: [[for, 3], [wdmg, 3], [wspeed, 1], [energy, 3]]
   weapon: { type: tranchant, dmg: 12, speed: 20, cost: 10 }
 lame_2:
   tier: 2
@@ -14,7 +14,7 @@ lame_2:
   cat: une_main
   value: 70
   tags: [metal, cuir]
-  pool: [[for, 3], [wdmg, 3], [wspeed, 1], [wcost, 2], [energy, 1]]
+  pool: [[for, 3], [wdmg, 3], [wspeed, 1], [energy, 3]]
   weapon: { type: tranchant, dmg: 15, speed: 20, cost: 10 }
 lame_3:
   tier: 3
@@ -22,7 +22,7 @@ lame_3:
   cat: une_main
   value: 140
   tags: [metal, cuir]
-  pool: [[for, 3], [wdmg, 3], [wspeed, 1], [wcost, 2], [energy, 1]]
+  pool: [[for, 3], [wdmg, 3], [wspeed, 1], [energy, 3]]
   weapon: { type: tranchant, dmg: 19, speed: 20, cost: 10 }
 lame_4:
   tier: 4
@@ -30,7 +30,7 @@ lame_4:
   cat: une_main
   value: 260
   tags: [metal, cuir]
-  pool: [[for, 3], [wdmg, 3], [wspeed, 1], [wcost, 2], [energy, 1]]
+  pool: [[for, 3], [wdmg, 3], [wspeed, 1], [energy, 3]]
   weapon: { type: feu, dmg: 23, speed: 20, cost: 10 }
   workshop: true
 lame_5:
@@ -39,7 +39,7 @@ lame_5:
   cat: une_main
   value: 450
   tags: [metal, cuir]
-  pool: [[for, 3], [wdmg, 3], [wspeed, 1], [wcost, 2], [energy, 1]]
+  pool: [[for, 3], [wdmg, 3], [wspeed, 1], [energy, 3]]
   weapon: { type: sacre, dmg: 28, speed: 20, cost: 10 }
   workshop: true
 masse_1:
@@ -48,7 +48,7 @@ masse_1:
   cat: une_main
   value: 30
   tags: [metal, bois]
-  pool: [[for, 2], [foi, 1], [wdmg, 2], [wspeed, 1], [wcost, 2], [will, 1]]
+  pool: [[for, 2], [foi, 1], [wdmg, 2], [wspeed, 1], [energy, 2], [will, 1]]
   weapon: { type: contondant, dmg: 10, speed: 21, cost: 8 }
 masse_2:
   tier: 2
@@ -56,7 +56,7 @@ masse_2:
   cat: une_main
   value: 70
   tags: [metal, bois]
-  pool: [[for, 2], [foi, 1], [wdmg, 2], [wspeed, 1], [wcost, 2], [will, 1]]
+  pool: [[for, 2], [foi, 1], [wdmg, 2], [wspeed, 1], [energy, 2], [will, 1]]
   weapon: { type: contondant, dmg: 13, speed: 21, cost: 8 }
 masse_3:
   tier: 3
@@ -64,7 +64,7 @@ masse_3:
   cat: une_main
   value: 140
   tags: [metal, bois]
-  pool: [[for, 2], [foi, 1], [wdmg, 2], [wspeed, 1], [wcost, 2], [will, 1]]
+  pool: [[for, 2], [foi, 1], [wdmg, 2], [wspeed, 1], [energy, 2], [will, 1]]
   weapon: { type: contondant, dmg: 16, speed: 21, cost: 8 }
 masse_4:
   tier: 4
@@ -72,7 +72,7 @@ masse_4:
   cat: une_main
   value: 260
   tags: [metal, bois]
-  pool: [[for, 2], [foi, 1], [wdmg, 2], [wspeed, 1], [wcost, 2], [will, 1]]
+  pool: [[for, 2], [foi, 1], [wdmg, 2], [wspeed, 1], [energy, 2], [will, 1]]
   weapon: { type: contondant, dmg: 19, speed: 21, cost: 8 }
   workshop: true
 masse_5:
@@ -81,7 +81,7 @@ masse_5:
   cat: une_main
   value: 450
   tags: [metal, bois]
-  pool: [[for, 2], [foi, 1], [wdmg, 2], [wspeed, 1], [wcost, 2], [will, 1]]
+  pool: [[for, 2], [foi, 1], [wdmg, 2], [wspeed, 1], [energy, 2], [will, 1]]
   weapon: { type: contondant, dmg: 23, speed: 21, cost: 8 }
   workshop: true
 deuxmains_1:
@@ -90,7 +90,7 @@ deuxmains_1:
   cat: deux_mains
   value: 30
   tags: [metal, bois]
-  pool: [[for, 3], [wdmg, 3], [wspeed, 1], [wcost, 2], [energy, 1], [hp, 1]]
+  pool: [[for, 3], [wdmg, 3], [wspeed, 1], [energy, 3], [hp, 1]]
   weapon: { type: tranchant, dmg: 16, speed: 24, cost: 14 }
 deuxmains_2:
   tier: 2
@@ -98,7 +98,7 @@ deuxmains_2:
   cat: deux_mains
   value: 70
   tags: [metal, bois]
-  pool: [[for, 3], [wdmg, 3], [wspeed, 1], [wcost, 2], [energy, 1], [hp, 1]]
+  pool: [[for, 3], [wdmg, 3], [wspeed, 1], [energy, 3], [hp, 1]]
   weapon: { type: tranchant, dmg: 20, speed: 24, cost: 14 }
 deuxmains_3:
   tier: 3
@@ -106,7 +106,7 @@ deuxmains_3:
   cat: deux_mains
   value: 140
   tags: [metal, bois]
-  pool: [[for, 3], [wdmg, 3], [wspeed, 1], [wcost, 2], [energy, 1], [hp, 1]]
+  pool: [[for, 3], [wdmg, 3], [wspeed, 1], [energy, 3], [hp, 1]]
   weapon: { type: contondant, dmg: 25, speed: 24, cost: 14 }
 deuxmains_4:
   tier: 4
@@ -114,7 +114,7 @@ deuxmains_4:
   cat: deux_mains
   value: 260
   tags: [metal, bois]
-  pool: [[for, 3], [wdmg, 3], [wspeed, 1], [wcost, 2], [energy, 1], [hp, 1]]
+  pool: [[for, 3], [wdmg, 3], [wspeed, 1], [energy, 3], [hp, 1]]
   weapon: { type: tranchant, dmg: 30, speed: 24, cost: 14 }
   workshop: true
 deuxmains_5:
@@ -123,7 +123,7 @@ deuxmains_5:
   cat: deux_mains
   value: 450
   tags: [metal, bois]
-  pool: [[for, 3], [wdmg, 3], [wspeed, 1], [wcost, 2], [energy, 1], [hp, 1]]
+  pool: [[for, 3], [wdmg, 3], [wspeed, 1], [energy, 3], [hp, 1]]
   weapon: { type: tranchant, dmg: 37, speed: 24, cost: 14 }
   workshop: true
 fronde_1:
@@ -132,7 +132,7 @@ fronde_1:
   cat: fronde
   value: 30
   tags: [cuir, fil]
-  pool: [[for, 3], [wdmg, 3], [wspeed, 1], [wcost, 2], [energy, 1]]
+  pool: [[for, 3], [wdmg, 3], [wspeed, 1], [energy, 3]]
   weapon: { type: contondant, dmg: 8, speed: 18, cost: 8 }
 fronde_2:
   tier: 2
@@ -140,7 +140,7 @@ fronde_2:
   cat: fronde
   value: 70
   tags: [cuir, fil]
-  pool: [[for, 3], [wdmg, 3], [wspeed, 1], [wcost, 2], [energy, 1]]
+  pool: [[for, 3], [wdmg, 3], [wspeed, 1], [energy, 3]]
   weapon: { type: contondant, dmg: 10, speed: 18, cost: 8 }
 fronde_3:
   tier: 3
@@ -148,7 +148,7 @@ fronde_3:
   cat: fronde
   value: 140
   tags: [cuir, fil]
-  pool: [[for, 3], [wdmg, 3], [wspeed, 1], [wcost, 2], [energy, 1]]
+  pool: [[for, 3], [wdmg, 3], [wspeed, 1], [energy, 3]]
   weapon: { type: contondant, dmg: 12, speed: 18, cost: 8 }
 fronde_4:
   tier: 4
@@ -156,7 +156,7 @@ fronde_4:
   cat: fronde
   value: 260
   tags: [cuir, fil]
-  pool: [[for, 3], [wdmg, 3], [wspeed, 1], [wcost, 2], [energy, 1]]
+  pool: [[for, 3], [wdmg, 3], [wspeed, 1], [energy, 3]]
   weapon: { type: feu, dmg: 15, speed: 18, cost: 8 }
   workshop: true
 fronde_5:
@@ -165,7 +165,7 @@ fronde_5:
   cat: fronde
   value: 450
   tags: [cuir, fil]
-  pool: [[for, 3], [wdmg, 3], [wspeed, 1], [wcost, 2], [energy, 1]]
+  pool: [[for, 3], [wdmg, 3], [wspeed, 1], [energy, 3]]
   weapon: { type: sacre, dmg: 18, speed: 18, cost: 8 }
   workshop: true
 arc_1:
@@ -174,7 +174,7 @@ arc_1:
   cat: arc
   value: 30
   tags: [bois, fil, plume]
-  pool: [[for, 3], [wdmg, 3], [wspeed, 1], [wcost, 2], [energy, 1]]
+  pool: [[for, 3], [wdmg, 3], [wspeed, 1], [energy, 3]]
   weapon: { type: tranchant, dmg: 10, speed: 18, cost: 10 }
 arc_2:
   tier: 2
@@ -182,7 +182,7 @@ arc_2:
   cat: arc
   value: 70
   tags: [bois, fil, plume]
-  pool: [[for, 3], [wdmg, 3], [wspeed, 1], [wcost, 2], [energy, 1]]
+  pool: [[for, 3], [wdmg, 3], [wspeed, 1], [energy, 3]]
   weapon: { type: tranchant, dmg: 13, speed: 18, cost: 10 }
 arc_3:
   tier: 3
@@ -190,7 +190,7 @@ arc_3:
   cat: arc
   value: 140
   tags: [bois, fil, plume]
-  pool: [[for, 3], [wdmg, 3], [wspeed, 1], [wcost, 2], [energy, 1]]
+  pool: [[for, 3], [wdmg, 3], [wspeed, 1], [energy, 3]]
   weapon: { type: tranchant, dmg: 16, speed: 18, cost: 10 }
 arc_4:
   tier: 4
@@ -198,7 +198,7 @@ arc_4:
   cat: arc
   value: 260
   tags: [bois, fil, plume]
-  pool: [[for, 3], [wdmg, 3], [wspeed, 1], [wcost, 2], [energy, 1]]
+  pool: [[for, 3], [wdmg, 3], [wspeed, 1], [energy, 3]]
   weapon: { type: tranchant, dmg: 19, speed: 18, cost: 10 }
   workshop: true
 arc_5:
@@ -207,7 +207,7 @@ arc_5:
   cat: arc
   value: 450
   tags: [bois, fil, plume]
-  pool: [[for, 3], [wdmg, 3], [wspeed, 1], [wcost, 2], [energy, 1]]
+  pool: [[for, 3], [wdmg, 3], [wspeed, 1], [energy, 3]]
   weapon: { type: tranchant, dmg: 23, speed: 18, cost: 10 }
   workshop: true
 baton_1:
@@ -258,7 +258,7 @@ gantelets_1:
   cat: gantelets
   value: 30
   tags: [cuir, metal]
-  pool: [[for, 3], [wdmg, 3], [wspeed, 1], [wcost, 2], [energy, 1], [will, 1]]
+  pool: [[for, 3], [wdmg, 3], [wspeed, 1], [energy, 3], [will, 1]]
   weapon: { type: contondant, dmg: 8, speed: 14, cost: 6 }
 gantelets_2:
   tier: 2
@@ -266,7 +266,7 @@ gantelets_2:
   cat: gantelets
   value: 70
   tags: [cuir, metal]
-  pool: [[for, 3], [wdmg, 3], [wspeed, 1], [wcost, 2], [energy, 1], [will, 1]]
+  pool: [[for, 3], [wdmg, 3], [wspeed, 1], [energy, 3], [will, 1]]
   weapon: { type: contondant, dmg: 10, speed: 14, cost: 6 }
 gantelets_3:
   tier: 3
@@ -274,7 +274,7 @@ gantelets_3:
   cat: gantelets
   value: 140
   tags: [cuir, metal]
-  pool: [[for, 3], [wdmg, 3], [wspeed, 1], [wcost, 2], [energy, 1], [will, 1]]
+  pool: [[for, 3], [wdmg, 3], [wspeed, 1], [energy, 3], [will, 1]]
   weapon: { type: contondant, dmg: 12, speed: 14, cost: 6 }
 gantelets_4:
   tier: 4
@@ -282,7 +282,7 @@ gantelets_4:
   cat: gantelets
   value: 260
   tags: [cuir, metal]
-  pool: [[for, 3], [wdmg, 3], [wspeed, 1], [wcost, 2], [energy, 1], [will, 1]]
+  pool: [[for, 3], [wdmg, 3], [wspeed, 1], [energy, 3], [will, 1]]
   weapon: { type: contondant, dmg: 15, speed: 14, cost: 6 }
   workshop: true
 gantelets_5:
@@ -291,6 +291,6 @@ gantelets_5:
   cat: gantelets
   value: 450
   tags: [cuir, metal]
-  pool: [[for, 3], [wdmg, 3], [wspeed, 1], [wcost, 2], [energy, 1], [will, 1]]
+  pool: [[for, 3], [wdmg, 3], [wspeed, 1], [energy, 3], [will, 1]]
   weapon: { type: contondant, dmg: 18, speed: 14, cost: 6 }
   workshop: true

@@ -84,9 +84,9 @@ describe('salles', () => {
   it('plafonne le niveau à 30 puis renforce les monstres de 6 % par niveau', () => {
     const top = dungeonById(c, 'abime_obsidienne'); // palier 5, niveau minimal 21
     expect(room(c, top, 13, false)).toMatchObject({ level: 29 });
-    expect(room(c, top, 15, false)).toMatchObject({ level: 30, options: { mult: 550 } }); // réglage du donjon seul
-    expect(room(c, top, 17, false)).toMatchObject({ level: 30, options: { mult: 583 } }); // 550 × 1,06
-    expect(room(c, top, 21, false).options.mult).toBe(649); // 550 × 1,18
+    expect(room(c, top, 15, false)).toMatchObject({ level: 30, options: { mult: 440 } }); // réglage du donjon seul
+    expect(room(c, top, 17, false)).toMatchObject({ level: 30, options: { mult: 466 } }); // 440 × 1,06
+    expect(room(c, top, 21, false).options.mult).toBe(519); // 440 × 1,18
   });
 
   it('tire des groupes déterministes qui tiennent dans la population et les emplacements, boss compris', () => {

@@ -27,7 +27,7 @@ poings_forge:
   craft: false
   nStats: 4
   weapon: { type: feu, dmg: 17, speed: 14, cost: 6 }
-  pool: [[for, 3], [wdmg, 3], [wspeed, 1], [wcost, 2], [energy, 1]]
+  pool: [[for, 3], [wdmg, 3], [wspeed, 1], [energy, 3]]
 ecailles_dragon:
   tier: 5
   slot: armure
