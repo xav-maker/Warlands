@@ -23,13 +23,13 @@ potion_mana:
   tier: 1
   value: 12
   tags: []
-  effect: { manaFlat: 40 }
+  effect: { manaFlat: 120 }
 potion_mana_normale:
   kind: consommable
   tier: 2
   value: 25
   tags: []
-  effect: { manaFlat: 90 }
+  effect: { manaFlat: 270 }
 potion_majeure:
   kind: consommable
   tier: 3
@@ -41,7 +41,7 @@ tonique:
   tier: 3
   value: 40
   tags: []
-  effect: { hpFlat: 150, manaFlat: 50 }
+  effect: { hpFlat: 150, manaFlat: 150 }
 onguent:
   kind: consommable
   tier: 5

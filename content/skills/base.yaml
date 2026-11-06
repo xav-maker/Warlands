@@ -226,7 +226,7 @@ soin_mineur:
   target: ally
   range: 2
   energy: 0
-  mana: 8
+  mana: 24
   durBase: unit
   durMult: 1000
   coef: 4000
@@ -236,7 +236,7 @@ regeneration:
   target: ally
   range: 2
   energy: 0
-  mana: 10
+  mana: 30
   durBase: unit
   durMult: 1000
   coef: 600
@@ -246,7 +246,7 @@ priere:
   target: self
   range: 1
   energy: 0
-  mana: 18
+  mana: 54
   durBase: unit
   durMult: 3000
   coef: 2500
@@ -256,7 +256,7 @@ purification:
   target: ally
   range: 2
   energy: 0
-  mana: 10
+  mana: 30
   durBase: unit
   durMult: 1000
   p: {}
@@ -265,7 +265,7 @@ trait_sacre:
   target: enemy
   range: 5
   energy: 0
-  mana: 10
+  mana: 30
   durBase: unit
   durMult: 1000
   p: { dmg: 20, tagMult: 2000 }
@@ -275,7 +275,7 @@ trait_sacre_renforce:
   target: enemy
   range: 5
   energy: 0
-  mana: 12
+  mana: 36
   durBase: unit
   durMult: 1000
   p: { dmg: 20, tagMult: 3000 }
@@ -285,7 +285,7 @@ bouclier_foi:
   target: ally
   range: 2
   energy: 0
-  mana: 12
+  mana: 36
   durBase: unit
   durMult: 1000
   coef: 5000
@@ -304,7 +304,7 @@ confusion:
   target: enemy
   range: 5
   energy: 0
-  mana: 10
+  mana: 30
   durBase: unit
   durMult: 1000
   p: { dur: 200, half: 100 }
@@ -322,7 +322,7 @@ trait_flammes:
   target: enemy
   range: 4
   energy: 0
-  mana: 5
+  mana: 15
   durBase: unit
   durMult: 1000
   p: { dmg: 15, burn: 6, burnDur: 20 }
@@ -332,7 +332,7 @@ boule_feu:
   target: enemy
   range: 5
   energy: 0
-  mana: 15
+  mana: 45
   durBase: unit
   durMult: 2000
   p: { dmg: 30, splash: 10, burn: 6, burnDur: 40 }
@@ -342,7 +342,7 @@ arme_enflammee:
   target: ally
   range: 1
   energy: 0
-  mana: 10
+  mana: 30
   durBase: unit
   durMult: 1000
   power: ele
@@ -352,7 +352,7 @@ mur_flammes:
   target: enemy
   range: 5
   energy: 0
-  mana: 18
+  mana: 54
   durBase: unit
   durMult: 2000
   p: { burn: 6, burnDur: 60 }
@@ -361,7 +361,7 @@ embrasement:
   target: enemy
   range: 5
   energy: 0
-  mana: 20
+  mana: 60
   durBase: unit
   durMult: 2000
   p: {}
@@ -454,7 +454,7 @@ drain:
   target: enemy
   range: 3
   energy: 0
-  mana: 12
+  mana: 36
   durBase: unit
   durMult: 2000
   p: { dmg: 20, crit: 10 }
@@ -464,7 +464,7 @@ murmure:
   target: enemy
   range: 5
   energy: 0
-  mana: 10
+  mana: 30
   durBase: unit
   durMult: 1000
   p: { dmg: 10, will: 250, half: 100, crit: 150 }
@@ -474,7 +474,7 @@ terreur_masse:
   target: enemy
   range: 5
   energy: 0
-  mana: 18
+  mana: 54
   durBase: unit
   durMult: 2000
   p: { dmg: 10, will: 250, half: 100, crit: 150 }
@@ -483,7 +483,7 @@ malediction:
   target: enemy
   range: 5
   energy: 0
-  mana: 12
+  mana: 36
   durBase: unit
   durMult: 2000
   p: { res: 250, dur: 80, halfDur: 40 }
@@ -492,7 +492,7 @@ nuage:
   target: enemy
   range: 4
   energy: 0
-  mana: 12
+  mana: 36
   durBase: unit
   durMult: 2000
   p: { dmg: 3, dur: 100, cap: 3 }
@@ -501,7 +501,7 @@ nuage_renforce:
   target: enemy
   range: 4
   energy: 0
-  mana: 14
+  mana: 42
   durBase: unit
   durMult: 2000
   p: { dmg: 3, dur: 100, cap: 5 }
@@ -510,7 +510,7 @@ lien_vital:
   target: enemy
   range: 4
   energy: 0
-  mana: 15
+  mana: 45
   durBase: unit
   durMult: 2000
   p: { dur: 60, halfDur: 30, share: 300 }
