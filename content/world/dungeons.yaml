@@ -9,81 +9,81 @@
   bosses: [taupe_reine, chef_gratte_gratte, roi_kobold]
   material: pepite_terriers
   uniques: [pioche_roi_kobold, casque_lanterne]
-  mult: 1030
+  mult: 1060
 - id: tertre_fees
   route: tourbieres_bruyere
   pool: [farfadets_voleurs, lutins_tourbe, feux_follets, champignons_fees]
   bosses: [lutin_grand_chapeau, fee_melancolie, roi_elfes_tertre]
   material: poussiere_fee
   uniques: [robe_petales, baguette_saule]
-  mult: 1450
+  mult: 1680
 - id: grotte_contrebandiers
   route: falaises_heron
   pool: [contrebandiers, chiens_garde, noyes_port, sorciere_quais]
   bosses: [borgne_main_leste, grosse_berthe, capitaine_corbac]
   material: rhum_noir
   uniques: [sabre_capitaine, longue_vue_corbac]
-  mult: 880
+  mult: 910
 - id: crypte_corbeaux
   route: vieux_cimetiere_chenes
   pool: [squelettes_corbeaux, goules_crypte, pretres_cadaveriques, nuee_corbeaux_morts]
   bosses: [gardien_os, abbesse_plume_noire, roi_corbeau]
   material: plume_ossuaire
   uniques: [masque_corbeau, faux_roi_corbeau]
-  mult: 410
+  mult: 470
 - id: puits_sans_fond
   route: mines
   pool: [nains_revenants, golems_fer_rouille, vers_aveugles, kobolds_fous]
   bosses: [contremaitre_eternel, golem_forge_primitif, ombre_puits]
   material: fer_profondeurs
   uniques: [marteau_puits, plastron_sans_fond]
-  mult: 520
+  mult: 590
 - id: ruche_cristal
   route: grottes_luminescentes
   pool: [guepes_cristal, larves_luisantes, ouvrieres_quartz, sentinelles_prismatiques]
   bosses: [bourdon_quartz, princesse_prisme, reine_cristal]
   material: gelee_cristal
   uniques: [aiguillon_cristal, carapace_prismatique]
-  mult: 610
+  mult: 700
 - id: tombeau_roi_glaces
   route: glacier_fendu
   pool: [guerriers_geles, spectres_givre, loups_glace, pretresses_hiver]
   bosses: [chancelier_givre, reine_hiver_pale, roi_glaces]
   material: glace_eternelle
   uniques: [couronne_givre, lame_hiver]
-  mult: 790
+  mult: 810
 - id: epave_leviathan
   route: cote_epaves
   pool: [marins_maudits, crabes_abysse, murenes_geantes, sorciers_marees]
   bosses: [bosco_noye, sorciere_mare_noire, coeur_leviathan]
   material: ecaille_leviathan
   uniques: [harpon_leviathan, cape_ecume]
-  mult: 900
+  mult: 1160
 - id: pyramide_jade
   route: temples_etouffes
   pool: [momies_jade, serpents_sacres, pretres_jaguars, gardiens_pierre_jade]
   bosses: [grand_jaguar, pretresse_jade_mort, dieu_serpent]
   material: jade_ancien
   uniques: [masque_jade, sceptre_serpent]
-  mult: 830
+  mult: 950
 - id: tour_vents
   route: route_tempetes
   pool: [elementaires_air, harpies_tour, moines_vent, gargouilles_bronze]
   bosses: [maitre_courants, gargouille_airain, seigneur_vents]
   material: plume_tempete
   uniques: [bottes_tempete, arc_quatre_vents]
-  mult: 740
+  mult: 780
 - id: observatoire_inverse
   route: ciel
   pool: [astromanciens_dements, etoiles_dechues, golems_orrery, anges_sans_visage]
   bosses: [gardien_orrery, astronome_vide, etoile_noire]
   material: fragment_etoile_noire
   uniques: [robe_nuit_etoilee, orbe_astre_mort]
-  mult: 610
+  mult: 630
 - id: abime_obsidienne
   route: pont_ames
   pool: [demons_verre, ames_captives, molosses_obsidienne, sorciers_gouffre]
   bosses: [geolier_ames, duchesse_verre, prince_abime]
   material: obsidienne_vivante
   uniques: [lame_ames, armure_prince]
-  mult: 470
+  mult: 550

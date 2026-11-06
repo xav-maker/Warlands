@@ -5,7 +5,7 @@ engine:
   tick: 20
   waitRegen: 50
   waitManaRegen: 50
-  woundWill: 500
+  woundWill: 1000 # v2 : en ‰ de la volonté de référence du combat ; 500 avant [H]
   allyDeathWill: 100
   sameTroopDeathWill: 200
   killWill: 100
@@ -21,6 +21,9 @@ engine:
   healMult: 1200
   healCooldown: 60
   hotCooldown: 100
+  # Épuisement (moteur v2, demandé par Xavier le 6 novembre 2026 ; valeurs [H]) : sous 30 % d'énergie, une capacité dure 40 % de plus.
+  exhaustAt: 300
+  exhaustMod: 1400
 eco:
   startGold: 1000 # or de départ [Xavier, 5 novembre 2026]
   # Deux milicien, deux chasseur et deux herboriste de niveau 1 (le prototype donnait un milicien et un chasseur : trop peu pour la première route).
@@ -46,7 +49,8 @@ eco:
   maxLevel: 30
   table: { materiau: 85, composant: 5, consommable: 7, equipement: 3 }
   guardianTable: { composant: 50, equipement: 30, materiau: 20 }
-gauges: { mult: 3 }
+# Énergie ×1,5 au lieu de ×3 (demandé par Xavier le 6 novembre 2026 ; valeur [H]) : le manque d'énergie doit arriver en combat.
+gauges: { mult: 3, energy: 1.5 }
 items:
   boost: 2
   tierBudget: { '1': 10, '2': 20, '3': 35, '4': 55, '5': 80 }
@@ -83,10 +87,11 @@ rares: { chance: 15, minWins: 10 }
 
 # Règles du jeu en ligne qui n'existent pas dans le prototype (README partie II) ; [H] = à régler.
 online:
-  # Moteur joué pour ce contenu (v1 : 5 puissances, immunités, soins fixes, README 19) ; ajustement du
+  # Moteur joué pour ce contenu (v1 : 5 puissances, immunités, soins fixes, README 19 ; v2 : volonté en points et
+  # épuisement, README 31) ; ajustement du
   # gardien appliqué à toute sa rencontre, escorte comprise, comme dans le tableau du README 6.2 : limité au
   # boss (README 16, point 2) il ne peut pas compenser l'escorte, grosse de 16 à 21 de population.
-  engineVersion: v1
+  engineVersion: v2
   guardianAdjust: all
   squad: { maxUnits: 8, maxPop: 11 } # README 20 [Xavier]
   # Réserve [Xavier, 5 novembre 2026] : 5 emplacements, 8 de population ; ses troupes ne combattent pas mais reçoivent

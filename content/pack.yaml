@@ -1,7 +1,7 @@
 # Pack de contenu. files : fichiers de chaque collection, dans l’ordre (l’ordre des entrées compte pour les tirages).
 
 id: cible-0.1
-engineVersion: v1
+engineVersion: v2
 files:
   skills:
     - skills/base.yaml

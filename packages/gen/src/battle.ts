@@ -83,7 +83,7 @@ export function unitStats(c: GenContent, t: PlayerTroop, u: PlayerUnit): UnitSta
           out.willMax += v;
           break;
         case 'energy':
-          out.energyMax += v * c.gaugeMult;
+          out.energyMax += Math.floor(v * (c.energyGaugeMult ?? c.gaugeMult));
           break;
         case 'mana':
           out.manaMax += v * c.gaugeMult;

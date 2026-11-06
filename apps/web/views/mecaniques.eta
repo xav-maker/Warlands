@@ -35,8 +35,8 @@
       <thead><tr><th>Statistique</th><th>Rôle</th></tr></thead>
       <tbody>
         <tr><td><b><%= lab('hp', 'PV max') %></b></td><td>Les points de vie. À 0, l’unité meurt, définitivement.</td></tr>
-        <tr><td><b><%= lab('will', 'Volonté max') %></b></td><td>Le sang-froid. Elle baisse quand on est blessé ou qu’un allié tombe ; trop basse, les actions ratent (voir <a href="#volonte">Volonté</a>).</td></tr>
-        <tr><td><b><%= lab('energy', 'Énergie max') %></b></td><td>Paie les attaques d’arme et les techniques. À sec, l’unité attend pour en récupérer.</td></tr>
+        <tr><td><b><%= lab('will', 'Volonté max') %></b></td><td>Le sang-froid. Elle baisse quand on est blessé ou qu’un allié tombe, du même nombre de points pour tout le monde : plus elle est haute, plus l’unité tient avant que ses actions ratent (voir <a href="#volonte">Volonté</a>).</td></tr>
+        <tr><td><b><%= lab('energy', 'Énergie max') %></b></td><td>Paie les attaques d’arme et les techniques. <% if (P.exhaustAt) { %>Sous <%= pct(P.exhaustAt) %> %, l’unité est épuisée et ses capacités sont plus lentes ; à<% } else { %>À<% } %> sec, elle attend pour en récupérer.</td></tr>
         <tr><td><b><%= lab('mana', 'Mana max') %></b></td><td>Paie les sorts. Seules certaines troupes en ont.</td></tr>
         <tr><td><b>Les 5 puissances</b></td><td>Elles s’ajoutent aux dégâts, aux soins et aux boucliers (tableau ci-dessous).</td></tr>
         <tr><td><b>Vitesse</b></td><td>La durée de base d’une action, en instants : <b>plus petit, plus rapide</b>.</td></tr>
@@ -64,11 +64,11 @@
     <p>Chaque troupe a, pour chaque statistique, une <b>valeur de base</b> et une <b>croissance par niveau</b>. À un niveau <i>n</i> :</p>
     <code class="formula">g(stat) = base + floor(croissance × (n − 1))
 PV max      = floor(g(PV) × multiplicateur de la forme / 1000) × <%= c.gaugeMult %>
-Énergie max = (g(énergie) + bonus de la forme) × <%= c.gaugeMult %>
+Énergie max = floor((g(énergie) + bonus de la forme) × <%= c.energyGaugeMult ?? c.gaugeMult %>)
 Mana max    = (g(mana) + bonus de la forme) × <%= c.gaugeMult %>
 Volonté max = g(volonté) + bonus de la forme
 Puissance   = g(puissance) + bonus de la forme</code>
-    <p>Les jauges de PV, d’énergie et de mana sont multipliées par <b><%= c.gaugeMult %></b> pour tout le monde (troupes et monstres) ; la volonté et les puissances ne le sont pas.</p>
+    <p>Les jauges de PV et de mana sont multipliées par <b><%= c.gaugeMult %></b> pour tout le monde (troupes et monstres), l’énergie par <b><%= c.energyGaugeMult ?? c.gaugeMult %></b> ; la volonté et les puissances ne le sont pas.</p>
     <div class="example">
       <b>Exemple : <%= ex.name %> (sans évolution)</b>
       <p>Base : <%= ex.base.hp %> PV avec +<%= ex.growth.hp %> par niveau. Au niveau 10 : g(PV) = <%= ex.base.hp %> + floor(<%= ex.growth.hp %> × 9) = <%= g('hp', 10) %>, donc <%= g('hp', 10) %> × <%= c.gaugeMult %> = <b><%= g('hp', 10) * c.gaugeMult %> PV max</b>.</p>
@@ -138,7 +138,7 @@ stat de l’objet = floor(points × valeur d’un point)</code>
     <h3>Ce que l’objet change vraiment</h3>
     <ul class="plain">
       <li>Les valeurs d’un objet sont <b>multipliées par <%= c.itemBoost %></b> à l’usage : ce que la fiche de l’objet affiche est déjà ce chiffre.</li>
-      <li>Pour les <b>PV, l’énergie et le mana</b>, le chiffre affiché est encore multiplié par <b><%= c.gaugeMult %></b> sur l’unité, comme toutes les jauges.</li>
+      <li>Pour les <b>PV et le mana</b>, le chiffre affiché est encore multiplié par <b><%= c.gaugeMult %></b> sur l’unité, et par <b><%= c.energyGaugeMult ?? c.gaugeMult %></b> pour l’<b>énergie</b> (arrondi à l’entier inférieur), comme les jauges.</li>
       <li>L’arme équipée <b>remplace</b> l’arme naturelle (dégâts, vitesse, coût, type), puis ses bonus s’ajoutent. La vitesse de l’arme ne descend pas sous 8, son coût en énergie pas sous 1.</li>
       <li>Une troupe ne porte que les catégories qu’elle accepte, et seulement à partir du niveau requis du palier.</li>
     </ul>
@@ -187,7 +187,8 @@ sous Hâte : durée × <%= mult(P.hasteMod) %>      sous Ralenti : durée × <%=
       <li>Si le combat est bloqué (personne n’a perdu de PV depuis <%= P.stallTime %> instants), les unités des rangs arrière avancent.</li>
       <li>Le <b>coût</b> est payé : énergie = coût de la capacité + coût de l’arme × son coefficient ; mana = coût du sort. S’il manque de l’énergie ou du mana, l’unité <b>attend</b> à la place.</li>
       <li>Un <b>test de volonté</b> décide du résultat (section suivante), puis la capacité est résolue.</li>
-    </ol>
+<% if (P.exhaustAt) { %>      <li><b>Épuisement</b> : si l’unité avait moins de <%= pct(P.exhaustAt) %> % de son énergie max avant de payer, la capacité dure <%= pct(P.exhaustMod ?? 1000) %> % de sa durée normale. Une grosse énergie max retarde ce moment.</li>
+<% } %>    </ol>
     <p><b>Attendre</b> met de côté <%= pct(P.waitRegen) %> % de l’énergie max<% if (P.waitManaRegen) { %> et <%= pct(P.waitManaRegen) %> % du mana max<% } %>, crédités à l’action suivante.</p>
   </article>
 
@@ -205,11 +206,13 @@ sous Hâte : durée × <%= mult(P.hasteMod) %>      sous Ralenti : durée × <%=
     </table>
     <p>Il n’y a pas de réussite critique. L’effet exact du demi-échec (DE) et de l’échec critique (EC) est écrit dans l’infobulle de chaque capacité.</p>
     <h3>Ce qui fait bouger la volonté</h3>
-    <code class="formula">blessure : −(PV perdus / PV max) × volonté max × <%= mult(P.woundWill) %>
-ennemi tué par l’unité : +<%= pct(P.killWill) %> % de la volonté max
-mort d’un allié d’une autre troupe : −<%= pct(P.allyDeathWill) %> %
-mort d’un allié de la même troupe : −<%= pct(P.sameTroopDeathWill) %> %</code>
-    <p class="meta">Exemple : une unité de 60 de volonté qui perd la moitié de ses PV perd 60 × 0,5 × <%= mult(P.woundWill) %> = <%= Math.floor(60 * 0.5 * P.woundWill / 1000) %> de volonté. Perdre ses compagnons de troupe pèse deux fois plus que perdre les autres.</p>
+    <p>Les gains et les pertes se comptent en <b>points</b>, à partir de la <b>volonté de référence</b> du combat : la moyenne des volontés max de toutes les unités, des deux camps. Ils sont les mêmes pour toutes les unités : une unité à forte volonté max en perd une plus petite part, et rate donc moins souvent.</p>
+    <code class="formula">blessure : −(PV perdus / PV max) × référence × <%= mult(P.woundWill) %>
+ennemi tué par l’unité : +<%= pct(P.killWill) %> % de la référence
+mort d’un allié d’une autre troupe : −<%= pct(P.allyDeathWill) %> % de la référence
+mort d’un allié de la même troupe : −<%= pct(P.sameTroopDeathWill) %> % de la référence
+capacités (Méditation, Terreur…) : leur pourcentage, de la référence</code>
+    <p class="meta">Exemple : avec une référence de 60, une unité qui perd la moitié de ses PV perd 60 × 0,5 × <%= mult(P.woundWill) %> = <%= Math.floor(60 * 0.5 * P.woundWill / 1000) %> points de volonté. Avec 60 de volonté max, c’est <%= Math.round(100 * Math.floor(60 * 0.5 * P.woundWill / 1000) / 60) %> % de sa jauge ; avec 90, seulement <%= Math.round(100 * Math.floor(60 * 0.5 * P.woundWill / 1000) / 90) %> %. Perdre ses compagnons de troupe pèse deux fois plus que perdre les autres. Les planchers (Esprit inébranlable, Sang-froid) restent une part de la volonté max de l’unité.</p>
   </article>
 
   <article class="card" id="degats">

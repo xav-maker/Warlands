@@ -80,8 +80,11 @@ export function loadInputs(): GoldenInput[] {
 export const toV1 = (units: UnitInput[]): UnitInput[] =>
   units.map(({ atk, ...u }) => ({ ...u, pow: { for: atk!, ele: atk!, esp: atk!, foi: atk!, omb: atk! } }));
 
+/** Versions qui lisent les puissances (entrées migrées par toV1). */
+const V1_PLUS = new Set(['v1', 'v2']);
+
 export const play = (version: string, g: GoldenInput): BattleOutput =>
-  simuler({ ...content, engineVersion: version, units: version === 'v1' ? toV1(g.units) : g.units }, g.seed);
+  simuler({ ...content, engineVersion: version, units: V1_PLUS.has(version) ? toV1(g.units) : g.units }, g.seed);
 
 /** Empreinte du déroulé, sans l'événement de départ (qui recopie l'entrée, migrée en v1). */
 const bodyHash = (out: BattleOutput): string => logHash({ ...out, log: out.log.slice(1) });
@@ -100,6 +103,8 @@ const touches: Record<string, (g: GoldenInput, out: BattleOutput) => boolean> = 
   'proto-0.4.1': (_g, out) => out.log.some((e) => e.k === 'act' && e.skill === 'embrasement'),
   'proto-0.4.2': (g) => g.units.some((u) => u.rules.some((r) => r.cond === 'allyHpBelow')),
   v1: (_g, out) => healsOrShields(out),
+  // Le contenu de référence n'a pas les paramètres d'épuisement : seule la volonté en points peut changer un combat.
+  v2: (_g, out) => out.log.some((e) => e.k === 'gauge' && e.g === 'will'),
 };
 
 if (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]) {

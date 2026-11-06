@@ -160,16 +160,16 @@ Statistiques de base au niveau `n` (`computeStats`), pour chaque stat `k` :
 g(k) = base[k] + floor(croissance[k] × (n − 1))
 PV max     = floor(g(hp) × multPV_forme / 1000) × GAUGE_MULT
 Volonté max = g(will) + bonus_forme
-Énergie max = (g(energy) + bonus_forme) × GAUGE_MULT
+Énergie max = floor((g(energy) + bonus_forme) × ENERGY_MULT)
 Mana max    = (g(mana) + bonus_forme) × GAUGE_MULT, ou 0 si base et croissance de mana valent 0
 Attaque     = g(atk) + bonus_forme
 Vitesse     = vitesse de la forme (fixe, plus petit = plus rapide)
 Résistances = % de la forme × 10 (en ‰)
 ```
 
-`GAUGE_MULT = 3` [Xavier] : PV, énergie et mana triplés pour toutes les troupes et tous les monstres (combats environ 2,5 fois plus longs). La volonté et l'attaque ne sont pas multipliées. Dans le prototype ville, une troupe reste toujours dans sa première forme (pas d'évolution), donc `multPV_forme = 1000` et les bonus de forme sont nuls.
+`GAUGE_MULT = 3` [Xavier] : PV et mana triplés pour toutes les troupes et tous les monstres (combats environ 2,5 fois plus longs). `ENERGY_MULT = 1,5` (`gauges.energy`, section 31 ; c'était `GAUGE_MULT` jusque-là) : l'énergie n'est plus que multipliée par 1,5, y compris l'énergie apportée par l'équipement. La volonté et l'attaque ne sont pas multipliées. Dans le prototype ville, une troupe reste toujours dans sa première forme (pas d'évolution), donc `multPV_forme = 1000` et les bonus de forme sont nuls.
 
-Exemple : un Milicien niveau 1 a 300 PV, 60 de volonté, 300 d'énergie, 0 mana, 5 d'attaque, vitesse 20, 10 % de résistance tranchante, arme Épée courte (12 tranchant, vitesse 20, coût 10).
+Exemple : un Milicien niveau 1 a 300 PV, 60 de volonté, 150 d'énergie, 0 mana, 5 d'attaque, vitesse 20, 10 % de résistance tranchante, arme Épée courte (12 tranchant, vitesse 20, coût 10).
 
 Les **stats finales** ajoutent l'équipement (section 7.4).
 
@@ -234,7 +234,7 @@ Le résultat donne le vainqueur (`0` joueur, `1` monstres, `null` égalité impo
 | `dotTick` | 4 | Période des tics de dégâts et soins sur la durée [Xavier]. |
 | `waitRegen` | 50 ‰ | Énergie rendue par Attendre (5 % du max). |
 | `waitManaRegen` | 50 ‰ | Mana rendu par Attendre (5 % du max) [Xavier]. |
-| `woundWill` | 500 | Volonté perdue en ‰ par ‰ de PV perdus (−1 % par 2 %). |
+| `woundWill` | 1 000 | Volonté perdue en ‰ par ‰ de PV perdus (−1 % par 1 % ; 500 jusqu'à la section 31). En v2, les variations de volonté sont des ‰ de la **volonté de référence du combat** (section 31). |
 | `allyDeathWill` | 100 ‰ | Volonté perdue à la mort d'un allié d'une autre troupe. |
 | `sameTroopDeathWill` | 200 ‰ | Volonté perdue à la mort d'un allié de la même troupe. |
 | `killWill` | 100 ‰ | Volonté gagnée en tuant un ennemi. |
@@ -247,6 +247,7 @@ Le résultat donne le vainqueur (`0` joueur, `1` monstres, `null` égalité impo
 | `healMult` | 1 200 | Tous les soins en combat ×1,2 [Xavier]. |
 | `healCooldown` | 60 | Recharge par cible des soins directs [Xavier]. |
 | `hotCooldown` | 100 | Recharge par cible des Régénérations [Xavier]. |
+| `exhaustAt` / `exhaustMod` | 300 / 1 400 | v2 : sous 30 % d'énergie avant paiement, une capacité dure ×1,4 (**épuisement**, section 31) [H]. |
 
 ### 5.3 Temps et ordre d'action
 
@@ -280,6 +281,7 @@ Le résultat donne le vainqueur (`0` joueur, `1` monstres, `null` égalité impo
    Il n'y a pas de réussite critique.
 7. Paiement : énergie = coût fixe + coût de l'arme × `energyW`/1000 ; mana = coût du sort.
 8. Résolution de la capacité selon le résultat (5.9 et annexe B).
+9. Durée (5.3) ; en v2, ×`exhaustMod` si l'unité était **épuisée** (énergie < `exhaustAt` avant le paiement, section 31).
 
 **Attendre** : met de côté 5 % de l'énergie max et 5 % du mana max (crédités à l'action suivante), dure vitesse × 1.
 
@@ -1204,3 +1206,14 @@ Constat de Xavier après deux jours de jeu : dès la 3e étape du palier 1, la m
 - **Réglage** : le `mult` de chacune des 145 étapes de `content/world/routes.yaml` a été recalculé par la nouvelle commande ``pnpm content calibrate [--fights N] [--tier N] [--dry]`` (dichotomie sur le `mult` qui rapproche le taux de victoire de la cible, mêmes graines et mêmes escouades que ``pnpm content simulate``, puis réécriture des seules lignes ``mult:``). Les facteurs par palier (``eco.monsterHp``, ``monsterAtk``, ``guardianAdj``), le moteur, les escouades de référence et les donjons ne changent pas.
 - **Effet** : l'étape 3 du palier 1 passe de 18-35 % à 90 % de victoires et l'étape 4 de 3-13 % à 80-82 %. Pour une escouade de niveau 7-8 équipée à l'étape 3, ce qui était le cas de Xavier, la simulation donne plus de 95 % de victoires et environ une unité perdue par victoire, contre 4 à 5 unités perdues par combat avant. Test de non-régression : les trois premières étapes du palier 1 coûtent en moyenne moins de 2 unités par combat (plus de 3 avant).
 - **Ce qui reste** : un combat perdu coûte toujours l'escouade entière (elle est ramenée en ville avec ses survivantes), et les unités tombées doivent être rachetées. Rien n'a changé sur ce point. Le niveau rapporte peu de puissance par rapport à l'équipement (PV d'un Milicien : 300 au niveau 1, 426 au niveau 8, 945 au niveau 30) ; si le palier 2 paraît encore dur, c'est le prochain levier.
+
+## 31. Volonté et énergie qui comptent (6 novembre 2026)
+
+Constat (simulation de 2 900 combats d'étape par réglage, en ne changeant qu'une stat de l'escouade de référence) : doubler la **volonté max** ne changeait rien (−1 point de victoire, du bruit), car toutes les variations de volonté étaient des ‰ de la volonté max de l'unité et le test lit un pourcentage. L'**énergie** ne manquait presque jamais : 2,6 % des actions du joueur étaient une attente faute d'énergie, et une énergie infinie ne rapportait que +3,7 points. Xavier a demandé que les deux stats comptent ; les valeurs sont [H].
+
+- **Moteur `v2`** (`packages/engine`, versions antérieures rejouables à l'identique, combats de référence dans `golden/v2`) :
+  - **Volonté en points** : toutes les variations de volonté (blessures, morts, ennemi tué, capacités et effets `will`, Aura de sérénité, Dernier rempart…) valent leur ‰ de la **volonté de référence du combat**, la moyenne entière des volontés max de toutes les unités des deux camps, et non plus de la volonté max de l'unité. Une unité à forte volonté max en perd donc une plus petite part et rate moins. Le test de volonté (50 % / 20 %) et les planchers (Esprit inébranlable, Sang-froid) restent des parts de la volonté max de l'unité.
+  - **Épuisement** : si l'énergie de l'unité, avant le paiement, est sous `exhaustAt` ‰ de son maximum (300), la capacité dure `exhaustMod` ‰ de sa durée (1 400, après Hâte et Ralenti). Les actions communes et Attendre ne sont pas concernées.
+- **Contenu** : `online.engineVersion` et `pack.engineVersion` passent à `v2` ; `woundWill` passe de 500 à 1 000 ; `gauges.energy: 1.5` multiplie l'énergie (base et équipement, arrondi à l'entier inférieur) par 1,5 au lieu de 3 : un Milicien de niveau 1 a 150 d'énergie au lieu de 300.
+- **Réglage** : les 145 `mult` des routes ont été recalculés par `pnpm content calibrate` et les `mult` des 12 donjons par la même dichotomie (40 parties par essai) ; les cibles de la section 30 ne changent pas.
+- **Effet mesuré** (contenu recalibré, 12 combats par étape) : 73 % de victoires en moyenne, comme avant. Les actions du joueur ratées (demi-échec ou échec critique) passent de 13,5 % à 17 %, les attentes faute d'énergie de 2,6 % à 10 %. Volonté max ×1,5 : **+7,1 points** de victoire (−0,8 avant), ×0,67 : **−8,4** (+1,5 avant). Énergie max ×1,5 : **+6,2** (+3,3 avant), ×0,67 : **−11,8** (−4,1 avant). Pour comparaison, +10 % de PV rapportaient +4,7 points.

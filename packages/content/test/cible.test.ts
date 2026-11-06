@@ -12,7 +12,7 @@ const from = (file: string): string[] => Object.keys(raw.origin).filter((k) => r
 describe('contenu cible', () => {
   it('est valide, moteur v1', () => {
     expect(v.issues.filter((i) => i.level === 'error')).toEqual([]);
-    expect(raw.params.online.engineVersion).toBe('v1');
+    expect(raw.params.online.engineVersion).toBe('v2');
   });
 
   it('20 régions, 29 routes, 96 + 20 rares', () => {

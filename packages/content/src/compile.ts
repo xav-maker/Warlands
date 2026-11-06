@@ -107,6 +107,7 @@ export function compile(raw: RawContent): Compiled {
     recruitValue: P.recipes.recruitValue,
     itemBoost: P.items.boost,
     gaugeMult: P.gauges.mult,
+    ...(P.gauges.energy !== undefined ? { energyGaugeMult: P.gauges.energy } : {}),
     rareChance: P.rares.chance,
     rareMinWins: P.rares.minWins,
     questGivers: raw.givers,

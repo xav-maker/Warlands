@@ -67,7 +67,7 @@ export function computeStats(c: GenContent, t: TroopDef, formId: string, level: 
     name: f.name,
     hpMax: hp,
     willMax: g2('will') + b('will'),
-    energyMax: (g2('energy') + b('energy')) * c.gaugeMult,
+    energyMax: Math.floor((g2('energy') + b('energy')) * (c.energyGaugeMult ?? c.gaugeMult)),
     manaMax: t.base.mana || t.growth.mana ? (g2('mana') + b('mana')) * c.gaugeMult : 0,
     atk: pow ? Math.max(...POWERS.map((k) => pow[k])) : g2('atk') + b('atk'),
     ...(pow ? { pow } : {}),

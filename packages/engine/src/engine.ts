@@ -14,11 +14,14 @@
  *                    en valeurs fixes, passifs de stats (contenu-cible-unites 3.6), camp de 16 en duo.
  *                    Avec des puissances égales à l'ancienne attaque et des coefficients de 1 000, la v1
  *                    rejoue proto-0.4.2 à l'identique sauf pour les soins et boucliers (README 19.3).
+ *   v2               volonté et énergie (README 31) : les gains et pertes de volonté valent leur ‰ de la
+ *                    volonté de référence du combat (moyenne des volontés max), plus de la volonté max de
+ *                    l'unité ; épuisement : sous exhaustAt ‰ d'énergie, une capacité dure exhaustMod ‰.
  */
 import { Rng } from '@cr/rng';
 import type { BattleInput, BattleOutput, Fx, LogEvent, Power, Rule, Side, Skill, UnitInput } from './types.ts';
 
-export const ENGINE_VERSIONS = ['proto-0.4-ville', 'proto-0.4.1', 'proto-0.4.2', 'v1'] as const;
+export const ENGINE_VERSIONS = ['proto-0.4-ville', 'proto-0.4.1', 'proto-0.4.2', 'v1', 'v2'] as const;
 export type EngineVersion = (typeof ENGINE_VERSIONS)[number];
 /** Version jouée quand l'entrée n'en précise pas. */
 export const ENGINE_VERSION: EngineVersion = ENGINE_VERSIONS[ENGINE_VERSIONS.length - 1]!;
@@ -177,6 +180,7 @@ export function simuler(input: BattleInput, seed: number): BattleOutput {
   const FIX_EMBRASEMENT = level >= 1;
   const FIX_ALLY_HP_BELOW = level >= 2;
   const V1 = level >= 3;
+  const V2 = level >= 4;
   if (V1) for (const u of input.units) if (!u.pow) throw new Error(`unité ${u.id} sans puissances : le moteur v1 lit pow, plus atk`);
   /** Alliés comptés par allyHpBelow : l'unité elle-même en est exclue depuis proto-0.4.2. */
   const otherAllies = (u2: Unit): Unit[] => (FIX_ALLY_HP_BELOW ? alliesOf(u2).filter((a) => a !== u2) : alliesOf(u2));
@@ -218,6 +222,10 @@ export function simuler(input: BattleInput, seed: number): BattleOutput {
     acting: false,
   }));
   const byId = new Map(units.map((u2) => [u2.id, u2]));
+  /** v2 : volonté de référence du combat (moyenne des volontés max) ; toutes les variations de volonté s'y mesurent. */
+  const willRef = units.length ? Math.floor(units.reduce((a, x) => a + x.willMax, 0) / units.length) : 0;
+  /** Échelle des variations de volonté : la volonté max de l'unité jusqu'à la v1, la référence du combat en v2. */
+  const willScale = (u2: Unit): number => (V2 ? willRef : u2.willMax);
   const emit = (e: LogEvent): void => {
     if (ended && e.k !== 'end') return;
     e.t = now;
@@ -327,7 +335,7 @@ export function simuler(input: BattleInput, seed: number): BattleOutput {
   const changeWill = (u2: Unit, permille: number, cause: string): void => {
     // v1 : l'immunité psychique protège des pertes de volonté causées par une capacité psychique.
     if (V1 && permille < 0 && curType === 'psychique' && cause === curSk?.name && isImmune(u2, 'psychique')) return;
-    if (inPlay(u2)) setGauge(u2, 'will', u2.will + Math.trunc((u2.willMax * permille) / 1e3), cause);
+    if (inPlay(u2)) setGauge(u2, 'will', u2.will + Math.trunc((willScale(u2) * permille) / 1e3), cause);
   };
   const healCdUntil = new Map<string, number>();
   const healReady = (x: Unit): boolean => !P.healCooldown || (healCdUntil.get(x.id) ?? -1) <= now;
@@ -363,7 +371,7 @@ export function simuler(input: BattleInput, seed: number): BattleOutput {
     if (lost > 0) lastWound = now;
     setGauge(u2, 'hp', to, cause);
     if (!passive(u2, 'rage')) {
-      const wl = Math.floor((lost * u2.willMax * P.woundWill) / (u2.hpMax * 1e3));
+      const wl = Math.floor((lost * willScale(u2) * P.woundWill) / (u2.hpMax * 1e3));
       if (wl > 0 && u2.hp > 0) setGauge(u2, 'will', u2.will - wl, 'blessure');
     }
     if (u2.hp <= 0) kill(u2, by);
@@ -799,6 +807,8 @@ export function simuler(input: BattleInput, seed: number): BattleOutput {
       } else {
         emit({ k: 'act', u: u2.id, rule: c.i, skill: c.id, target: c.target.id });
         let out: Outcome = 'ok';
+        // v2 : épuisement, jugé sur l'énergie avant paiement.
+        const exhausted = V2 && !!P.exhaustAt && u2.energy * 1e3 < P.exhaustAt * u2.energyMax;
         const conf = has(u2, 'confusion');
         const wp = pct(u2.will, u2.willMax);
         if (conf) {
@@ -819,6 +829,7 @@ export function simuler(input: BattleInput, seed: number): BattleOutput {
         [curSk, curId, curType, curOut] = [undefined, '', undefined, 'ok'];
         const base = sk.durBase === 'weapon' ? u2.weapon.speed : u2.speed;
         dur = durMod(u2, Math.floor((base * sk.durMult) / 1e3));
+        if (exhausted) dur = Math.max(1, Math.floor((dur * (P.exhaustMod ?? 1e3)) / 1e3));
       }
     }
     u2.nextAt = now + dur + u2.extraDelay;

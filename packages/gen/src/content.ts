@@ -220,6 +220,8 @@ export interface GenContent {
   recruitValue: number[];
   itemBoost: number;
   gaugeMult: number;
+  /** Multiplicateur de la jauge d'énergie (absent : gaugeMult). */
+  energyGaugeMult?: number;
   rareChance: number;
   rareMinWins: number;
   questGivers: string[][];

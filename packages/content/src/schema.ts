@@ -201,7 +201,8 @@ export const Params = z.strictObject({
     craftGoldPerTier: num,
     recruitGoldPerPop: num,
   }),
-  gauges: z.strictObject({ mult: int }),
+  // energy : multiplicateur propre à la jauge d'énergie, résultat arrondi à l'entier inférieur (absent : mult).
+  gauges: z.strictObject({ mult: int, energy: num.optional() }),
   items: z.strictObject({
     boost: int,
     tierBudget: z.record(z.string(), int),

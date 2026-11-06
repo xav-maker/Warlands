@@ -79,7 +79,8 @@ const battleArb = fc.record({
 type Arb = typeof battleArb extends fc.Arbitrary<infer T> ? T : never;
 
 function toInput(b: Arb): BattleInput {
-  const v1 = b.version === 'v1';
+  // v1 et suivantes : puissances et immunités.
+  const v1 = b.version === 'v1' || b.version === 'v2';
   const side = (list: Arb['a'], s: 0 | 1): UnitInput[] =>
     list.map((u, i) => {
       const rules: Rule[] = [...u.rules, { cond: 'always', action: u.skills[0]!, target: 'nearestEnemy' }];
@@ -106,7 +107,9 @@ function toInput(b: Arb): BattleInput {
         rules,
       };
     });
-  return { engineVersion: b.version, params: content.params, skills: content.skills, units: [...side(b.a, 0), ...side(b.b, 1)] };
+  // v2 : épuisement actif, pour que les propriétés le couvrent aussi.
+  const params = b.version === 'v2' ? { ...content.params, exhaustAt: 300, exhaustMod: 1400 } : content.params;
+  return { engineVersion: b.version, params, skills: content.skills, units: [...side(b.a, 0), ...side(b.b, 1)] };
 }
 
 describe('propriétés du moteur', () => {

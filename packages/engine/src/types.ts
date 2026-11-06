@@ -88,6 +88,10 @@ export interface Params {
   healMult?: number;
   healCooldown?: number;
   hotCooldown?: number;
+  /** v2 : seuil d'épuisement, en ‰ de l'énergie max (absent ou 0 : pas d'épuisement). */
+  exhaustAt?: number;
+  /** v2 : durée d'une capacité lancée épuisé, en ‰ de sa durée normale. */
+  exhaustMod?: number;
 }
 
 export interface UnitInput {

@@ -13,7 +13,7 @@ describe('fiche de statistiques', () => {
     const s = sheet(pack, { type: 'milicien', form: 'milicien', level: 1 });
     expect(line(s, 'PV max')).toMatchObject({ base: 300, total: 300, bonus: 0, next: 18 });
     expect(line(s, 'Volonté max')).toMatchObject({ total: 60, next: 1 });
-    expect(line(s, 'Énergie max')).toMatchObject({ total: 300 });
+    expect(line(s, 'Énergie max')).toMatchObject({ total: 150 });
     expect(line(s, 'Force').total).toBe(5);
     expect(line(s, 'Vitesse').total).toBe(20);
     expect(s.res).toMatchObject([{ label: 'tranchant', total: 10 }]);
