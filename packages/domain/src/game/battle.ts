@@ -46,7 +46,7 @@ export type SquadOutcome = Pick<BattleRewards, 'xp' | 'xpBy' | 'levelUps' | 'dea
 
 /**
  * Applique un combat à l'escouade d'un joueur (guide 8.2, point 4) : unités mortes (équipement détruit), survivantes
- * à au moins 1 PV et +25 % de mana, troupes sans unité en tombe ; en cas de victoire, XP partagée entre les troupes
+ * à au moins 1 PV et + eco.manaRegenEnd % de mana (50), troupes sans unité en tombe ; en cas de victoire, XP partagée entre les troupes
  * qui ont combattu jusqu'au bout, et aussi aux troupes en réserve (README 29.2). En duo, chaque joueur l'applique à sa propre escouade (README 23.3).
  */
 export async function settleSquad(

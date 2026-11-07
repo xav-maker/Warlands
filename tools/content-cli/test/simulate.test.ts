@@ -8,7 +8,7 @@ import { validateContent } from '@cr/content';
 import type { GenContent } from '@cr/gen';
 import { battleUnits, genMonsters, routes, stepSpec } from '@cr/gen';
 import { beforeAll, describe, expect, it } from 'vitest';
-import { rewriteMults, tuneStep } from '../src/calibrate.ts';
+import { rewriteMults, tuneRoute, tuneStep } from '../src/calibrate.ts';
 import { diffPacks } from '../src/diff.ts';
 import {
   DUNGEON_TARGET,
@@ -17,17 +17,20 @@ import {
   simulateDungeons,
   loadSquads,
   report,
-  ROUTE_TOLERANCE,
-  routeGaps,
+  RUN_TIER_TOLERANCE,
+  RUN_TOLERANCE,
+  RUNS,
+  runReport,
+  runTarget,
+  runVerdicts,
   simulate,
+  simulateRun,
+  simulateRuns,
   SQUADS_FILE,
   squadForStep,
   squadOf,
-  STEP_TOLERANCE,
   stepTarget,
   tierTarget,
-  TOLERANCE,
-  verdicts,
 } from '../src/simulate.ts';
 
 const v = validateContent(join(import.meta.dirname, '../../../content'));
@@ -127,11 +130,25 @@ describe('simulation', () => {
     }
   });
 
-  it('le rapport signale les paliers hors cible', () => {
+  it('le rapport des routes complètes signale les routes et les paliers hors cible', () => {
     const one = { ...pack, routes: routes(pack).slice(0, 1) } as GenContent;
-    const rows = simulate(one, squads, 2).map((r) => ({ ...r, winRate: 1 }));
-    expect(report(rows, squads)).toContain('hors cible');
-    expect(verdicts(rows)[0]!.ok).toBe(false);
+    const rows = simulateRuns(one, squads, 2).map((r) => ({ ...r, done: 1 }));
+    expect(runReport(rows)).toContain('hors cible');
+    expect(runVerdicts(rows)[0]!.ok).toBe(false);
+    expect(report(simulate(one, squads, 2), squads)).toContain('| Forme |');
+  });
+
+  it('une route complète est déterministe et ne finit jamais plus souvent qu’elle ne gagne sa première étape', () => {
+    const R = routes(pack)[0]!;
+    const a = simulateRun(pack, R, squads, 4);
+    expect(simulateRun(pack, R, squads, 4)).toEqual(a);
+    expect(a.reach).toHaveLength(R.steps.length);
+    for (let i = 1; i < a.reach.length; i++) expect(a.reach[i]!).toBeLessThanOrEqual(a.reach[i - 1]!);
+    expect(a.done).toBe(a.reach.at(-1));
+  });
+
+  it('cibles de route : 60 % au palier 1, −6 points par palier [Xavier, 7 novembre 2026]', () => {
+    expect([1, 2, 3, 4, 5].map((t) => Math.round(runTarget(t) * 100))).toEqual([60, 54, 48, 42, 36]);
   });
 
   it('le multiplicateur d’étape (mult) renforce les PV et l’attaque des monstres', () => {
@@ -155,36 +172,20 @@ describe('équilibrage du contenu publié (60 combats par étape, escouades équ
   }, 300_000);
   const near = (x: number, target: number, tol: number): boolean => Math.abs(x - target) <= tol + 1e-9;
 
-  it('chaque palier atteint ses taux visés', () => {
-    for (const v of verdicts(rows)) {
-      expect(near(v.steps, v.stepsTarget, TOLERANCE), `palier ${v.tier} : étapes ${v.steps}`).toBe(true);
-      expect(near(v.guardians, v.guardiansTarget, TOLERANCE), `palier ${v.tier} : gardiens ${v.guardians}`).toBe(true);
-      expect(v.ok).toBe(true);
+  it('chaque route complète est finie la part de fois visée par son palier, et chaque palier en moyenne (README 33)', () => {
+    const runs = simulateRuns(pack, squads, RUNS);
+    for (const r of runs) {
+      expect(near(r.done, runTarget(r.tier), RUN_TOLERANCE), `${r.routeName} : route finie ${r.done}`).toBe(true);
+      // Le début de route est facile : la difficulté vient de l'usure, combat après combat.
+      expect(r.reach[0], `${r.routeName} : première étape`).toBeGreaterThanOrEqual(0.85);
     }
-  });
+    for (const t of runVerdicts(runs)) expect(near(t.done, t.target, RUN_TIER_TOLERANCE), `palier ${t.tier} : ${t.done}`).toBe(true);
+  }, 300_000);
 
-  it('les routes d’un même palier ont la même difficulté', () => {
-    for (const g of routeGaps(rows)) {
-      expect(near(g.steps, g.stepsTarget, ROUTE_TOLERANCE), `${g.routeName} : étapes ${g.steps}`).toBe(true);
-      expect(near(g.guardian, g.guardianTarget, STEP_TOLERANCE), `${g.routeName} : gardien ${g.guardian}`).toBe(true);
-    }
-  });
-
-  it('chaque étape suit la rampe de son palier', () => {
-    for (const r of rows)
-      expect(
-        near(r.winRate, stepTarget(r.tier, r.step, r.guardian), STEP_TOLERANCE),
-        `${r.routeName}, étape ${r.step} : ${r.winRate}`,
-      ).toBe(true);
-  });
-
-  it('chaque route monte en difficulté, et le tout début est facile', () => {
-    for (const R of routes(pack)) {
-      const of = rows.filter((r) => r.route === R.id && !r.guardian);
-      for (let i = 1; i < of.length; i++)
-        expect(of[i]!.winRate, `${R.name} : étape ${i + 1} contre ${i}`).toBeLessThanOrEqual(of[i - 1]!.winRate + 0.05);
-      expect(of[0]!.winRate, `${R.name} : première étape`).toBeGreaterThan(of.at(-1)!.winRate);
-    }
+  it('aucune étape n’est un mur : à pleine vie, chaque combat se gagne au moins 7 fois sur 10, et le tout début est facile', () => {
+    // Depuis le réglage de route (README 33), un combat isolé à pleine vie se gagne presque toujours ; la rampe de
+    // difficulté se lit sur la route complète (PV et morts reportés), plus combat par combat.
+    for (const r of rows) expect(r.winRate, `${r.routeName}, étape ${r.step}`).toBeGreaterThanOrEqual(0.7);
     // Palier 1 : l'escouade de départ (pas pleine, niveau en retard, sans équipement) passe la première étape presque toujours.
     for (const r of rows.filter((x) => x.tier === 1 && x.step === 1)) expect(r.winRate, r.routeName).toBeGreaterThanOrEqual(0.9);
   });
@@ -240,6 +241,16 @@ describe('réglage de la difficulté (calibrate)', () => {
     const out = rewriteMults(yaml, tuned);
     expect(out).toBe(yaml.replace('100', '111').replace('200', '222').replace('300', '333'));
     expect(rewriteMults(yaml, [])).toBe(yaml);
+  });
+
+  it('le réglage de route multiplie toutes les étapes par le même facteur et rapproche la route de sa cible', () => {
+    const one = structuredClone({ ...pack, routes: routes(pack).slice(0, 1) }) as GenContent;
+    const R = routes(one)[0]!;
+    const before = R.steps.map((st) => st.mult ?? 1000);
+    const ts = tuneRoute(one, R.id, squads, 10);
+    const ratios = ts.map((t, i) => t.mult / before[i]!);
+    for (const x of ratios) expect(x).toBeCloseTo(ratios[0]!, 1);
+    expect(Math.abs(ts[0]!.winRate - ts[0]!.target)).toBeLessThanOrEqual(0.2);
   });
 
   it('trouve un mult qui rapproche une étape de sa cible', () => {

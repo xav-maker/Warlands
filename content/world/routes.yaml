@@ -16,7 +16,7 @@
       level: [1, 2]
       pop: [1, 2]
       draws: [1, 2]
-      mult: 632
+      mult: 370
     - id: sentier
       pool: [gobelins, frondeurs_gob, loup_gris, corbeaux]
       mats: [bois_tordu, resine, plume_corbeau]
@@ -25,7 +25,7 @@
       level: [3, 4]
       pop: [2, 3]
       draws: [1, 2]
-      mult: 818
+      mult: 479
     - id: nids
       pool: [araignee, loup_gris, frondeurs_gob, loup_alpha]
       mats: [resine, fil_araignee, champignon_pale]
@@ -34,7 +34,7 @@
       level: [4, 6]
       pop: [3, 5]
       draws: [2, 2]
-      mult: 1216
+      mult: 711
     - id: camp
       pool: [gobelins, frondeurs_gob, chaman, troll]
       mats: [ferraille, fer_noir, plume_corbeau]
@@ -43,7 +43,7 @@
       level: [6, 7]
       pop: [5, 7]
       draws: [2, 2]
-      mult: 1027
+      mult: 601
     - id: coeur
       pool: [loup_gris, araignee, loup_alpha]
       mats: [seve_ambree, os_ancien, resine]
@@ -52,7 +52,7 @@
       level: [8, 9]
       pop: [8, 9]
       draws: [2, 3]
-      mult: 1605
+      mult: 939
       guardian: true
       forced: [sylvain]
 - id: marais
@@ -71,7 +71,7 @@
       level: [8, 9]
       pop: [2, 3]
       draws: [1, 2]
-      mult: 1309
+      mult: 761
     - id: roselieres
       pool: [hommes_lezards, feu_follet, crapaud, pecheurs_maudits]
       mats: [ecaille_terne, plume_heron, algue_noire]
@@ -80,7 +80,7 @@
       level: [9, 10]
       pop: [3, 4]
       draws: [1, 2]
-      mult: 1027
+      mult: 597
     - id: epaves
       pool: [noyes, pecheurs_maudits, spectre_brumes, sangsues]
       mats: [fer_noir, algue_noire, os_ancien]
@@ -89,7 +89,7 @@
       level: [10, 11]
       pop: [3, 5]
       draws: [2, 2]
-      mult: 885
+      mult: 514
     - id: tertre
       pool: [sorciere_noyee, crocodile, troll_marais, noyes]
       mats: [tourbe, seve_ambree, ecaille_terne]
@@ -98,7 +98,7 @@
       level: [11, 12]
       pop: [5, 7]
       draws: [2, 2]
-      mult: 830
+      mult: 482
     - id: gouffre
       pool: [noyes, spectre_brumes, sangsues]
       mats: [algue_noire, perle_noyee, plume_heron]
@@ -107,7 +107,7 @@
       level: [13, 14]
       pop: [6, 7]
       draws: [2, 3]
-      mult: 1853
+      mult: 1077
       guardian: true
       forced: [mere_noyes]
 - id: mines
@@ -126,7 +126,7 @@
       level: [13, 14]
       pop: [2, 3]
       draws: [1, 2]
-      mult: 891
+      mult: 477
     - id: galeries
       pool: [ver_galeries, kobolds, contremaitre, gelee]
       mats: [soie_profonde, charbon_dense, cuir_basilic]
@@ -135,7 +135,7 @@
       level: [14, 15]
       pop: [3, 4]
       draws: [1, 2]
-      mult: 1186
+      mult: 635
     - id: filons
       pool: [elementaire_cristal, nains_renegats, mineurs_fantomes, artificier]
       mats: [cristal_brut, minerai_argent, soufre]
@@ -144,7 +144,7 @@
       level: [15, 16]
       pop: [3, 5]
       draws: [2, 2]
-      mult: 857
+      mult: 458
     - id: puits
       pool: [basilic, golem_pierre, nains_renegats, mineurs_fantomes]
       mats: [cuir_basilic, cristal_brut, soie_profonde]
@@ -153,7 +153,7 @@
       level: [16, 17]
       pop: [5, 7]
       draws: [2, 2]
-      mult: 741
+      mult: 396
     - id: forge
       pool: [golem_pierre, kobolds, artificier]
       mats: [minerai_argent, cristal_brut, charbon_dense]
@@ -162,7 +162,7 @@
       level: [18, 19]
       pop: [8, 9]
       draws: [2, 3]
-      mult: 1670
+      mult: 893
       guardian: true
       forced: [coeur_forge]
 - id: desert
@@ -181,7 +181,7 @@
       level: [18, 19]
       pop: [3, 4]
       draws: [1, 2]
-      mult: 647
+      mult: 464
     - id: caravane
       pool: [pillards_sable, archers_nomades, scorpions_geants, salamandre]
       mats: [ecorce_cendre, verre_cendre, sel_ardent]
@@ -190,7 +190,7 @@
       level: [19, 20]
       pop: [4, 5]
       draws: [1, 2]
-      mult: 712
+      mult: 511
     - id: tombeaux
       pool: [momies, pretre_scarabee, ombre_mirage, djinn]
       mats: [essence_mirage, os_dragonnet, chitine_doree]
@@ -199,7 +199,7 @@
       level: [20, 21]
       pop: [3, 5]
       draws: [2, 2]
-      mult: 1017
+      mult: 729
     - id: verrerie
       pool: [golem_verre, ver_sables, djinn, salamandre]
       mats: [verre_cendre, os_dragonnet, essence_mirage]
@@ -208,7 +208,7 @@
       level: [21, 22]
       pop: [5, 7]
       draws: [2, 2]
-      mult: 940
+      mult: 674
     - id: antre
       pool: [salamandre, scorpions_geants, djinn]
       mats: [os_dragonnet, verre_cendre, sel_ardent]
@@ -217,7 +217,7 @@
       level: [23, 24]
       pop: [9, 10]
       draws: [2, 3]
-      mult: 660
+      mult: 473
       guardian: true
       forced: [dragon_cendre]
 - id: ciel
@@ -236,7 +236,7 @@
       level: [23, 24]
       pop: [3, 4]
       draws: [1, 2]
-      mult: 399
+      mult: 213
     - id: parvis
       pool: [sentinelles, archers_celestes, gargouilles, griffons]
       mats: [pierre_lune, eclat_astral, fil_lumiere]
@@ -245,7 +245,7 @@
       level: [24, 25]
       pop: [4, 5]
       draws: [1, 2]
-      mult: 629
+      mult: 337
     - id: observatoire
       pool: [astromancien, spectres_lumiere, anges_dechus, harpies]
       mats: [poussiere_etoile, eclat_astral, larme_aube]
@@ -254,7 +254,7 @@
       level: [25, 26]
       pop: [3, 5]
       draws: [2, 2]
-      mult: 429
+      mult: 230
     - id: jardins
       pool: [chimere, golem_astral, gardien_seuil, anges_dechus]
       mats: [larme_aube, plume_seraphique, poussiere_etoile]
@@ -263,7 +263,7 @@
       level: [26, 27]
       pop: [5, 7]
       draws: [2, 2]
-      mult: 573
+      mult: 307
     - id: trone
       pool: [anges_dechus, spectres_lumiere, archers_celestes]
       mats: [eclat_astral, larme_aube, plume_seraphique]
@@ -272,7 +272,7 @@
       level: [28, 29]
       pop: [7, 7]
       draws: [2, 3]
-      mult: 759
+      mult: 406
       guardian: true
       forced: [archonte_dechu]
 - id: pres_brande
@@ -291,7 +291,7 @@
       level: [1, 2]
       pop: [1, 2]
       draws: [1, 2]
-      mult: 712
+      mult: 513
     - id: pres_brande_2
       pool: [loup_gris, gobelins, frondeurs_gob, corbeaux, sanglier, lievres, bourdons, kobolds_pres]
       mats: [ble_noir, champignon_pale, soie_bourdon]
@@ -300,7 +300,7 @@
       level: [3, 4]
       pop: [2, 3]
       draws: [1, 2]
-      mult: 442
+      mult: 319
     - id: pres_brande_3
       pool:
         [araignee, loup_gris, frondeurs_gob, loup_alpha, gobelins, chaman, troll, epouvantail, ours_brun, brigands_haies, sorciere_haies]
@@ -310,7 +310,7 @@
       level: [4, 6]
       pop: [3, 5]
       draws: [2, 2]
-      mult: 771
+      mult: 556
     - id: pres_brande_4
       pool:
         [araignee, loup_gris, frondeurs_gob, loup_alpha, gobelins, chaman, troll, epouvantail, ours_brun, brigands_haies, sorciere_haies]
@@ -320,7 +320,7 @@
       level: [6, 7]
       pop: [5, 7]
       draws: [2, 2]
-      mult: 632
+      mult: 456
     - id: pres_brande_5
       pool:
         [araignee, loup_gris, frondeurs_gob, loup_alpha, gobelins, chaman, troll, epouvantail, ours_brun, brigands_haies, sorciere_haies]
@@ -330,7 +330,7 @@
       level: [8, 9]
       pop: [8, 9]
       draws: [2, 3]
-      mult: 1058
+      mult: 763
       guardian: true
       forced: [taureau_brande]
 - id: gue_lavandieres
@@ -349,7 +349,7 @@
       level: [1, 2]
       pop: [1, 2]
       draws: [1, 2]
-      mult: 868
+      mult: 618
     - id: gue_lavandieres_2
       pool: [loup_gris, gobelins, frondeurs_gob, corbeaux, grenouilles, rats_eau, farfadets, lavandiere]
       mats: [ecaille_brochet, champignon_pale, galet_chantant]
@@ -358,7 +358,7 @@
       level: [3, 4]
       pop: [2, 3]
       draws: [1, 2]
-      mult: 666
+      mult: 474
     - id: gue_lavandieres_3
       pool: [araignee, loup_gris, frondeurs_gob, loup_alpha, gobelins, chaman, troll, ondine, brochet, nymphe, troll_pont]
       mats: [resine, roseau_tresse, plume_corbeau]
@@ -367,7 +367,7 @@
       level: [4, 6]
       pop: [3, 5]
       draws: [2, 2]
-      mult: 1146
+      mult: 816
     - id: gue_lavandieres_4
       pool: [araignee, loup_gris, frondeurs_gob, loup_alpha, gobelins, chaman, troll, ondine, brochet, nymphe, troll_pont]
       mats: [fil_araignee, ferraille, bois_tordu]
@@ -376,7 +376,7 @@
       level: [6, 7]
       pop: [5, 7]
       draws: [2, 2]
-      mult: 802
+      mult: 571
     - id: gue_lavandieres_5
       pool: [araignee, loup_gris, frondeurs_gob, loup_alpha, gobelins, chaman, troll, ondine, brochet, nymphe, troll_pont]
       mats: [ecorce_saule, pierre_lisse, ecaille_brochet]
@@ -385,7 +385,7 @@
       level: [8, 9]
       pop: [8, 9]
       draws: [2, 3]
-      mult: 1174
+      mult: 836
       guardian: true
       forced: [dame_gue]
 - id: collines_menhirs
@@ -404,7 +404,7 @@
       level: [1, 2]
       pop: [1, 2]
       draws: [1, 2]
-      mult: 393
+      mult: 312
     - id: collines_menhirs_2
       pool: [sanglier, lievres, bourdons, kobolds_pres, bandits, deserteurs, chiens_bruyere, corneilles]
       mats: [cuir_bandit, soie_bourdon, eclat_menhir]
@@ -413,7 +413,7 @@
       level: [3, 4]
       pop: [2, 3]
       draws: [1, 2]
-      mult: 241
+      mult: 192
     - id: collines_menhirs_3
       pool: [epouvantail, ours_brun, brigands_haies, sorciere_haies, esprit_menhir, chef_bande, rebouteuse, belier]
       mats: [defense_sanglier, plume_corneille, laine_grasse]
@@ -422,7 +422,7 @@
       level: [4, 6]
       pop: [3, 5]
       draws: [2, 2]
-      mult: 460
+      mult: 366
     - id: collines_menhirs_4
       pool: [epouvantail, ours_brun, brigands_haies, sorciere_haies, esprit_menhir, chef_bande, rebouteuse, belier]
       mats: [bruyere_seche, ble_noir, cuir_bandit]
@@ -431,7 +431,7 @@
       level: [6, 7]
       pop: [5, 7]
       draws: [2, 2]
-      mult: 425
+      mult: 338
     - id: collines_menhirs_5
       pool: [epouvantail, ours_brun, brigands_haies, sorciere_haies, esprit_menhir, chef_bande, rebouteuse, belier]
       mats: [soie_bourdon, eclat_menhir, defense_sanglier]
@@ -440,7 +440,7 @@
       level: [8, 9]
       pop: [8, 9]
       draws: [2, 3]
-      mult: 698
+      mult: 555
       guardian: true
       forced: [menhir_eveille]
 - id: tourbieres_bruyere
@@ -459,7 +459,7 @@
       level: [1, 2]
       pop: [1, 2]
       draws: [1, 2]
-      mult: 335
+      mult: 237
     - id: tourbieres_bruyere_2
       pool: [grenouilles, rats_eau, farfadets, lavandiere, bandits, deserteurs, chiens_bruyere, corneilles]
       mats: [cuir_bandit, galet_chantant, eclat_menhir]
@@ -468,7 +468,7 @@
       level: [3, 4]
       pop: [2, 3]
       draws: [1, 2]
-      mult: 286
+      mult: 202
     - id: tourbieres_bruyere_3
       pool: [ondine, brochet, nymphe, troll_pont, esprit_menhir, chef_bande, rebouteuse, belier]
       mats: [roseau_tresse, plume_corneille, ecorce_saule]
@@ -477,7 +477,7 @@
       level: [4, 6]
       pop: [3, 5]
       draws: [2, 2]
-      mult: 868
+      mult: 615
     - id: tourbieres_bruyere_4
       pool: [ondine, brochet, nymphe, troll_pont, esprit_menhir, chef_bande, rebouteuse, belier]
       mats: [bruyere_seche, ecaille_brochet, cuir_bandit]
@@ -486,7 +486,7 @@
       level: [6, 7]
       pop: [5, 7]
       draws: [2, 2]
-      mult: 644
+      mult: 456
     - id: tourbieres_bruyere_5
       pool: [ondine, brochet, nymphe, troll_pont, esprit_menhir, chef_bande, rebouteuse, belier]
       mats: [galet_chantant, eclat_menhir, roseau_tresse]
@@ -495,7 +495,7 @@
       level: [8, 9]
       pop: [8, 9]
       draws: [2, 3]
-      mult: 1240
+      mult: 878
       guardian: true
       forced: [roi_farfadets]
 - id: chemin_pendus
@@ -514,7 +514,7 @@
       level: [1, 2]
       pop: [1, 2]
       draws: [1, 2]
-      mult: 741
+      mult: 605
     - id: chemin_pendus_2
       pool: [sanglier, lievres, bourdons, kobolds_pres, squelettes, goules, chien_squelette, spectre]
       mats: [linceul, soie_bourdon, cendre_funeraire]
@@ -523,7 +523,7 @@
       level: [3, 4]
       pop: [2, 3]
       draws: [1, 2]
-      mult: 425
+      mult: 347
     - id: chemin_pendus_3
       pool: [epouvantail, ours_brun, brigands_haies, sorciere_haies, necromant, vampire, fossoyeur, banshee]
       mats: [defense_sanglier, clou_cercueil, laine_grasse]
@@ -532,7 +532,7 @@
       level: [4, 6]
       pop: [3, 5]
       draws: [2, 2]
-      mult: 508
+      mult: 415
     - id: chemin_pendus_4
       pool: [epouvantail, ours_brun, brigands_haies, sorciere_haies, necromant, vampire, fossoyeur, banshee]
       mats: [os_poli, ble_noir, linceul]
@@ -541,7 +541,7 @@
       level: [6, 7]
       pop: [5, 7]
       draws: [2, 2]
-      mult: 544
+      mult: 444
     - id: chemin_pendus_5
       pool: [epouvantail, ours_brun, brigands_haies, sorciere_haies, necromant, vampire, fossoyeur, banshee]
       mats: [soie_bourdon, cendre_funeraire, defense_sanglier]
@@ -550,7 +550,7 @@
       level: [8, 9]
       pop: [8, 9]
       draws: [2, 3]
-      mult: 802
+      mult: 654
       guardian: true
       forced: [bourreau_sans_tete]
 - id: combe_brumes
@@ -569,7 +569,7 @@
       level: [1, 2]
       pop: [1, 2]
       draws: [1, 2]
-      mult: 712
+      mult: 545
     - id: combe_brumes_2
       pool: [grenouilles, rats_eau, farfadets, lavandiere, chauves_souris_g, chasseurs_primes, pendus, corbeau_augure]
       mats: [brume_condensee, galet_chantant, bois_pin_noir]
@@ -578,7 +578,7 @@
       level: [3, 4]
       pop: [2, 3]
       draws: [1, 2]
-      mult: 518
+      mult: 396
     - id: combe_brumes_3
       pool: [ondine, brochet, nymphe, troll_pont, loup_garou, sorciere_brumes_m, ours_brumes, brumeux]
       mats: [roseau_tresse, croc_lunaire, ecorce_saule]
@@ -587,7 +587,7 @@
       level: [4, 6]
       pop: [3, 5]
       draws: [2, 2]
-      mult: 741
+      mult: 567
     - id: combe_brumes_4
       pool: [ondine, brochet, nymphe, troll_pont, loup_garou, sorciere_brumes_m, ours_brumes, brumeux]
       mats: [fourrure_loup_garou, ecaille_brochet, brume_condensee]
@@ -596,7 +596,7 @@
       level: [6, 7]
       pop: [5, 7]
       draws: [2, 2]
-      mult: 602
+      mult: 461
     - id: combe_brumes_5
       pool: [ondine, brochet, nymphe, troll_pont, loup_garou, sorciere_brumes_m, ours_brumes, brumeux]
       mats: [galet_chantant, bois_pin_noir, roseau_tresse]
@@ -605,7 +605,7 @@
       level: [8, 9]
       pop: [8, 9]
       draws: [2, 3]
-      mult: 940
+      mult: 719
       guardian: true
       forced: [grande_ondine]
 - id: lisiere_ambre
@@ -624,7 +624,7 @@
       level: [1, 2]
       pop: [1, 2]
       draws: [1, 2]
-      mult: 460
+      mult: 371
     - id: lisiere_ambre_2
       pool: [bandits, deserteurs, chiens_bruyere, corneilles, sylphes, guepes, cerf_ambre, archers_sylvains]
       mats: [ecorce_rousse, eclat_menhir, bois_cerf]
@@ -633,7 +633,7 @@
       level: [3, 4]
       pop: [2, 3]
       draws: [1, 2]
-      mult: 286
+      mult: 231
     - id: lisiere_ambre_3
       pool: [esprit_menhir, chef_bande, rebouteuse, belier, ours_chene, dryade_corrompue, druide_noir, treant]
       mats: [plume_corneille, cire_guepe, bruyere_seche]
@@ -642,7 +642,7 @@
       level: [4, 6]
       pop: [3, 5]
       draws: [2, 2]
-      mult: 632
+      mult: 510
     - id: lisiere_ambre_4
       pool: [esprit_menhir, chef_bande, rebouteuse, belier, ours_chene, dryade_corrompue, druide_noir, treant]
       mats: [ambre_brut, cuir_bandit, ecorce_rousse]
@@ -651,7 +651,7 @@
       level: [6, 7]
       pop: [5, 7]
       draws: [2, 2]
-      mult: 498
+      mult: 402
     - id: lisiere_ambre_5
       pool: [esprit_menhir, chef_bande, rebouteuse, belier, ours_chene, dryade_corrompue, druide_noir, treant]
       mats: [eclat_menhir, bois_cerf, plume_corneille]
@@ -660,7 +660,7 @@
       level: [8, 9]
       pop: [8, 9]
       draws: [2, 3]
-      mult: 778
+      mult: 628
       guardian: true
       forced: [gardien_chene]
 - id: falaises_heron
@@ -691,7 +691,7 @@
       level: [8, 9]
       pop: [2, 3]
       draws: [1, 2]
-      mult: 1114
+      mult: 690
     - id: falaises_heron_2
       pool:
         [
@@ -712,7 +712,7 @@
       level: [9, 10]
       pop: [3, 4]
       draws: [1, 2]
-      mult: 802
+      mult: 496
     - id: falaises_heron_3
       pool:
         [
@@ -734,7 +734,7 @@
       level: [10, 11]
       pop: [3, 5]
       draws: [2, 2]
-      mult: 650
+      mult: 402
     - id: falaises_heron_4
       pool:
         [
@@ -756,7 +756,7 @@
       level: [11, 12]
       pop: [5, 7]
       draws: [2, 2]
-      mult: 644
+      mult: 399
     - id: falaises_heron_5
       pool:
         [
@@ -778,7 +778,7 @@
       level: [13, 14]
       pop: [12, 13]
       draws: [2, 3]
-      mult: 1123
+      mult: 695
       guardian: true
       forced: [heron_colossal]
 - id: sentier_cretes
@@ -797,7 +797,7 @@
       level: [8, 9]
       pop: [2, 3]
       draws: [1, 2]
-      mult: 632
+      mult: 432
     - id: sentier_cretes_2
       pool: [chauves_souris_g, chasseurs_primes, pendus, corbeau_augure, loups_blancs, harpies_neiges, nains_givre_m, chamane_givre]
       mats: [cristal_givre, bois_pin_noir, fer_gele]
@@ -806,7 +806,7 @@
       level: [9, 10]
       pop: [3, 4]
       draws: [1, 2]
-      mult: 508
+      mult: 347
     - id: sentier_cretes_3
       pool: [loup_garou, sorciere_brumes_m, ours_brumes, brumeux, yeti_m, geant_givre, elem_glace, wendigo]
       mats: [croc_lunaire, corne_belier_blanc, fourrure_loup_garou]
@@ -815,7 +815,7 @@
       level: [10, 11]
       pop: [3, 5]
       draws: [2, 2]
-      mult: 526
+      mult: 359
     - id: sentier_cretes_4
       pool: [loup_garou, sorciere_brumes_m, ours_brumes, brumeux, yeti_m, geant_givre, elem_glace, wendigo]
       mats: [fourrure_yeti, brume_condensee, cristal_givre]
@@ -824,7 +824,7 @@
       level: [11, 12]
       pop: [5, 7]
       draws: [2, 2]
-      mult: 498
+      mult: 340
     - id: sentier_cretes_5
       pool: [loup_garou, sorciere_brumes_m, ours_brumes, brumeux, yeti_m, geant_givre, elem_glace, wendigo]
       mats: [bois_pin_noir, fer_gele, croc_lunaire]
@@ -833,7 +833,7 @@
       level: [13, 14]
       pop: [12, 13]
       draws: [2, 3]
-      mult: 705
+      mult: 482
       guardian: true
       forced: [loup_garou_alpha]
 - id: bois_lanternes
@@ -852,7 +852,7 @@
       level: [8, 9]
       pop: [2, 3]
       draws: [1, 2]
-      mult: 748
+      mult: 484
     - id: bois_lanternes_2
       pool: [squelettes, goules, chien_squelette, spectre, spores, elfes_noirs, chasseresse_noire, mangeur_lanternes]
       mats: [spores_luisantes, cendre_funeraire, bois_nuit]
@@ -861,7 +861,7 @@
       level: [9, 10]
       pop: [3, 4]
       draws: [1, 2]
-      mult: 644
+      mult: 417
     - id: bois_lanternes_3
       pool: [necromant, vampire, fossoyeur, banshee, araignee_geante, tisseuse_nuit, ombre_rampante, ours_chancre]
       mats: [clou_cercueil, chitine_araignee, os_poli]
@@ -870,7 +870,7 @@
       level: [10, 11]
       pop: [3, 5]
       draws: [2, 2]
-      mult: 771
+      mult: 499
     - id: bois_lanternes_4
       pool: [necromant, vampire, fossoyeur, banshee, araignee_geante, tisseuse_nuit, ombre_rampante, ours_chancre]
       mats: [soie_noire, linceul, spores_luisantes]
@@ -879,7 +879,7 @@
       level: [11, 12]
       pop: [5, 7]
       draws: [2, 2]
-      mult: 641
+      mult: 415
     - id: bois_lanternes_5
       pool: [necromant, vampire, fossoyeur, banshee, araignee_geante, tisseuse_nuit, ombre_rampante, ours_chancre]
       mats: [cendre_funeraire, bois_nuit, clou_cercueil]
@@ -888,7 +888,7 @@
       level: [13, 14]
       pop: [12, 13]
       draws: [2, 3]
-      mult: 978
+      mult: 633
       guardian: true
       forced: [seigneur_liche_lanternes]
 - id: vieux_cimetiere_chenes
@@ -907,7 +907,7 @@
       level: [8, 9]
       pop: [2, 3]
       draws: [1, 2]
-      mult: 921
+      mult: 660
     - id: vieux_cimetiere_chenes_2
       pool: [squelettes, goules, chien_squelette, spectre, sylphes, guepes, cerf_ambre, archers_sylvains]
       mats: [ecorce_rousse, cendre_funeraire, bois_cerf]
@@ -916,7 +916,7 @@
       level: [9, 10]
       pop: [3, 4]
       draws: [1, 2]
-      mult: 756
+      mult: 542
     - id: vieux_cimetiere_chenes_3
       pool: [necromant, vampire, fossoyeur, banshee, ours_chene, dryade_corrompue, druide_noir, treant]
       mats: [clou_cercueil, cire_guepe, os_poli]
@@ -925,7 +925,7 @@
       level: [10, 11]
       pop: [3, 5]
       draws: [2, 2]
-      mult: 638
+      mult: 457
     - id: vieux_cimetiere_chenes_4
       pool: [necromant, vampire, fossoyeur, banshee, ours_chene, dryade_corrompue, druide_noir, treant]
       mats: [ambre_brut, linceul, ecorce_rousse]
@@ -934,7 +934,7 @@
       level: [11, 12]
       pop: [5, 7]
       draws: [2, 2]
-      mult: 561
+      mult: 402
     - id: vieux_cimetiere_chenes_5
       pool: [necromant, vampire, fossoyeur, banshee, ours_chene, dryade_corrompue, druide_noir, treant]
       mats: [cendre_funeraire, bois_cerf, clou_cercueil]
@@ -943,7 +943,7 @@
       level: [13, 14]
       pop: [12, 13]
       draws: [2, 3]
-      mult: 949
+      mult: 680
       guardian: true
       forced: [druide_liche]
 - id: gorges_fumantes
@@ -962,7 +962,7 @@
       level: [8, 9]
       pop: [2, 3]
       draws: [1, 2]
-      mult: 1101
+      mult: 760
     - id: gorges_fumantes_2
       pool: [sylphes, guepes, cerf_ambre, archers_sylvains, diablotins, vers_magma, salamandre_lave, pyromancienne]
       mats: [soufre_ardent, bois_cerf, ecaille_salamandre]
@@ -971,7 +971,7 @@
       level: [9, 10]
       pop: [3, 4]
       draws: [1, 2]
-      mult: 778
+      mult: 537
     - id: gorges_fumantes_3
       pool: [ours_chene, dryade_corrompue, druide_noir, treant, elem_feu, golem_basalte, chiens_infernaux, forgeron_demon]
       mats: [cire_guepe, fer_lave, ambre_brut]
@@ -980,7 +980,7 @@
       level: [10, 11]
       pop: [3, 5]
       draws: [2, 2]
-      mult: 561
+      mult: 387
     - id: gorges_fumantes_4
       pool: [ours_chene, dryade_corrompue, druide_noir, treant, elem_feu, golem_basalte, chiens_infernaux, forgeron_demon]
       mats: [basalte, ecorce_rousse, soufre_ardent]
@@ -989,7 +989,7 @@
       level: [11, 12]
       pop: [5, 7]
       draws: [2, 2]
-      mult: 488
+      mult: 337
     - id: gorges_fumantes_5
       pool: [ours_chene, dryade_corrompue, druide_noir, treant, elem_feu, golem_basalte, chiens_infernaux, forgeron_demon]
       mats: [bois_cerf, ecaille_salamandre, cire_guepe]
@@ -998,7 +998,7 @@
       level: [13, 14]
       pop: [12, 13]
       draws: [2, 3]
-      mult: 630
+      mult: 435
       guardian: true
       forced: [ours_magma]
 - id: col_vent_blanc
@@ -1018,7 +1018,7 @@
       level: [13, 14]
       pop: [2, 3]
       draws: [1, 2]
-      mult: 620
+      mult: 370
     - id: col_vent_blanc_2
       pool:
         [kobolds, chauves_souris, artificier, gelee, ver_galeries, contremaitre, loups_blancs, harpies_neiges, nains_givre_m, chamane_givre]
@@ -1028,7 +1028,7 @@
       level: [14, 15]
       pop: [3, 4]
       draws: [1, 2]
-      mult: 584
+      mult: 348
     - id: col_vent_blanc_3
       pool:
         [elementaire_cristal, nains_renegats, mineurs_fantomes, artificier, basilic, golem_pierre, yeti_m, geant_givre, elem_glace, wendigo]
@@ -1038,7 +1038,7 @@
       level: [15, 16]
       pop: [3, 5]
       draws: [2, 2]
-      mult: 653
+      mult: 389
     - id: col_vent_blanc_4
       pool:
         [elementaire_cristal, nains_renegats, mineurs_fantomes, artificier, basilic, golem_pierre, yeti_m, geant_givre, elem_glace, wendigo]
@@ -1048,7 +1048,7 @@
       level: [16, 17]
       pop: [5, 7]
       draws: [2, 2]
-      mult: 498
+      mult: 297
     - id: col_vent_blanc_5
       pool:
         [elementaire_cristal, nains_renegats, mineurs_fantomes, artificier, basilic, golem_pierre, yeti_m, geant_givre, elem_glace, wendigo]
@@ -1058,7 +1058,7 @@
       level: [18, 19]
       pop: [16, 17]
       draws: [2, 3]
-      mult: 769
+      mult: 458
       guardian: true
       forced: [wyrm_neiges]
 - id: glacier_fendu
@@ -1077,7 +1077,7 @@
       level: [13, 14]
       pop: [2, 3]
       draws: [1, 2]
-      mult: 684
+      mult: 487
     - id: glacier_fendu_2
       pool: [loups_blancs, harpies_neiges, nains_givre_m, chamane_givre, pirates, canonniers, crabes_geants, noye_corsaire]
       mats: [toile_voile, fer_gele, ecaille_naga]
@@ -1086,7 +1086,7 @@
       level: [14, 15]
       pop: [3, 4]
       draws: [1, 2]
-      mult: 620
+      mult: 441
     - id: glacier_fendu_3
       pool: [yeti_m, geant_givre, elem_glace, wendigo, naga_m, sirene_corsaire, requins_garous, kraken_juv]
       mats: [corne_belier_blanc, poudre_noire, fourrure_yeti]
@@ -1095,7 +1095,7 @@
       level: [15, 16]
       pop: [3, 5]
       draws: [2, 2]
-      mult: 653
+      mult: 465
     - id: glacier_fendu_4
       pool: [yeti_m, geant_givre, elem_glace, wendigo, naga_m, sirene_corsaire, requins_garous, kraken_juv]
       mats: [corail_rouge, cristal_givre, toile_voile]
@@ -1104,7 +1104,7 @@
       level: [16, 17]
       pop: [5, 7]
       draws: [2, 2]
-      mult: 433
+      mult: 308
     - id: glacier_fendu_5
       pool: [yeti_m, geant_givre, elem_glace, wendigo, naga_m, sirene_corsaire, requins_garous, kraken_juv]
       mats: [fer_gele, ecaille_naga, corne_belier_blanc]
@@ -1113,7 +1113,7 @@
       level: [18, 19]
       pop: [16, 17]
       draws: [2, 3]
-      mult: 446
+      mult: 318
       guardian: true
       forced: [mammouth_guerre]
 - id: grottes_luminescentes
@@ -1132,7 +1132,7 @@
       level: [13, 14]
       pop: [2, 3]
       draws: [1, 2]
-      mult: 846
+      mult: 438
     - id: grottes_luminescentes_2
       pool: [spores, elfes_noirs, chasseresse_noire, mangeur_lanternes, diablotins, vers_magma, salamandre_lave, pyromancienne]
       mats: [soufre_ardent, bois_nuit, ecaille_salamandre]
@@ -1141,7 +1141,7 @@
       level: [14, 15]
       pop: [3, 4]
       draws: [1, 2]
-      mult: 712
+      mult: 369
     - id: grottes_luminescentes_3
       pool: [araignee_geante, tisseuse_nuit, ombre_rampante, ours_chancre, elem_feu, golem_basalte, chiens_infernaux, forgeron_demon]
       mats: [chitine_araignee, fer_lave, soie_noire]
@@ -1150,7 +1150,7 @@
       level: [15, 16]
       pop: [3, 5]
       draws: [2, 2]
-      mult: 689
+      mult: 357
     - id: grottes_luminescentes_4
       pool: [araignee_geante, tisseuse_nuit, ombre_rampante, ours_chancre, elem_feu, golem_basalte, chiens_infernaux, forgeron_demon]
       mats: [basalte, spores_luisantes, soufre_ardent]
@@ -1159,7 +1159,7 @@
       level: [16, 17]
       pop: [5, 7]
       draws: [2, 2]
-      mult: 464
+      mult: 240
     - id: grottes_luminescentes_5
       pool: [araignee_geante, tisseuse_nuit, ombre_rampante, ours_chancre, elem_feu, golem_basalte, chiens_infernaux, forgeron_demon]
       mats: [bois_nuit, ecaille_salamandre, chitine_araignee]
@@ -1168,7 +1168,7 @@
       level: [18, 19]
       pop: [16, 17]
       draws: [2, 3]
-      mult: 771
+      mult: 399
       guardian: true
       forced: [reine_spores]
 - id: racines_profondes
@@ -1187,7 +1187,7 @@
       level: [13, 14]
       pop: [2, 3]
       draws: [1, 2]
-      mult: 834
+      mult: 476
     - id: racines_profondes_2
       pool: [spores, elfes_noirs, chasseresse_noire, mangeur_lanternes, moustiques_geants, sarbacaniers, hommes_fauves, plante_carnivore]
       mats: [venin_emeraude, bois_nuit, bois_teck]
@@ -1196,7 +1196,7 @@
       level: [14, 15]
       pop: [3, 4]
       draws: [1, 2]
-      mult: 748
+      mult: 427
     - id: racines_profondes_3
       pool: [araignee_geante, tisseuse_nuit, ombre_rampante, ours_chancre, serpent_roi, chamane_crapaud_m, gorille_m, idole_jade]
       mats: [chitine_araignee, jade_brut, soie_noire]
@@ -1205,7 +1205,7 @@
       level: [15, 16]
       pop: [3, 5]
       draws: [2, 2]
-      mult: 872
+      mult: 498
     - id: racines_profondes_4
       pool: [araignee_geante, tisseuse_nuit, ombre_rampante, ours_chancre, serpent_roi, chamane_crapaud_m, gorille_m, idole_jade]
       mats: [liane_fer, spores_luisantes, venin_emeraude]
@@ -1214,7 +1214,7 @@
       level: [16, 17]
       pop: [5, 7]
       draws: [2, 2]
-      mult: 657
+      mult: 375
     - id: racines_profondes_5
       pool: [araignee_geante, tisseuse_nuit, ombre_rampante, ours_chancre, serpent_roi, chamane_crapaud_m, gorille_m, idole_jade]
       mats: [bois_nuit, bois_teck, chitine_araignee]
@@ -1223,7 +1223,7 @@
       level: [18, 19]
       pop: [16, 17]
       draws: [2, 3]
-      mult: 771
+      mult: 440
       guardian: true
       forced: [ver_racine]
 - id: plaines_basalte
@@ -1242,7 +1242,7 @@
       level: [13, 14]
       pop: [2, 3]
       draws: [1, 2]
-      mult: 684
+      mult: 387
     - id: plaines_basalte_2
       pool: [diablotins, vers_magma, salamandre_lave, pyromancienne, hyenes_m, orcs_pillards, centaures, harpies_tempete]
       mats: [herbe_a_vent, ecaille_salamandre, fer_orc]
@@ -1251,7 +1251,7 @@
       level: [14, 15]
       pop: [3, 4]
       draws: [1, 2]
-      mult: 539
+      mult: 305
     - id: plaines_basalte_3
       pool: [elem_feu, golem_basalte, chiens_infernaux, forgeron_demon, chef_orc, chamane_orc, geant_steppes, esprit_vent]
       mats: [fer_lave, corne_hyene, basalte]
@@ -1260,7 +1260,7 @@
       level: [15, 16]
       pop: [3, 5]
       draws: [2, 2]
-      mult: 626
+      mult: 354
     - id: plaines_basalte_4
       pool: [elem_feu, golem_basalte, chiens_infernaux, forgeron_demon, chef_orc, chamane_orc, geant_steppes, esprit_vent]
       mats: [cuir_centaure, soufre_ardent, herbe_a_vent]
@@ -1269,7 +1269,7 @@
       level: [16, 17]
       pop: [5, 7]
       draws: [2, 2]
-      mult: 424
+      mult: 240
     - id: plaines_basalte_5
       pool: [elem_feu, golem_basalte, chiens_infernaux, forgeron_demon, chef_orc, chamane_orc, geant_steppes, esprit_vent]
       mats: [ecaille_salamandre, fer_orc, fer_lave]
@@ -1278,7 +1278,7 @@
       level: [18, 19]
       pop: [16, 17]
       draws: [2, 3]
-      mult: 657
+      mult: 372
       guardian: true
       forced: [seigneur_braises]
 - id: cote_epaves
@@ -1309,7 +1309,7 @@
       level: [18, 19]
       pop: [3, 4]
       draws: [1, 2]
-      mult: 786
+      mult: 549
     - id: cote_epaves_2
       pool:
         [
@@ -1330,7 +1330,7 @@
       level: [19, 20]
       pop: [4, 5]
       draws: [1, 2]
-      mult: 741
+      mult: 518
     - id: cote_epaves_3
       pool:
         [
@@ -1352,7 +1352,7 @@
       level: [20, 21]
       pop: [3, 5]
       draws: [2, 2]
-      mult: 903
+      mult: 631
     - id: cote_epaves_4
       pool:
         [
@@ -1374,7 +1374,7 @@
       level: [21, 22]
       pop: [5, 7]
       draws: [2, 2]
-      mult: 726
+      mult: 507
     - id: cote_epaves_5
       pool:
         [
@@ -1396,7 +1396,7 @@
       level: [23, 24]
       pop: [20, 21]
       draws: [2, 3]
-      mult: 1009
+      mult: 705
       guardian: true
       forced: [amiral_noye]
 - id: fosse_sirenes
@@ -1415,7 +1415,7 @@
       level: [18, 19]
       pop: [3, 4]
       draws: [1, 2]
-      mult: 804
+      mult: 562
     - id: fosse_sirenes_2
       pool: [pirates, canonniers, crabes_geants, noye_corsaire, hommes_poissons_m, meduses_m, anguilles, garde_engloutie]
       mats: [encre_pieuvre, ecaille_naga, algue_ys]
@@ -1424,7 +1424,7 @@
       level: [19, 20]
       pop: [4, 5]
       draws: [1, 2]
-      mult: 921
+      mult: 644
     - id: fosse_sirenes_3
       pool: [naga_m, sirene_corsaire, requins_garous, kraken_juv, sirenes_abyssales, oracle_noye, leviathan_juv, horreur]
       mats: [poudre_noire, dent_leviathan, corail_rouge]
@@ -1433,7 +1433,7 @@
       level: [20, 21]
       pop: [3, 5]
       draws: [2, 2]
-      mult: 539
+      mult: 377
     - id: fosse_sirenes_4
       pool: [naga_m, sirene_corsaire, requins_garous, kraken_juv, sirenes_abyssales, oracle_noye, leviathan_juv, horreur]
       mats: [nacre_abyssale, toile_voile, encre_pieuvre]
@@ -1442,7 +1442,7 @@
       level: [21, 22]
       pop: [5, 7]
       draws: [2, 2]
-      mult: 561
+      mult: 392
     - id: fosse_sirenes_5
       pool: [naga_m, sirene_corsaire, requins_garous, kraken_juv, sirenes_abyssales, oracle_noye, leviathan_juv, horreur]
       mats: [ecaille_naga, algue_ys, poudre_noire]
@@ -1451,7 +1451,7 @@
       level: [23, 24]
       pop: [20, 21]
       draws: [2, 3]
-      mult: 712
+      mult: 498
       guardian: true
       forced: [kraken_ancien]
 - id: savane_rouge
@@ -1470,7 +1470,7 @@
       level: [18, 19]
       pop: [3, 4]
       draws: [1, 2]
-      mult: 632
+      mult: 446
     - id: savane_rouge_2
       pool: [moustiques_geants, sarbacaniers, hommes_fauves, plante_carnivore, hyenes_m, orcs_pillards, centaures, harpies_tempete]
       mats: [herbe_a_vent, bois_teck, fer_orc]
@@ -1479,7 +1479,7 @@
       level: [19, 20]
       pop: [4, 5]
       draws: [1, 2]
-      mult: 645
+      mult: 455
     - id: savane_rouge_3
       pool: [serpent_roi, chamane_crapaud_m, gorille_m, idole_jade, chef_orc, chamane_orc, geant_steppes, esprit_vent]
       mats: [jade_brut, corne_hyene, liane_fer]
@@ -1488,7 +1488,7 @@
       level: [20, 21]
       pop: [3, 5]
       draws: [2, 2]
-      mult: 526
+      mult: 371
     - id: savane_rouge_4
       pool: [serpent_roi, chamane_crapaud_m, gorille_m, idole_jade, chef_orc, chamane_orc, geant_steppes, esprit_vent]
       mats: [cuir_centaure, venin_emeraude, herbe_a_vent]
@@ -1497,7 +1497,7 @@
       level: [21, 22]
       pop: [5, 7]
       draws: [2, 2]
-      mult: 566
+      mult: 399
     - id: savane_rouge_5
       pool: [serpent_roi, chamane_crapaud_m, gorille_m, idole_jade, chef_orc, chamane_orc, geant_steppes, esprit_vent]
       mats: [bois_teck, fer_orc, jade_brut]
@@ -1506,7 +1506,7 @@
       level: [23, 24]
       pop: [20, 21]
       draws: [2, 3]
-      mult: 655
+      mult: 462
       guardian: true
       forced: [lion_roi_khar]
 - id: temples_etouffes
@@ -1526,7 +1526,7 @@
       level: [18, 19]
       pop: [3, 4]
       draws: [1, 2]
-      mult: 698
+      mult: 449
     - id: temples_etouffes_2
       pool:
         [moustiques_geants, sarbacaniers, hommes_fauves, plante_carnivore, demons_mineurs, archers_obsidienne, molosse_infernal, succube_m]
@@ -1536,7 +1536,7 @@
       level: [19, 20]
       pop: [4, 5]
       draws: [1, 2]
-      mult: 655
+      mult: 421
     - id: temples_etouffes_3
       pool: [serpent_roi, chamane_crapaud_m, gorille_m, idole_jade, chevalier_infernal, sorcier_abyssal, inquisiteur_dechu, balrog]
       mats: [jade_brut, chaine_ame, liane_fer]
@@ -1545,7 +1545,7 @@
       level: [20, 21]
       pop: [3, 5]
       draws: [2, 2]
-      mult: 657
+      mult: 422
     - id: temples_etouffes_4
       pool: [serpent_roi, chamane_crapaud_m, gorille_m, idole_jade, chevalier_infernal, sorcier_abyssal, inquisiteur_dechu, balrog]
       mats: [obsidienne, venin_emeraude, sang_demon]
@@ -1554,7 +1554,7 @@
       level: [21, 22]
       pop: [5, 7]
       draws: [2, 2]
-      mult: 684
+      mult: 440
     - id: temples_etouffes_5
       pool: [serpent_roi, chamane_crapaud_m, gorille_m, idole_jade, chevalier_infernal, sorcier_abyssal, inquisiteur_dechu, balrog]
       mats: [bois_teck, cuir_infernal, jade_brut]
@@ -1563,7 +1563,7 @@
       level: [23, 24]
       pop: [20, 21]
       draws: [2, 3]
-      mult: 978
+      mult: 629
       guardian: true
       forced: [quetzal_serpent]
 - id: route_tempetes
@@ -1582,7 +1582,7 @@
       level: [18, 19]
       pop: [3, 4]
       draws: [1, 2]
-      mult: 802
+      mult: 561
     - id: route_tempetes_2
       pool: [hyenes_m, orcs_pillards, centaures, harpies_tempete, fees_reve, archeres_rosee_m, chevaliers_lune_m, licorne_noire]
       mats: [soie_reve, fer_orc, bois_argent]
@@ -1591,7 +1591,7 @@
       level: [19, 20]
       pop: [4, 5]
       draws: [1, 2]
-      mult: 826
+      mult: 577
     - id: route_tempetes_3
       pool: [chef_orc, chamane_orc, geant_steppes, esprit_vent, cauchemar, mangeur_reves, dormeur_m, sylve_songeuse]
       mats: [corne_hyene, corne_licorne, cuir_centaure]
@@ -1600,7 +1600,7 @@
       level: [20, 21]
       pop: [3, 5]
       draws: [2, 2]
-      mult: 563
+      mult: 394
     - id: route_tempetes_4
       pool: [chef_orc, chamane_orc, geant_steppes, esprit_vent, cauchemar, mangeur_reves, dormeur_m, sylve_songeuse]
       mats: [petale_lune, herbe_a_vent, soie_reve]
@@ -1609,7 +1609,7 @@
       level: [21, 22]
       pop: [5, 7]
       draws: [2, 2]
-      mult: 498
+      mult: 348
     - id: route_tempetes_5
       pool: [chef_orc, chamane_orc, geant_steppes, esprit_vent, cauchemar, mangeur_reves, dormeur_m, sylve_songeuse]
       mats: [fer_orc, bois_argent, corne_hyene]
@@ -1618,7 +1618,7 @@
       level: [23, 24]
       pop: [20, 21]
       draws: [2, 3]
-      mult: 794
+      mult: 555
       guardian: true
       forced: [esprit_tempete]
 - id: faille_abyssale
@@ -1637,7 +1637,7 @@
       level: [23, 24]
       pop: [3, 4]
       draws: [1, 2]
-      mult: 584
+      mult: 300
     - id: faille_abyssale_2
       pool: [hommes_poissons_m, meduses_m, anguilles, garde_engloutie, demons_mineurs, archers_obsidienne, molosse_infernal, succube_m]
       mats: [sang_demon, algue_ys, cuir_infernal]
@@ -1646,7 +1646,7 @@
       level: [24, 25]
       pop: [4, 5]
       draws: [1, 2]
-      mult: 632
+      mult: 325
     - id: faille_abyssale_3
       pool: [sirenes_abyssales, oracle_noye, leviathan_juv, horreur, chevalier_infernal, sorcier_abyssal, inquisiteur_dechu, balrog]
       mats: [dent_leviathan, chaine_ame, nacre_abyssale]
@@ -1655,7 +1655,7 @@
       level: [25, 26]
       pop: [3, 5]
       draws: [2, 2]
-      mult: 997
+      mult: 512
     - id: faille_abyssale_4
       pool: [sirenes_abyssales, oracle_noye, leviathan_juv, horreur, chevalier_infernal, sorcier_abyssal, inquisiteur_dechu, balrog]
       mats: [obsidienne, encre_pieuvre, sang_demon]
@@ -1664,7 +1664,7 @@
       level: [26, 27]
       pop: [5, 7]
       draws: [2, 2]
-      mult: 489
+      mult: 251
     - id: faille_abyssale_5
       pool: [sirenes_abyssales, oracle_noye, leviathan_juv, horreur, chevalier_infernal, sorcier_abyssal, inquisiteur_dechu, balrog]
       mats: [algue_ys, cuir_infernal, dent_leviathan]
@@ -1673,7 +1673,7 @@
       level: [28, 29]
       pop: [16, 17]
       draws: [2, 3]
-      mult: 555
+      mult: 285
       guardian: true
       forced: [leviathan_obsidienne]
 - id: pont_ames
@@ -1692,7 +1692,7 @@
       level: [23, 24]
       pop: [3, 4]
       draws: [1, 2]
-      mult: 684
+      mult: 302
     - id: pont_ames_2
       pool: [demons_mineurs, archers_obsidienne, molosse_infernal, succube_m, fees_reve, archeres_rosee_m, chevaliers_lune_m, licorne_noire]
       mats: [soie_reve, cuir_infernal, bois_argent]
@@ -1701,7 +1701,7 @@
       level: [24, 25]
       pop: [4, 5]
       draws: [1, 2]
-      mult: 632
+      mult: 279
     - id: pont_ames_3
       pool: [chevalier_infernal, sorcier_abyssal, inquisiteur_dechu, balrog, cauchemar, mangeur_reves, dormeur_m, sylve_songeuse]
       mats: [chaine_ame, corne_licorne, obsidienne]
@@ -1710,7 +1710,7 @@
       level: [25, 26]
       pop: [3, 5]
       draws: [2, 2]
-      mult: 1204
+      mult: 531
     - id: pont_ames_4
       pool: [chevalier_infernal, sorcier_abyssal, inquisiteur_dechu, balrog, cauchemar, mangeur_reves, dormeur_m, sylve_songeuse]
       mats: [petale_lune, sang_demon, soie_reve]
@@ -1719,7 +1719,7 @@
       level: [26, 27]
       pop: [5, 7]
       draws: [2, 2]
-      mult: 539
+      mult: 238
     - id: pont_ames_5
       pool: [chevalier_infernal, sorcier_abyssal, inquisiteur_dechu, balrog, cauchemar, mangeur_reves, dormeur_m, sylve_songeuse]
       mats: [cuir_infernal, bois_argent, chaine_ame]
@@ -1728,6 +1728,6 @@
       level: [28, 29]
       pop: [16, 17]
       draws: [2, 3]
-      mult: 706
+      mult: 311
       guardian: true
       forced: [gardien_pont]

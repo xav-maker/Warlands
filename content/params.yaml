@@ -30,7 +30,8 @@ eco:
   startTroops: [[milicien, 1], [milicien, 1], [chasseur, 1], [chasseur, 1], [herboriste, 1], [herboriste, 1]]
   startItems: { bandage: 3 }
   startRecipe: acolyte
-  manaRegenEnd: 25
+  # Mana rendu après chaque victoire, en % du max (25 jusqu’au README 33) [Xavier, 7 novembre 2026 : plus de mana en fin de combat].
+  manaRegenEnd: 50
   # Facteurs de palier, complétés étape par étape par le `mult` de world/routes.yaml (réglé par `pnpm content calibrate`,
   # mesuré par `pnpm content simulate`, escouades de référence équipées, balance/squads.yaml) : 91 % de victoires
   # en moyenne au palier 1, −7 points par palier, gardiens 75 % puis −7 points [Xavier, 6 novembre 2026]. Le prototype

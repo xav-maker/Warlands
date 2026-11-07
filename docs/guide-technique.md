@@ -452,7 +452,7 @@ Toutes ces commandes refusent d'agir tant que `now < player.watch_until` (blocag
 1. Verrou du joueur, contrôle : position sur la route, rencontre `visible` qui appartient au joueur, `now ≥ watch_until`, escouade non vide avec au moins une unité vivante.
 2. Construction de l'entrée : stats finales de chaque unité (niveau, forme, équipement × `ITEM_BOOST`, résistances plafonnées), PV et mana courants, rangs, stratégie par défaut de la forme privée des capacités désactivées, monstres de la rencontre avec le renfort de région.
 3. Graine du combat tirée maintenant, puis `simuler(entrée, graine)`.
-4. Dans la même transaction : PV et mana restants, +25 % de mana, unités mortes (équipement vers `GRAVE`), troupes sans unité vivante vers `GRAVE`, XP et niveaux, or au grand livre, butin vers `BAG` puis `PENDING_LOOT`, rencontre passée à `fought`, ligne `battle`, `watch_until` calculé.
+4. Dans la même transaction : PV et mana restants, + `eco.manaRegenEnd` % de mana (50 depuis le README 33), unités mortes (équipement vers `GRAVE`), troupes sans unité vivante vers `GRAVE`, XP et niveaux, or au grand livre, butin vers `BAG` puis `PENDING_LOOT`, rencontre passée à `fought`, ligne `battle`, `watch_until` calculé.
 5. Après le commit, redirection vers la page du combat, qui charge le journal.
 
 Un combat ne peut pas être relancé pour obtenir un meilleur tirage, puisque le tirage et l'application sont dans la même transaction [A, 6.4].

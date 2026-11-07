@@ -60,13 +60,10 @@ export const SQUADS_FILE = join(import.meta.dirname, '../balance/squads.yaml');
  * (91 % de victoires en moyenne sur les 4 premières étapes) et la difficulté monte doucement, −7 points par palier
  * (57 % au palier 5) ; un gardien reste un vrai obstacle, 75 % au palier 1 et −7 points par palier.
  */
+// Depuis le README 33, ces cibles ne donnent plus que la forme de chaque route (réglage étape par étape) ; son niveau
+// est ensuite réglé sur la part de routes complètes (`runTarget`).
 export const tierTarget = (tier: number, guardian: boolean): number =>
   guardian ? 0.75 - 0.07 * (tier - 1) : tier === 1 ? TIER1_STEPS.reduce((a, x) => a + x, 0) / TIER1_STEPS.length : 0.85 - 0.07 * (tier - 1);
-/** Écart toléré entre la moyenne simulée d'un palier et sa cible, en points de victoire (0,05 = 5 points). */
-export const TOLERANCE = 0.05;
-/** Écart toléré entre la moyenne d'une route et la cible de son palier (dispersion entre routes), et pour une étape. */
-export const ROUTE_TOLERANCE = 0.05;
-export const STEP_TOLERANCE = 0.1;
 
 /**
  * Rampe de difficulté dans une route. Palier 1 : cibles propres à chaque étape, car au début l'escouade n'est pas
@@ -169,6 +166,134 @@ export function simulateStep(c: GenContent, R: Route, si: number, squads: Record
 }
 
 // ---------------------------------------------------------------------------------------------------------
+// Routes complètes (README 33) : de la ville de départ à la ville d'arrivée, les 5 étapes à la suite.
+
+/**
+ * Part des routes complètes visée pour l'escouade de référence [Xavier, 7 novembre 2026 : « il faut pouvoir finir les
+ * runs pour aller d'une ville à l'autre », mais « ne rends pas le jeu trop facile »] : 60 % au palier 1, −6 points par
+ * palier (36 % au palier 5). L'escouade de référence n'est pas optimisée (composition fixe, équipement moyen, aucun
+ * consommable) : un joueur qui choisit sa composition, ses objets et ses potions doit faire nettement mieux.
+ */
+export const runTarget = (tier: number): number => 0.6 - 0.06 * (tier - 1);
+/** Écart toléré entre la part de routes finies d'une route et sa cible ; entre la moyenne d'un palier et sa cible. */
+export const RUN_TOLERANCE = 0.1;
+export const RUN_TIER_TOLERANCE = 0.05;
+/** Parties par route (simulation et réglage). */
+export const RUNS = 40;
+
+export interface RunReport {
+  route: string;
+  routeName: string;
+  tier: number;
+  level: number;
+  runs: number;
+  /** Part des parties qui finissent la route (gardien battu). */
+  done: number;
+  /** Étapes gagnées en moyenne (sur 5). */
+  avgSteps: number;
+  /** Part des parties qui gagnent l'étape i (au moins i+1 étapes). */
+  reach: number[];
+}
+
+/**
+ * Niveau de l'escouade de référence pour une route : le niveau le plus haut des monstres de l'avant-dernière étape
+ * (+ offset du palier) ; le joueur gagne des niveaux en route, le gardien reste au-dessus de lui.
+ */
+export const runLevel = (R: Route, sq: Squad): number => Math.min(30, Math.max(1, R.steps[R.steps.length - 2]!.level[1] + sq.offset));
+
+/**
+ * `runs` parties de la route entière avec l'escouade de référence du palier (sans les réglages d'étape du début de
+ * partie), équipée au palier, sans consommable : PV, morts et mana reportés de combat en combat, + manaRegenEnd % de
+ * mana après chaque victoire, comme en ligne. Une défaite arrête la partie.
+ */
+export function simulateRun(c: GenContent, R: Route, squads: Record<string, Squad>, runs = RUNS): RunReport {
+  const o = c.online!;
+  const regen = Number((c.eco as unknown as { manaRegenEnd: number }).manaRegenEnd);
+  const scale = (v: number): number => Math.max(1, Math.round(v * o.encounters.popMult));
+  const sq = squads[String(R.tier)]!;
+  const level = runLevel(R, sq);
+  const n = R.steps.length;
+  const reach = Array<number>(n).fill(0);
+  let steps = 0;
+  for (let k = 0; k < runs; k++) {
+    let squad = squadOf(c, { offset: sq.offset, troops: sq.troops }, level, R.tier);
+    let d = 0;
+    for (let si = 0; si < n && squad.length; si++) {
+      const st = R.steps[si]!;
+      const spec = stepSpec(st);
+      const seed = 104729 * (k + 1) + 7919 * si + R.id.length;
+      const side = genMonsters(c, { ...spec, pop: [scale(spec.pop[0]), scale(spec.pop[1])], slots: o.encounters.slots }, seed);
+      const units = battleUnits(c, squad, side, {
+        territory: R.tier - 1,
+        guardianStep: !!st.guardian,
+        guardianAdjust: o.guardianAdjust,
+        ...(st.mult ? { mult: st.mult } : {}),
+      });
+      const res = simuler({ engineVersion: o.engineVersion, params: c.params, skills: c.skills, units }, seed).result;
+      if (res.winner !== 0) break;
+      reach[si]!++;
+      d++;
+      let i = 0;
+      for (const t of squad)
+        t.units = t.units.filter((u) => {
+          const ur = res.units[i++]!;
+          if (ur.dead) return false;
+          const mx = unitStats(c, t, u).manaMax;
+          u.hp = Math.max(1, ur.hp);
+          u.mana = Math.min(mx, ur.mana + Math.floor((mx * regen) / 100));
+          return true;
+        });
+      squad = squad.filter((t) => t.units.length);
+    }
+    steps += d;
+  }
+  return {
+    route: R.id,
+    routeName: R.name,
+    tier: R.tier,
+    level,
+    runs,
+    done: reach[n - 1]! / runs,
+    avgSteps: steps / runs,
+    reach: reach.map((x) => x / runs),
+  };
+}
+
+export const simulateRuns = (c: GenContent, squads: Record<string, Squad>, runs = RUNS): RunReport[] =>
+  routes(c).map((R) => simulateRun(c, R, squads, runs));
+
+/** Section du rapport : routes complètes, par route puis par palier. */
+export function runReport(rows: RunReport[]): string {
+  const lines = [
+    '## Routes complètes',
+    '',
+    `Escouade de référence du palier (composition fixe, équipée au palier, sans consommable), au niveau des monstres de l'étape 4 ; les 5 étapes à la suite, PV, morts et mana reportés. Cible : route finie ${pct(runTarget(1))} des fois au palier 1, −6 points par palier ; tolérance ${Math.round(RUN_TOLERANCE * 100)} points par route, ${Math.round(RUN_TIER_TOLERANCE * 100)} par palier.`,
+    '',
+    '| Route | Palier | Niveau | Étape 1 | 2 | 3 | 4 | Gardien (route finie) | Cible | Étapes gagnées | Verdict |',
+    '|---|---|---|---|---|---|---|---|---|---|---|',
+  ];
+  for (const r of rows)
+    lines.push(
+      `| ${r.routeName} | ${r.tier} | ${r.level} | ${r.reach.slice(0, -1).map(pct).join(' | ')} | ${pct(r.done)} | ${pct(runTarget(r.tier))} | ${r.avgSteps.toFixed(1)} | ${Math.abs(r.done - runTarget(r.tier)) <= RUN_TOLERANCE + 1e-9 ? 'dans la cible' : 'hors cible'} |`,
+    );
+  lines.push('', '| Palier | Routes finies | Cible | Verdict |', '|---|---|---|---|');
+  for (const t of runVerdicts(rows))
+    lines.push(`| ${t.tier} | ${pct(t.done)} | ${pct(t.target)} | ${t.ok ? 'dans la cible' : 'hors cible'} |`);
+  return lines.join('\n') + '\n';
+}
+
+/** Part moyenne des routes finies de chaque palier, comparée à sa cible. */
+export function runVerdicts(rows: RunReport[]): { tier: number; done: number; target: number; ok: boolean }[] {
+  return [...new Set(rows.map((r) => r.tier))]
+    .sort((a, b) => a - b)
+    .map((tier) => {
+      const of = rows.filter((r) => r.tier === tier);
+      const done = of.reduce((a, r) => a + r.done, 0) / of.length;
+      return { tier, done, target: runTarget(tier), ok: Math.abs(done - runTarget(tier)) <= RUN_TIER_TOLERANCE + 1e-9 };
+    });
+}
+
+// ---------------------------------------------------------------------------------------------------------
 // Donjons (README 23) : profondeur atteinte, PV persistants de salle en salle, sans consommable ni soin.
 
 /** Niveau de l'escouade de référence dans un donjon : niveau minimal de la route + DUNGEON_OFFSET. */
@@ -256,66 +381,11 @@ export function simulate(c: GenContent, squads: Record<string, Squad>, opt: SimO
 }
 
 const pct = (x: number): string => `${Math.round(x * 100)} %`;
-const mean = (rows: StepReport[]): number => (rows.length ? rows.reduce((a, r) => a + r.winRate, 0) / rows.length : NaN);
-
-export interface TierVerdict {
-  tier: number;
-  /** Moyenne des étapes (gardiens exclus) et des gardiens. */
-  steps: number;
-  guardians: number;
-  stepsTarget: number;
-  guardiansTarget: number;
-  ok: boolean;
-}
-
-/** Moyenne simulée de chaque palier comparée à sa cible, à `TOLERANCE` près. */
-export function verdicts(rows: StepReport[]): TierVerdict[] {
-  return [...new Set(rows.map((r) => r.tier))]
-    .sort((a, b) => a - b)
-    .map((tier) => {
-      const of = rows.filter((r) => r.tier === tier);
-      const steps = mean(of.filter((r) => !r.guardian));
-      const guardians = mean(of.filter((r) => r.guardian));
-      const stepsTarget = tierTarget(tier, false);
-      const guardiansTarget = tierTarget(tier, true);
-      const near = (x: number, t: number): boolean => Number.isNaN(x) || Math.abs(x - t) <= TOLERANCE + 1e-9;
-      return { tier, steps, guardians, stepsTarget, guardiansTarget, ok: near(steps, stepsTarget) && near(guardians, guardiansTarget) };
-    });
-}
-
-export interface RouteGap {
-  route: string;
-  routeName: string;
-  tier: number;
-  steps: number;
-  stepsTarget: number;
-  /** Moyenne de la route moins la cible du palier. */
-  gap: number;
-  guardian: number;
-  guardianTarget: number;
-}
-
-/** Moyenne des étapes (gardien exclu) de chaque route et écart à la cible du palier. */
-export function routeGaps(rows: StepReport[]): RouteGap[] {
-  return [...new Set(rows.map((r) => r.route))].map((route) => {
-    const of = rows.filter((r) => r.route === route);
-    const tier = of[0]!.tier;
-    const steps = mean(of.filter((r) => !r.guardian));
-    const stepsTarget = tierTarget(tier, false);
-    return {
-      route,
-      routeName: of[0]!.routeName,
-      tier,
-      steps,
-      stepsTarget,
-      gap: steps - stepsTarget,
-      guardian: mean(of.filter((r) => r.guardian)),
-      guardianTarget: tierTarget(tier, true),
-    };
-  });
-}
-
-/** Rapport Markdown : une table par palier, la dispersion par route, puis la comparaison de chaque palier à sa cible. */
+/**
+ * Rapport Markdown : une table par palier, combat par combat. La colonne « Forme » donne la cible du réglage étape par
+ * étape (`stepTarget`) ; le réglage de route (README 33) multiplie ensuite toutes les étapes d'une route par un même
+ * facteur, donc les victoires s'en écartent : le verdict porte sur les routes complètes (`runReport`).
+ */
 export function report(rows: StepReport[], squads: Record<string, Squad>, opt: { gear?: boolean } = {}): string {
   const lines: string[] = [
     '# Simulation d’équilibrage',
@@ -329,37 +399,12 @@ export function report(rows: StepReport[], squads: Record<string, Squad>, opt: {
       `## Palier ${tier} — escouade au niveau des monstres${s.offset ? ` ${s.offset > 0 ? '+' : ''}${s.offset}` : ''} : ${s.troops.map(([t]) => t).join(', ')}`,
       '',
     );
-    lines.push('| Route | Étape | Niveaux | Victoires | Cible | Durée | Pertes | Or | XP |', '|---|---|---|---|---|---|---|---|---|');
+    lines.push('| Route | Étape | Niveaux | Victoires | Forme | Durée | Pertes | Or | XP |', '|---|---|---|---|---|---|---|---|---|');
     for (const r of rows.filter((x) => x.tier === tier))
       lines.push(
         `| ${r.routeName} | ${r.step}. ${r.stepName}${r.guardian ? ' (gardien)' : ''} | ${r.level[0]}-${r.level[1]} | ${pct(r.winRate)} | ${pct(stepTarget(r.tier, r.step, r.guardian))} | ${r.avgTime} | ${r.avgLosses} | ${r.gold} | ${r.xp} |`,
       );
     lines.push('');
   }
-  lines.push(
-    '## Dispersion par route',
-    '',
-    `Moyenne des étapes de chaque route contre la cible de son palier (tolérance ${Math.round(ROUTE_TOLERANCE * 100)} points).`,
-    '',
-    '| Route | Palier | Étapes | Cible | Écart | Gardien | Cible |',
-    '|---|---|---|---|---|---|---|',
-  );
-  for (const g of routeGaps(rows))
-    lines.push(
-      `| ${g.routeName} | ${g.tier} | ${pct(g.steps)} | ${pct(g.stepsTarget)} | ${g.gap >= 0 ? '+' : '−'}${Math.round(Math.abs(g.gap) * 100)} | ${pct(g.guardian)} | ${pct(g.guardianTarget)} |`,
-    );
-  lines.push('');
-  lines.push(
-    '## Moyennes par palier et cibles',
-    '',
-    `Cible : voir tierTarget (91 % au palier 1, −7 points par palier ; gardiens 75 % puis −7 points) ; tolérance ${Math.round(TOLERANCE * 100)} points.`,
-    '',
-    '| Palier | Étapes | Cible | Gardiens | Cible | Verdict |',
-    '|---|---|---|---|---|---|',
-  );
-  for (const v of verdicts(rows))
-    lines.push(
-      `| ${v.tier} | ${pct(v.steps)} | ${pct(v.stepsTarget)} | ${pct(v.guardians)} | ${pct(v.guardiansTarget)} | ${v.ok ? 'dans la cible' : 'hors cible'} |`,
-    );
   return lines.join('\n') + '\n';
 }
