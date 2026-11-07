@@ -5,7 +5,7 @@ eclat_glace:
   target: enemy
   range: 4
   energy: 0
-  mana: 24
+  mana: 12
   durBase: unit
   durMult: 1000
   p: {}
@@ -19,7 +19,7 @@ tempete_givre:
   target: enemy
   range: 5
   energy: 0
-  mana: 60
+  mana: 30
   durBase: unit
   durMult: 2000
   p: {}
@@ -33,7 +33,7 @@ pluie_feu:
   target: enemy
   range: 5
   energy: 0
-  mana: 72
+  mana: 36
   durBase: unit
   durMult: 2500
   p: {}
@@ -47,7 +47,7 @@ eruption:
   target: enemy
   range: 5
   energy: 0
-  mana: 90
+  mana: 45
   durBase: unit
   durMult: 3000
   p: {}
@@ -76,7 +76,7 @@ javelot_lumiere:
   target: enemy
   range: 5
   energy: 0
-  mana: 36
+  mana: 18
   durBase: unit
   durMult: 1000
   p: {}
@@ -89,7 +89,7 @@ nova_sacree:
   target: enemy
   range: 5
   energy: 0
-  mana: 54
+  mana: 27
   durBase: unit
   durMult: 2000
   p: {}
@@ -102,7 +102,7 @@ fleau:
   target: enemy
   range: 4
   energy: 0
-  mana: 42
+  mana: 21
   durBase: unit
   durMult: 1000
   p: {}
@@ -116,7 +116,7 @@ toucher_spectral:
   target: enemy
   range: 3
   energy: 0
-  mana: 30
+  mana: 15
   durBase: unit
   durMult: 1000
   p: {}
@@ -156,7 +156,7 @@ mot_silence:
   target: enemy
   range: 5
   energy: 0
-  mana: 36
+  mana: 18
   durBase: unit
   durMult: 1000
   p: {}
@@ -168,7 +168,7 @@ affaiblissement:
   target: enemy
   range: 5
   energy: 0
-  mana: 30
+  mana: 15
   durBase: unit
   durMult: 1000
   p: {}
@@ -340,7 +340,7 @@ soin_majeur:
   target: ally
   range: 3
   energy: 0
-  mana: 48
+  mana: 24
   durBase: unit
   durMult: 1000
   coef: 8000
@@ -353,7 +353,7 @@ cercle_soins:
   target: self
   range: 1
   energy: 0
-  mana: 60
+  mana: 30
   durBase: unit
   durMult: 2000
   coef: 3000
@@ -366,7 +366,7 @@ seve:
   target: ally
   range: 2
   energy: 0
-  mana: 36
+  mana: 18
   durBase: unit
   durMult: 1000
   coef: 800
@@ -379,7 +379,7 @@ peau_ecorce:
   target: ally
   range: 2
   energy: 0
-  mana: 30
+  mana: 15
   durBase: unit
   durMult: 1000
   p: {}
@@ -391,7 +391,7 @@ benediction:
   target: self
   range: 1
   energy: 0
-  mana: 48
+  mana: 24
   durBase: unit
   durMult: 2000
   p: {}
@@ -403,7 +403,7 @@ chant_guerre:
   target: self
   range: 1
   energy: 0
-  mana: 36
+  mana: 18
   durBase: unit
   durMult: 1500
   power: esp
@@ -417,7 +417,7 @@ vent_rapide:
   target: self
   range: 1
   energy: 0
-  mana: 54
+  mana: 27
   durBase: unit
   durMult: 1500
   p: {}

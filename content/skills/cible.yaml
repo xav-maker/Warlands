@@ -258,7 +258,7 @@ javelot_glace:
   target: enemy
   range: 5
   energy: 0
-  mana: 36
+  mana: 18
   durBase: unit
   durMult: 1000
   p: {}
@@ -274,7 +274,7 @@ blizzard:
   target: enemy
   range: 5
   energy: 0
-  mana: 78
+  mana: 39
   durBase: unit
   durMult: 2500
   p: {}
@@ -290,7 +290,7 @@ prison_glace:
   target: enemy
   range: 5
   energy: 0
-  mana: 54
+  mana: 27
   durBase: unit
   durMult: 2000
   p: {}
@@ -304,7 +304,7 @@ lance_feu:
   target: enemy
   range: 5
   energy: 0
-  mana: 42
+  mana: 21
   durBase: unit
   durMult: 1000
   p: {}
@@ -319,7 +319,7 @@ nova_flammes:
   target: self
   range: 1
   energy: 0
-  mana: 54
+  mana: 27
   durBase: unit
   durMult: 2000
   p: {}
@@ -333,7 +333,7 @@ meteore:
   target: enemy
   range: 5
   energy: 0
-  mana: 96
+  mana: 48
   durBase: unit
   durMult: 3000
   p: {}
@@ -349,7 +349,7 @@ armure_givre:
   target: ally
   range: 2
   energy: 0
-  mana: 36
+  mana: 18
   durBase: unit
   durMult: 1000
   p: {}
@@ -363,7 +363,7 @@ bouclier_flammes:
   target: self
   range: 1
   energy: 0
-  mana: 42
+  mana: 21
   durBase: unit
   durMult: 1000
   p: {}
@@ -393,7 +393,7 @@ jet_magma:
   target: enemy
   range: 4
   energy: 0
-  mana: 42
+  mana: 21
   durBase: unit
   durMult: 1500
   p: {}
@@ -409,7 +409,7 @@ onde_mentale:
   target: enemy
   range: 5
   energy: 0
-  mana: 42
+  mana: 21
   durBase: unit
   durMult: 2000
   p: {}
@@ -425,7 +425,7 @@ domination:
   target: enemy
   range: 5
   energy: 0
-  mana: 48
+  mana: 24
   durBase: unit
   durMult: 2000
   p: {}
@@ -440,7 +440,7 @@ vision_terreur:
   target: enemy
   range: 5
   energy: 0
-  mana: 36
+  mana: 18
   durBase: unit
   durMult: 1000
   p: {}
@@ -455,7 +455,7 @@ lame_psychique:
   target: enemy
   range: 3
   energy: 0
-  mana: 36
+  mana: 18
   durBase: unit
   durMult: 1000
   p: {}
@@ -470,7 +470,7 @@ sommeil:
   target: enemy
   range: 5
   energy: 0
-  mana: 54
+  mana: 27
   durBase: unit
   durMult: 2000
   p: {}
@@ -484,7 +484,7 @@ clarte:
   target: ally
   range: 3
   energy: 0
-  mana: 30
+  mana: 15
   durBase: unit
   durMult: 1000
   p: {}
@@ -512,7 +512,7 @@ hurlement_mental:
   target: self
   range: 1
   energy: 0
-  mana: 66
+  mana: 33
   durBase: unit
   durMult: 2000
   p: {}
@@ -539,7 +539,7 @@ lien_esprits:
   target: self
   range: 1
   energy: 0
-  mana: 48
+  mana: 24
   durBase: unit
   durMult: 1500
   p: {}
@@ -553,7 +553,7 @@ mains_lumiere:
   target: ally
   range: 2
   energy: 0
-  mana: 42
+  mana: 21
   durBase: unit
   durMult: 1000
   p: {}
@@ -567,7 +567,7 @@ onde_soin:
   target: self
   range: 1
   energy: 0
-  mana: 54
+  mana: 27
   durBase: unit
   durMult: 2000
   p: {}
@@ -581,7 +581,7 @@ rayon_sacre:
   target: enemy
   range: 5
   energy: 0
-  mana: 36
+  mana: 18
   durBase: unit
   durMult: 1000
   p: {}
@@ -596,7 +596,7 @@ jugement:
   target: enemy
   range: 5
   energy: 0
-  mana: 75
+  mana: 38
   durBase: unit
   durMult: 2000
   p: {}
@@ -611,7 +611,7 @@ egide:
   target: ally
   range: 3
   energy: 0
-  mana: 48
+  mana: 24
   durBase: unit
   durMult: 1000
   p: {}
@@ -625,7 +625,7 @@ consecration:
   target: enemy
   range: 5
   energy: 0
-  mana: 60
+  mana: 30
   durBase: unit
   durMult: 2000
   p: {}
@@ -640,7 +640,7 @@ purification_masse:
   target: self
   range: 1
   energy: 0
-  mana: 60
+  mana: 30
   durBase: unit
   durMult: 2000
   p: {}
@@ -668,7 +668,7 @@ trait_ombre:
   target: enemy
   range: 5
   energy: 0
-  mana: 30
+  mana: 15
   durBase: unit
   durMult: 1000
   p: {}
@@ -683,7 +683,7 @@ peste:
   target: enemy
   range: 4
   energy: 0
-  mana: 54
+  mana: 27
   durBase: unit
   durMult: 2000
   p: {}
@@ -697,7 +697,7 @@ drain_ame:
   target: enemy
   range: 3
   energy: 0
-  mana: 48
+  mana: 24
   durBase: unit
   durMult: 2000
   p: {}
@@ -712,7 +712,7 @@ malefice:
   target: enemy
   range: 5
   energy: 0
-  mana: 48
+  mana: 24
   durBase: unit
   durMult: 2000
   p: {}
@@ -727,7 +727,7 @@ nuee_ombres:
   target: enemy
   range: 5
   energy: 0
-  mana: 72
+  mana: 36
   durBase: unit
   durMult: 2500
   p: {}
@@ -742,7 +742,7 @@ putrefaction:
   target: enemy
   range: 4
   energy: 0
-  mana: 36
+  mana: 18
   durBase: unit
   durMult: 1000
   p: {}
@@ -771,7 +771,7 @@ toucher_tombe:
   target: enemy
   range: 2
   energy: 0
-  mana: 30
+  mana: 15
   durBase: unit
   durMult: 1000
   p: {}
@@ -786,7 +786,7 @@ marque_mort:
   target: enemy
   range: 5
   energy: 0
-  mana: 36
+  mana: 18
   durBase: unit
   durMult: 1000
   p: {}
@@ -801,7 +801,7 @@ silence_tombe:
   target: enemy
   range: 5
   energy: 0
-  mana: 66
+  mana: 33
   durBase: unit
   durMult: 2000
   p: {}

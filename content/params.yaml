@@ -4,7 +4,8 @@ engine:
   timeLimit: 3000
   tick: 20
   waitRegen: 50
-  waitManaRegen: 50
+  # Attendre ne rend plus de mana (50 ‰ jusqu’au README 35) : un lanceur à sec le reste jusqu’à une potion ou la fin du combat.
+  waitManaRegen: 0
   woundWill: 1000 # v2 : en ‰ de la volonté de référence du combat ; 500 avant [H]
   allyDeathWill: 100
   sameTroopDeathWill: 200
@@ -30,8 +31,9 @@ eco:
   startTroops: [[milicien, 1], [milicien, 1], [chasseur, 1], [chasseur, 1], [herboriste, 1], [herboriste, 1]]
   startItems: { bandage: 3 }
   startRecipe: acolyte
-  # Mana rendu après chaque victoire, en % du max (25 jusqu’au README 33) [Xavier, 7 novembre 2026 : plus de mana en fin de combat].
-  manaRegenEnd: 50
+  # Mana rendu après chaque combat, en % du max (25, puis 50 au README 33 ; 15 au README 35) [Xavier, 7 novembre 2026 : le mana
+  # doit s’épuiser au fil d’une route, les potions de mana servent à le gérer].
+  manaRegenEnd: 15
   # Facteurs de palier, complétés étape par étape par le `mult` de world/routes.yaml (réglé par `pnpm content calibrate`,
   # mesuré par `pnpm content simulate`, escouades de référence équipées, balance/squads.yaml) : 91 % de victoires
   # en moyenne au palier 1, −7 points par palier, gardiens 75 % puis −7 points [Xavier, 6 novembre 2026]. Le prototype

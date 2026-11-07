@@ -803,7 +803,7 @@ Aujourd'hui **tout** est dans le navigateur : l'état, les règles, les généra
 - Jauges ×3, durée limite 3 000 (au lieu de 1 000 dans la spec combat).
 - Tics de dégâts/soins sur la durée tous les 4 instants (spec : 20).
 - Soins ×1,2, recharges de soin par cible (60 et 100 instants).
-- Attendre rend aussi 5 % du mana ; +25 % de mana à la fin de chaque combat (+50 % depuis la section 33, `eco.manaRegenEnd`).
+- Attendre rend aussi 5 % du mana (plus rien depuis la section 35) ; +25 % de mana à la fin de chaque combat (50 % à la section 33, 15 % depuis la section 35, `eco.manaRegenEnd`).
 - Rang effectif (rangs vides retirés des portées), avancée automatique en cas de combat bloqué, attaque de base toujours active.
 - Bonus d'équipement ×2.
 - Combats non passables, rediffusion obligatoire.
@@ -1267,3 +1267,15 @@ Constat (simulation des routes complètes, 40 parties par route) : au palier 2, 
 - **Correction** (`online.activePick: strategy`, `pickActive` de `packages/gen/src/troops.ts`) : au-delà de 6, on garde l'**attaque de base**, les **passifs et réactions**, puis les capacités dans l'**ordre de leur première règle** dans la stratégie par défaut (l'ordre des règles est leur priorité), enfin les autres, les plus récentes d'abord. Une capacité désactivée par le joueur laisse sa place à la suivante dans cet ordre. Le même choix vaut pour les monstres. Sans ce réglage (contenu du prototype), rien ne change : les vecteurs de référence restent identiques.
 - **Effet** (palier 2, routes réglées avant la correction) : +1 niveau, 78 à 95 % de routes finies ; +2, 85 à 98 % ; +5, 95 à 100 %. Les routes ont ensuite été recalibrées (deux passes, cibles de la section 33, toutes à 4 points ou moins) et les donjons aussi : puits 790, ruche 980, tombeau 930, épave 930, pyramide 720, tour 510, observatoire 670, abîme 420 (les autres inchangés).
 - **Énergie de l'équipement** : vérifiée en même temps, laissée telle quelle. Elle multiplie l'énergie max par 3,5 au palier 5 avec l'équipement moyen, mais l'énergie de base grandit très peu avec le niveau, d'où ce chiffre. L'épuisement touche encore 15 à 22 % des actions du joueur aux paliers 2 à 5 (37 % au palier 1, 33 à 56 % sans équipement), et l'énergie reste la stat d'objet qui rapporte le moins par point (section 32) : la baisser la rendrait inutile.
+
+## 35. Le mana se gère sur toute la route (7 novembre 2026)
+
+Constat de Xavier : après le premier combat, on n'a déjà plus de mana, et les suivants se jouent tous avec le mana rendu en fin de combat ; il faudrait que le mana s'épuise au bout de quelques combats, qu'on en récupère moins à la fin d'un combat, et qu'entamer un combat sans mana se paie, d'où l'intérêt des potions de mana pendant une route.
+
+- **Mesure avant** (routes complètes, escouade de référence) : le mana des lanceurs se stabilisait autour de 60 % (100 → 80 → 72 → 63 → 61 % au début des combats 1 à 5), car chaque combat vidait la réserve et l'on récupérait 50 %. Un lanceur à sec gênait à peine (93 % de victoires en combat isolé, contre 98 %) : attendre lui rendait 5 % de son mana à chaque fois.
+- **Changements** :
+  - **coût en mana des sorts divisé par 2** (70 capacités ; ×1,5 par rapport au contenu d'avant la section 32.1) : un combat consomme environ un quart de la réserve au lieu de la vider ;
+  - **attendre ne rend plus de mana** (`waitManaRegen` 50 → 0) : un lanceur à sec le reste jusqu'à une potion, la fin du combat ou le retour en ville ;
+  - **15 % du mana rendu après un combat** (`eco.manaRegenEnd`, 50 → 15). Les potions de mana sont inchangées (120, 270, tonique 150). Le retour en ville rend toujours tout (section 21).
+- **Effet** (après recalibrage) : le mana des lanceurs au début des combats 1 à 5 d'une route descend à **100 → 82 → 63 → 43 → 29 %** (27 % après le gardien). Sur une route complète, l'escouade de référence finit 53 % des routes avec cette gestion, **7 % sans aucun mana** et **84 % avec le mana remis au plein avant chaque combat** : les potions de mana, et le choix du moment de rentrer, comptent.
+- **Réglage** : routes recalibrées (deux passes, cibles de la section 33, toutes à 4 points ou moins), donjons aussi : terriers 840, tertre 1 150, grotte 820, crypte 460, puits 640, ruche 720, tombeau 700, épave 840, pyramide 680, tour 490, observatoire 620, abîme 400. L'aide (« Stats et combat ») explique le mana sur une route.
