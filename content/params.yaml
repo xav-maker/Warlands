@@ -97,6 +97,9 @@ online:
   # boss (README 16, point 2) il ne peut pas compenser l'escorte, grosse de 16 à 21 de population.
   engineVersion: v2
   guardianAdjust: all
+  # Au-delà de 6 capacités connues, les actives sont choisies selon la stratégie par défaut, plus les 5 plus récentes
+  # (README 34) : le Prêtre perdait Soin mineur au niveau 13.
+  activePick: strategy
   squad: { maxUnits: 8, maxPop: 11 } # README 20 [Xavier]
   # Réserve [Xavier, 5 novembre 2026] : 5 emplacements, 8 de population ; ses troupes ne combattent pas mais reçoivent
   # l'XP, xpShare ‰ de la part d'une troupe qui combat (1 000 : la même).

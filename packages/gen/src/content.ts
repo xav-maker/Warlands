@@ -233,6 +233,8 @@ export interface GenContent {
 export interface OnlineRules {
   engineVersion: string;
   guardianAdjust: 'all' | 'guardian';
+  /** Capacités actives au-delà de 6 : les 5 plus récentes (absent ou recent, prototype) ou selon la stratégie (README 34). */
+  activePick?: 'recent' | 'strategy';
   squad: { maxUnits: number; maxPop: number };
   /** Réserve : unités et population au plus ; xpShare : part (‰) de l'XP d'une troupe qui combat. */
   reserve: { maxUnits: number; maxPop: number; xpShare: number };

@@ -183,7 +183,7 @@ sous Hâte : durée × <%= mult(P.hasteMod) %>      sous Ralenti : durée × <%=
     <ol>
       <li>L’énergie et le mana mis de côté par un « Attendre » précédent sont crédités.</li>
       <li>Une unité <b>gelée</b> ne fait rien et rejoue à la fin du gel.</li>
-      <li>L’unité parcourt ses règles dans l’ordre et prend la <b>première applicable</b> : capacité active, condition vraie, au moins une cible valide, mana suffisant. Les règles sont celles du type de troupe ; vous choisissez seulement lesquelles de ses capacités sont actives (6 au plus : l’attaque de base et les 5 plus récentes, sauf si vous en désactivez).</li>
+      <li>L’unité parcourt ses règles dans l’ordre et prend la <b>première applicable</b> : capacité active, condition vraie, au moins une cible valide, mana suffisant. Les règles sont celles du type de troupe ; vous choisissez seulement lesquelles de ses capacités sont actives (6 au plus : l’attaque de base, les passifs, puis les capacités dans l’ordre de priorité de sa stratégie ; une capacité que vous désactivez laisse sa place à la suivante).</li>
       <li>Si le combat est bloqué (personne n’a perdu de PV depuis <%= P.stallTime %> instants), les unités des rangs arrière avancent.</li>
       <li>Le <b>coût</b> est payé : énergie = coût de la capacité + coût de l’arme × son coefficient ; mana = coût du sort. S’il manque de l’énergie ou du mana, l’unité <b>attend</b> à la place.</li>
       <li>Un <b>test de volonté</b> décide du résultat (section suivante), puis la capacité est résolue.</li>

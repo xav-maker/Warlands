@@ -182,10 +182,11 @@ describe('équilibrage du contenu publié (60 combats par étape, escouades équ
     for (const t of runVerdicts(runs)) expect(near(t.done, t.target, RUN_TIER_TOLERANCE), `palier ${t.tier} : ${t.done}`).toBe(true);
   }, 300_000);
 
-  it('aucune étape n’est un mur : à pleine vie, chaque combat se gagne au moins 7 fois sur 10, et le tout début est facile', () => {
+  it('aucune étape n’est un mur : à pleine vie, chaque combat se gagne au moins 7 fois sur 10 (un gardien 55 %), et le tout début est facile', () => {
     // Depuis le réglage de route (README 33), un combat isolé à pleine vie se gagne presque toujours ; la rampe de
     // difficulté se lit sur la route complète (PV et morts reportés), plus combat par combat.
-    for (const r of rows) expect(r.winRate, `${r.routeName}, étape ${r.step}`).toBeGreaterThanOrEqual(0.7);
+    // Un gardien reste un vrai obstacle : 55 % au moins (62 % pour celui des Ruines Célestes, palier 5).
+    for (const r of rows) expect(r.winRate, `${r.routeName}, étape ${r.step}`).toBeGreaterThanOrEqual(r.guardian ? 0.55 : 0.7);
     // Palier 1 : l'escouade de départ (pas pleine, niveau en retard, sans équipement) passe la première étape presque toujours.
     for (const r of rows.filter((x) => x.tier === 1 && x.step === 1)) expect(r.winRate, r.routeName).toBeGreaterThanOrEqual(0.9);
   });

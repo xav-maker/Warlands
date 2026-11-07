@@ -6,7 +6,7 @@ import { POWERS, type Power, type Powers, type Rule, type UnitInput, type Weapon
 import type { GenContent } from './content.ts';
 import type { MonsterGroup } from './encounters.ts';
 import type { EquipInstance } from './equip.ts';
-import { basicAttack, computeStats, defaultActive, defaultRules, learned } from './troops.ts';
+import { basicAttack, computeStats, defaultActive, defaultRules, learned, pickActive } from './troops.ts';
 import type { TroopStats } from './troops.ts';
 
 export interface PlayerUnit {
@@ -32,7 +32,8 @@ export interface PlayerTroop {
 /**
  * Capacités actives d'une troupe de joueur : celles par défaut, l'attaque de base toujours comprise.
  * Avec des capacités désactivées (README 20.1) : parmi les capacités connues et non désactivées,
- * l'attaque de base et les 5 plus récemment apprises.
+ * l'attaque de base et les 5 plus récemment apprises, ou, avec `online.activePick: strategy` (README 34), le même
+ * choix par la stratégie que sans capacité désactivée.
  */
 export function troopActive(c: GenContent, t: PlayerTroop): string[] {
   const d = c.troops[t.type]!;
@@ -40,10 +41,11 @@ export function troopActive(c: GenContent, t: PlayerTroop): string[] {
   if (t.disabled?.length) {
     const off = new Set(t.disabled.filter((x) => x !== base));
     const known = learned(d, t.form, t.level).filter((x) => !off.has(x));
+    if (c.online?.activePick === 'strategy') return pickActive(c, d, known);
     const rest = known.filter((x) => x !== base);
     return [base, ...rest.slice(-5)].filter((x, i, a) => a.indexOf(x) === i).sort((a, b) => known.indexOf(a) - known.indexOf(b));
   }
-  const act = defaultActive(d, t.form, t.level);
+  const act = defaultActive(d, t.form, t.level, c);
   return act.includes(base) ? act : [base, ...act.slice(0, 5)];
 }
 

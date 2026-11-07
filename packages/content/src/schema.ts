@@ -220,6 +220,8 @@ export const Params = z.strictObject({
   online: z.strictObject({
     engineVersion: id,
     guardianAdjust: z.enum(['all', 'guardian']),
+    // Choix des capacités actives au-delà de 6 (README 34) : les plus récentes (prototype) ou selon la stratégie.
+    activePick: z.enum(['recent', 'strategy']).optional(),
     squad: z.strictObject({ maxUnits: int.min(1), maxPop: int.min(1) }),
     // Réserve (README 29) : troupes qui ne combattent pas mais reçoivent l'XP ; xpShare : part de l'XP d'une troupe qui
     // combat, en ‰.

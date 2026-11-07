@@ -86,7 +86,7 @@
     </div>
     <div class="card">
       <h2>Capacités</h2>
-      <p class="muted">Cochez une capacité pour que la troupe ne s’en serve plus. Au combat, elle utilise l’attaque de base et ses 5 capacités les plus récentes parmi celles qui restent.</p>
+      <p class="muted">Cochez une capacité pour que la troupe ne s’en serve plus. Au combat, elle en garde 6 au plus parmi celles qui restent : l’attaque de base, ses passifs, puis les plus prioritaires de sa stratégie.</p>
       <form method="post" action="/troupe/<%= t.id %>/capacites">
         <input type="hidden" name="_csrf" value="<%= it.csrf %>">
         <ul class="items">

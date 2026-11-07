@@ -24,10 +24,35 @@ export function learned(t: TroopDef, formId: string, level: number): string[] {
 
 export const basicAttack = (t: TroopDef): string => t.forms[0]!.skills[0]![0];
 
-/** Les 6 capacités actives par défaut : l'attaque de base et les 5 plus récentes. */
-export function defaultActive(t: TroopDef, formId: string, level: number): string[] {
+/** Plafond de capacités actives d'une troupe (README 20.1). */
+export const MAX_ACTIVE = 6;
+
+/**
+ * Choix des capacités actives selon la stratégie (`online.activePick: strategy`, README 34) : parmi `known`, l'attaque de
+ * base, puis les passifs et réactions (absents des règles), puis les capacités dans l'ordre de leur première règle dans la stratégie
+ * par défaut (l'ordre des règles est leur priorité), puis les autres, les plus récentes d'abord. Renvoyées dans l'ordre
+ * d'apprentissage. Le choix « les 5 plus récentes » retirait des capacités clés (Soin mineur du Prêtre dès le niveau 13,
+ * Repos, Méditation…).
+ */
+export function pickActive(c: GenContent, t: TroopDef, known: string[]): string[] {
+  if (known.length <= MAX_ACTIVE) return known;
+  const order: string[] = [];
+  const add = (x: string): void => {
+    if (known.includes(x) && !order.includes(x)) order.push(x);
+  };
+  add(basicAttack(t));
+  for (const x of known) if (c.skills[x] && c.skills[x].kind !== 'active') add(x);
+  for (const r of t.rules) add(r.action);
+  for (const x of [...known].reverse()) add(x);
+  const keep = new Set(order.slice(0, MAX_ACTIVE));
+  return known.filter((x) => keep.has(x));
+}
+
+/** Les 6 capacités actives par défaut : l'attaque de base et les 5 plus récentes (prototype), ou selon la stratégie (`pickActive`). */
+export function defaultActive(t: TroopDef, formId: string, level: number, c?: GenContent): string[] {
   const all = learned(t, formId, level);
   if (all.length <= 6) return all;
+  if (c?.online?.activePick === 'strategy') return pickActive(c, t, all);
   const picked = [all[0]!];
   for (let i = all.length - 1; i > 0 && picked.length < 6; i--) picked.push(all[i]!);
   return all.filter((x) => picked.includes(x));
@@ -103,7 +128,7 @@ export function newTroop(c: GenContent, type: string, level = 10): MonsterTroop 
     type,
     level,
     form,
-    active: defaultActive(t, form, level),
+    active: defaultActive(t, form, level, c),
     rules: defaultRules(t, form, level),
     units: Array.from({ length: t.units }, () => ({ dist: t.defaultDist, hpPct: 100, manaPct: 100 })),
   };
