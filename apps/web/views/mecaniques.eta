@@ -190,7 +190,7 @@ sous Hâte : durée × <%= mult(P.hasteMod) %>      sous Ralenti : durée × <%=
 <% if (P.exhaustAt) { %>      <li><b>Épuisement</b> : si l’unité avait moins de <%= pct(P.exhaustAt) %> % de son énergie max avant de payer, la capacité dure <%= pct(P.exhaustMod ?? 1000) %> % de sa durée normale. Une grosse énergie max retarde ce moment.</li>
 <% } %>    </ol>
     <p><b>Attendre</b> met de côté <%= pct(P.waitRegen) %> % de l’énergie max<% if (P.waitManaRegen) { %> et <%= pct(P.waitManaRegen) %> % du mana max<% } %>, crédités à l’action suivante.</p>
-    <p><b>Mana sur une route</b> : après chaque combat, les survivants ne récupèrent que <b><%= c.eco.manaRegenEnd %> %</b> de leur mana max. Il s’épuise donc de combat en combat ; les potions de mana et le retour en ville (tout est rendu) sont les seuls moyens de le remonter. Un lanceur à sec n’attend pas le retour de son mana : il se rabat sur ses capacités sans mana.</p>
+    <p><b>Mana sur une route</b> : après chaque combat, les survivants ne récupèrent que <b><%= c.eco.manaRegenEnd %> %</b> de leur mana max. Il s’épuise donc de combat en combat ; les potions de mana et le retour en ville (tout est rendu) sont les seuls moyens de le remonter. En combat, attendre ne rend qu’un filet de mana<% if (P.waitManaRegen) { %> (<%= pct(P.waitManaRegen) %> % du max)<% } %> : un lanceur à sec ne relance un sort que de temps en temps.</p>
   </article>
 
   <article class="card" id="volonte">

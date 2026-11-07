@@ -270,7 +270,7 @@ describe('traversée complète (critère de J2, côté serveur)', () => {
       .orderBy('id')
       .execute();
     expect(battles.map((b) => b.kind)).toEqual(['route', 'route', 'route', 'route', 'guardian']);
-    expect(new Set(battles.map((b) => `${b.engine_version} ${b.content_version}`))).toEqual(new Set([`v2 ${content.hash}`]));
+    expect(new Set(battles.map((b) => `${b.engine_version} ${b.content_version}`))).toEqual(new Set([`v3 ${content.hash}`]));
   });
 });
 

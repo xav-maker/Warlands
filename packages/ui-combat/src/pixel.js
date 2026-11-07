@@ -640,7 +640,9 @@ function mountPixel(canvas, input, log, hooks, theme = 0) {
       g2.fillStyle = r > 0.5 ? "#58d068" : r > 0.25 ? "#f0c040" : "#f05040";
       g2.fillRect(x - 7, y - 21, hpw, 2);
       if (v.u.manaMax) {
-        g2.fillStyle = "#4a9cf0";
+        // Gris : il reste du mana, mais pas assez pour le sort le moins cher de l'unité (README 36).
+        const costs = (v.u.skills ?? []).map((s) => input.skills[s]?.mana ?? 0).filter((m) => m > 0);
+        g2.fillStyle = costs.length && v.mana < Math.min(...costs) ? "#6a7080" : "#4a9cf0";
         g2.fillRect(x - 7, y - 19, Math.round(14 * v.mana / v.u.manaMax), 1);
       }
       let k = 0;

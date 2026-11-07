@@ -59,7 +59,7 @@ describe('salles', () => {
     const r1 = room(c, kobold, 1, false);
     expect(r1).toMatchObject({ level: 3, pop: 4, boss: null, gold: 13 });
     expect(r1.spec).toMatchObject({ level: [3, 3], pop: [4, 4], forced: [], slots: 8 });
-    expect(r1.options).toMatchObject({ territory: 0, guardianStep: false, guardianAdjust: 'guardian', mult: 840 }); // réglage du donjon (mult)
+    expect(r1.options).toMatchObject({ territory: 0, guardianStep: false, guardianAdjust: 'guardian', mult: 930 }); // réglage du donjon (mult)
     expect(room(c, kobold, 3, false)).toMatchObject({ level: 4, pop: 6 });
     expect(room(c, kobold, 8, false)).toMatchObject({ level: 6, pop: 11, boss: 'chef_gratte_gratte' });
     expect(room(c, kobold, 20, false).pop).toBe(11);

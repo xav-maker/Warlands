@@ -17,11 +17,14 @@
  *   v2               volonté et énergie (README 31) : les gains et pertes de volonté valent leur ‰ de la
  *                    volonté de référence du combat (moyenne des volontés max), plus de la volonté max de
  *                    l'unité ; épuisement : sous exhaustAt ‰ d'énergie, une capacité dure exhaustMod ‰.
+ *   v3               soins ciblés (README 36) : une règle « allyHpBelow v » sur une capacité visant un allié ne
+ *                    vise que des alliés sous v % de leurs PV ; une règle sautée faute de mana est signalée
+ *                    dans le journal (événement `nomana`, une fois par décision).
  */
 import { Rng } from '@cr/rng';
 import type { BattleInput, BattleOutput, Fx, LogEvent, Power, Rule, Side, Skill, UnitInput } from './types.ts';
 
-export const ENGINE_VERSIONS = ['proto-0.4-ville', 'proto-0.4.1', 'proto-0.4.2', 'v1', 'v2'] as const;
+export const ENGINE_VERSIONS = ['proto-0.4-ville', 'proto-0.4.1', 'proto-0.4.2', 'v1', 'v2', 'v3'] as const;
 export type EngineVersion = (typeof ENGINE_VERSIONS)[number];
 /** Version jouée quand l'entrée n'en précise pas. */
 export const ENGINE_VERSION: EngineVersion = ENGINE_VERSIONS[ENGINE_VERSIONS.length - 1]!;
@@ -181,6 +184,7 @@ export function simuler(input: BattleInput, seed: number): BattleOutput {
   const FIX_ALLY_HP_BELOW = level >= 2;
   const V1 = level >= 3;
   const V2 = level >= 4;
+  const V3 = level >= 5;
   if (V1) for (const u of input.units) if (!u.pow) throw new Error(`unité ${u.id} sans puissances : le moteur v1 lit pow, plus atk`);
   /** Alliés comptés par allyHpBelow : l'unité elle-même en est exclue depuis proto-0.4.2. */
   const otherAllies = (u2: Unit): Unit[] => (FIX_ALLY_HP_BELOW ? alliesOf(u2).filter((a) => a !== u2) : alliesOf(u2));
@@ -712,6 +716,12 @@ export function simuler(input: BattleInput, seed: number): BattleOutput {
     );
   };
   function choose(u2: Unit): Choice | null {
+    // v3 : première règle sautée faute de mana, signalée avec la décision prise à sa place.
+    let short: { skill: string; cost: number } | null = null;
+    const pick = (c: Choice | null): Choice | null => {
+      if (short) emit({ k: 'nomana', u: u2.id, skill: short.skill, mana: u2.mana, cost: short.cost });
+      return c;
+    };
     for (let i = 0; i < u2.rules.length; i++) {
       const r = u2.rules[i]!;
       const id = r.action;
@@ -732,6 +742,9 @@ export function simuler(input: BattleInput, seed: number): BattleOutput {
       }
       if (r.cond === 'targetHasState') list = list.filter((x) => has(x, r.s ?? ''));
       if (r.cond === 'targetLacksState') list = list.filter((x) => !has(x, r.s ?? ''));
+      // v3 : « un allié sous v % » ne soigne que des alliés sous v %, plus le plus blessé de ceux qui sont disponibles.
+      if (V3 && r.cond === 'allyHpBelow' && !COMMON.has(id) && SK[id]!.target === 'ally')
+        list = list.filter((x) => x.hp * 100 < (r.v ?? 0) * x.hpMax);
       if (V1 && !COMMON.has(id) && SK[id]!.target === 'enemy') {
         const type = skillType(u2, id, SK[id]);
         if (r.cond === 'targetImmune') list = list.filter((x) => isImmune(x, type));
@@ -745,10 +758,13 @@ export function simuler(input: BattleInput, seed: number): BattleOutput {
       const kind = COMMON.has(id) ? 'self' : SK[id]!.target;
       const target = select2(u2, list, r.target, kind);
       if (!target) continue;
-      if (!COMMON.has(id) && P.manaSkipsRule && u2.mana < SK[id]!.mana) continue;
-      return { i, id, target };
+      if (!COMMON.has(id) && P.manaSkipsRule && u2.mana < SK[id]!.mana) {
+        if (V3 && !short) short = { skill: id, cost: SK[id]!.mana };
+        continue;
+      }
+      return pick({ i, id, target });
     }
-    return null;
+    return pick(null);
   }
   function wait(u2: Unit, why: string): number {
     emit({ k: 'wait', u: u2.id, why });

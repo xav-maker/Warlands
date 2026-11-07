@@ -66,6 +66,11 @@ function viewAt(upTo) {
   }
   return { units, t };
 }
+// Coût du sort le moins cher de l'unité (0 : aucun sort) : sous ce seuil, son mana ne lui sert plus (README 36).
+var minManaCost = (u2) => {
+  const costs = (u2.skills ?? []).map((s) => battle?.input.skills[s]?.mana ?? 0).filter((m) => m > 0);
+  return costs.length ? Math.min(...costs) : 0;
+};
 var nameOf = (id) => id && battle ? battle.input.units.find((u2) => u2.id === id)?.name ?? id : "?";
 var tagOf = (id) => id ? id[0] === "A" ? "A" : "B" : "";
 function who(id) {
@@ -80,6 +85,8 @@ function evLine(e) {
       return h("span", {}, who(e.u), " \xB7 ", h("b", {}, skillName2(e.skill)), e.target && e.target !== e.u ? [" \u2192 ", who(e.target)] : "", e.rule < 0 ? h("span", { class: "dim" }, " automatique : combat bloqu\xE9") : h("span", { class: "dim" }, ` r\xE8gle ${e.rule + 1}`));
     case "wait":
       return e.why === "choice" ? null : h("span", {}, who(e.u), e.why === "energy" ? " attend : pas assez d\u2019\xE9nergie" : " attend : aucune r\xE8gle applicable");
+    case "nomana":
+      return h("span", { class: "dim" }, who(e.u), ` : pas assez de mana pour ${skillName2(e.skill)} (${e.mana}/${e.cost})`);
     case "frozen":
       return h("span", {}, who(e.u), ` est gel\xE9 jusqu\u2019\xE0 l\u2019instant ${e.until}`);
     case "will":
@@ -311,7 +318,15 @@ R\xE9sistances : ${RES_ORDER.filter((r) => v.u.res[r]).map((r) => `${TYPE_LABEL[
       bar2("hp", v.hp, v.u.hpMax),
       bar2("will", v.will, v.u.willMax),
       bar2("energy", v.energy, v.u.energyMax),
-      bar2("mana", v.mana, v.u.manaMax),
+      (() => {
+        const b = bar2("mana", v.mana, v.u.manaMax);
+        const min = minManaCost(v.u);
+        if (b && min && v.mana < min) {
+          b.classList.add("short");
+          b.title = `mana ${v.mana}/${v.u.manaMax} : pas assez pour lancer un sort (le moins cher coûte ${min})`;
+        }
+        return b;
+      })(),
       st.length ? h("div", { class: "tk-states" }, st.map(([k, s3]) => h("span", { class: "st", title: `jusqu\u2019\xE0 ${s3.until}` }, STATE_NAMES[k] ?? k, s3.charges > 1 ? ` \xD7${s3.charges}` : ""))) : null,
       v.dead ? h("div", { class: "tk-flag" }, "mort") : v.fled ? h("div", { class: "tk-flag" }, "enfui") : null,
       hitNow && hitNow.u === v.u.id ? h("div", { class: "float dmg" }, `\u2212${hitNow.final - hitNow.absorbed}`) : null,

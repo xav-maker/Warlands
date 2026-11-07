@@ -803,7 +803,7 @@ Aujourd'hui **tout** est dans le navigateur : l'état, les règles, les généra
 - Jauges ×3, durée limite 3 000 (au lieu de 1 000 dans la spec combat).
 - Tics de dégâts/soins sur la durée tous les 4 instants (spec : 20).
 - Soins ×1,2, recharges de soin par cible (60 et 100 instants).
-- Attendre rend aussi 5 % du mana (plus rien depuis la section 35) ; +25 % de mana à la fin de chaque combat (50 % à la section 33, 15 % depuis la section 35, `eco.manaRegenEnd`).
+- Attendre rend aussi 5 % du mana (2 % depuis la section 35.1) ; +25 % de mana à la fin de chaque combat (50 % à la section 33, 15 % depuis la section 35, `eco.manaRegenEnd`).
 - Rang effectif (rangs vides retirés des portées), avancée automatique en cas de combat bloqué, attaque de base toujours active.
 - Bonus d'équipement ×2.
 - Combats non passables, rediffusion obligatoire.
@@ -1279,3 +1279,23 @@ Constat de Xavier : après le premier combat, on n'a déjà plus de mana, et les
   - **15 % du mana rendu après un combat** (`eco.manaRegenEnd`, 50 → 15). Les potions de mana sont inchangées (120, 270, tonique 150). Le retour en ville rend toujours tout (section 21).
 - **Effet** (après recalibrage) : le mana des lanceurs au début des combats 1 à 5 d'une route descend à **100 → 82 → 63 → 43 → 29 %** (27 % après le gardien). Sur une route complète, l'escouade de référence finit 53 % des routes avec cette gestion, **7 % sans aucun mana** et **84 % avec le mana remis au plein avant chaque combat** : les potions de mana, et le choix du moment de rentrer, comptent.
 - **Réglage** : routes recalibrées (deux passes, cibles de la section 33, toutes à 4 points ou moins), donjons aussi : terriers 840, tertre 1 150, grotte 820, crypte 460, puits 640, ruche 720, tombeau 700, épave 840, pyramide 680, tour 490, observatoire 620, abîme 400. L'aide (« Stats et combat ») explique le mana sur une route.
+
+### 35.1 Un filet de mana en attendant (7 novembre 2026)
+
+Constat de Xavier sur un combat : un Herboriste immobile ne soignait plus son Milicien, alors qu'il lui restait du mana. Il lui restait moins que le coût de Sève régénératrice (18) : la règle était sautée et, attendre ne rendant plus de mana (section 35), il restait bloqué jusqu'à la fin du combat.
+
+- **Changement** : attendre rend **2 % du mana max** (`waitManaRegen` 20 ‰ ; 50 avant la section 35, 0 depuis). Un lanceur à sec relance un sort de temps en temps, sans retrouver de quoi tenir une route.
+- **Effet** (contenu de la section 36, recalibré) : le mana des lanceurs au début des combats 1 à 5 d'une route descend toujours, **100 → 80 → 61 → 42 → 31 %**. L'escouade de référence finit 52 % des routes avec cette gestion, et 18 % sans aucun mana.
+
+## 36. Soins ciblés et mana insuffisant visible (7 novembre 2026)
+
+Suite du même combat : Xavier demande de réserver Sève aux alliés blessés, et de montrer la bonne barre de mana dans les deux vues (il voyait du mana au 2e Herboriste, qui ne soignait pourtant plus).
+
+- **Diagnostic** : les barres de mana étaient exactes (vérifié sur 413 unités : la barre de fin de combat est le mana réel). Le mana restant était simplement sous le coût du sort. Côté Sève, la règle visait tout allié sans Régénération, même en pleine santé : 98 % des Sèves partaient sur un allié à 80 % de PV ou plus. Comme un même allié ne peut recevoir qu'une Régénération toutes les 100 instants (`hotCooldown`), le blessé était souvent en recharge quand il en avait besoin.
+- **Stratégies** (`content/strategies.yaml`, 11 troupes) : la règle de Sève devient « un allié sous 80 % de PV → le plus blessé », plus « soi-même sous 80 % → soi ».
+- **Moteur v3** (`packages/engine`, combats de référence dans `golden/v3` : 64 sur 251 changent, aucun ne change de vainqueur) :
+  - une règle `allyHpBelow v` sur une capacité qui vise un allié ne vise que des **alliés sous v %** de leurs PV ; avant, si le plus blessé était en recharge, le soin partait sur le suivant, même plein. Vaut pour tous les soins sous condition de PV (Soin mineur, Régénération, Bouclier de foi…) ;
+  - une règle sautée **faute de mana** est signalée dans le journal (événement `nomana`, une fois par décision, avec le mana et le coût).
+  Il ne reste que 6 % de Sèves sur un allié à 80 % de PV ou plus (au moment du lancer, le soin a pu partir juste avant qu'un autre allié passe sous le seuil).
+- **Vues du combat** (`packages/ui-combat`) : le journal affiche « pas assez de mana pour Sève régénératrice (12/18) » ; la barre de mana d'une unité dont le mana est sous le coût de son sort le moins cher est **hachurée** dans la vue tableau (avec une infobulle) et **grise** dans la vue pixel.
+- **Réglage** : `online.engineVersion` et `pack.engineVersion` passent à `v3` ; routes recalibrées (deux passes, toutes à 4 points de leur cible ou moins), donjons aussi : terriers 930, tertre 1 420, grotte 860, crypte 490, puits 780, ruche 900, tombeau 960, épave 930, pyramide 720, tour 550, observatoire 620, abîme 400.

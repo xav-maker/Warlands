@@ -4,8 +4,9 @@ engine:
   timeLimit: 3000
   tick: 20
   waitRegen: 50
-  # Attendre ne rend plus de mana (50 ‰ jusqu’au README 35) : un lanceur à sec le reste jusqu’à une potion ou la fin du combat.
-  waitManaRegen: 0
+  # Attendre rend 2 % du mana max (50 ‰ jusqu’au README 35, 0 puis 20 ‰ au README 35.1) : un lanceur à sec soigne encore de
+  # temps en temps, sans retrouver de quoi tenir toute une route.
+  waitManaRegen: 20
   woundWill: 1000 # v2 : en ‰ de la volonté de référence du combat ; 500 avant [H]
   allyDeathWill: 100
   sameTroopDeathWill: 200
@@ -94,10 +95,10 @@ rares: { chance: 15, minWins: 10 }
 # Règles du jeu en ligne qui n'existent pas dans le prototype (README partie II) ; [H] = à régler.
 online:
   # Moteur joué pour ce contenu (v1 : 5 puissances, immunités, soins fixes, README 19 ; v2 : volonté en points et
-  # épuisement, README 31) ; ajustement du
+  # épuisement, README 31 ; v3 : soins réservés aux alliés sous le seuil, mana insuffisant signalé, README 36) ; ajustement du
   # gardien appliqué à toute sa rencontre, escorte comprise, comme dans le tableau du README 6.2 : limité au
   # boss (README 16, point 2) il ne peut pas compenser l'escorte, grosse de 16 à 21 de population.
-  engineVersion: v2
+  engineVersion: v3
   guardianAdjust: all
   # Au-delà de 6 capacités connues, les actives sont choisies selon la stratégie par défaut, plus les 5 plus récentes
   # (README 34) : le Prêtre perdait Soin mineur au niveau 13.

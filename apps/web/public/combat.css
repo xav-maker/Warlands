@@ -273,6 +273,13 @@ button.icon {
 .g-mana i {
   background: color-mix(in srgb, var(--mana) 60%, transparent);
 }
+/* Mana restant, mais sous le coût du sort le moins cher de l'unité (README 36). */
+.bar.g-mana.short i {
+  background: repeating-linear-gradient(135deg, var(--sunk) 0 3px, color-mix(in srgb, var(--mana) 35%, transparent) 3px 6px);
+}
+.bar.g-mana.short span {
+  color: var(--muted, var(--ink));
+}
 .bar.g-will,
 .bar.g-energy,
 .bar.g-mana {

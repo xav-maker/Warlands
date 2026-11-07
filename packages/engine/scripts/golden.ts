@@ -81,7 +81,7 @@ export const toV1 = (units: UnitInput[]): UnitInput[] =>
   units.map(({ atk, ...u }) => ({ ...u, pow: { for: atk!, ele: atk!, esp: atk!, foi: atk!, omb: atk! } }));
 
 /** Versions qui lisent les puissances (entrées migrées par toV1). */
-const V1_PLUS = new Set(['v1', 'v2']);
+const V1_PLUS = new Set(['v1', 'v2', 'v3']);
 
 export const play = (version: string, g: GoldenInput): BattleOutput =>
   simuler({ ...content, engineVersion: version, units: V1_PLUS.has(version) ? toV1(g.units) : g.units }, g.seed);
@@ -105,6 +105,7 @@ const touches: Record<string, (g: GoldenInput, out: BattleOutput) => boolean> = 
   v1: (_g, out) => healsOrShields(out),
   // Le contenu de référence n'a pas les paramètres d'épuisement : seule la volonté en points peut changer un combat.
   v2: (_g, out) => out.log.some((e) => e.k === 'gauge' && e.g === 'will'),
+  v3: (g, out) => g.units.some((u) => u.rules.some((r) => r.cond === 'allyHpBelow')) || out.log.some((e) => e.k === 'nomana'),
 };
 
 if (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]) {

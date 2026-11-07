@@ -125,7 +125,8 @@ herboriste:
   - { cond: allyHpBelow, v: 50, action: onde_soin, target: self }
   - { cond: allyHpBelow, v: 55, action: soin_mineur, target: mostWoundedAlly }
   - { cond: allyHpBelow, v: 55, action: mains_lumiere, target: mostWoundedAlly }
-  - { cond: targetLacksState, s: regeneration, action: seve, target: mostWoundedAlly }
+  - { cond: allyHpBelow, v: 80, action: seve, target: mostWoundedAlly }
+  - { cond: selfHpBelow, v: 80, action: seve, target: self }
   - { cond: targetLacksState, s: garde, action: peau_ecorce, target: mostWoundedAlly }
   - { cond: targetLacksState, s: garde, action: armure_givre, target: mostWoundedAlly }
   - { cond: selfLacksState, s: epines, action: carapace_epines, target: self }
@@ -563,7 +564,8 @@ moustiques:
   - { cond: always, action: attendre, target: self }
 troll_marais:
   - { cond: selfEnergyBelow, v: 15, action: repos, target: self }
-  - { cond: targetLacksState, s: regeneration, action: seve, target: mostWoundedAlly }
+  - { cond: allyHpBelow, v: 80, action: seve, target: mostWoundedAlly }
+  - { cond: selfHpBelow, v: 80, action: seve, target: self }
   - { cond: selfEnergyAbove, v: 40, action: coup_massue, target: nearestEnemy }
   - { cond: always, action: emploi, target: nearestEnemy }
   - { cond: noEnemyInRange, action: avancer, target: self }
@@ -985,7 +987,8 @@ grande_ondine:
   - { cond: noEnemyInRange, action: avancer, target: self }
   - { cond: always, action: attendre, target: self }
 gardien_chene:
-  - { cond: targetLacksState, s: regeneration, action: seve, target: mostWoundedAlly }
+  - { cond: allyHpBelow, v: 80, action: seve, target: mostWoundedAlly }
+  - { cond: selfHpBelow, v: 80, action: seve, target: self }
   - { cond: selfLacksState, s: epines, action: carapace_epines, target: self }
   - { cond: enemiesAtLeast, v: 3, action: pietinement, target: self }
   - { cond: enemiesAtLeast, v: 3, action: peste, target: nearestEnemy }
@@ -1017,7 +1020,8 @@ seigneur_liche_lanternes:
   - { cond: noEnemyInRange, action: avancer, target: self }
   - { cond: always, action: attendre, target: self }
 druide_liche:
-  - { cond: targetLacksState, s: regeneration, action: seve, target: mostWoundedAlly }
+  - { cond: allyHpBelow, v: 80, action: seve, target: mostWoundedAlly }
+  - { cond: selfHpBelow, v: 80, action: seve, target: self }
   - { cond: selfLacksState, s: epines, action: carapace_epines, target: self }
   - { cond: enemiesAtLeast, v: 3, action: peste, target: nearestEnemy }
   - { cond: always, action: drain_ame, target: weakestEnemy }
@@ -1217,7 +1221,8 @@ brochet:
 nymphe:
   - { cond: selfWillBelow, v: 45, action: meditation, target: self }
   - { cond: allyHpBelow, v: 55, action: soin_mineur, target: mostWoundedAlly }
-  - { cond: targetLacksState, s: regeneration, action: seve, target: mostWoundedAlly }
+  - { cond: allyHpBelow, v: 80, action: seve, target: mostWoundedAlly }
+  - { cond: selfHpBelow, v: 80, action: seve, target: self }
   - { cond: always, action: emploi, target: nearestEnemy }
   - { cond: noEnemyInRange, action: avancer, target: self }
   - { cond: always, action: attendre, target: self }
@@ -1395,7 +1400,8 @@ ours_chene:
   - { cond: always, action: attendre, target: self }
 dryade_corrompue:
   - { cond: selfWillBelow, v: 45, action: meditation, target: self }
-  - { cond: targetLacksState, s: regeneration, action: seve, target: mostWoundedAlly }
+  - { cond: allyHpBelow, v: 80, action: seve, target: mostWoundedAlly }
+  - { cond: selfHpBelow, v: 80, action: seve, target: self }
   - { cond: enemiesAtLeast, v: 3, action: peste, target: nearestEnemy }
   - { cond: always, action: emploi, target: nearestEnemy }
   - { cond: noEnemyInRange, action: avancer, target: self }
@@ -2106,7 +2112,8 @@ rare_ours_chene_pourri:
   - { cond: always, action: attendre, target: self }
 rare_dryade_larmes_noires:
   - { cond: selfWillBelow, v: 45, action: meditation, target: self }
-  - { cond: targetLacksState, s: regeneration, action: seve, target: mostWoundedAlly }
+  - { cond: allyHpBelow, v: 80, action: seve, target: mostWoundedAlly }
+  - { cond: selfHpBelow, v: 80, action: seve, target: self }
   - { cond: enemiesAtLeast, v: 3, action: peste, target: nearestEnemy }
   - { cond: always, action: emploi, target: nearestEnemy }
   - { cond: noEnemyInRange, action: avancer, target: self }
@@ -2584,7 +2591,8 @@ druide_menhirs:
   - { cond: selfWillBelow, v: 45, action: meditation, target: self }
   - { cond: allyHpBelow, v: 50, action: cercle_soins, target: self }
   - { cond: allyHpBelow, v: 50, action: onde_soin, target: self }
-  - { cond: targetLacksState, s: regeneration, action: seve, target: mostWoundedAlly }
+  - { cond: allyHpBelow, v: 80, action: seve, target: mostWoundedAlly }
+  - { cond: selfHpBelow, v: 80, action: seve, target: self }
   - { cond: targetLacksState, s: garde, action: peau_ecorce, target: mostWoundedAlly }
   - { cond: allyHpBelow, v: 70, action: clarte, target: mostWoundedAlly }
   - { cond: always, action: purification_masse, target: self }
@@ -2774,7 +2782,8 @@ dryade:
   - { cond: allyHpBelow, v: 50, action: cercle_soins, target: self }
   - { cond: allyHpBelow, v: 50, action: onde_soin, target: self }
   - { cond: allyHpBelow, v: 55, action: mains_lumiere, target: mostWoundedAlly }
-  - { cond: targetLacksState, s: regeneration, action: seve, target: mostWoundedAlly }
+  - { cond: allyHpBelow, v: 80, action: seve, target: mostWoundedAlly }
+  - { cond: selfHpBelow, v: 80, action: seve, target: self }
   - { cond: targetLacksState, s: garde, action: peau_ecorce, target: mostWoundedAlly }
   - { cond: always, action: purification_masse, target: self }
   - { cond: selfLacksState, s: epines, action: carapace_epines, target: self }
@@ -3131,7 +3140,8 @@ pretresse_jade:
   - { cond: allyHpBelow, v: 50, action: cercle_soins, target: self }
   - { cond: allyHpBelow, v: 55, action: mains_lumiere, target: mostWoundedAlly }
   - { cond: targetLacksState, s: bouclier, action: egide, target: mostWoundedAlly }
-  - { cond: targetLacksState, s: regeneration, action: seve, target: mostWoundedAlly }
+  - { cond: allyHpBelow, v: 80, action: seve, target: mostWoundedAlly }
+  - { cond: selfHpBelow, v: 80, action: seve, target: self }
   - { cond: always, action: purification_masse, target: self }
   - { cond: always, action: emploi, target: nearestEnemy }
   - { cond: noEnemyInRange, action: avancer, target: self }
@@ -3475,7 +3485,8 @@ feux_follets:
   - { cond: noEnemyInRange, action: avancer, target: self }
   - { cond: always, action: attendre, target: self }
 champignons_fees:
-  - { cond: targetLacksState, s: regeneration, action: seve, target: mostWoundedAlly }
+  - { cond: allyHpBelow, v: 80, action: seve, target: mostWoundedAlly }
+  - { cond: selfHpBelow, v: 80, action: seve, target: self }
   - { cond: always, action: sommeil, target: strongestEnemy }
   - { cond: always, action: emploi, target: nearestEnemy }
   - { cond: noEnemyInRange, action: avancer, target: self }
